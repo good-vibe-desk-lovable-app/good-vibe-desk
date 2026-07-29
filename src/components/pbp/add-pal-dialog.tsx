@@ -225,10 +225,16 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                         />
                         <span className="leading-tight">
                           <span className="font-medium">{passive.name}</span>
+                          {guaranteed.has(passive.id) ? (
+                            <Badge variant="outline" className="ml-2 text-[10px]">
+                              always has
+                            </Badge>
+                          ) : null}
                           <span className="block text-xs text-muted-foreground">
                             {passive.description}
                           </span>
                         </span>
+
                       </label>
                     );
                   })}
