@@ -6,6 +6,7 @@ import type { Pal } from "@/data/palworld";
 import {
   MAX_PASSIVE_SLOTS,
   genderRatioNote,
+  guaranteedPassiveIds,
   newInstanceId,
   passivesForPal,
   type CollectionEntry,
