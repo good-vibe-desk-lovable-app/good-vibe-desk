@@ -76,6 +76,12 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
     [palId],
   );
 
+  const guaranteed = useMemo(
+    () => new Set(palId === null ? [] : guaranteedPassiveIds(palId)),
+    [palId],
+  );
+
+
   const atCap = passiveIds.length >= MAX_PASSIVE_SLOTS;
   const ratioNote = selected ? genderRatioNote(selected.name, selected.maleRatio) : null;
 
