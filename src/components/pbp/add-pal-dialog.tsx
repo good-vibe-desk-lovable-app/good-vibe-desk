@@ -141,8 +141,10 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                         type="button"
                         onClick={() => {
                           setPalId(pal.id);
-                          setPassiveIds([]);
+                          // Guaranteed passives are always on the Pal, so start them ticked.
+                          setPassiveIds(guaranteedPassiveIds(pal.id).slice(0, MAX_PASSIVE_SLOTS));
                         }}
+
                         className={cn(
                           "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors",
                           isActive
