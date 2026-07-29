@@ -35,13 +35,26 @@ export function getPassive(id: string): Passive | undefined {
   return passiveById.get(id);
 }
 
-/** Passives a Pal can naturally roll. `'any'` (or unlisted) means all of them. */
+/**
+ * Every Pal can roll any passive, so the picker always offers the full list.
+ * Guaranteed ones are surfaced separately.
+ */
 export function passivesForPal(palId: number): Passive[] {
-  const allowed = PAL_PASSIVES[palId];
-  if (!allowed || allowed === "any") return PASSIVES;
-  const list = allowed.map((id) => passiveById.get(id)).filter((p): p is Passive => !!p);
-  return list.length ? list : PASSIVES;
+  const guaranteed = guaranteedPassiveIds(palId);
+  if (guaranteed.length === 0) return PASSIVES;
+  const first = guaranteed
+    .map((id) => passiveById.get(id))
+    .filter((p): p is Passive => !!p);
+  const rest = PASSIVES.filter((p) => !guaranteed.includes(p.id));
+  return [...first, ...rest];
 }
+
+/** Passives this species always spawns with, per palcalc's guaranteed list. */
+export function guaranteedPassiveIds(palId: number): string[] {
+  const entry = PAL_PASSIVES[palId];
+  return !entry || entry === "any" ? [] : entry;
+}
+
 
 function isGender(value: unknown): value is Gender {
   return value === "male" || value === "female" || value === "unknown";
