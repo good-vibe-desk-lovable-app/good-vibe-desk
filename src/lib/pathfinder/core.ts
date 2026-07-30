@@ -31,8 +31,6 @@ export interface SearchDeps {
   resolve: Resolve;
   sameSpeciesOnly: Set<number>;
   nameOf: (palId: number) => string;
-  /** Breeding power, used to steer the beam toward the target species. */
-  rankOf?: (palId: number) => number;
 }
 
 
