@@ -148,7 +148,7 @@ export function search(
   onProgress?: (partial: Result) => void,
 ): Result {
   const started = now();
-  const maxCost = options.maxDepth ?? 8;
+  const maxCost = options.maxDepth ?? 30;
   const timeoutMs = options.timeoutMs ?? 5000;
   const forbid = options.forbidFinalPair
     ? `${Math.min(...options.forbidFinalPair)}:${Math.max(...options.forbidFinalPair)}`
