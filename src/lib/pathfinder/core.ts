@@ -148,7 +148,7 @@ export function search(
   onProgress?: (partial: Result) => void,
 ): Result {
   const started = now();
-  const maxCost = options.maxDepth ?? 30;
+  const maxCost = options.maxDepth ?? 12;
   const timeoutMs = options.timeoutMs ?? 5000;
   const forbid = options.forbidFinalPair
     ? `${Math.min(...options.forbidFinalPair)}:${Math.max(...options.forbidFinalPair)}`
@@ -265,7 +265,9 @@ export function search(
       const pairKey = `${Math.min(a.palId, b.palId)}:${Math.max(a.palId, b.palId)}`;
       if (pairKey === forbid) return;
     }
-    const cost = a.cost + b.cost + 1;
+    // Depth of the breeding tree: shared sub-results are bred once, so depth
+    // tracks real effort better than summing both branches.
+    const cost = Math.max(a.cost, b.cost) + 1;
     if (cost > maxCost) return;
     const key = `${res.childId}:${newMask}`;
     const existing = best.get(key);
