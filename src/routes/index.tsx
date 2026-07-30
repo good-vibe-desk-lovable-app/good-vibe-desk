@@ -43,6 +43,9 @@ function Index() {
   const [targetId, setTargetId] = useState<number | null>(null);
   const [selections, setSelections] = useState<Set<string>>(new Set());
   const [hydrated, setHydrated] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [result, setResult] = useState<Result | null>(null);
+
 
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
   useEffect(() => {
@@ -71,15 +74,53 @@ function Index() {
     );
     setSelections((prev) => new Set(Array.from(prev).filter((key) => valid.has(key))));
     setEntries(next);
+    setResult(null);
   }
 
   const canCalculate = target !== null && selections.size > 0;
 
-  function handleFindChain() {
-    if (!target) return;
-    console.log({ target, selections: Array.from(selections) });
-    toast("Algorithm coming next");
+  const desiredSources = useMemo(
+    () =>
+      Array.from(
+        new Set(Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":")))),
+      ),
+    [selections],
+  );
+
+  function buildInput(): PathfinderInput | null {
+    if (targetId === null) return null;
+    return { targetId, collection: entries, desiredSources, options: { timeoutMs: 5000 } };
   }
+
+  async function handleFindChain() {
+    const input = buildInput();
+    if (!input) return;
+    setRunning(true);
+    try {
+      setResult(await runPathfinder(input, { timeoutMs: 5000 }));
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "The search failed.");
+    } finally {
+      setRunning(false);
+    }
+  }
+
+  async function handleAlternative() {
+    const input = buildInput();
+    if (!input || !result) return;
+    setRunning(true);
+    try {
+      const next = await findAlternative(result, input, { timeoutMs: 5000 });
+      if (next.steps.length === 0 && next.status !== "ok") {
+        toast("No different chain found.");
+      } else {
+        setResult(next);
+      }
+    } finally {
+      setRunning(false);
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-background">
