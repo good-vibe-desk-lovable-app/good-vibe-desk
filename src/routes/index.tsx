@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Egg, Sparkles } from "lucide-react";
+import { Egg, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 import { DATA_VERSION, PALS } from "@/data/palworld";
@@ -12,10 +12,13 @@ import {
   saveLastTarget,
   type CollectionEntry,
 } from "@/lib/collection";
+import { findAlternative, runPathfinder, type PathfinderInput, type Result } from "@/lib/pathfinder";
 import { Button } from "@/components/ui/button";
 import { CollectionPanel } from "@/components/pbp/collection-panel";
 import { PassivesPanel } from "@/components/pbp/passives-panel";
+import { ResultsPanel } from "@/components/pbp/results-panel";
 import { TargetPanel } from "@/components/pbp/target-panel";
+
 
 const TITLE = "Palworld Breeding Pathfinder — Plan Passive Trait Chains";
 const DESCRIPTION =
@@ -40,6 +43,9 @@ function Index() {
   const [targetId, setTargetId] = useState<number | null>(null);
   const [selections, setSelections] = useState<Set<string>>(new Set());
   const [hydrated, setHydrated] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [result, setResult] = useState<Result | null>(null);
+
 
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
   useEffect(() => {
@@ -68,15 +74,53 @@ function Index() {
     );
     setSelections((prev) => new Set(Array.from(prev).filter((key) => valid.has(key))));
     setEntries(next);
+    setResult(null);
   }
 
   const canCalculate = target !== null && selections.size > 0;
 
-  function handleFindChain() {
-    if (!target) return;
-    console.log({ target, selections: Array.from(selections) });
-    toast("Algorithm coming next");
+  const desiredSources = useMemo(
+    () =>
+      Array.from(
+        new Set(Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":")))),
+      ),
+    [selections],
+  );
+
+  function buildInput(): PathfinderInput | null {
+    if (targetId === null) return null;
+    return { targetId, collection: entries, desiredSources, options: { timeoutMs: 5000 } };
   }
+
+  async function handleFindChain() {
+    const input = buildInput();
+    if (!input) return;
+    setRunning(true);
+    try {
+      setResult(await runPathfinder(input, { timeoutMs: 5000 }));
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "The search failed.");
+    } finally {
+      setRunning(false);
+    }
+  }
+
+  async function handleAlternative() {
+    const input = buildInput();
+    if (!input || !result) return;
+    setRunning(true);
+    try {
+      const next = await findAlternative(result, input, { timeoutMs: 5000 });
+      if (next.steps.length === 0 && next.status !== "ok") {
+        toast("No different chain found.");
+      } else {
+        setResult(next);
+      }
+    } finally {
+      setRunning(false);
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -121,8 +165,18 @@ function Index() {
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-2">
-          <Button size="lg" className="w-full sm:w-auto" disabled={!canCalculate} onClick={handleFindChain}>
-            <Sparkles className="size-4" /> Find breeding chain
+          <Button
+            size="lg"
+            className="w-full sm:w-auto"
+            disabled={!canCalculate || running}
+            onClick={handleFindChain}
+          >
+            {running ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Sparkles className="size-4" />
+            )}
+            {running ? "Searching…" : "Find breeding chain"}
           </Button>
           {!canCalculate ? (
             <p className="text-xs text-muted-foreground">
@@ -130,6 +184,17 @@ function Index() {
             </p>
           ) : null}
         </div>
+
+        {result && targetId !== null ? (
+          <ResultsPanel
+            result={result}
+            entries={entries}
+            targetId={targetId}
+            onAlternative={handleAlternative}
+            alternativeLoading={running}
+          />
+        ) : null}
+
 
         <footer className="mt-12 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
           <p>
