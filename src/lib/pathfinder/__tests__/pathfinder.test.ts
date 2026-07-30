@@ -86,8 +86,8 @@ describe("pathfinder", () => {
       { parent1Id: 3, parent2Id: 3, childId: 9 },
     ];
     const deps = makeDeps(pals, combos);
-    const collection = [entry("i1", 1), entry("i2", 2), entry("i3", 3)];
-    const res = search(deps, 9, collection, ["i1", "i2", "i3"], { maxDepth: 1 });
+    const collection = [entry("i1", 1), entry("i2", 2), entry("i3", 3), entry("i4", 3)];
+    const res = search(deps, 9, collection, ["i1", "i2", "i3", "i4"], { maxDepth: 1 });
     expect(res.status).toBe("partial");
     expect(res.coveredSources.length).toBeGreaterThan(0);
     expect(res.missingSources.length).toBeGreaterThan(0);
