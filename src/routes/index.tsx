@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Egg, Sparkles } from "lucide-react";
+import { Egg, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 import { DATA_VERSION, PALS } from "@/data/palworld";
@@ -12,10 +12,13 @@ import {
   saveLastTarget,
   type CollectionEntry,
 } from "@/lib/collection";
+import { findAlternative, runPathfinder, type PathfinderInput, type Result } from "@/lib/pathfinder";
 import { Button } from "@/components/ui/button";
 import { CollectionPanel } from "@/components/pbp/collection-panel";
 import { PassivesPanel } from "@/components/pbp/passives-panel";
+import { ResultsPanel } from "@/components/pbp/results-panel";
 import { TargetPanel } from "@/components/pbp/target-panel";
+
 
 const TITLE = "Palworld Breeding Pathfinder — Plan Passive Trait Chains";
 const DESCRIPTION =
