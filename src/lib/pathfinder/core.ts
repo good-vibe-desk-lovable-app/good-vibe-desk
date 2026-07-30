@@ -187,10 +187,26 @@ export function search(
 
   const best = new Map<string, State>();
   const buckets: State[][] = [];
+  let bestPartial: State | null = null;
+
+  // Track the best target-species state as soon as it is discovered, so a
+  // partial answer survives even when the full goal is never reached.
+  const noteTarget = (s: State) => {
+    if (s.palId !== targetId) return;
+    if (
+      !bestPartial ||
+      popcount(s.mask) > popcount(bestPartial.mask) ||
+      (popcount(s.mask) === popcount(bestPartial.mask) && s.cost < bestPartial.cost)
+    ) {
+      bestPartial = s;
+    }
+  };
+
   const push = (state: State) => {
     const existing = best.get(state.key);
     if (existing && existing.cost <= state.cost) return;
     best.set(state.key, state);
+    noteTarget(state);
     (buckets[state.cost] ??= []).push(state);
   };
 
@@ -229,18 +245,6 @@ export function search(
   const goalKey = `${targetId}:${goalMask}`;
   const settledZero: State[] = [];
   const carriers = new Map<number, State[]>();
-  let bestPartial: State | null = null;
-
-  const noteTarget = (s: State) => {
-    if (s.palId !== targetId) return;
-    if (
-      !bestPartial ||
-      popcount(s.mask) > popcount(bestPartial.mask) ||
-      (popcount(s.mask) === popcount(bestPartial.mask) && s.cost < bestPartial.cost)
-    ) {
-      bestPartial = s;
-    }
-  };
 
   const genderWarning = (a: State, b: State): string | null => {
     if (!a.instanceId || !b.instanceId) return null;
@@ -279,7 +283,6 @@ export function search(
   };
 
   let goal = best.get(goalKey) ?? null;
-  for (const state of best.values()) noteTarget(state);
   if (goal) {
     return reconstruct(goal, deps, desired, goalMask, warnings, now() - started, sourcesOf);
   }
@@ -292,7 +295,6 @@ export function search(
       if (best.get(state.key) !== state) continue; // superseded by a cheaper route
       if (now() - started > timeoutMs) break outer;
 
-      noteTarget(state);
       if (state.key === goalKey) {
         goal = state;
         break outer;
