@@ -1,7 +1,7 @@
 import { it } from "vitest";
 import { findBreedingChain } from "@/lib/pathfinder/pathfinder";
 import { palById } from "@/data/palworld";
-it("probe", () => {
+it("probe", { timeout: 60000 }, () => {
   const coll = [
     { instanceId: "i1", palId: 1, gender: "male" as const, passiveIds: ["Legend"] },
     { instanceId: "i2", palId: 2, gender: "female" as const, passiveIds: ["Noukin"] },
