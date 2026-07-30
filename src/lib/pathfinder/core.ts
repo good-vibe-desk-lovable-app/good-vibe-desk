@@ -345,13 +345,28 @@ export function search(
       }
     }
 
-    // Beam: keep the most promising states.
-    next.sort((x, y) => {
-      const sx = Math.max(...x.owned.map((o) => popcount(o.mask)));
-      const sy = Math.max(...y.owned.map((o) => popcount(o.mask)));
-      return sy - sx;
-    });
+    // Beam: keep the most promising states. Nodes that already hold the target
+    // species with passives rank first, then broad passive coverage, then how
+    // close the carrier species sits to the target's breeding power.
+    const rankOf = deps.rankOf ?? (() => 0);
+    const targetRank = rankOf(targetId);
+    const score = (n: Node) => {
+      let targetBits = 0;
+      let maxBits = 0;
+      let closest = Infinity;
+      for (const o of n.owned) {
+        const pc = popcount(o.mask);
+        if (o.palId === targetId && pc > targetBits) targetBits = pc;
+        if (pc > maxBits) maxBits = pc;
+        if (pc > 0) closest = Math.min(closest, Math.abs(rankOf(o.palId) - targetRank));
+      }
+      return (
+        targetBits * 1e6 + maxBits * 1e4 - Math.min(closest, 5000) - n.depth * 0.001
+      );
+    };
+    next.sort((x, y) => score(y) - score(x));
     frontier = next.slice(0, beamWidth);
+
 
     if (onProgress && now() - lastProgress > 250) {
       lastProgress = now();
