@@ -165,8 +165,18 @@ function Index() {
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-2">
-          <Button size="lg" className="w-full sm:w-auto" disabled={!canCalculate} onClick={handleFindChain}>
-            <Sparkles className="size-4" /> Find breeding chain
+          <Button
+            size="lg"
+            className="w-full sm:w-auto"
+            disabled={!canCalculate || running}
+            onClick={handleFindChain}
+          >
+            {running ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Sparkles className="size-4" />
+            )}
+            {running ? "Searching…" : "Find breeding chain"}
           </Button>
           {!canCalculate ? (
             <p className="text-xs text-muted-foreground">
@@ -174,6 +184,17 @@ function Index() {
             </p>
           ) : null}
         </div>
+
+        {result && targetId !== null ? (
+          <ResultsPanel
+            result={result}
+            entries={entries}
+            targetId={targetId}
+            onAlternative={handleAlternative}
+            alternativeLoading={running}
+          />
+        ) : null}
+
 
         <footer className="mt-12 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
           <p>
