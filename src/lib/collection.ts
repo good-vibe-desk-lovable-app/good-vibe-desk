@@ -18,6 +18,7 @@ export interface CollectionFile {
 
 export const COLLECTION_KEY = "pbp:collection:v1";
 export const LAST_TARGET_KEY = "pbp:lastTarget:v1";
+export const FAVORITES_KEY = "pbp:favorites:v1";
 
 export const MAX_PASSIVE_SLOTS = 4;
 
@@ -27,6 +28,14 @@ export const HATCH_TIME: Record<string, string> = {
   Large: "18–36h",
   Huge: "36–72h",
 };
+
+/** Same estimates as numbers, for summing a whole chain. */
+export const HATCH_HOURS: Record<string, [number, number]> = {
+  Normal: [3, 6],
+  Large: [18, 36],
+  Huge: [36, 72],
+};
+
 
 const passiveById = new Map<string, Passive>(PASSIVES.map((p) => [p.id, p]));
 const palIds = new Set<number>(PALS.map((p) => p.id));
@@ -138,4 +147,41 @@ export function genderRatioNote(name: string, maleRatio?: number): string | null
   return maleRatio < 50
     ? `Only ${maleRatio}% of wild ${name} are male.`
     : `Only ${100 - maleRatio}% of wild ${name} are female.`;
+}
+
+export interface FavoritesFile {
+  version: 1;
+  ids: number[];
+}
+
+export function loadFavorites(): number[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(FAVORITES_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as Partial<FavoritesFile>;
+    if (!Array.isArray(parsed?.ids)) return [];
+    return parsed.ids.filter((id): id is number => typeof id === "number" && palIds.has(id));
+  } catch {
+    return [];
+  }
+}
+
+export function saveFavorites(ids: number[]) {
+  if (typeof window === "undefined") return;
+  const file: FavoritesFile = { version: 1, ids };
+  try {
+    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(file));
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Which species guarantee a given passive — powers the glossary. */
+export function palsGuaranteeing(passiveId: string): number[] {
+  const out: number[] = [];
+  for (const [key, value] of Object.entries(PAL_PASSIVES)) {
+    if (value !== "any" && Array.isArray(value) && value.includes(passiveId)) out.push(Number(key));
+  }
+  return out;
 }

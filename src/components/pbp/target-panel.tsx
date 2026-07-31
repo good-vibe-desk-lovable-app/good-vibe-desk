@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Search, Target } from "lucide-react";
+import { AlertTriangle, Search, Star, Target } from "lucide-react";
 
 import { PALS, SAME_SPECIES_ONLY } from "@/data/palworld";
 import type { Pal } from "@/data/palworld";
@@ -13,18 +13,31 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 interface TargetPanelProps {
   target: Pal | null;
   onSelect: (palId: number) => void;
+  favorites: number[];
+  onToggleFavorite: (palId: number) => void;
 }
 
-export function TargetPanel({ target, onSelect }: TargetPanelProps) {
+export function TargetPanel({
+  target,
+  onSelect,
+  favorites,
+  onToggleFavorite,
+}: TargetPanelProps) {
   const [query, setQuery] = useState("");
+  const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     const list = q
       ? PALS.filter((p) => p.name.toLowerCase().includes(q) || String(p.palDexNo).startsWith(q))
       : PALS;
-    return list.slice(0, 200);
-  }, [query]);
+    // Favourites float to the top, otherwise the dataset order is preserved.
+    const sorted = [...list].sort(
+      (a, b) => Number(favoriteSet.has(b.id)) - Number(favoriteSet.has(a.id)),
+    );
+    return sorted.slice(0, 200);
+  }, [query, favoriteSet]);
+
 
   const locked = target ? SAME_SPECIES_ONLY.has(target.id) : false;
   const ratioNote = target ? genderRatioNote(target.name, target.maleRatio) : null;
@@ -50,12 +63,30 @@ export function TargetPanel({ target, onSelect }: TargetPanelProps) {
         <ScrollArea className="h-52 rounded-lg border">
           <ul className="p-1">
             {results.map((pal) => (
-              <li key={pal.id}>
+              <li key={pal.id} className="flex items-center">
+                <button
+                  type="button"
+                  onClick={() => onToggleFavorite(pal.id)}
+                  aria-label={
+                    favoriteSet.has(pal.id)
+                      ? `Remove ${pal.name} from favourites`
+                      : `Add ${pal.name} to favourites`
+                  }
+                  aria-pressed={favoriteSet.has(pal.id)}
+                  className="rounded-md p-1.5 text-muted-foreground transition-colors hover:text-warning"
+                >
+                  <Star
+                    className={cn(
+                      "size-4",
+                      favoriteSet.has(pal.id) ? "fill-warning text-warning" : "",
+                    )}
+                  />
+                </button>
                 <button
                   type="button"
                   onClick={() => onSelect(pal.id)}
                   className={cn(
-                    "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors",
+                    "flex flex-1 items-center gap-2 rounded-md px-2 py-2 text-left text-sm transition-colors",
                     pal.id === target?.id
                       ? "bg-primary/15 text-foreground"
                       : "hover:bg-accent/60 text-muted-foreground hover:text-foreground",
@@ -73,6 +104,7 @@ export function TargetPanel({ target, onSelect }: TargetPanelProps) {
                 </button>
               </li>
             ))}
+
             {results.length === 0 ? (
               <li className="px-3 py-6 text-center text-sm text-muted-foreground">
                 No Pals match “{query}”.
