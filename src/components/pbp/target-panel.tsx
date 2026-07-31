@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Search, Target } from "lucide-react";
+import { AlertTriangle, Search, Star, Target } from "lucide-react";
 
 import { PALS, SAME_SPECIES_ONLY } from "@/data/palworld";
 import type { Pal } from "@/data/palworld";
@@ -13,18 +13,31 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 interface TargetPanelProps {
   target: Pal | null;
   onSelect: (palId: number) => void;
+  favorites: number[];
+  onToggleFavorite: (palId: number) => void;
 }
 
-export function TargetPanel({ target, onSelect }: TargetPanelProps) {
+export function TargetPanel({
+  target,
+  onSelect,
+  favorites,
+  onToggleFavorite,
+}: TargetPanelProps) {
   const [query, setQuery] = useState("");
+  const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     const list = q
       ? PALS.filter((p) => p.name.toLowerCase().includes(q) || String(p.palDexNo).startsWith(q))
       : PALS;
-    return list.slice(0, 200);
-  }, [query]);
+    // Favourites float to the top, otherwise the dataset order is preserved.
+    const sorted = [...list].sort(
+      (a, b) => Number(favoriteSet.has(b.id)) - Number(favoriteSet.has(a.id)),
+    );
+    return sorted.slice(0, 200);
+  }, [query, favoriteSet]);
+
 
   const locked = target ? SAME_SPECIES_ONLY.has(target.id) : false;
   const ratioNote = target ? genderRatioNote(target.name, target.maleRatio) : null;
