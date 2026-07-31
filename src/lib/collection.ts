@@ -22,6 +22,16 @@ export const FAVORITES_KEY = "pbp:favorites:v1";
 
 export const MAX_PASSIVE_SLOTS = 4;
 
+/**
+ * Import hardening. instanceId is load-bearing: the search's self-breeding
+ * guard treats equal instanceIds as the same physical Pal, and the desired-
+ * source bitmask is keyed on it. Duplicates therefore deadlock the search
+ * ("impossible" on reachable targets) or silently mis-assign mask bits, and
+ * unbounded lengths can blow the localStorage quota so saves silently stop.
+ */
+export const MAX_ENTRIES = 500;
+const MAX_INSTANCE_ID_LENGTH = 64;
+
 /** Egg-size driven hatch estimates at default server settings. */
 export const HATCH_TIME: Record<string, string> = {
   Normal: "3–6h",
@@ -69,28 +79,74 @@ function isGender(value: unknown): value is Gender {
   return value === "male" || value === "female" || value === "unknown";
 }
 
-/** Tolerant parse: v1 files predating the gender field default to "unknown". */
-export function parseCollectionFile(raw: unknown): CollectionEntry[] | null {
+export interface ParseCollectionResult {
+  entries: CollectionEntry[];
+  /** Human-readable notes about anything the parser had to repair or drop. */
+  notes: string[];
+}
+
+/**
+ * Tolerant parse: v1 files predating the gender field default to "unknown".
+ * Repairs rather than rejects where safe: duplicate / oversized / missing
+ * instanceIds are regenerated, unknown passives are dropped, and the entry
+ * count is capped. Only a structurally wrong file or an unknown palId returns
+ * null (an unknown palId means the file targets a different dataset version —
+ * silently repairing that would fabricate a collection the user doesn't own).
+ */
+export function parseCollectionFileDetailed(raw: unknown): ParseCollectionResult | null {
   if (typeof raw !== "object" || raw === null) return null;
   const file = raw as Partial<CollectionFile>;
   if (!Array.isArray(file.entries)) return null;
 
+  const notes: string[] = [];
+  const seenIds = new Set<string>();
   const entries: CollectionEntry[] = [];
-  for (const item of file.entries) {
+
+  const items =
+    file.entries.length > MAX_ENTRIES ? file.entries.slice(0, MAX_ENTRIES) : file.entries;
+  if (file.entries.length > MAX_ENTRIES) {
+    notes.push(`File had ${file.entries.length} entries — only the first ${MAX_ENTRIES} were imported.`);
+  }
+
+  let regenerated = 0;
+  for (const item of items) {
     if (typeof item !== "object" || item === null) return null;
     const e = item as Partial<CollectionEntry>;
     if (typeof e.palId !== "number" || !palIds.has(e.palId)) return null;
+
     const passiveIds = Array.isArray(e.passiveIds)
       ? e.passiveIds.filter((id): id is string => typeof id === "string" && passiveById.has(id))
       : [];
+
+    let instanceId =
+      typeof e.instanceId === "string" &&
+      e.instanceId.length > 0 &&
+      e.instanceId.length <= MAX_INSTANCE_ID_LENGTH &&
+      !seenIds.has(e.instanceId)
+        ? e.instanceId
+        : "";
+    if (!instanceId) {
+      instanceId = newInstanceId();
+      regenerated++;
+    }
+    seenIds.add(instanceId);
+
     entries.push({
-      instanceId: typeof e.instanceId === "string" && e.instanceId ? e.instanceId : newInstanceId(),
+      instanceId,
       palId: e.palId,
       gender: isGender(e.gender) ? e.gender : "unknown",
       passiveIds: passiveIds.slice(0, MAX_PASSIVE_SLOTS),
     });
   }
-  return entries;
+  if (regenerated > 0) {
+    notes.push(`${regenerated} ${regenerated === 1 ? "entry" : "entries"} had missing, oversized, or duplicate ids — new ids were assigned.`);
+  }
+  return { entries, notes };
+}
+
+/** Back-compatible wrapper: existing callers that only want the entries. */
+export function parseCollectionFile(raw: unknown): CollectionEntry[] | null {
+  return parseCollectionFileDetailed(raw)?.entries ?? null;
 }
 
 export function newInstanceId(): string {
