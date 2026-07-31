@@ -38,7 +38,12 @@ export function PassiveChip({ passiveId, carried, className }: PassiveChipProps)
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(true);
+        }}
+
         title={`What does ${label} do?`}
         className={cn(
           "inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium transition-colors",
