@@ -108,7 +108,7 @@ export function BreedingPowerTool() {
 
             {outcome ? (
               <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
-                <p className="flex flex-wrap items-center gap-2 text-base font-semibold">
+                <div className="flex flex-wrap items-center gap-2 text-base font-semibold">
                   {outcome.pa.name} + {outcome.pb.name} ={" "}
                   <span className="text-primary">{outcome.child?.name ?? "?"}</span>
                   <Badge variant="outline" className="text-[10px]">
@@ -118,7 +118,7 @@ export function BreedingPowerTool() {
                         ? "Same species"
                         : "Breeding power"}
                   </Badge>
-                </p>
+                </div>
                 {outcome.res.via === "formula" ? (
                   <p className="mt-2 text-sm text-muted-foreground">
                     rank {outcome.pa.combiRank} + {outcome.pb.combiRank} → target {outcome.target} →
