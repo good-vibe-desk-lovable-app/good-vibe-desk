@@ -148,3 +148,40 @@ export function genderRatioNote(name: string, maleRatio?: number): string | null
     ? `Only ${maleRatio}% of wild ${name} are male.`
     : `Only ${100 - maleRatio}% of wild ${name} are female.`;
 }
+
+export interface FavoritesFile {
+  version: 1;
+  ids: number[];
+}
+
+export function loadFavorites(): number[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(FAVORITES_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as Partial<FavoritesFile>;
+    if (!Array.isArray(parsed?.ids)) return [];
+    return parsed.ids.filter((id): id is number => typeof id === "number" && palIds.has(id));
+  } catch {
+    return [];
+  }
+}
+
+export function saveFavorites(ids: number[]) {
+  if (typeof window === "undefined") return;
+  const file: FavoritesFile = { version: 1, ids };
+  try {
+    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(file));
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Which species guarantee a given passive — powers the glossary. */
+export function palsGuaranteeing(passiveId: string): number[] {
+  const out: number[] = [];
+  for (const [key, value] of Object.entries(PAL_PASSIVES)) {
+    if (value !== "any" && Array.isArray(value) && value.includes(passiveId)) out.push(Number(key));
+  }
+  return out;
+}
