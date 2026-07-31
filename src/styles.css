@@ -99,6 +99,9 @@
   --success-foreground: oklch(0.18 0.045 265);
   --warning: oklch(0.815 0.138 76);
   --warning-foreground: oklch(0.18 0.045 265);
+  --info: oklch(0.72 0.132 236);
+  --info-foreground: oklch(0.18 0.045 265);
+
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 16%);
   --ring: oklch(0.795 0.142 78);
