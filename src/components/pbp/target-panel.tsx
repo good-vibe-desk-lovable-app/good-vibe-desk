@@ -63,12 +63,30 @@ export function TargetPanel({
         <ScrollArea className="h-52 rounded-lg border">
           <ul className="p-1">
             {results.map((pal) => (
-              <li key={pal.id}>
+              <li key={pal.id} className="flex items-center">
+                <button
+                  type="button"
+                  onClick={() => onToggleFavorite(pal.id)}
+                  aria-label={
+                    favoriteSet.has(pal.id)
+                      ? `Remove ${pal.name} from favourites`
+                      : `Add ${pal.name} to favourites`
+                  }
+                  aria-pressed={favoriteSet.has(pal.id)}
+                  className="rounded-md p-1.5 text-muted-foreground transition-colors hover:text-warning"
+                >
+                  <Star
+                    className={cn(
+                      "size-4",
+                      favoriteSet.has(pal.id) ? "fill-warning text-warning" : "",
+                    )}
+                  />
+                </button>
                 <button
                   type="button"
                   onClick={() => onSelect(pal.id)}
                   className={cn(
-                    "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors",
+                    "flex flex-1 items-center gap-2 rounded-md px-2 py-2 text-left text-sm transition-colors",
                     pal.id === target?.id
                       ? "bg-primary/15 text-foreground"
                       : "hover:bg-accent/60 text-muted-foreground hover:text-foreground",
@@ -86,6 +104,7 @@ export function TargetPanel({
                 </button>
               </li>
             ))}
+
             {results.length === 0 ? (
               <li className="px-3 py-6 text-center text-sm text-muted-foreground">
                 No Pals match “{query}”.
