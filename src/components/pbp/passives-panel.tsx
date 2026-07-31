@@ -1,5 +1,6 @@
 import { palById } from "@/data/palworld";
-import { MAX_PASSIVE_SLOTS, getPassive, type CollectionEntry } from "@/lib/collection";
+import { MAX_PASSIVE_SLOTS, type CollectionEntry } from "@/lib/collection";
+import { PassiveChip } from "./passive-chip";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -107,7 +108,7 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
                             checked={selections.has(key)}
                             onCheckedChange={() => toggle(key)}
                           />
-                          <span>{getPassive(passiveId)?.name ?? passiveId}</span>
+                          <PassiveChip passiveId={passiveId} carried={selections.has(key)} />
                         </label>
                       );
                     })}
