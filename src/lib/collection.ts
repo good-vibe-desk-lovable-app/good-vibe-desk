@@ -18,6 +18,7 @@ export interface CollectionFile {
 
 export const COLLECTION_KEY = "pbp:collection:v1";
 export const LAST_TARGET_KEY = "pbp:lastTarget:v1";
+export const FAVORITES_KEY = "pbp:favorites:v1";
 
 export const MAX_PASSIVE_SLOTS = 4;
 
@@ -27,6 +28,14 @@ export const HATCH_TIME: Record<string, string> = {
   Large: "18–36h",
   Huge: "36–72h",
 };
+
+/** Same estimates as numbers, for summing a whole chain. */
+export const HATCH_HOURS: Record<string, [number, number]> = {
+  Normal: [3, 6],
+  Large: [18, 36],
+  Huge: [36, 72],
+};
+
 
 const passiveById = new Map<string, Passive>(PASSIVES.map((p) => [p.id, p]));
 const palIds = new Set<number>(PALS.map((p) => p.id));
