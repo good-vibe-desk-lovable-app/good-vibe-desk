@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Egg, Loader2, PawPrint, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
@@ -57,6 +57,17 @@ function Index() {
   const [result, setResult] = useState<Result | null>(null);
   const [alternatives, setAlternatives] = useState<Result[]>([]);
 
+  /**
+   * Search epoch. A "Find chain" click kicks off up to four sequential worker
+   * runs (main result + three background alternatives) spanning many seconds.
+   * Any input edit during that window — collection change, target change, or a
+   * newer search — must invalidate the in-flight work, or its late setState
+   * calls resurrect results computed against inputs that no longer exist.
+   * Every async path captures the epoch at start and re-checks it before each
+   * state write; bumping the ref is how the current work is cancelled.
+   */
+  const runEpoch = useRef(0);
+
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
   useEffect(() => {
     setEntries(loadCollection());
@@ -90,11 +101,24 @@ function Index() {
 
   // Drop selections whose Pal or passive no longer exists in the collection.
   function handleCollectionChange(next: CollectionEntry[]) {
+    runEpoch.current++; // cancel in-flight searches against the old collection
     const valid = new Set(next.flatMap((e) => e.passiveIds.map((p) => `${e.instanceId}:${p}`)));
     setSelections((prev) => new Set(Array.from(prev).filter((key) => valid.has(key))));
     setEntries(next);
     setResult(null);
     setAlternatives([]);
+    setAltLoading(false);
+  }
+
+  // A stale result rendered against a new target mislabels every panel.
+  function handleTargetSelect(id: number | null) {
+    if (id !== targetId) {
+      runEpoch.current++;
+      setResult(null);
+      setAlternatives([]);
+      setAltLoading(false);
+    }
+    setTargetId(id);
   }
 
   const canCalculate = target !== null && selections.size > 0;
@@ -119,13 +143,14 @@ function Index() {
   }, [targetId, entries, desiredSources]);
 
   /** Chains alternatives, each forbidding the previous one's final pair. */
-  async function collectAlternatives(base: Result, input: PathfinderInput) {
+  async function collectAlternatives(base: Result, input: PathfinderInput, epoch: number) {
     setAltLoading(true);
     try {
       const found: Result[] = [];
       let previous = base;
       for (let i = 0; i < 3; i++) {
         const next = await findAlternative(previous, input, { timeoutMs: 4000 });
+        if (runEpoch.current !== epoch) return; // superseded — discard silently
         if (next.steps.length === 0) break;
         const signature = next.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
         const baseSig = base.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
@@ -142,39 +167,45 @@ function Index() {
       );
       setAlternatives(found);
     } finally {
-      setAltLoading(false);
+      if (runEpoch.current === epoch) setAltLoading(false);
     }
   }
 
   async function handleFindChain() {
     const input = buildInput();
     if (!input) return;
+    const epoch = ++runEpoch.current;
     setRunning(true);
     setAlternatives([]);
     try {
       const next = await runPathfinder(input, { timeoutMs: 5000 });
+      if (runEpoch.current !== epoch) return;
       setResult(next);
-      if (next.steps.length > 0) void collectAlternatives(next, input);
+      if (next.steps.length > 0) void collectAlternatives(next, input, epoch);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "The search failed.");
+      if (runEpoch.current === epoch) {
+        toast.error(error instanceof Error ? error.message : "The search failed.");
+      }
     } finally {
-      setRunning(false);
+      if (runEpoch.current === epoch) setRunning(false);
     }
   }
 
   async function handleAlternative() {
     const input = buildInput();
     if (!input || !result) return;
+    const epoch = ++runEpoch.current; // supersedes any background alternative collection
     setRunning(true);
     try {
       const next = await findAlternative(result, input, { timeoutMs: 5000 });
+      if (runEpoch.current !== epoch) return;
       if (next.steps.length === 0 && next.status !== "ok") {
         toast("No different chain found.");
       } else {
         setResult(next);
       }
     } finally {
-      setRunning(false);
+      if (runEpoch.current === epoch) setRunning(false);
     }
   }
 
@@ -205,7 +236,7 @@ function Index() {
           <CollectionPanel entries={entries} onChange={handleCollectionChange} />
           <TargetPanel
             target={target}
-            onSelect={setTargetId}
+            onSelect={handleTargetSelect}
             favorites={favorites}
             onToggleFavorite={toggleFavorite}
           />
@@ -270,7 +301,7 @@ function Index() {
             {DATA_VERSION.sourcedAt}
           </p>
           <p className="mt-1">
-            <a
+            
               href="https://github.com/tylercamp/palcalc"
               target="_blank"
               rel="noopener noreferrer"
