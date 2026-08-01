@@ -14,6 +14,34 @@ import { findBreedingChain } from "./pathfinder";
 import type { PathfinderInput, Result, WorkerOutbound } from "./types";
 
 /**
+ * One long-lived worker, reused across searches.
+ *
+ * Why: dataset module init inside the worker costs ~160ms on desktop (and
+ * several hundred ms on mobile) — an order of magnitude more than a typical
+ * 20ms search. Spawning a fresh worker per run paid that on every click, and
+ * four times per "Find chain" once alternatives were collected. Reuse pays it
+ * once per session. A `requestId` echoed by the worker keeps overlapping or
+ * abandoned runs from cross-talking; the worker is only torn down (and lazily
+ * respawned) after a timeout or crash, when its internal state is suspect.
+ */
+let sharedWorker: Worker | null = null;
+let nextRequestId = 1;
+
+function getWorker(): Worker {
+  if (!sharedWorker) {
+    sharedWorker = new Worker(new URL("./pathfinder.worker.ts", import.meta.url), {
+      type: "module",
+    });
+  }
+  return sharedWorker;
+}
+
+function killWorker() {
+  sharedWorker?.terminate();
+  sharedWorker = null;
+}
+
+/**
  * Runs the search in a Web Worker so the UI stays responsive.
  * Falls back to a synchronous run when workers are unavailable (SSR/tests).
  */
@@ -30,21 +58,26 @@ export function runPathfinder(
   }
 
   return new Promise<Result>((resolve) => {
-    const worker = new Worker(new URL("./pathfinder.worker.ts", import.meta.url), {
-      type: "module",
-    });
+    const worker = getWorker();
+    const requestId = nextRequestId++;
 
     let best: Result | null = null;
     let settled = false;
 
-    const finish = (result: Result) => {
+    const finish = (result: Result, opts?: { crashed?: boolean }) => {
       if (settled) return;
       settled = true;
       clearTimeout(timer);
-      worker.terminate();
+      worker.removeEventListener("message", onMessage);
+      worker.removeEventListener("error", onError);
+      // A timed-out or crashed worker may still be mid-search or in an unknown
+      // state — discard it; the next run lazily spawns a fresh one.
+      if (opts?.crashed) killWorker();
       resolve(result);
     };
 
+    // The search self-terminates at `timeoutMs` and posts partial results;
+    // this outer timer is only a watchdog for a wedged worker.
     const timer = setTimeout(() => {
       finish(
         best ?? {
@@ -55,11 +88,13 @@ export function runPathfinder(
           warnings: ["Search timed out before finding a chain."],
           elapsedMs: timeoutMs,
         },
+        { crashed: true },
       );
     }, timeoutMs + 500);
 
-    worker.onmessage = (event: MessageEvent<WorkerOutbound>) => {
+    const onMessage = (event: MessageEvent<WorkerOutbound>) => {
       const msg = event.data;
+      if (msg.requestId !== requestId) return; // stale reply from a superseded run
       if (msg.type === "progress") best = msg.best;
       else if (msg.type === "done") finish(msg.result);
       else
@@ -73,13 +108,16 @@ export function runPathfinder(
         });
     };
 
-    worker.onerror = () => {
+    const onError = () => {
       finish(
         findBreedingChain(input.targetId, input.collection, input.desiredSources, options),
+        { crashed: true },
       );
     };
 
-    worker.postMessage({ ...input, options } satisfies PathfinderInput);
+    worker.addEventListener("message", onMessage);
+    worker.addEventListener("error", onError);
+    worker.postMessage({ ...input, options, requestId } satisfies PathfinderInput);
   });
 }
 
