@@ -8,9 +8,9 @@ import {
   DATA_VERSION,
   resolveChild,
   palById,
-  pairToChild,
-  childToParents,
 } from "../data/palworld";
+// Heavy full-pair tables — only this diagnostics route pays their init cost.
+import { pairToChild, childToParents } from "../data/palworld/pairMaps";
 import type { Pal } from "../data/palworld";
 import { Input } from "../components/ui/input";
 import { Badge } from "../components/ui/badge";
