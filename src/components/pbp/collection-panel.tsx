@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import { Download, Mars, Pencil, Plus, Trash2, Upload, Venus, HelpCircle } from "lucide-react";
+import { toast } from "sonner";
 
 import { DATA_VERSION, palById } from "@/data/palworld";
 import {
   getPassive,
-  parseCollectionFile,
+  parseCollectionFileDetailed,
   type CollectionEntry,
   type Gender,
 } from "@/lib/collection";
@@ -22,6 +23,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddPalDialog } from "./add-pal-dialog";
+
+/** Exports are a few KB even for huge collections — anything near this is not ours. */
+const MAX_IMPORT_BYTES = 2 * 1024 * 1024;
 
 function GenderIcon({ gender }: { gender: Gender }) {
   const label = gender === "male" ? "Male" : gender === "female" ? "Female" : "Gender unknown";
@@ -53,19 +57,29 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
     const a = document.createElement("a");
     a.href = url;
     a.download = `pbp-collection-${isoDate}.json`;
+    // Firefox (notably mobile) will not honour a click on a detached anchor,
+    // and revoking the URL synchronously can race the download start. Attach,
+    // click, detach, and revoke on the next macrotask.
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
   }
 
   async function handleImportFile(file: File) {
+    if (file.size > MAX_IMPORT_BYTES) {
+      setImportError("That file is too large to be a collection export.");
+      return;
+    }
     try {
-      const parsed = parseCollectionFile(JSON.parse(await file.text()));
+      const parsed = parseCollectionFileDetailed(JSON.parse(await file.text()));
       if (!parsed) {
         setImportError("That file isn't a valid collection export.");
         return;
       }
       setImportError(null);
-      setPendingImport(parsed);
+      for (const note of parsed.notes) toast(note);
+      setPendingImport(parsed.entries);
     } catch {
       setImportError("That file isn't a valid collection export.");
     }
