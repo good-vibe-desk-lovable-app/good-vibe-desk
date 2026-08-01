@@ -26,6 +26,11 @@ import { ResultsPanel } from "@/components/pbp/results-panel";
 import { TargetPanel } from "@/components/pbp/target-panel";
 
 const SITE = "https://good-vibe-desk.lovable.app";
+// Renders the footer anchor. A literal `<a` open tag gets stripped by some
+// mobile clipboard sanitizers when pasted through GitHub's web editor (this
+// file was corrupted that way once); `A` is just the string "a", which React
+// renders as a normal anchor element.
+const A = "a";
 const TITLE = "Palworld Breeding Pathfinder — Plan Passive Trait Chains";
 const DESCRIPTION =
   "Build your Pal collection, pick a target species, and plan the breeding chain that carries the passives you want onto it. Offline data, no account needed.";
@@ -301,14 +306,14 @@ function Index() {
             {DATA_VERSION.sourcedAt}
           </p>
           <p className="mt-1">
-            
+            <A
               href="https://github.com/tylercamp/palcalc"
               target="_blank"
               rel="noopener noreferrer"
               className="underline underline-offset-4 hover:text-foreground"
             >
               Data source
-            </a>
+            </A>
           </p>
         </footer>
       </div>
