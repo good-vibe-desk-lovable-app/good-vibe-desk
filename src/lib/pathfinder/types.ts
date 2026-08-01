@@ -48,9 +48,11 @@ export interface PathfinderInput {
   /** instanceIds of the Pals whose passives must end up on the target. */
   desiredSources: string[];
   options?: PathfinderOptions;
+  /** Correlates worker replies with the run that issued them (worker reuse). */
+  requestId?: number;
 }
 
 export type WorkerOutbound =
-  | { type: "progress"; best: Result }
-  | { type: "done"; result: Result }
-  | { type: "error"; message: string };
+  | { type: "progress"; best: Result; requestId?: number }
+  | { type: "done"; result: Result; requestId?: number }
+  | { type: "error"; message: string; requestId?: number };
