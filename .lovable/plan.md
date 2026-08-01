@@ -1,43 +1,35 @@
-## Goal
+# Phase 1 — Test safety net + worker pre-warm
 
-Phase 4 of the handoff plan: turn the working pathfinder into a polished tool — a visual merge tree, a summary card, alternative chains, a passive glossary, a breeding-power calculator, favorites, empty states, SEO, and an error boundary.
+Step 0 baseline: `npx vitest run` — 2 files, 11 tests, all green (output pasted in chat).
 
-Untouched: `src/data/palworld/*`, the pathfinder public API, and the `pbp:collection:v1` storage schema.
+## What changes
 
-## What gets built
+### 1. package.json
+- Add `"test": "vitest run"` to scripts.
+- Add `fast-check` as a devDependency.
 
-**1. Merge-tree visualization** (replaces the numbered step list)
-An SVG binary tree built from `Result.steps`. Leaves are the original collection Pals (green border, glowing passive chips), intermediates are blue, the target root is gold, larger, with a star. Straight lines connect each pair of parents to their child. Each edge is labelled with the step's `via`: "Unique", "Same species", or the computed breeding-power target for formula steps. Hovering a node opens a tooltip with name, combi rank, egg type/size and the source passives it carries. The tree lives in a bordered container that scrolls horizontally on small screens.
+### 2. `src/lib/pathfinder/__tests__/audit-regressions.test.ts` (new)
+Regression coverage for the collection-import hardening guarantees:
+- Duplicate `instanceId` repair: two entries sharing `"DUP"` → 2 entries, unique ids, exactly one repair note; then `search(deps, 37, repaired, bothIds, { timeoutMs: 5000 })` returns `ok` with 2 covered sources (no step-count assertion).
+- Entry cap: 700 valid entries → 500 out plus a note.
+- Id length cap: 500-char id → regenerated id ≤ 64 chars plus a note.
+- Unknown `palId` (999999) → parse returns `null`.
+- Unknown passive dropped, entry survives with only the valid one.
 
-**2. Final summary card** (beside the tree)
-Target name and image placeholder, green chips for every passive that reaches the target, and a stats line: "N steps · N eggs · ~Xh–Yh total incubation", summing each child's egg size (Normal 3–6h, Large 18–36h, Huge 36–72h). Plus a "Cakes you'll want" line covering Special Cake (inheritance), Vegetable Cake (two eggs) and Extravagant Vegetable Cake (stats/mutation).
+The duplicate-repair case needs the real dataset-bound deps (real `resolveChild`, `SAME_SPECIES_ONLY`, name lookup), built inside the test from `@/data/palworld` so `search` stays dependency-injected.
 
-**3. Alternative chains panel**
-Calls the existing `findAlternative` up to three times, each forbidding the previously shown final pair. Sorted by fewest steps, then widest coverage. Each row reads "Alt N — X steps, Y passives covered" with a "Use this chain" button that swaps it into the tree.
+### 3. `src/lib/pathfinder/__tests__/audit-properties.test.ts` (new, fast-check)
+Randomised collections (2–6 entries, real pal ids, 0–4 real passive ids, unique instance ids), random target from `PALS`, random desiredSources subset, `timeoutMs: 2000`, ≥ 50 runs. Invariants: never throws; step indices sequential from 0; all parent/child ids exist in the dataset; no step breeds a leaf with itself (differing instanceIds); when `status === "ok"`, `coveredSources ⊆ desiredSources` and `missingSources` is empty; `elapsedMs <= 2600`.
 
-**4. Passive glossary**
-Every passive chip anywhere in the app becomes a button opening a dialog with the passive's name, tier badge, description, and the Pals from `PAL_PASSIVES` that guarantee it (with a note when it's unrestricted). A standing footer note explains inheritance in plain language and states that exact percentages aren't published.
+### 4. `src/lib/pathfinder/index.ts`
+Export `warmPathfinder(): void` — calls the existing `getWorker()` when `Worker` is defined, posts nothing. Shared-worker + requestId design untouched.
 
-**5. Breeding-power tool**
-A collapsible "What do X + Y make?" card with two Pal pickers, always resolving through `resolveChild`. Formula results show the working: "rank 570 + 1460 → target 1015 → closest eligible: Robinquill (1010)".
+### 5. `src/routes/index.tsx`
+Inside the existing hydration `useEffect`, after current work: guard on `typeof window !== "undefined"`, schedule `warmPathfinder()` via `requestIdleCallback` when available else `setTimeout(..., 0)`, and clear the handle on unmount. No state writes, so the runEpoch pattern is satisfied trivially.
 
-**6. Egg info per step** — egg type, egg size and hatch-time range beside each step's child.
+## Risks
+- Property tests over the real dataset can be slow; runs capped at 50 with small collections and a 2s search timeout. If wall-clock is excessive I will report rather than loosen invariants.
+- Random targets may often be `impossible`/`partial` — invariants are written to hold for all statuses, not just `ok`.
 
-**7. Favorites** — star toggle in the target picker, persisted to `pbp:favorites:v1` as `{ version: 1, ids: number[] }`, favorites sorted to the top.
-
-**8. Empty and error states** — no collection, no target, no passives selected, plus a red "impossible" state with two concrete suggestions and an amber "partial" banner naming which source Pals didn't make it.
-
-**9. "How breeding works"** — a collapsible near the footer explaining the farm, cake, averaged breeding power, special override pairs, and the eleven self-only Pals.
-
-**10. SEO + resilience** — unique title/description/og/twitter tags in the `/` route `head()` (no og:image on `__root`), and an error boundary around the results section with a Retry button.
-
-**11. Responsive** — panels stack below md; verified end-to-end at 390px.
-
-## Technical notes
-
-- New components under `src/components/pbp/`: `merge-tree.tsx` (layout maths + SVG), `summary-card.tsx`, `alternatives-panel.tsx`, `passive-chip.tsx` + `passive-glossary-dialog.tsx`, `breeding-power-tool.tsx`, `how-breeding-works.tsx`, `results-error-boundary.tsx`.
-- Tree layout: a pure `layoutTree(steps)` helper computing node depths and x-positions from the step list, unit-testable without the DOM; kept separate from the SVG renderer.
-- Favorites persistence added to `src/lib/collection.ts` alongside the existing helpers (new key, existing schemas unchanged).
-- Hatch-time totals reuse the existing `HATCH_TIME` map, extended with numeric ranges for summing.
-- New shadcn components installed as needed: tooltip, collapsible, dialog (if absent).
-- Verification: `vitest` for the layout helper, then Playwright at 1280px and 390px checking tree colouring, edge labels, the Anubis + Cattiva → Robinquill working, glossary open, favorites surviving refresh, and the `<head>` tags on `/`.
+## Verification
+`npx vitest run` and `vite build`, both pasted verbatim. Any failure → FAILURE REPORT, no auto-fix.
