@@ -14,7 +14,13 @@ import {
   saveLastTarget,
   type CollectionEntry,
 } from "@/lib/collection";
-import { findAlternative, runPathfinder, type PathfinderInput, type Result } from "@/lib/pathfinder";
+import {
+  findAlternative,
+  runPathfinder,
+  warmPathfinder,
+  type PathfinderInput,
+  type Result,
+} from "@/lib/pathfinder";
 import { Button } from "@/components/ui/button";
 import { AlternativesPanel } from "@/components/pbp/alternatives-panel";
 import { BreedingPowerTool } from "@/components/pbp/breeding-power-tool";
@@ -79,7 +85,23 @@ function Index() {
     setTargetId(loadLastTarget());
     setFavorites(loadFavorites());
     setHydrated(true);
+
+    // Pre-spawn the search worker while the browser is idle; no state writes.
+    if (typeof window === "undefined") return;
+    const idle = (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
+      .requestIdleCallback;
+    if (idle) {
+      const handle = idle(() => warmPathfinder());
+      return () => {
+        (window as unknown as { cancelIdleCallback?: (h: number) => void }).cancelIdleCallback?.(
+          handle,
+        );
+      };
+    }
+    const timer = window.setTimeout(() => warmPathfinder(), 0);
+    return () => window.clearTimeout(timer);
   }, []);
+
 
   useEffect(() => {
     if (hydrated) saveCollection(entries);
