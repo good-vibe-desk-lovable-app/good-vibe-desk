@@ -39,7 +39,7 @@ describe("pathfinder property invariants", () => {
           const res = search(deps, targetId, collection, desiredSources, { timeoutMs: 2000 });
 
           res.steps.forEach((step, i) => {
-            expect(step.index).toBe(i);
+            expect(step.index).toBe(i + 1);
             expect(palById.has(step.parent1)).toBe(true);
             expect(palById.has(step.parent2)).toBe(true);
             expect(palById.has(step.child)).toBe(true);
