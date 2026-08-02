@@ -42,6 +42,17 @@ function killWorker() {
 }
 
 /**
+ * Spawns the shared worker ahead of the first search so the dataset module
+ * init (~160ms) is paid while the user is still filling in their collection.
+ * Posts nothing; safe to call repeatedly.
+ */
+export function warmPathfinder(): void {
+  if (typeof Worker === "undefined") return;
+  getWorker();
+}
+
+
+/**
  * Runs the search in a Web Worker so the UI stays responsive.
  * Falls back to a synchronous run when workers are unavailable (SSR/tests).
  */
