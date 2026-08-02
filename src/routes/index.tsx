@@ -14,7 +14,13 @@ import {
   saveLastTarget,
   type CollectionEntry,
 } from "@/lib/collection";
-import { findAlternative, runPathfinder, type PathfinderInput, type Result } from "@/lib/pathfinder";
+import {
+  findAlternative,
+  runPathfinder,
+  warmPathfinder,
+  type PathfinderInput,
+  type Result,
+} from "@/lib/pathfinder";
 import { Button } from "@/components/ui/button";
 import { AlternativesPanel } from "@/components/pbp/alternatives-panel";
 import { BreedingPowerTool } from "@/components/pbp/breeding-power-tool";
