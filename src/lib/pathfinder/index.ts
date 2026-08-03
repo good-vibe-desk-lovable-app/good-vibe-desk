@@ -118,7 +118,9 @@ export function runPathfinder(
           missingSources: input.desiredSources,
           warnings: [msg.message],
           elapsedMs: 0,
+          totalExpectedEggs: 0,
         });
+
     };
 
     const onError = () => {
