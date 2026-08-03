@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Egg, Loader2, PawPrint, Sparkles } from "lucide-react";
+import { Egg, Link2, Loader2, PawPrint, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 import { DATA_VERSION, PALS } from "@/data/palworld";
