@@ -80,9 +80,26 @@ function Index() {
   const runEpoch = useRef(0);
 
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
+  // A #s= share link wins over stored state — the user followed it on purpose.
   useEffect(() => {
-    setEntries(loadCollection());
-    setTargetId(loadLastTarget());
+    const shared =
+      typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
+    const decoded = shared ? decodeShareState(shared) : null;
+
+    if (decoded) {
+      setEntries(decoded.collection);
+      setTargetId(decoded.targetId);
+      setSelections(new Set(decoded.selection));
+      toast.success("Loaded a shared plan", {
+        description: decoded.notes.length
+          ? decoded.notes.join(" ")
+          : `${decoded.collection.length} Pals imported from the link.`,
+      });
+    } else {
+      if (shared) toast.error("That share link couldn't be read — it may be damaged or outdated.");
+      setEntries(loadCollection());
+      setTargetId(loadLastTarget());
+    }
     setFavorites(loadFavorites());
     setHydrated(true);
 
@@ -101,6 +118,23 @@ function Index() {
     const timer = window.setTimeout(() => warmPathfinder(), 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  async function handleShare() {
+    const url = buildShareUrl({
+      targetId,
+      collection: entries,
+      selection: Array.from(selections),
+    });
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Share link copied", {
+        description: "Anyone opening it gets your collection, target and passive picks.",
+      });
+    } catch {
+      toast.error("Couldn't copy — your browser blocked clipboard access.");
+    }
+  }
+
 
 
   useEffect(() => {
