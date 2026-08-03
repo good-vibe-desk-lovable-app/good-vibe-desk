@@ -317,15 +317,31 @@ function Index() {
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-2">
-          <Button
-            size="lg"
-            className="w-full sm:w-auto"
-            disabled={!canCalculate || running}
-            onClick={handleFindChain}
-          >
-            {running ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-            {running ? "Searching…" : "Find breeding chain"}
-          </Button>
+          <div className="flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto"
+              disabled={!canCalculate || running}
+              onClick={handleFindChain}
+            >
+              {running ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Sparkles className="size-4" />
+              )}
+              {running ? "Searching…" : "Find breeding chain"}
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto"
+              disabled={entries.length === 0}
+              onClick={handleShare}
+            >
+              <Link2 className="size-4" />
+              Copy share link
+            </Button>
+          </div>
           {!canCalculate ? (
             <p className="text-xs text-muted-foreground">
               {target === null
@@ -334,6 +350,7 @@ function Index() {
             </p>
           ) : null}
         </div>
+
 
         {result && targetId !== null ? (
           <ResultsErrorBoundary onRetry={handleFindChain}>
