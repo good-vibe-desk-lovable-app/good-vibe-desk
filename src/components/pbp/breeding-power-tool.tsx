@@ -262,7 +262,10 @@ export function BreedingPowerTool() {
                 Pick two Pals to see what they produce.
               </p>
             )}
+              </>
+            )}
           </CardContent>
+
         </CollapsibleContent>
       </Card>
     </Collapsible>
