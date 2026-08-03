@@ -17,14 +17,23 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
   const target = palById.get(targetId);
   const eggs = result.steps.length;
 
+  // Single-pass incubation (one egg per step) and the retry-weighted total.
   let lo = 0;
   let hi = 0;
+  let retryLo = 0;
+  let retryHi = 0;
   for (const step of result.steps) {
     const size = palById.get(step.child)?.eggSize ?? "Normal";
     const [a, b] = HATCH_HOURS[size] ?? [0, 0];
     lo += a;
     hi += b;
+    const tries = Math.max(1, step.expectedAttempts);
+    retryLo += a * tries;
+    retryHi += b * tries;
   }
+  const hours = (n: number) => Math.round(n);
+  const days = (n: number) => (Math.round((n / 24) * 10) / 10).toFixed(1);
+
 
   return (
     <Card className="border-warning/40 bg-card/80">
