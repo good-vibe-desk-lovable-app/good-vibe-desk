@@ -69,9 +69,16 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
           </span>
         </p>
 
+        <p className="text-sm tabular-nums">
+          Total hatch time: ~{hours(retryLo)}–{hours(retryHi)}h
+          {retryHi >= 48 ? ` (${days(retryLo)}–${days(retryHi)} days)` : ""}{" "}
+          <span className="text-muted-foreground">incubation across expected retries</span>
+        </p>
+
         <p className="text-xs text-muted-foreground">
           Egg estimates use provisional inheritance odds.
         </p>
+
 
 
         <p className="flex gap-2 rounded-lg border border-border/70 bg-background/40 p-3 text-xs text-muted-foreground">
