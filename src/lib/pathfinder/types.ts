@@ -22,6 +22,8 @@ export interface Step {
   via: BreedingVia;
   /** instanceIds of the original collection Pals whose passives the child carries. */
   carriedSources: string[];
+  /** Expected eggs needed for this step to produce the desired passive set. */
+  expectedAttempts: number;
 }
 
 export interface Result {
@@ -31,7 +33,10 @@ export interface Result {
   missingSources: string[];
   warnings: string[];
   elapsedMs: number;
+  /** Sum of every step's expectedAttempts. */
+  totalExpectedEggs: number;
 }
+
 
 export interface PathfinderOptions {
   maxDepth?: number;
