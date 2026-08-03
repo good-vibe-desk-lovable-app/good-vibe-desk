@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
-import { Check, ChevronsUpDown, Calculator } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Check, ChevronsUpDown, Calculator, Loader2 } from "lucide-react";
+
 
 import { PALS, palById, resolveChild } from "@/data/palworld";
 import { cn } from "@/lib/utils";
