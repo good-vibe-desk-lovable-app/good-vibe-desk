@@ -17,8 +17,13 @@ export default defineConfig({
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
+        // Nitro emits the browser bundle into dist/client; the SW and its
+        // precache manifest must be rooted there or every URL gets a
+        // "client/" prefix and 404s at runtime.
+        outDir: "dist/client",
         // The guarded wrapper in src/lib/pwa.ts is the ONLY registrar.
         injectRegister: null,
+
         devOptions: { enabled: false },
         filename: "sw.js",
         manifest: {
