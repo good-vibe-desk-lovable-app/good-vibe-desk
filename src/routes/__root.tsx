@@ -11,7 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { registerServiceWorker } from "../lib/pwa";
 import { Toaster } from "../components/ui/sonner";
+
 
 
 function NotFoundComponent() {
@@ -87,6 +89,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "theme-color", content: "#0a0d14" },
+
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -99,8 +103,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/pwa-192x192.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
     ],
+
   }),
 
   shellComponent: RootShell,
@@ -126,6 +133,11 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  // Client-only: the wrapper itself refuses to register in dev/preview/iframe.
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
@@ -134,4 +146,5 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
 

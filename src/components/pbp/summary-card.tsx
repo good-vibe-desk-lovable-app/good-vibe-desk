@@ -17,14 +17,23 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
   const target = palById.get(targetId);
   const eggs = result.steps.length;
 
+  // Single-pass incubation (one egg per step) and the retry-weighted total.
   let lo = 0;
   let hi = 0;
+  let retryLo = 0;
+  let retryHi = 0;
   for (const step of result.steps) {
     const size = palById.get(step.child)?.eggSize ?? "Normal";
     const [a, b] = HATCH_HOURS[size] ?? [0, 0];
     lo += a;
     hi += b;
+    const tries = Math.max(1, step.expectedAttempts);
+    retryLo += a * tries;
+    retryHi += b * tries;
   }
+  const hours = (n: number) => Math.round(n);
+  const days = (n: number) => (Math.round((n / 24) * 10) / 10).toFixed(1);
+
 
   return (
     <Card className="border-warning/40 bg-card/80">
@@ -55,10 +64,22 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
         <p className="flex items-center gap-2 text-sm">
           <Egg className="size-4 text-muted-foreground" />
           <span className="tabular-nums">
-            {eggs} {eggs === 1 ? "step" : "steps"} · {eggs} {eggs === 1 ? "egg" : "eggs"} to hatch ·
-            ~{lo}h–{hi}h total incubation
+            {eggs} {eggs === 1 ? "step" : "steps"} · ~{Math.round(result.totalExpectedEggs)} total
+            eggs expected · ~{lo}h–{hi}h total incubation
           </span>
         </p>
+
+        <p className="text-sm tabular-nums">
+          Total hatch time: ~{hours(retryLo)}–{hours(retryHi)}h
+          {retryHi >= 48 ? ` (${days(retryLo)}–${days(retryHi)} days)` : ""}{" "}
+          <span className="text-muted-foreground">incubation across expected retries</span>
+        </p>
+
+        <p className="text-xs text-muted-foreground">
+          Egg estimates use provisional inheritance odds.
+        </p>
+
+
 
         <p className="flex gap-2 rounded-lg border border-border/70 bg-background/40 p-3 text-xs text-muted-foreground">
           <Cake className="mt-0.5 size-4 shrink-0 text-primary" />

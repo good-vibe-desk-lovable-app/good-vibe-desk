@@ -98,7 +98,9 @@ export function runPathfinder(
           missingSources: input.desiredSources,
           warnings: ["Search timed out before finding a chain."],
           elapsedMs: timeoutMs,
+          totalExpectedEggs: 0,
         },
+
         { crashed: true },
       );
     }, timeoutMs + 500);
@@ -116,7 +118,9 @@ export function runPathfinder(
           missingSources: input.desiredSources,
           warnings: [msg.message],
           elapsedMs: 0,
+          totalExpectedEggs: 0,
         });
+
     };
 
     const onError = () => {

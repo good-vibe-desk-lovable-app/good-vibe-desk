@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Egg, Loader2, PawPrint, Sparkles } from "lucide-react";
+import { Egg, Link2, Loader2, PawPrint, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 
 import { DATA_VERSION, PALS } from "@/data/palworld";
@@ -21,6 +21,8 @@ import {
   type PathfinderInput,
   type Result,
 } from "@/lib/pathfinder";
+import { buildShareUrl, decodeShareState, readShareHash } from "@/lib/share";
+
 import { Button } from "@/components/ui/button";
 import { AlternativesPanel } from "@/components/pbp/alternatives-panel";
 import { BreedingPowerTool } from "@/components/pbp/breeding-power-tool";
@@ -80,9 +82,26 @@ function Index() {
   const runEpoch = useRef(0);
 
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
+  // A #s= share link wins over stored state — the user followed it on purpose.
   useEffect(() => {
-    setEntries(loadCollection());
-    setTargetId(loadLastTarget());
+    const shared =
+      typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
+    const decoded = shared ? decodeShareState(shared) : null;
+
+    if (decoded) {
+      setEntries(decoded.collection);
+      setTargetId(decoded.targetId);
+      setSelections(new Set(decoded.selection));
+      toast.success("Loaded a shared plan", {
+        description: decoded.notes.length
+          ? decoded.notes.join(" ")
+          : `${decoded.collection.length} Pals imported from the link.`,
+      });
+    } else {
+      if (shared) toast.error("That share link couldn't be read — it may be damaged or outdated.");
+      setEntries(loadCollection());
+      setTargetId(loadLastTarget());
+    }
     setFavorites(loadFavorites());
     setHydrated(true);
 
@@ -101,6 +120,23 @@ function Index() {
     const timer = window.setTimeout(() => warmPathfinder(), 0);
     return () => window.clearTimeout(timer);
   }, []);
+
+  async function handleShare() {
+    const url = buildShareUrl({
+      targetId,
+      collection: entries,
+      selection: Array.from(selections),
+    });
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Share link copied", {
+        description: "Anyone opening it gets your collection, target and passive picks.",
+      });
+    } catch {
+      toast.error("Couldn't copy — your browser blocked clipboard access.");
+    }
+  }
+
 
 
   useEffect(() => {
@@ -281,15 +317,31 @@ function Index() {
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-2">
-          <Button
-            size="lg"
-            className="w-full sm:w-auto"
-            disabled={!canCalculate || running}
-            onClick={handleFindChain}
-          >
-            {running ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-            {running ? "Searching…" : "Find breeding chain"}
-          </Button>
+          <div className="flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto"
+              disabled={!canCalculate || running}
+              onClick={handleFindChain}
+            >
+              {running ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Sparkles className="size-4" />
+              )}
+              {running ? "Searching…" : "Find breeding chain"}
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto"
+              disabled={entries.length === 0}
+              onClick={handleShare}
+            >
+              <Link2 className="size-4" />
+              Copy share link
+            </Button>
+          </div>
           {!canCalculate ? (
             <p className="text-xs text-muted-foreground">
               {target === null
@@ -298,6 +350,7 @@ function Index() {
             </p>
           ) : null}
         </div>
+
 
         {result && targetId !== null ? (
           <ResultsErrorBoundary onRetry={handleFindChain}>

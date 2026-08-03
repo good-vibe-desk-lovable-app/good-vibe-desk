@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
-import { Check, ChevronsUpDown, Calculator } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Check, ChevronsUpDown, Calculator, Loader2 } from "lucide-react";
+
 
 import { PALS, palById, resolveChild } from "@/data/palworld";
 import { cn } from "@/lib/utils";
@@ -72,8 +73,109 @@ function PalCombo({
   );
 }
 
+type Mode = "forward" | "reverse";
+
+/** Cached across activations so the ~160ms table build happens at most once. */
+let pairMapsPromise: Promise<typeof import("@/data/palworld/pairMaps")> | null = null;
+function loadPairMaps() {
+  // Constraint 1: pairMaps is NEVER statically imported outside /data-check.
+  pairMapsPromise ??= import("@/data/palworld/pairMaps");
+  return pairMapsPromise;
+}
+
+function ReverseLookup() {
+  const [child, setChild] = useState<number | null>(null);
+  const [parents, setParents] = useState<Array<[number, number]> | null>(null);
+  const [loading, setLoading] = useState(false);
+  const epoch = useRef(0);
+
+  // Start building the pair tables as soon as this mode is shown.
+  useEffect(() => {
+    const mine = ++epoch.current;
+    setLoading(true);
+    loadPairMaps()
+      .then(() => {
+        if (epoch.current === mine) setLoading(false);
+      })
+      .catch(() => {
+        if (epoch.current === mine) setLoading(false);
+      });
+    return () => {
+      epoch.current++;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (child === null) {
+      setParents(null);
+      return;
+    }
+    const mine = ++epoch.current;
+    setLoading(true);
+    loadPairMaps()
+      .then(({ childToParents }) => {
+        if (epoch.current !== mine) return;
+        setParents(childToParents.get(child) ?? []);
+        setLoading(false);
+      })
+      .catch(() => {
+        if (epoch.current !== mine) return;
+        setParents([]);
+        setLoading(false);
+      });
+    return () => {
+      epoch.current++;
+    };
+  }, [child]);
+
+  return (
+    <div className="space-y-4">
+      <PalCombo value={child} onChange={setChild} label="Pal you want" />
+
+      {loading ? (
+        <p className="flex items-center justify-center gap-2 rounded-lg border border-dashed border-border/70 px-4 py-6 text-sm text-muted-foreground">
+          <Loader2 className="size-4 animate-spin" /> Building the pair tables…
+        </p>
+      ) : parents === null ? (
+        <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
+          Pick a Pal to see every pair that produces it.
+        </p>
+      ) : parents.length === 0 ? (
+        <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
+          No pair produces {palById.get(child!)?.name} — it can only be caught in the wild.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground">
+            {parents.length} {parents.length === 1 ? "pair produces" : "pairs produce"}{" "}
+            <span className="font-medium text-foreground">{palById.get(child!)?.name}</span>
+          </p>
+          <ul className="max-h-72 space-y-1 overflow-y-auto rounded-lg border border-border/70 p-2">
+            {parents.map(([p1, p2]) => (
+              <li
+                key={`${p1}:${p2}`}
+                className="flex items-center justify-between rounded-md px-2 py-1.5 text-sm hover:bg-accent/50"
+              >
+                <span>
+                  {palById.get(p1)?.name ?? `#${p1}`} + {palById.get(p2)?.name ?? `#${p2}`}
+                </span>
+                {p1 === p2 ? (
+                  <Badge variant="outline" className="text-[10px]">
+                    Same species
+                  </Badge>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function BreedingPowerTool() {
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<Mode>("forward");
   const [a, setA] = useState<number | null>(null);
   const [b, setB] = useState<number | null>(null);
 
@@ -94,17 +196,39 @@ export function BreedingPowerTool() {
         <CollapsibleTrigger asChild>
           <CardHeader className="cursor-pointer">
             <CardTitle className="flex items-center gap-2 text-lg">
-              <Calculator className="size-4" /> What do X + Y make?
+              <Calculator className="size-4" /> Breeding lookup
               <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
             </CardTitle>
           </CardHeader>
         </CollapsibleTrigger>
         <CollapsibleContent>
           <CardContent className="space-y-4">
+            <div className="inline-flex rounded-lg border border-border/70 p-1">
+              <Button
+                size="sm"
+                variant={mode === "forward" ? "secondary" : "ghost"}
+                onClick={() => setMode("forward")}
+              >
+                What do X + Y make?
+              </Button>
+              <Button
+                size="sm"
+                variant={mode === "reverse" ? "secondary" : "ghost"}
+                onClick={() => setMode("reverse")}
+              >
+                What makes this Pal?
+              </Button>
+            </div>
+
+            {mode === "reverse" ? (
+              <ReverseLookup />
+            ) : (
+              <>
             <div className="grid gap-3 sm:grid-cols-2">
               <PalCombo value={a} onChange={setA} label="First parent" />
               <PalCombo value={b} onChange={setB} label="Second parent" />
             </div>
+
 
             {outcome ? (
               <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
@@ -139,7 +263,10 @@ export function BreedingPowerTool() {
                 Pick two Pals to see what they produce.
               </p>
             )}
+              </>
+            )}
           </CardContent>
+
         </CollapsibleContent>
       </Card>
     </Collapsible>
