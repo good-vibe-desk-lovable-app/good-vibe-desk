@@ -1,5 +1,6 @@
 // Pure search core. Takes its data through `deps` so tests can run on tiny
 // fixtures without importing the full Palworld dataset.
+import { expectedAttempts } from "./inheritance";
 import type {
   BreedingVia,
   CollectionEntry,
@@ -7,6 +8,7 @@ import type {
   Result,
   Step,
 } from "./types";
+
 
 export interface ResolverPal {
   id: number;
@@ -127,14 +129,68 @@ interface State {
   key: string;
   palId: number;
   mask: number;
-  /** number of breeding steps needed to obtain this state */
-  cost: number;
+  /** expected total eggs to obtain this state (search cost) */
+  expectedEggs: number;
+  /** breeding-tree depth, used as tiebreaker and bounded by maxDepth */
+  depth: number;
+  /** how many passives this Pal carries (dilutes the next roll) */
+  passiveCount: number;
+  /** expected eggs for the single step that produced this state */
+  attempts: number;
   a: State | null;
   b: State | null;
   via: BreedingVia | null;
   /** leaf-only: the collection entry this state came from */
   instanceId?: string;
   gender?: CollectionEntry["gender"];
+}
+
+/** Lexicographic (expectedEggs, depth) ordering. */
+function cheaper(x: State, y: State): boolean {
+  if (x.expectedEggs !== y.expectedEggs) return x.expectedEggs < y.expectedEggs;
+  return x.depth < y.depth;
+}
+
+/** Array-backed binary min-heap over `cheaper`. No decrease-key: stale pops are skipped. */
+class MinHeap {
+  private items: State[] = [];
+
+  get size(): number {
+    return this.items.length;
+  }
+
+  push(state: State): void {
+    const items = this.items;
+    items.push(state);
+    let i = items.length - 1;
+    while (i > 0) {
+      const parent = (i - 1) >> 1;
+      if (!cheaper(items[i], items[parent])) break;
+      [items[i], items[parent]] = [items[parent], items[i]];
+      i = parent;
+    }
+  }
+
+  pop(): State | undefined {
+    const items = this.items;
+    if (items.length === 0) return undefined;
+    const top = items[0];
+    const last = items.pop()!;
+    if (items.length === 0) return top;
+    items[0] = last;
+    let i = 0;
+    for (;;) {
+      const l = i * 2 + 1;
+      const r = l + 1;
+      let best = i;
+      if (l < items.length && cheaper(items[l], items[best])) best = l;
+      if (r < items.length && cheaper(items[r], items[best])) best = r;
+      if (best === i) break;
+      [items[i], items[best]] = [items[best], items[i]];
+      i = best;
+    }
+    return top;
+  }
 }
 
 export function search(
@@ -146,7 +202,7 @@ export function search(
   onProgress?: (partial: Result) => void,
 ): Result {
   const started = now();
-  const maxCost = options.maxDepth ?? 12;
+  const maxDepth = options.maxDepth ?? 12;
   const timeoutMs = options.timeoutMs ?? 5000;
   const forbid = options.forbidFinalPair
     ? `${Math.min(...options.forbidFinalPair)}:${Math.max(...options.forbidFinalPair)}`
@@ -175,6 +231,7 @@ export function search(
     missingSources: desired,
     warnings: message ? [...warnings, message] : warnings,
     elapsedMs: now() - started,
+    totalExpectedEggs: 0,
   });
 
   // A same-species-only Pal can never be produced from other species.
@@ -184,7 +241,7 @@ export function search(
   }
 
   const best = new Map<string, State>();
-  const buckets: State[][] = [];
+  const heap = new MinHeap();
   let bestPartial: State | null = null;
 
   // Track the best target-species state as soon as it is discovered, so a
@@ -194,7 +251,8 @@ export function search(
     if (
       !bestPartial ||
       popcount(s.mask) > popcount(bestPartial.mask) ||
-      (popcount(s.mask) === popcount(bestPartial.mask) && s.cost < bestPartial.cost)
+      (popcount(s.mask) === popcount(bestPartial.mask) &&
+        s.expectedEggs < bestPartial.expectedEggs)
     ) {
       bestPartial = s;
     }
@@ -202,20 +260,24 @@ export function search(
 
   const push = (state: State) => {
     const existing = best.get(state.key);
-    if (existing && existing.cost <= state.cost) return;
+    if (existing && !cheaper(state, existing)) return;
     best.set(state.key, state);
     noteTarget(state);
-    (buckets[state.cost] ??= []).push(state);
+    heap.push(state);
   };
 
   for (const entry of collection) {
     const i = desired.indexOf(entry.instanceId);
     const mask = i >= 0 ? 1 << i : 0;
+    const passiveCount = entry.passiveIds.length;
     push({
       key: `${entry.palId}:${mask}`,
       palId: entry.palId,
       mask,
-      cost: 0,
+      expectedEggs: 0,
+      depth: 0,
+      passiveCount,
+      attempts: 0,
       a: null,
       b: null,
       via: null,
@@ -228,7 +290,10 @@ export function search(
         key: `${entry.palId}:0`,
         palId: entry.palId,
         mask: 0,
-        cost: 0,
+        expectedEggs: 0,
+        depth: 0,
+        passiveCount,
+        attempts: 0,
         a: null,
         b: null,
         via: null,
@@ -265,20 +330,29 @@ export function search(
     }
     // Depth of the breeding tree: shared sub-results are bred once, so depth
     // tracks real effort better than summing both branches.
-    const cost = Math.max(a.cost, b.cost) + 1;
-    if (cost > maxCost) return;
+    const depth = Math.max(a.depth, b.depth) + 1;
+    if (depth > maxDepth) return;
+    const desiredCount = popcount(newMask);
+    const attempts = expectedAttempts({
+      parentPassiveCount: a.passiveCount + b.passiveCount,
+      desiredCount,
+    });
+    const expectedEggs = a.expectedEggs + b.expectedEggs + attempts;
     const key = `${res.childId}:${newMask}`;
-    const existing = best.get(key);
-    if (existing && existing.cost <= cost) return;
     const child: State = {
       key,
       palId: res.childId,
       mask: newMask,
-      cost,
+      expectedEggs,
+      depth,
+      passiveCount: desiredCount,
+      attempts,
       a,
       b,
       via: res.via,
     };
+    const existing = best.get(key);
+    if (existing && !cheaper(child, existing)) return;
     push(child);
   };
 
@@ -288,53 +362,51 @@ export function search(
   }
 
   let lastProgress = now();
-  outer: for (let cost = 0; cost <= maxCost; cost++) {
-    const bucket = buckets[cost];
-    if (!bucket) continue;
-    for (const state of bucket) {
-      if (best.get(state.key) !== state) continue; // superseded by a cheaper route
-      if (now() - started > timeoutMs) break outer;
+  while (heap.size > 0) {
+    const state = heap.pop()!;
+    if (best.get(state.key) !== state) continue; // superseded by a cheaper route
+    if (now() - started > timeoutMs) break;
 
-      if (state.key === goalKey) {
-        goal = state;
-        break outer;
-      }
+    if (state.key === goalKey) {
+      goal = state;
+      break;
+    }
 
-      // Merge with every settled species-only partner (this also grows the set
-      // of reachable species), then with the best carriers of other passive sets.
-      for (const partner of settledZero) combine(state, partner);
-      for (const [mask, list] of carriers) {
-        if ((state.mask | mask) === state.mask) continue; // adds nothing new
-        for (const partner of list) combine(state, partner);
-      }
+    // Merge with every settled species-only partner (this also grows the set
+    // of reachable species), then with the best carriers of other passive sets.
+    for (const partner of settledZero) combine(state, partner);
+    for (const [mask, list] of carriers) {
+      if ((state.mask | mask) === state.mask) continue; // adds nothing new
+      for (const partner of list) combine(state, partner);
+    }
 
-      if (state.mask === 0) {
-        settledZero.push(state);
-      } else {
-        const list = carriers.get(state.mask) ?? [];
-        list.push(state);
-        list.sort((x, y) => x.cost - y.cost);
-        carriers.set(state.mask, list.slice(0, CARRIERS_PER_MASK));
-      }
+    if (state.mask === 0) {
+      settledZero.push(state);
+    } else {
+      const list = carriers.get(state.mask) ?? [];
+      list.push(state);
+      list.sort((x, y) => x.expectedEggs - y.expectedEggs);
+      carriers.set(state.mask, list.slice(0, CARRIERS_PER_MASK));
+    }
 
-      goal = best.get(goalKey) ?? null;
-      if (goal) break outer;
+    goal = best.get(goalKey) ?? null;
+    if (goal) break;
 
-      if (onProgress && now() - lastProgress > 250) {
-        lastProgress = now();
-        onProgress(
-          bestPartial
-            ? reconstruct(bestPartial, deps, desired, goalMask, warnings, now() - started, sourcesOf)
-            : {
-                status: "impossible",
-                steps: [],
-                coveredSources: [],
-                missingSources: desired,
-                warnings,
-                elapsedMs: now() - started,
-              },
-        );
-      }
+    if (onProgress && now() - lastProgress > 250) {
+      lastProgress = now();
+      onProgress(
+        bestPartial
+          ? reconstruct(bestPartial, deps, desired, goalMask, warnings, now() - started, sourcesOf)
+          : {
+              status: "impossible",
+              steps: [],
+              coveredSources: [],
+              missingSources: desired,
+              warnings,
+              elapsedMs: now() - started,
+              totalExpectedEggs: 0,
+            },
+      );
     }
   }
 
@@ -380,6 +452,7 @@ function reconstruct(
       child: state.palId,
       via: state.via!,
       carriedSources: sourcesOf(state.mask),
+      expectedAttempts: state.attempts,
     });
   };
   visit(goal);
@@ -401,5 +474,7 @@ function reconstruct(
     missingSources: missing,
     warnings,
     elapsedMs,
+    totalExpectedEggs: steps.reduce((sum, s) => sum + s.expectedAttempts, 0),
   };
 }
+
