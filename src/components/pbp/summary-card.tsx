@@ -55,10 +55,15 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
         <p className="flex items-center gap-2 text-sm">
           <Egg className="size-4 text-muted-foreground" />
           <span className="tabular-nums">
-            {eggs} {eggs === 1 ? "step" : "steps"} · {eggs} {eggs === 1 ? "egg" : "eggs"} to hatch ·
-            ~{lo}h–{hi}h total incubation
+            {eggs} {eggs === 1 ? "step" : "steps"} · ~{Math.round(result.totalExpectedEggs)} total
+            eggs expected · ~{lo}h–{hi}h total incubation
           </span>
         </p>
+
+        <p className="text-xs text-muted-foreground">
+          Egg estimates use provisional inheritance odds.
+        </p>
+
 
         <p className="flex gap-2 rounded-lg border border-border/70 bg-background/40 p-3 text-xs text-muted-foreground">
           <Cake className="mt-0.5 size-4 shrink-0 text-primary" />
