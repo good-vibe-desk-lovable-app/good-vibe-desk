@@ -11,7 +11,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { registerServiceWorker } from "../lib/pwa";
 import { Toaster } from "../components/ui/sonner";
+
 
 
 function NotFoundComponent() {
@@ -131,6 +133,11 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  // Client-only: the wrapper itself refuses to register in dev/preview/iframe.
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
@@ -139,4 +146,5 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
 
