@@ -21,6 +21,8 @@ import {
   type PathfinderInput,
   type Result,
 } from "@/lib/pathfinder";
+import { buildShareUrl, decodeShareState, readShareHash } from "@/lib/share";
+
 import { Button } from "@/components/ui/button";
 import { AlternativesPanel } from "@/components/pbp/alternatives-panel";
 import { BreedingPowerTool } from "@/components/pbp/breeding-power-tool";
