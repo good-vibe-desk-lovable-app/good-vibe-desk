@@ -6,7 +6,10 @@
 // re-validated through parseCollectionFileDetailed — the single hardened entry
 // point for collection data (unique instanceIds, entry cap, id length cap,
 // palId/passiveId checked against the dataset).
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string";
+// lz-string is CommonJS; named ESM imports fail under SSR. Use the default export.
+import lzString from "lz-string";
+
+const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = lzString;
 
 import { parseCollectionFileDetailed, type CollectionEntry } from "@/lib/collection";
 import { PALS } from "@/data/palworld";
