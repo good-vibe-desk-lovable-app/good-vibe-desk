@@ -142,6 +142,17 @@ def parse_spawns(h):
     return out
 
 
+def parse_habitat(h):
+    out = []
+    for m in re.finditer(
+        r'href="([A-Za-z_]+)\?pal=[^&]+&t=(day|night)TimeLocations"[^>]*>.*?\((\d+)\)</a>',
+        h, re.S,
+    ):
+        out.append({"map": m.group(1).replace("_", " "), "time": m.group(2),
+                    "count": int(m.group(3))})
+    return out
+
+
 def parse_active_skills(h):
     seg = section(h, "Active Skills")
     if not seg:
@@ -213,6 +224,7 @@ for internal, display in PALS:
         "work": parse_work(h),
         "drops": parse_drops(h),
         "spawns": parse_spawns(h),
+        "habitat": parse_habitat(h),
         "activeSkills": parse_active_skills(h),
         "partnerSkill": parse_partner(h),
         "nocturnal": bool(re.search(r"Nocturnal", h)),

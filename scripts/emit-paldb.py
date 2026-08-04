@@ -69,6 +69,16 @@ write("spawns.ts",
       "export function isBreedOnly(internalName: string): boolean {\n"
       "  return spawnsOf(internalName).every((s) => s.kind === \"egg\");\n}\n")
 
+# habitat
+lines = [f"  {j(k)}: {j(recs[k].get('habitat', []))}," for k in keys]
+write("habitat.ts",
+      "export interface HabitatWindow {\n  map: string;\n  time: \"day\" | \"night\";\n"
+      "  count: number;\n}\n\n"
+      "export const PAL_HABITAT: Record<string, HabitatWindow[]> = {\n"
+      + "\n".join(lines) + "\n};\n\n"
+      "export function habitatOf(internalName: string): HabitatWindow[] {\n"
+      "  return PAL_HABITAT[internalName] ?? [];\n}\n")
+
 # drops
 lines = [f"  {j(k)}: {j(recs[k]['drops'])}," for k in keys]
 write("drops.ts",
