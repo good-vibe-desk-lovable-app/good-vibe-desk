@@ -181,8 +181,7 @@ for internal, display in PALS:
     h = open(path).read()
     title = re.search(r"<title>([^<]+)", h)
     kv = kv_pairs(h)
-    others = others_table(h)
-    elements = [e for e in [others.get("ElementType1"), others.get("ElementType2")]
+    elements = [e for e in [kv.get("ElementType1"), kv.get("ElementType2")]
                 if e and e != "None"]
     rec = {
         "internalName": internal,
@@ -217,7 +216,8 @@ for internal, display in PALS:
         "activeSkills": parse_active_skills(h),
         "partnerSkill": parse_partner(h),
         "nocturnal": bool(re.search(r"Nocturnal", h)),
-        "genus": others.get("GenusCategory"),
+        "genus": kv.get("GenusCategory"),
+        "foodAmount": num(kv.get("FoodAmount")),
     }
     for field, val in (("elements", rec["elements"]), ("work", rec["work"])):
         if not val:
