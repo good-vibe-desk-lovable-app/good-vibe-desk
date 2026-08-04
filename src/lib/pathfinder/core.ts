@@ -333,10 +333,13 @@ export function search(
     const depth = Math.max(a.depth, b.depth) + 1;
     if (depth > maxDepth) return;
     const desiredCount = popcount(newMask);
-    const attempts = expectedAttempts({
-      parentPassiveCount: a.passiveCount + b.passiveCount,
+    // Draw pool = distinct passives across both parents. Passives the two
+    // parents share are counted once (they overlap in the desired mask).
+    const parentPassiveCount = Math.max(
       desiredCount,
-    });
+      a.passiveCount + b.passiveCount - popcount(a.mask & b.mask),
+    );
+    const attempts = expectedAttempts({ parentPassiveCount, desiredCount });
     const expectedEggs = a.expectedEggs + b.expectedEggs + attempts;
     const key = `${res.childId}:${newMask}`;
     const child: State = {
