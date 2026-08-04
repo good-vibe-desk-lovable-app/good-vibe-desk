@@ -1,52 +1,82 @@
 // Probability model for passive inheritance during breeding.
 //
-// PROVISIONAL VALUES — placeholder shape only. These numbers are NOT verified
-// game constants. They exist so the cost architecture can ship and be tested.
-// They MUST be replaced with values extracted from the palcalc project
-// (github.com/tylercamp/palcalc) before the numbers shown to users are
-// presented as accurate. Do not tune these by intuition.
+// Model (mirrors tylercamp/palcalc PassiveSkillProbability):
+//  1. The child inherits N passives from the COMBINED pool of its parents'
+//     distinct passives, where N is drawn from a fixed weight table
+//     (1 is likeliest, 4 the rarest).
+//  2. Those N are drawn uniformly WITHOUT replacement from the pool, so the
+//     odds that a specific desired subset of size k lands is hypergeometric:
+//        P(k desired | N drawn, pool m) = C(m - k, N - k) / C(m, N)
+//  3. The game may then roll additional random passives into free slots. That
+//     can only help (it never removes an inherited passive), so it is ignored
+//     here — the model is a lower bound on success odds.
 
 export interface InheritStepInput {
-  /** distinct passives across both parents (0–8) */
+  /** distinct passives across both parents (the draw pool) */
   parentPassiveCount: number;
   /** desired passives that must land on the child (0–4) */
   desiredCount: number;
 }
 
-/** Base success odds keyed by how many desired passives must land at once. */
-export const PASSIVE_INHERIT_TABLE: Record<number, number> = {
-  0: 1.0,
-  1: 0.45,
-  2: 0.25,
-  3: 0.12,
-  4: 0.06,
+/**
+ * Relative weights for how many passives are inherited from the parent pool.
+ * palcalc: 4 / 3 / 2 / 1 for 1..4 inherited passives.
+ */
+export const INHERITED_COUNT_WEIGHTS: Record<number, number> = {
+  1: 4,
+  2: 3,
+  3: 2,
+  4: 1,
 };
 
-/** Each extra junk passive in the parent pool dilutes the roll. */
-const JUNK_DECAY = 0.9;
+const WEIGHT_TOTAL = Object.values(INHERITED_COUNT_WEIGHTS).reduce((a, b) => a + b, 0);
+
+/** Normalised P(N = n) for n = 1..4. */
+export function inheritedCountProbability(n: number): number {
+  return (INHERITED_COUNT_WEIGHTS[n] ?? 0) / WEIGHT_TOTAL;
+}
+
+export const MAX_PASSIVE_SLOTS = 4;
 
 /** Never let odds collapse to zero — the search needs a finite cost. */
-const MIN_PROBABILITY = 0.005;
+const MIN_PROBABILITY = 0.0005;
 
 /** Cap on expected attempts so a hopeless step stays comparable, not infinite. */
-export const MAX_EXPECTED_ATTEMPTS = 200;
+export const MAX_EXPECTED_ATTEMPTS = 2000;
+
+function choose(n: number, k: number): number {
+  if (k < 0 || k > n || n < 0) return 0;
+  let r = 1;
+  const kk = Math.min(k, n - k);
+  for (let i = 0; i < kk; i++) r = (r * (n - i)) / (i + 1);
+  return r;
+}
 
 function clampDesired(desiredCount: number): number {
   if (!Number.isFinite(desiredCount) || desiredCount <= 0) return 0;
-  return Math.min(4, Math.floor(desiredCount));
+  return Math.min(MAX_PASSIVE_SLOTS, Math.floor(desiredCount));
 }
 
 /** Probability that one breeding attempt yields the desired passive set. In (0, 1]. */
 export function stepSuccessProbability(input: InheritStepInput): number {
-  const desired = clampDesired(input.desiredCount);
-  if (desired === 0) return 1;
+  const k = clampDesired(input.desiredCount);
+  if (k === 0) return 1;
 
-  const base = PASSIVE_INHERIT_TABLE[desired] ?? MIN_PROBABILITY;
-  const parents = Number.isFinite(input.parentPassiveCount)
-    ? Math.max(0, Math.floor(input.parentPassiveCount))
-    : 0;
-  const junk = Math.max(0, parents - desired);
-  const p = base * Math.pow(JUNK_DECAY, junk);
+  const pool = Math.max(
+    k,
+    Number.isFinite(input.parentPassiveCount)
+      ? Math.floor(input.parentPassiveCount)
+      : k,
+  );
+
+  let p = 0;
+  for (let n = k; n <= MAX_PASSIVE_SLOTS; n++) {
+    const draws = Math.min(n, pool);
+    if (draws < k) continue;
+    const total = choose(pool, draws);
+    if (total === 0) continue;
+    p += inheritedCountProbability(n) * (choose(pool - k, draws - k) / total);
+  }
   return Math.min(1, Math.max(MIN_PROBABILITY, p));
 }
 
