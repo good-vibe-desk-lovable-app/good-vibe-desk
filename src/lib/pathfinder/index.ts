@@ -110,7 +110,7 @@ export function runPathfinder(
       if (msg.requestId !== requestId) return; // stale reply from a superseded run
       if (msg.type === "progress") best = msg.best;
       else if (msg.type === "done") finish(msg.result);
-      else
+      else if (msg.type === "error")
         finish({
           status: "impossible",
           steps: [],
@@ -120,6 +120,7 @@ export function runPathfinder(
           elapsedMs: 0,
           totalExpectedEggs: 0,
         });
+
 
     };
 
