@@ -67,7 +67,8 @@ export function workLevelOf(pal: Pal, work: string): number {
 }
 
 function hasWorkData(pal: Pal): boolean {
-  return Array.isArray(PAL_STATS[pal.internalName]?.work);
+  const work = PAL_STATS[pal.internalName]?.work;
+  return Array.isArray(work) && work.length > 0;
 }
 
 /** Highest active-skill power the Pal can learn, or null when no skills are known. */
