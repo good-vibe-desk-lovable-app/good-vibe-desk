@@ -76,7 +76,8 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
         </p>
 
         <p className="text-xs text-muted-foreground">
-          Egg estimates use provisional inheritance odds.
+          Lower bound: randomly-added passives enlarge each later step's parent pool, so long
+          chains cost more eggs in practice than shown.
         </p>
 
 
