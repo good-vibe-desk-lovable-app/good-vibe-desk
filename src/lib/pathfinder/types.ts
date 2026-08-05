@@ -57,7 +57,38 @@ export interface PathfinderInput {
   requestId?: number;
 }
 
+/** Part 5: one batch request over many targets on the SAME shared worker. */
+export interface BatchInput {
+  kind: "batch";
+  collection: CollectionEntry[];
+  desiredSources: string[];
+  targetIds: number[];
+  /** Per-target search budget. */
+  perTargetTimeoutMs?: number;
+  /** Whole-batch budget; partial results are returned when it is hit. */
+  budgetMs?: number;
+  requestId?: number;
+}
+
+export interface BatchEntry {
+  targetId: number;
+  totalExpectedEggs: number;
+  stepCount: number;
+  usedSources: string[];
+  status: Result["status"];
+}
+
+export type WorkerInbound = (PathfinderInput & { kind?: "single" }) | BatchInput;
+
 export type WorkerOutbound =
   | { type: "progress"; best: Result; requestId?: number }
   | { type: "done"; result: Result; requestId?: number }
-  | { type: "error"; message: string; requestId?: number };
+  | { type: "error"; message: string; requestId?: number }
+  | {
+      type: "batch-progress";
+      done: number;
+      total: number;
+      entries: BatchEntry[];
+      requestId?: number;
+    }
+  | { type: "batch-done"; entries: BatchEntry[]; truncated: boolean; requestId?: number };
