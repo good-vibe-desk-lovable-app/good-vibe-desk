@@ -66,7 +66,10 @@ export function PalPicker({
   const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
   const ownedSet = useMemo(() => new Set(ownedIds), [ownedIds]);
 
+  const channels = useMemo(() => channelsInUse(), []);
+
   const rows = useMemo(() => {
+
     const q = query.trim().toLowerCase();
     return PALS.filter((p) => {
       if (q && !p.name.toLowerCase().includes(q) && !String(p.palDexNo).startsWith(q)) return false;
