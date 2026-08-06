@@ -1,5 +1,6 @@
-// Where to catch a Pal — Part 6 surface for the generated habitat data.
-import { MapPin, Moon, Sun } from "lucide-react";
+// Where to get a Pal — Part 6 surface for the habitat data and the hand-maintained
+// acquisition channels. There is no "breed only" badge: it is not a real category.
+import { MapPin, Moon, ShieldCheck, Sun } from "lucide-react";
 
 import { acquisitionOf } from "@/lib/acquisition";
 import { PAL_STATS } from "@/data/palworld/stats";
@@ -14,16 +15,18 @@ export function HabitatCard({ pal }: { pal: Pal }) {
     <div className="rounded-xl border border-border/70 bg-background/40 p-3 text-sm">
       <div className="flex flex-wrap items-center gap-2">
         <MapPin className="size-4 text-primary" />
-        <span className="font-medium">Where to find {pal.name}</span>
-        {info.kind === "field" ? (
-          <Badge variant="secondary" className="text-[10px]">
-            Catchable in the wild
+        <span className="font-medium">How to get {pal.name}</span>
+        <Badge
+          variant={info.channel === "unknown" ? "outline" : "secondary"}
+          className="text-[10px]"
+        >
+          {info.label}
+        </Badge>
+        {info.guaranteedCapture ? (
+          <Badge variant="outline" className="gap-1 text-[10px]">
+            <ShieldCheck className="size-3" /> Guaranteed capture
           </Badge>
-        ) : (
-          <Badge variant="outline" className="text-[10px]">
-            Acquisition unknown
-          </Badge>
-        )}
+        ) : null}
         {nocturnal ? (
           <Badge variant="outline" className="text-[10px]">
             Nocturnal
@@ -31,7 +34,22 @@ export function HabitatCard({ pal }: { pal: Pal }) {
         ) : null}
       </div>
 
-      {info.kind === "field" ? (
+      <p className="mt-2 text-xs">{info.requirement}</p>
+      {info.sourceTier ? (
+        <p className="mt-1 text-[11px] text-muted-foreground">
+          Source: {info.sourceTier === 1 ? "datamine (tier 1)" : "guide sites (tier 3)"}
+        </p>
+      ) : null}
+
+      {info.notes.length > 0 ? (
+        <ul className="mt-2 list-disc space-y-0.5 pl-4 text-xs text-muted-foreground">
+          {info.notes.map((n) => (
+            <li key={n}>{n}</li>
+          ))}
+        </ul>
+      ) : null}
+
+      {info.windows.length > 0 ? (
         <>
           <ul className="mt-2 space-y-1 text-xs">
             {info.windows.map((w) => (
@@ -57,13 +75,11 @@ export function HabitatCard({ pal }: { pal: Pal }) {
             </p>
           )}
           <p className="mt-1 text-[11px] text-muted-foreground">
-            Level ranges and alpha variants aren't in the sourced data, so they're not shown rather
-            than guessed.
+            Level ranges and alpha variants aren't in the sourced data unless listed above, so
+            they're not shown rather than guessed.
           </p>
         </>
-      ) : (
-        <p className="mt-2 text-xs text-muted-foreground">{info.reason}</p>
-      )}
+      ) : null}
     </div>
   );
 }

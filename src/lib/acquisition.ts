@@ -1,20 +1,40 @@
 // How can a player actually get this Pal?
 //
-// IMPORTANT: the per-point rows in spawns.ts are incomplete (see modelGaps.ts) —
-// Chikipi has no field row yet 558 habitat spawn points. Field presence is
-// therefore decided by PAL_HABITAT totals, which cover all 299 Pals.
+// There is no "breed only" Pal: every roster entry has at least one spawner or
+// boss row, and the twelve Pals with no habitat presence all carry
+// CaptureRateCorrect 1.0. So this module reports an ACQUISITION CHANNEL, never a
+// breed-only flag.
 //
-// There is no dungeon / tower-boss / raid-boss data in the dataset, so a Pal with
-// no habitat presence is reported "unknown", never "breed only". An over-applied
-// breed-only badge would tell players to breed Pals they could simply catch.
+// Two sources feed it:
+//   1. ACQUISITION_CHANNELS — hand-maintained, datamine/guide sourced, for the
+//      Pals whose channel is not a plain overworld spawn.
+//   2. PAL_HABITAT totals — the reliable signal for wild presence. The per-point
+//      rows in spawns.ts are incomplete (see modelGaps.ts): Chikipi has no field
+//      row yet 558 habitat spawn points.
+//
+// Dungeon acquisition is UNDER-COUNTED (see manualDataGaps.ts), so a Pal with no
+// channel and no habitat presence reports "unknown" — never "not obtainable".
 import { PALS } from "@/data/palworld";
 import { PAL_HABITAT } from "@/data/palworld/habitat";
 import { PAL_SPAWNS, type SpawnPoint } from "@/data/palworld/spawns";
+import {
+  ACQUISITION_CHANNELS,
+  CHANNEL_LABEL,
+  type AcquisitionChannel,
+} from "@/data/palworld/acquisitionChannels";
 
-export type Acquisition = "field" | "unknown";
+export type { AcquisitionChannel };
+export { CHANNEL_LABEL };
 
 export interface AcquisitionInfo {
-  kind: Acquisition;
+  channel: AcquisitionChannel;
+  label: string;
+  /** What the player has to do to get it. */
+  requirement: string;
+  /** 1 = datamine, 3 = guide site. null when derived from habitat counts alone. */
+  sourceTier: 1 | 3 | null;
+  notes: string[];
+  guaranteedCapture: boolean;
   /** Total parsed spawn points across every map and time-of-day window. */
   habitatPoints: number;
   /** Named areas we have coordinates or labels for (may be empty). */
@@ -53,18 +73,33 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
     new Set(rows.filter((r) => (r.kind ?? "field") === "field").map((r) => r.area)),
   );
 
+  const known = ACQUISITION_CHANNELS[internalName];
+  const channel: AcquisitionChannel = known
+    ? known.channel
+    : habitatPoints > 0
+      ? "wild_spawn"
+      : "unknown";
+
+  const requirement = known
+    ? known.requirement
+    : habitatPoints > 0
+      ? `Catchable in the overworld — ${habitatPoints} spawn points recorded.`
+      : "No channel resolved. Dungeon spawn tables key through group IDs and could not be matched, so this is unconfirmed rather than unobtainable.";
+
   return {
-    kind: habitatPoints > 0 ? "field" : "unknown",
+    channel,
+    label: CHANNEL_LABEL[channel],
+    requirement,
+    sourceTier: known?.sourceTier ?? null,
+    notes: known?.notes ?? [],
+    guaranteedCapture: known?.guaranteedCapture ?? false,
     habitatPoints,
     areas,
     dayPoints: day,
     nightPoints: night,
     windows: Array.from(byMap.values()).filter((w) => w.day > 0 || w.night > 0),
     eggOnlyRows: rows.length > 0 && rows.every((r) => r.kind === "egg"),
-    reason:
-      habitatPoints > 0
-        ? `${habitatPoints} spawn points recorded in the wild.`
-        : "No wild spawn points recorded, and the dataset has no dungeon, tower or raid source data — how to obtain this Pal is unconfirmed.",
+    reason: requirement,
   };
 }
 
@@ -74,13 +109,16 @@ export function acquisitionOfPalId(palId: number): AcquisitionInfo | null {
 }
 
 /** Counts for the whole dex — used by /data-check and the audit report. */
-export function acquisitionBreakdown(): Record<Acquisition, number> {
-  const out: Record<Acquisition, number> = { field: 0, unknown: 0 };
-  for (const pal of PALS) out[acquisitionOf(pal.internalName).kind]++;
+export function acquisitionBreakdown(): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const pal of PALS) {
+    const k = acquisitionOf(pal.internalName).channel;
+    out[k] = (out[k] ?? 0) + 1;
+  }
   return out;
 }
 
-export const ACQUISITION_LABEL: Record<Acquisition, string> = {
-  field: "Catchable in the wild",
-  unknown: "Acquisition unknown",
-};
+/** Channels present in the roster, for filter chips. */
+export function channelsInUse(): AcquisitionChannel[] {
+  return Object.keys(acquisitionBreakdown()).sort() as AcquisitionChannel[];
+}
