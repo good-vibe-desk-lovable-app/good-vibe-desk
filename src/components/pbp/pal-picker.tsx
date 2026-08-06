@@ -7,7 +7,13 @@ import { Search, Star } from "lucide-react";
 import { PALS, SAME_SPECIES_ONLY } from "@/data/palworld";
 import type { Pal } from "@/data/palworld";
 import { PAL_ELEMENTS } from "@/data/palworld/elements";
-import { acquisitionOf } from "@/lib/acquisition";
+import {
+  CHANNEL_LABEL,
+  acquisitionOf,
+  channelsInUse,
+  type AcquisitionChannel,
+} from "@/lib/acquisition";
+
 import { WORK_TYPES, workLevelOf } from "@/lib/tiers";
 import { loadRecentPals, pushRecentPal } from "@/lib/recents";
 import { cn } from "@/lib/utils";
@@ -48,7 +54,7 @@ export function PalPicker({
   const [query, setQuery] = useState("");
   const [elements, setElements] = useState<string[]>([]);
   const [works, setWorks] = useState<string[]>([]);
-  const [acq, setAcq] = useState<"all" | "field" | "unknown">("all");
+  const [acq, setAcq] = useState<AcquisitionChannel | "all">("all");
   const [recent, setRecent] = useState<number[]>([]);
   const [scrollTop, setScrollTop] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
@@ -69,7 +75,7 @@ export function PalPicker({
         if (!elements.some((e) => own.includes(e))) return false;
       }
       if (works.length && !works.every((w) => workLevelOf(p, w) > 0)) return false;
-      if (acq !== "all" && acquisitionOf(p.internalName).kind !== acq) return false;
+      if (acq !== "all" && acquisitionOf(p.internalName).channel !== acq) return false;
       return true;
     }).sort((a, b) => a.name.localeCompare(b.name));
   }, [query, elements, works, acq]);
@@ -160,12 +166,16 @@ export function PalPicker({
       </div>
 
       <div className="flex flex-wrap gap-1">
-        {(["all", "field", "unknown"] as const).map((k) => (
+        <Chip on={acq === "all"} onClick={() => setAcq("all")}>
+          Any source
+        </Chip>
+        {channels.map((k) => (
           <Chip key={k} on={acq === k} onClick={() => setAcq(k)}>
-            {k === "all" ? "Any source" : k === "field" ? "Catchable" : "Acquisition unknown"}
+            {CHANNEL_LABEL[k]}
           </Chip>
         ))}
       </div>
+
 
       {quickRow("Favourites", favorites)}
       {quickRow("Recent", recent)}
@@ -224,11 +234,12 @@ export function PalPicker({
                         owned
                       </Badge>
                     ) : null}
-                    {info.kind === "unknown" ? (
-                      <Badge variant="outline" className="text-[10px]">
-                        ?
+                    {info.channel !== "wild_spawn" ? (
+                      <Badge variant="outline" className="text-[10px]" title={info.requirement}>
+                        {info.channel === "unknown" ? "?" : CHANNEL_LABEL[info.channel]}
                       </Badge>
                     ) : null}
+
                     {SAME_SPECIES_ONLY.has(pal.id) ? (
                       <Badge variant="outline" className="text-[10px]">
                         self only
