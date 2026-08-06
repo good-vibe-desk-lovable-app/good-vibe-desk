@@ -79,7 +79,8 @@ export interface TierResult {
 
 /** paldb.cc publishes base stats, not level-80 stats. Shown on the page. */
 export const STAT_BASIS =
-  "Scores use base stats as published by paldb.cc — level-80 stat lines were not sourceable, so absolute values are lower than in-game at cap. Relative ordering is unaffected.";
+  "Combat scores use base stats as published by paldb.cc — level-80 stat lines were not sourceable for the roster, so absolute values are lower than in-game at cap; relative ordering is unaffected. Work suitability levels normalise against 8, the maximum BASE level in the datamine.";
+
 
 function statOrNull(pal: Pal, key: string): number | null {
   const v = PAL_STATS[pal.internalName]?.stats[key];
