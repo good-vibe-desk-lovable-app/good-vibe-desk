@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { PALS } from "@/data/palworld";
+import { acquisitionOf } from "@/lib/acquisition";
 import { MergeTree } from "./merge-tree";
 import { PassiveChip } from "./passive-chip";
 import { SummaryCard } from "./summary-card";
@@ -178,6 +180,8 @@ export function ResultsPanel({
             </ol>
           ) : null}
 
+          <NeededPals result={result} entries={entries} />
+
           {result.warnings.length > 0 ? (
             <ul className="space-y-1 rounded-lg border border-warning/50 bg-warning/10 p-3 text-sm text-warning">
               {result.warnings.map((w, i) => (
@@ -195,5 +199,58 @@ export function ResultsPanel({
         </CardContent>
       </Card>
     </TooltipProvider>
+  );
+}
+
+/**
+ * Part 6 — every leaf of the chain the player doesn't already own, with how to
+ * get it. A leaf is a parent that no earlier step produces. This is what turns
+ * a chain into an actionable plan.
+ */
+function NeededPals({ result, entries }: { result: Result; entries: CollectionEntry[] }) {
+  if (result.steps.length === 0) return null;
+  const produced = new Set(result.steps.map((s) => s.child));
+  const owned = new Set(entries.map((e) => e.palId));
+  const leaves = new Set<number>();
+  for (const step of result.steps) {
+    for (const parent of [step.parent1, step.parent2]) {
+      if (!produced.has(parent) && !owned.has(parent)) leaves.add(parent);
+    }
+  }
+  if (leaves.size === 0) return null;
+
+  return (
+    <div className="rounded-xl border border-primary/40 bg-primary/5 p-3">
+      <p className="mb-2 text-sm font-semibold">Pals you still need — and where to get them</p>
+      <ul className="space-y-2 text-xs">
+        {Array.from(leaves).map((palId) => {
+          const pal = PALS.find((p) => p.id === palId);
+          if (!pal) return null;
+          const info = acquisitionOf(pal.internalName);
+          return (
+            <li key={palId} className="rounded-lg border border-border/70 bg-background/60 p-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-medium">{pal.name}</span>
+                <Badge
+                  variant={info.channel === "unknown" ? "outline" : "secondary"}
+                  className="text-[10px]"
+                >
+                  {info.label}
+                </Badge>
+                {info.guaranteedCapture ? (
+                  <Badge variant="outline" className="text-[10px]">
+                    Guaranteed capture
+                  </Badge>
+                ) : null}
+              </div>
+              <p className="mt-1 text-muted-foreground">{info.requirement}</p>
+              {info.notes.length > 0 ? (
+                <p className="mt-1 text-muted-foreground">{info.notes.join(" · ")}</p>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
