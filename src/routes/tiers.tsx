@@ -3,9 +3,11 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, Info, Trophy } from "lucide-react";
 
 import {
+  CONDENSE_TABLE,
   OVERALL_FORMULA,
   RAID_FORMULA,
   RANCH_FORMULA,
+  RANCH_NOTE,
   STAT_BASIS,
   WORK_FORMULA,
   WORK_TYPES,
@@ -16,6 +18,7 @@ import {
   workTier,
   type TierResult,
 } from "@/lib/tiers";
+
 import { loadCollection } from "@/lib/collection";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -397,6 +400,17 @@ function TiersPage() {
         </TabsContent>
 
         <TabsContent value="ranch" className="space-y-4 pt-4">
+          <div className="rounded-xl border border-border/70 bg-background/40 p-3 text-xs text-muted-foreground">
+            <p className="flex gap-2">
+              <Info className="mt-0.5 size-3.5 shrink-0" />
+              <span>
+                {RANCH_NOTE}
+                <br />
+                Condensation: rank 0–4 (4 stars), {CONDENSE_TABLE[4].cumulative} sacrifices total at
+                rank 4 — {CONDENSE_TABLE[4].bonus}, {CONDENSE_TABLE[4].suitability}.
+              </span>
+            </p>
+          </div>
           <TierTable
             result={ranch}
             owned={owned}
@@ -404,6 +418,7 @@ function TiersPage() {
             weights="fixed — Farming suitability dominates, work speed breaks ties"
           />
         </TabsContent>
+
       </Tabs>
     </div>
   );

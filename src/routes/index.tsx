@@ -29,6 +29,8 @@ import { BreedingPowerTool } from "@/components/pbp/breeding-power-tool";
 import { CollectionPanel } from "@/components/pbp/collection-panel";
 import { HowBreedingWorks } from "@/components/pbp/how-breeding-works";
 import { PassivesPanel } from "@/components/pbp/passives-panel";
+import { RecommendedPanel } from "@/components/pbp/recommended-panel";
+
 import { ResultsErrorBoundary } from "@/components/pbp/results-error-boundary";
 import { ResultsPanel } from "@/components/pbp/results-panel";
 import { TargetPanel } from "@/components/pbp/target-panel";
@@ -315,6 +317,16 @@ function Index() {
             </div>
           )}
         </div>
+
+        <div className="mt-6">
+          <RecommendedPanel
+            entries={entries}
+            desiredSources={desiredSources}
+            onPickTarget={handleTargetSelect}
+            runEpoch={runEpoch}
+          />
+        </div>
+
 
         <div className="mt-8 flex flex-col items-center gap-2">
           <div className="flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row">

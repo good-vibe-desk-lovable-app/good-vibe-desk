@@ -54,7 +54,12 @@ write("stats.ts",
       "export const PAL_STATS: Record<string, PalStatBlock> = {\n"
       + "\n".join(lines) + "\n};\n\n"
       "export function workLevel(internalName: string, work: string): number {\n"
-      "  return PAL_STATS[internalName]?.work.find((w) => w.work === work)?.level ?? 0;\n}\n")
+      "  return PAL_STATS[internalName]?.work.find((w) => w.work === work)?.level ?? 0;\n}\n\n"
+      "// HAND-MAINTAINED merge - see ./overrides.ts. Rows the paldb crawl cannot\n"
+      "// supply (currently Astralym). Re-emitted here so a regeneration keeps them.\n"
+      'import { STAT_OVERRIDES } from "./overrides";\n'
+      "Object.assign(PAL_STATS, STAT_OVERRIDES);\n")
+
 
 # spawns
 lines = [f"  {j(k)}: {j(recs[k]['spawns'])}," for k in keys]

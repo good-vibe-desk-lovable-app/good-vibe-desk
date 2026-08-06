@@ -314,3 +314,9 @@ export const PAL_STATS: Record<string, PalStatBlock> = {
 export function workLevel(internalName: string, work: string): number {
   return PAL_STATS[internalName]?.work.find((w) => w.work === work)?.level ?? 0;
 }
+
+// HAND-MAINTAINED merge — see ./overrides.ts. Rows the paldb crawl cannot supply
+// (currently Astralym). scripts/emit-paldb.py re-emits these two lines so a
+// regeneration cannot drop them.
+import { STAT_OVERRIDES } from "./overrides";
+Object.assign(PAL_STATS, STAT_OVERRIDES);

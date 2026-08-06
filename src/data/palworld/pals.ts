@@ -302,4 +302,13 @@ export const PALS: Pal[] = [
   { id: 306, palDexNo: 194, isVariant: false, internalName: "FlowerPrince", name: "Dandilord", combiRank: 60, breedingPowerPriority: 6000, indexOrder: 306, breedingEligible: false, elements: [], eggType: "Common", eggSize: "Large", maleRatio: 60 },
   { id: 307, palDexNo: 183, isVariant: false, internalName: "KabukiMan", name: "Renjishi", combiRank: 290, breedingPowerPriority: 29000, indexOrder: 307, breedingEligible: true, elements: [], eggType: "Common", eggSize: "Large", maleRatio: 60 },
   { id: 308, palDexNo: 184, isVariant: false, internalName: "DomeArmorDragon", name: "Aegidron", combiRank: 30, breedingPowerPriority: 3000, indexOrder: 308, breedingEligible: true, elements: [], eggType: "Common", eggSize: "Huge" },
+  // HAND-ADDED (not in palcalc db.json v27). Source: Dhampyru/Palworld-Extracted
+  // datamine "Game Data Parsed 7-22-26", cross-checked against paldb.cc and
+  // palworld.wiki.gg. IgnoreCombi: TRUE in the datamine -> breedingEligible: false,
+  // so it can never be produced by breeding and never appears as a chain target
+  // or intermediate. eggSize follows the RARITY rule (Normal 0-4, Large 5-7,
+  // Huge 8+); Rarity is 10, therefore Huge. Body size (XL) is a different field
+  // and is NOT used for egg size. eggType is inferred from ElementType None ->
+  // Common and is logged in manualDataGaps.ts as inferred, not datamined.
+  { id: 309, palDexNo: 204, isVariant: false, internalName: "WorldTreeDragon", name: "Astralym", combiRank: 10, breedingPowerPriority: 1000, indexOrder: 309, breedingEligible: false, elements: [], eggType: "Common", eggSize: "Huge" },
 ];
