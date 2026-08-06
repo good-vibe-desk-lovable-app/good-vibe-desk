@@ -8,6 +8,30 @@ import { PALS } from "@/data/palworld";
 import type { Pal } from "@/data/palworld";
 import { PAL_STATS } from "@/data/palworld/stats";
 import { skillsOf } from "@/data/palworld/skills";
+import { LEARNSET_NOT_FOUND, WORK_VERIFIED_ABSENT } from "@/data/palworld/overrides";
+
+/**
+ * Maximum BASE work suitability in the datamine is 8. No Pal has base 9 or 10 —
+ * the runtime scale reaching 10 comes from condensation (+1 to the best
+ * suitability per rank; at rank 4, +1 to every suitability) and the "Applied
+ * Handbook" consumables (+1 permanent, one item per work type). Normalising
+ * against 10 would compress every score and understate specialists.
+ */
+export const MAX_BASE_WORK_LEVEL = 8;
+
+/**
+ * Condensation runs 0-4 (five states, four stars). Ranch output tables use
+ * Lv1..Lv5 headers, which are PARTNER SKILL levels: partner skill level =
+ * condensation rank + 1. Sacrifice totals are the post-v1.0 values (cumulative
+ * 48, not the stale pre-1.0 116).
+ */
+export const CONDENSE_TABLE = [
+  { rank: 0, sacrifices: 0, cumulative: 0, partnerSkillLevel: 1, bonus: "no bonus", suitability: "none" },
+  { rank: 1, sacrifices: 4, cumulative: 4, partnerSkillLevel: 2, bonus: "+5% HP/Atk/Def", suitability: "+1 to best" },
+  { rank: 2, sacrifices: 8, cumulative: 12, partnerSkillLevel: 3, bonus: "+10% HP/Atk/Def", suitability: "+1 to 2nd-best" },
+  { rank: 3, sacrifices: 12, cumulative: 24, partnerSkillLevel: 4, bonus: "+15% HP/Atk/Def", suitability: "+1 to 3rd-best" },
+  { rank: 4, sacrifices: 24, cumulative: 48, partnerSkillLevel: 5, bonus: "+20% HP/Atk/Def", suitability: "+1 to every suitability" },
+] as const;
 
 export const WORK_TYPES = [
   "Kindling",
@@ -66,9 +90,20 @@ export function workLevelOf(pal: Pal, work: string): number {
   return PAL_STATS[pal.internalName]?.work.find((w) => w.work === work)?.level ?? 0;
 }
 
+/**
+ * True when the work suitability figures are KNOWN. An empty list normally means
+ * the field was absent on the source page (KingWhale), but for a Pal in
+ * WORK_VERIFIED_ABSENT the zeros are datamined facts and must be scored, not
+ * reported as insufficient data.
+ */
 function hasWorkData(pal: Pal): boolean {
   const work = PAL_STATS[pal.internalName]?.work;
+  if (WORK_VERIFIED_ABSENT.has(pal.internalName)) return true;
   return Array.isArray(work) && work.length > 0;
+}
+
+function workVerifiedZero(pal: Pal): boolean {
+  return WORK_VERIFIED_ABSENT.has(pal.internalName);
 }
 
 /** Highest active-skill power the Pal can learn, or null when no skills are known. */
@@ -103,7 +138,12 @@ export function raidTier(weights: RaidWeights): TierResult {
     if (attack === null) missing.push("attack");
     if (health === null) missing.push("health");
     if (defense === null) missing.push("defense");
-    if (skill === null) missing.push("active skills");
+    if (skill === null)
+      missing.push(
+        LEARNSET_NOT_FOUND.has(pal.internalName)
+          ? "active skills (no learnset in any source)"
+          : "active skills",
+      );
     if (missing.length) {
       unranked.push({ pal, missing });
       continue;
@@ -123,7 +163,7 @@ export function raidTier(weights: RaidWeights): TierResult {
 }
 
 export const WORK_FORMULA =
-  "score = (sum of selected work suitability levels) x 10 + work speed x Ws";
+  "score = (sum of selected work suitability levels / 8) x 100 + work speed x Ws — levels normalise against 8, the maximum BASE suitability in the datamine (9 and 10 only exist via condensation and Applied Handbooks)";
 
 export function workTier(selected: readonly string[], speedWeight: number): TierResult {
   const works = selected.length ? selected : WORK_TYPES;
@@ -147,14 +187,25 @@ export function workTier(selected: readonly string[], speedWeight: number): Tier
       if (lv > 0) detail[w] = lv;
       total += lv;
     }
-    if (total === 0) continue; // genuinely no suitability for the selected jobs
+    // A zero total normally just means "no suitability for the jobs you picked",
+    // so the Pal drops out of the list. A verified-absent zero is a fact about
+    // the Pal and stays in the ranking (at the bottom).
+    if (total === 0 && !workVerifiedZero(pal)) continue;
     detail["Work Speed"] = speed;
-    rows.push({ pal, score: total * 10 + speed * speedWeight, detail });
+    rows.push({
+      pal,
+      score: (total / MAX_BASE_WORK_LEVEL) * 100 + speed * speedWeight,
+      detail,
+    });
   }
   return finish(rows, unranked);
 }
 
-export const RANCH_FORMULA = "score = Farming suitability x 100 + work speed";
+export const RANCH_FORMULA =
+  "score = (Farming suitability / 8) x 100 + work speed — quantity only; per-item ranch drop rates do not exist in any datamine export and are not invented here";
+
+export const RANCH_NOTE =
+  "Ranch output quantity scales with PARTNER SKILL LEVEL 1-5, which maps to condensation rank 0-4 (Lamball wool 1 -> 1-5, Mau gold coin 10 -> 10-50). Only Vixy changes which items it drops.";
 
 /** Ranch output comes from Farming suitability; ties break on work speed. */
 export function ranchTier(): TierResult {
@@ -167,10 +218,10 @@ export function ranchTier(): TierResult {
       continue;
     }
     const farming = workLevelOf(pal, "Farming");
-    if (farming <= 0) continue; // no ranch output at all — not a data gap
+    if (farming <= 0 && !workVerifiedZero(pal)) continue; // no ranch output — not a data gap
     rows.push({
       pal,
-      score: farming * 100 + speed,
+      score: (farming / MAX_BASE_WORK_LEVEL) * 100 + speed,
       detail: { Farming: farming, "Work Speed": speed },
     });
   }
