@@ -20,7 +20,7 @@ export default defineConfig({
         // Nitro emits the browser bundle into dist/client; the SW and its
         // precache manifest must be rooted there or every URL gets a
         // "client/" prefix and 404s at runtime.
-        outDir: "dist/client",
+        outDir: "dist",
         // The guarded wrapper in src/lib/pwa.ts is the ONLY registrar.
         injectRegister: null,
 
