@@ -22,6 +22,9 @@ import { Progress } from "@/components/ui/progress";
  */
 const BREEDABLE_TARGET_IDS = PALS.filter((p) => p.breedingEligible).map((p) => p.id);
 
+/** Cap the session cache so a long session can't grow it without bound. */
+const MAX_CACHE_ENTRIES = 10;
+
 function hashOf(collection: CollectionEntry[], desiredSources: string[]): string {
   return (
     collection
@@ -57,35 +60,48 @@ export function RecommendedPanel({
   );
 
   const run = useCallback(async () => {
-    const epoch = ++runEpoch.current;
+    // Check the cache BEFORE bumping runEpoch. The epoch is shared with the
+    // main pathfinder search, so bumping it on a cache hit would silently
+    // cancel a running "Find breeding chain" while doing no work of our own.
     const cached = cache.current.get(key);
     if (cached) {
       setRows(cached.entries);
       setTruncated(cached.truncated);
       return;
     }
+
+    const epoch = ++runEpoch.current;
     setRunning(true);
     setProgress({ done: 0, total: BREEDABLE_TARGET_IDS.length });
-    const result = await runBatchPathfinder(
-      {
-        collection: entries,
-        desiredSources,
-        targetIds: BREEDABLE_TARGET_IDS,
-        perTargetTimeoutMs: 200,
-      },
-      {
-        budgetMs: 10000,
-        onProgress: (done, total) => {
-          if (runEpoch.current !== epoch) return;
-          setProgress({ done, total });
+    try {
+      const result = await runBatchPathfinder(
+        {
+          collection: entries,
+          desiredSources,
+          targetIds: BREEDABLE_TARGET_IDS,
+          perTargetTimeoutMs: 200,
         },
-      },
-    );
-    if (runEpoch.current !== epoch) return; // superseded by a collection edit
-    cache.current.set(key, result);
-    setRows(result.entries);
-    setTruncated(result.truncated);
-    setRunning(false);
+        {
+          budgetMs: 10000,
+          onProgress: (done, total) => {
+            if (runEpoch.current !== epoch) return;
+            setProgress({ done, total });
+          },
+        },
+      );
+      if (runEpoch.current !== epoch) return; // superseded by a collection edit
+      if (cache.current.size >= MAX_CACHE_ENTRIES) {
+        const oldest = cache.current.keys().next().value;
+        if (oldest !== undefined) cache.current.delete(oldest);
+      }
+      cache.current.set(key, result);
+      setRows(result.entries);
+      setTruncated(result.truncated);
+    } finally {
+      // Must run even on the superseded path, or the button stays disabled
+      // and the progress bar sticks until a page reload.
+      if (runEpoch.current === epoch) setRunning(false);
+    }
   }, [entries, desiredSources, key, runEpoch]);
 
   const top = (rows ?? []).slice(0, 20);
