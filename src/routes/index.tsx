@@ -35,7 +35,7 @@ import { ResultsErrorBoundary } from "@/components/pbp/results-error-boundary";
 import { ResultsPanel } from "@/components/pbp/results-panel";
 import { TargetPanel } from "@/components/pbp/target-panel";
 
-const SITE = "https://good-vibe-desk.lovable.app";
+const SITE = "https://good-vibe-desk.netlify.app";
 // Renders the footer anchor. A literal `<a` open tag gets stripped by some
 // mobile clipboard sanitizers when pasted through GitHub's web editor (this
 // file was corrupted that way once); `A` is just the string "a", which React
