@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, Search } from "lucide-react";
+import { Check, Hammer, Search, Footprints, Sparkles, Swords } from "lucide-react";
 
 import { PALS } from "@/data/palworld";
-import type { Pal } from "@/data/palworld";
+import type { Pal, Passive } from "@/data/palworld";
 import {
   MAX_PASSIVE_SLOTS,
   genderRatioNote,
@@ -12,6 +12,7 @@ import {
   type CollectionEntry,
   type Gender,
 } from "@/lib/collection";
+import { categoryOfId, PASSIVE_CATEGORIES, type PassiveCategory } from "@/lib/passive-categories";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,62 @@ const GENDERS: Array<{ value: Gender; label: string }> = [
   { value: "unknown", label: "Not sure" },
 ];
 
+const TIERS = ["common", "rare", "epic", "legendary"] as const;
+type Tier = (typeof TIERS)[number];
+
+/** Matches the tier colours already used by PassiveChip. */
+const TIER_CLASS: Record<Tier, string> = {
+  common: "border-border/70 text-muted-foreground",
+  rare: "border-info/50 text-info",
+  epic: "border-primary/50 text-primary",
+  legendary: "border-warning/60 text-warning",
+};
+
+const CATEGORY_ICON: Record<PassiveCategory, typeof Swords> = {
+  Combat: Swords,
+  Work: Hammer,
+  Movement: Footprints,
+  Other: Sparkles,
+};
+
+/**
+ * A passive is a downside when its description carries a negative percentage
+ * ("Work Speed -10%"). Read off the text rather than guessed, so anything
+ * without a clear sign renders neutral.
+ */
+function effectSign(passive: Passive): "positive" | "negative" | "neutral" {
+  if (/-\s*\d/.test(passive.description)) return "negative";
+  if (/\+\s*\d/.test(passive.description)) return "positive";
+  return "neutral";
+}
+
+/**
+ * Rank rather than merely filter. A name that STARTS with the query is what
+ * the user meant; a description that happens to mention the word is a distant
+ * fallback. Lower rank sorts first; -1 means "no match at all".
+ */
+function rankPassive(passive: Passive, q: string): number {
+  if (!q) return 0;
+  const name = passive.name.toLowerCase();
+  if (name === q) return 0;
+  if (name.startsWith(q)) return 1;
+  if (name.includes(q)) return 2;
+  if (passive.description.toLowerCase().includes(q)) return 3;
+  return -1;
+}
+
+/** Same idea for the species list: prefix beats substring beats dex number. */
+function rankPal(pal: Pal, q: string): number {
+  if (!q) return 0;
+  const name = pal.name.toLowerCase();
+  if (name === q) return 0;
+  if (name.startsWith(q)) return 1;
+  if (name.includes(q)) return 2;
+  if (String(pal.palDexNo).startsWith(q)) return 3;
+  if (pal.internalName.toLowerCase().includes(q)) return 4;
+  return -1;
+}
+
 interface AddPalDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -49,22 +106,30 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
   const [gender, setGender] = useState<Gender>("unknown");
   const [passiveIds, setPassiveIds] = useState<string[]>([]);
 
+  // Passive picker state — reset whenever the dialog opens or the species changes.
+  const [passiveQuery, setPassiveQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<PassiveCategory | null>(null);
+  const [tierFilter, setTierFilter] = useState<Tier | null>(null);
+
   useEffect(() => {
     if (!open) return;
     setQuery("");
     setPalId(editing?.palId ?? null);
     setGender(editing?.gender ?? "unknown");
     setPassiveIds(editing?.passiveIds ?? []);
+    setPassiveQuery("");
+    setCategoryFilter(null);
+    setTierFilter(null);
   }, [open, editing]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const list = q
-      ? PALS.filter(
-          (p) => p.name.toLowerCase().includes(q) || String(p.palDexNo).startsWith(q),
-        )
-      : PALS;
-    return list.slice(0, 200);
+    if (!q) return PALS.slice(0, 200);
+    return PALS.map((p) => ({ p, r: rankPal(p, q) }))
+      .filter((x) => x.r >= 0)
+      .sort((a, b) => a.r - b.r || a.p.name.localeCompare(b.p.name))
+      .slice(0, 200)
+      .map((x) => x.p);
   }, [query]);
 
   const selected: Pal | undefined = useMemo(
@@ -82,6 +147,25 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
     [palId],
   );
 
+  /**
+   * Search + chips compose: the chips narrow the pool, the query ranks what's
+   * left. With no query the original order is preserved, which keeps the
+   * guaranteed passives hoisted to the top where passivesForPal put them.
+   */
+  const visiblePassives = useMemo(() => {
+    const q = passiveQuery.trim().toLowerCase();
+    const pool = availablePassives.filter((p) => {
+      if (categoryFilter && categoryOfId(p.id) !== categoryFilter) return false;
+      if (tierFilter && p.tier !== tierFilter) return false;
+      return true;
+    });
+    if (!q) return pool;
+    return pool
+      .map((p, i) => ({ p, r: rankPassive(p, q), i }))
+      .filter((x) => x.r >= 0)
+      .sort((a, b) => a.r - b.r || a.i - b.i)
+      .map((x) => x.p);
+  }, [availablePassives, passiveQuery, categoryFilter, tierFilter]);
 
   const atCap = passiveIds.length >= MAX_PASSIVE_SLOTS;
   const ratioNote = selected ? genderRatioNote(selected.name, selected.maleRatio) : null;
@@ -143,8 +227,11 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                           setPalId(pal.id);
                           // Guaranteed passives are always on the Pal, so start them ticked.
                           setPassiveIds(guaranteedPassiveIds(pal.id).slice(0, MAX_PASSIVE_SLOTS));
+                          // A new species means a new passive pool — clear the filters.
+                          setPassiveQuery("");
+                          setCategoryFilter(null);
+                          setTierFilter(null);
                         }}
-
                         className={cn(
                           "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors",
                           isActive
@@ -168,11 +255,16 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                 })}
                 {results.length === 0 ? (
                   <li className="px-3 py-6 text-center text-sm text-muted-foreground">
-                    No Pals match “{query}”.
+                    No Pals match "{query}".
                   </li>
                 ) : null}
               </ul>
             </ScrollArea>
+            <p className="text-xs text-muted-foreground">
+              {query.trim()
+                ? `${results.length} of ${PALS.length} Pals shown.`
+                : `${PALS.length} Pals.`}
+            </p>
           </div>
 
           <div className="space-y-2">
@@ -197,16 +289,71 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
           {selected ? (
             <div className="space-y-2">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <Label>Passives on this {selected.name}</Label>
+                <Label htmlFor="passive-search">Passives on this {selected.name}</Label>
                 <span className="text-xs text-muted-foreground">
                   Pals have {MAX_PASSIVE_SLOTS} passive slots · {passiveIds.length}/
                   {MAX_PASSIVE_SLOTS} used
                 </span>
               </div>
+
+              <div className="relative">
+                <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  id="passive-search"
+                  value={passiveQuery}
+                  onChange={(e) => setPassiveQuery(e.target.value)}
+                  placeholder="Search passives by name or effect…"
+                  className="pl-9"
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {PASSIVE_CATEGORIES.map((c) => {
+                  const Icon = CATEGORY_ICON[c];
+                  const active = categoryFilter === c;
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => setCategoryFilter(active ? null : c)}
+                      className={cn(
+                        "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors",
+                        active
+                          ? "border-primary/60 bg-primary/15 text-foreground"
+                          : "border-border/70 text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      <Icon className="size-3" />
+                      {c}
+                    </button>
+                  );
+                })}
+                {TIERS.map((t) => {
+                  const active = tierFilter === t;
+                  return (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setTierFilter(active ? null : t)}
+                      className={cn(
+                        "rounded-full border px-2.5 py-1 text-xs capitalize transition-colors",
+                        TIER_CLASS[t],
+                        active ? "bg-accent/60 text-foreground" : "hover:text-foreground",
+                      )}
+                    >
+                      {t}
+                    </button>
+                  );
+                })}
+              </div>
+
               <ScrollArea className="h-56 rounded-lg border">
                 <div className="grid gap-1 p-2 sm:grid-cols-2">
-                  {availablePassives.map((passive) => {
+                  {visiblePassives.map((passive) => {
                     const checked = passiveIds.includes(passive.id);
+                    const Icon = CATEGORY_ICON[categoryOfId(passive.id)];
+                    const sign = effectSign(passive);
                     return (
                       <label
                         key={passive.id}
@@ -224,22 +371,50 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                           className="mt-0.5"
                         />
                         <span className="leading-tight">
-                          <span className="font-medium">{passive.name}</span>
-                          {guaranteed.has(passive.id) ? (
-                            <Badge variant="outline" className="ml-2 text-[10px]">
-                              always has
+                          <span className="flex flex-wrap items-center gap-1.5">
+                            <Icon className="size-3 shrink-0 text-muted-foreground" />
+                            <span className="font-medium">{passive.name}</span>
+                            <Badge
+                              variant="outline"
+                              className={cn("text-[10px] capitalize", TIER_CLASS[passive.tier])}
+                            >
+                              {passive.tier}
                             </Badge>
-                          ) : null}
-                          <span className="block text-xs text-muted-foreground">
+                            {guaranteed.has(passive.id) ? (
+                              <Badge variant="outline" className="text-[10px]">
+                                always has
+                              </Badge>
+                            ) : null}
+                          </span>
+                          <span
+                            className={cn(
+                              "block text-xs",
+                              sign === "negative"
+                                ? "text-destructive"
+                                : sign === "positive"
+                                  ? "text-success"
+                                  : "text-muted-foreground",
+                            )}
+                          >
                             {passive.description}
                           </span>
                         </span>
-
                       </label>
                     );
                   })}
+                  {visiblePassives.length === 0 ? (
+                    <p className="col-span-full px-3 py-6 text-center text-sm text-muted-foreground">
+                      No passives match those filters.
+                    </p>
+                  ) : null}
                 </div>
               </ScrollArea>
+
+              <p className="text-xs text-muted-foreground">
+                Showing {visiblePassives.length} of {availablePassives.length} passives. Any Pal
+                can roll any passive, so the full list is always offered — the ones this species
+                is guaranteed to have are ticked and sorted first.
+              </p>
             </div>
           ) : null}
         </div>
