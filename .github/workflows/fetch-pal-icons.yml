@@ -1,0 +1,98 @@
+name: Fetch Pal icons
+
+# Run manually from the Actions tab. Downloads every Pal icon from paldb.cc's
+# CDN into public/pals/icons/ and commits them, so the app serves its own
+# images and keeps working offline. Only needs re-running when the roster
+# changes.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Download icons
+        run: |
+          node <<'SCRIPT'
+          const fs = require("fs");
+          const path = require("path");
+
+          // Read the generated module without importing TypeScript: the URLs
+          // live in a plain object literal, so a regex over the source is
+          // enough and avoids adding a build step to this workflow.
+          const src = fs.readFileSync("src/data/palworld/palIcons.ts", "utf8");
+          const block = src.split("PAL_ICON_SOURCE_URLS")[1] || "";
+          const entries = [...block.matchAll(/"([^"]+)":\s*"(https:[^"]+)"/g)]
+            .map(([, name, url]) => ({ name, url }));
+
+          if (entries.length === 0) {
+            console.error("No source URLs found — aborting rather than committing an empty set.");
+            process.exit(1);
+          }
+          console.log(`Found ${entries.length} icons to fetch.`);
+
+          const outDir = path.join("public", "pals", "icons");
+          fs.mkdirSync(outDir, { recursive: true });
+
+          let downloaded = 0, skipped = 0;
+          const failed = [];
+
+          for (const { name, url } of entries) {
+            const dest = path.join(outDir, `${name}.webp`);
+            if (fs.existsSync(dest) && fs.statSync(dest).size > 0) { skipped++; continue; }
+            try {
+              const res = await fetch(url, {
+                headers: { "User-Agent": "good-vibe-desk-icon-fetch/1.0" },
+              });
+              if (!res.ok) { failed.push(`${name}: HTTP ${res.status}`); continue; }
+              const buf = Buffer.from(await res.arrayBuffer());
+              if (buf.length === 0) { failed.push(`${name}: empty response`); continue; }
+              fs.writeFileSync(dest, buf);
+              downloaded++;
+            } catch (err) {
+              failed.push(`${name}: ${err.message}`);
+            }
+            // Be polite to the CDN.
+            await new Promise((r) => setTimeout(r, 120));
+          }
+
+          console.log(`Downloaded ${downloaded}, already present ${skipped}, failed ${failed.length}.`);
+          if (failed.length) {
+            console.log("Failures:");
+            for (const f of failed) console.log("  " + f);
+          }
+          // A handful of misses is tolerable — the UI falls back to text. A
+          // total wipeout means something is wrong upstream, so fail loudly.
+          if (downloaded === 0 && skipped === 0) {
+            console.error("Nothing was downloaded at all — failing.");
+            process.exit(1);
+          }
+          SCRIPT
+
+      - name: Report size
+        run: |
+          echo "Files: $(find public/pals/icons -type f | wc -l)"
+          echo "Total: $(du -sh public/pals/icons | cut -f1)"
+
+      - name: Commit the icons
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/pals/icons
+          if git diff --staged --quiet; then
+            echo "No new icons — nothing to commit."
+          else
+            git commit -m "Add Pal icons fetched from paldb.cc CDN"
+            git push
+          fi
