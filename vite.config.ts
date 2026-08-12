@@ -17,9 +17,10 @@ export default defineConfig({
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
-        // Nitro emits the browser bundle into dist/client; the SW and its
-        // precache manifest must be rooted there or every URL gets a
-        // "client/" prefix and 404s at runtime.
+        // The Netlify Nitro preset emits the browser bundle into dist (the
+        // Cloudflare preset used dist/client). The SW and its precache
+        // manifest must be rooted wherever the assets actually land, or every
+        // URL gains a wrong prefix and 404s at runtime.
         outDir: "dist",
         // The guarded wrapper in src/lib/pwa.ts is the ONLY registrar.
         injectRegister: null,
@@ -48,7 +49,16 @@ export default defineConfig({
           ],
         },
         workbox: {
-          globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+          // TanStack Start builds three environments (client, ssr, nitro) and
+          // the PWA plugin's glob runs before the client assets are on disk,
+          // which is why the manifest came out empty. Pointing globDirectory
+          // at the finished client output fixes the "0.00 KiB" precache.
+          globDirectory: "dist",
+          globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,webp}"],
+          // Pal artwork is fetched on demand rather than precached, so the
+          // service worker install stays small on mobile data.
+          globIgnores: ["**/node_modules/**/*", "sw.js", "workbox-*.js", "pals/**"],
+          maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
           navigateFallback: "/",
           navigateFallbackDenylist: [/^\/~oauth/, /^\/api\//],
           runtimeCaching: [
@@ -56,6 +66,16 @@ export default defineConfig({
               urlPattern: ({ request }: { request: Request }) => request.mode === "navigate",
               handler: "NetworkFirst",
               options: { cacheName: "pages" },
+            },
+            {
+              // Pal artwork: cache each image the first time it is actually
+              // viewed, rather than shipping 300 files in the SW install.
+              urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith("/pals/"),
+              handler: "CacheFirst",
+              options: {
+                cacheName: "pal-images",
+                expiration: { maxEntries: 700, maxAgeSeconds: 60 * 60 * 24 * 90 },
+              },
             },
           ],
         },
