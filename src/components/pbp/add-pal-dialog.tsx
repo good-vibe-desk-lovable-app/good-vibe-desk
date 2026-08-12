@@ -29,6 +29,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { PalIcon } from "./pal-icon";
 
 const GENDERS: Array<{ value: Gender; label: string }> = [
   { value: "male", label: "Male" },
@@ -242,6 +243,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                         <span className="w-12 shrink-0 text-xs tabular-nums opacity-70">
                           #{pal.palDexNo}
                         </span>
+                        <PalIcon internalName={pal.internalName} name={pal.name} size={28} />
                         <span className="flex-1 font-medium">{pal.name}</span>
                         {pal.isVariant ? (
                           <Badge variant="outline" className="text-[10px]">
@@ -255,7 +257,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                 })}
                 {results.length === 0 ? (
                   <li className="px-3 py-6 text-center text-sm text-muted-foreground">
-                    No Pals match "{query}".
+                    No Pals match “{query}”.
                   </li>
                 ) : null}
               </ul>
