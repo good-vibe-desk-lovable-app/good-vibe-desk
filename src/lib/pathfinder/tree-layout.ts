@@ -34,7 +34,9 @@ export interface TreeLayout {
 }
 
 export const NODE_W = 168;
-export const NODE_H = 66;
+// 66 was sized for a two-line text node; the icon added above the name needs
+// another ~28px plus its gap.
+export const NODE_H = 96;
 export const COL_GAP = 32;
 export const ROW_GAP = 66;
 
