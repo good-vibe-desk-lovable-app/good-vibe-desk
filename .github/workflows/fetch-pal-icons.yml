@@ -20,21 +20,24 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
-      - name: Download icons
+      - name: Write the fetch script
         run: |
-          node <<'SCRIPT'
-          const fs = require("fs");
-          const path = require("path");
+          mkdir -p .ci
+          cat > .ci/fetch-icons.mjs <<'SCRIPT'
+          // ESM: package.json sets "type": "module", so no require() here.
+          import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+          import { join } from "node:path";
 
-          // Read the generated module without importing TypeScript: the URLs
-          // live in a plain object literal, so a regex over the source is
-          // enough and avoids adding a build step to this workflow.
-          const src = fs.readFileSync("src/data/palworld/palIcons.ts", "utf8");
-          const block = src.split("PAL_ICON_SOURCE_URLS")[1] || "";
-          const entries = [...block.matchAll(/"([^"]+)":\s*"(https:[^"]+)"/g)]
-            .map(([, name, url]) => ({ name, url }));
+          // Read the generated module as text rather than importing TypeScript:
+          // the URLs live in a plain object literal, so a regex is enough and
+          // this workflow needs no build step.
+          const src = readFileSync("src/data/palworld/palIcons.ts", "utf8");
+          const block = src.split("PAL_ICON_SOURCE_URLS")[1] ?? "";
+          const entries = [...block.matchAll(/"([^"]+)":\s*"(https:[^"]+)"/g)].map(
+            ([, name, url]) => ({ name, url }),
+          );
 
           if (entries.length === 0) {
             console.error("No source URLs found — aborting rather than committing an empty set.");
@@ -42,23 +45,33 @@ jobs:
           }
           console.log(`Found ${entries.length} icons to fetch.`);
 
-          const outDir = path.join("public", "pals", "icons");
-          fs.mkdirSync(outDir, { recursive: true });
+          const outDir = join("public", "pals", "icons");
+          mkdirSync(outDir, { recursive: true });
 
-          let downloaded = 0, skipped = 0;
+          let downloaded = 0;
+          let skipped = 0;
           const failed = [];
 
           for (const { name, url } of entries) {
-            const dest = path.join(outDir, `${name}.webp`);
-            if (fs.existsSync(dest) && fs.statSync(dest).size > 0) { skipped++; continue; }
+            const dest = join(outDir, `${name}.webp`);
+            if (existsSync(dest) && statSync(dest).size > 0) {
+              skipped++;
+              continue;
+            }
             try {
               const res = await fetch(url, {
                 headers: { "User-Agent": "good-vibe-desk-icon-fetch/1.0" },
               });
-              if (!res.ok) { failed.push(`${name}: HTTP ${res.status}`); continue; }
+              if (!res.ok) {
+                failed.push(`${name}: HTTP ${res.status}`);
+                continue;
+              }
               const buf = Buffer.from(await res.arrayBuffer());
-              if (buf.length === 0) { failed.push(`${name}: empty response`); continue; }
-              fs.writeFileSync(dest, buf);
+              if (buf.length === 0) {
+                failed.push(`${name}: empty response`);
+                continue;
+              }
+              writeFileSync(dest, buf);
               downloaded++;
             } catch (err) {
               failed.push(`${name}: ${err.message}`);
@@ -80,6 +93,9 @@ jobs:
           }
           SCRIPT
 
+      - name: Download icons
+        run: node .ci/fetch-icons.mjs
+
       - name: Report size
         run: |
           echo "Files: $(find public/pals/icons -type f | wc -l)"
@@ -87,6 +103,7 @@ jobs:
 
       - name: Commit the icons
         run: |
+          rm -rf .ci
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/pals/icons
