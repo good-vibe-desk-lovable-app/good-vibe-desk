@@ -24,6 +24,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddPalDialog } from "./add-pal-dialog";
 import { BulkAddDialog } from "./bulk-add-dialog";
+import { PalIcon } from "./pal-icon";
 
 /** Exports are a few KB even for huge collections — anything near this is not ours. */
 const MAX_IMPORT_BYTES = 2 * 1024 * 1024;
@@ -154,6 +155,9 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
+                        {pal ? (
+                          <PalIcon internalName={pal.internalName} name={pal.name} size={36} />
+                        ) : null}
                         <GenderIcon gender={entry.gender} />
                         <span className="truncate font-semibold">{pal?.name ?? "Unknown Pal"}</span>
                         {pal ? (
