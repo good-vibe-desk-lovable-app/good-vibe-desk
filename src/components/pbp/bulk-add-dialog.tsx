@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { PalIcon } from "./pal-icon";
 
 /**
  * Rank rather than merely filter. A name that STARTS with the query is what
@@ -176,6 +177,7 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
                       <span className="w-12 shrink-0 text-xs tabular-nums opacity-70">
                         #{pal.palDexNo}
                       </span>
+                      <PalIcon internalName={pal.internalName} name={pal.name} size={28} />
                       <span className="flex-1 font-medium">{pal.name}</span>
                       {pal.isVariant ? (
                         <Badge variant="outline" className="text-[10px]">
