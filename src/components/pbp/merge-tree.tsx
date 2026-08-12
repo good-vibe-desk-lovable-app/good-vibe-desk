@@ -7,6 +7,7 @@ import { formulaTarget, layoutTree, NODE_H, NODE_W } from "@/lib/pathfinder/tree
 import type { TreeNode } from "@/lib/pathfinder/tree-layout";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { PalIcon } from "./pal-icon";
 
 const PAD = 24;
 
@@ -97,6 +98,9 @@ export function MergeTree({ steps, targetId, sourceName, sourcePassives }: Merge
                   )}
                   style={{ left: PAD + node.x, top: PAD + node.y, width: NODE_W, height: NODE_H }}
                 >
+                  {pal ? (
+                    <PalIcon internalName={pal.internalName} name={pal.name} size={28} />
+                  ) : null}
                   <span className="flex items-center gap-1 text-sm leading-tight font-semibold">
                     {node.kind === "root" ? <Star className="size-3.5 text-warning" /> : null}
                     {pal?.name ?? `Pal #${node.palId}`}
