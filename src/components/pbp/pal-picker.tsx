@@ -19,6 +19,7 @@ import { loadRecentPals, pushRecentPal } from "@/lib/recents";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { PalIcon } from "./pal-icon";
 
 export const ELEMENTS = [
   "Normal",
@@ -231,6 +232,7 @@ export function PalPicker({
                     <span className="w-10 shrink-0 text-xs tabular-nums opacity-70">
                       #{pal.palDexNo}
                     </span>
+                    <PalIcon internalName={pal.internalName} name={pal.name} size={32} />
                     <span className="min-w-0 flex-1 truncate font-medium">{pal.name}</span>
                     {ownedSet.has(pal.id) ? (
                       <Badge variant="secondary" className="text-[10px]">
