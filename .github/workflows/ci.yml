@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          # 20 is deprecated on GitHub runners and emits a warning on every run.
+          # 20 is deprecated on GitHub runners and warns on every run.
           node-version: "22"
 
       - name: Install dependencies
@@ -26,12 +26,8 @@ jobs:
         # environment. It catches unused imports and missing hook dependency
         # arrays — bugs that typecheck cleanly and misbehave at runtime.
         #
-        # STILL continue-on-error, deliberately, for exactly one more cycle.
-        # The generated dataset modules are now excluded from the formatting
-        # rule (.prettierignore + eslint.config.js) and the Format workflow has
-        # cleaned the rest of the tree, so this step is EXPECTED to be green.
-        # Confirm it is green in this log, then delete this flag and the two
-        # lines above it.
+        # Still continue-on-error for one more cycle. Confirm this step is
+        # green in the log, then delete this flag and the two lines above it.
         continue-on-error: true
         run: npm run lint
 
@@ -39,43 +35,45 @@ jobs:
         run: npx vitest run
 
       - name: Production build
-        # NITRO_PRESET is deliberately unset. @lovable.dev/vite-tanstack-config
-        # defaults nitro to a Cloudflare target, which is the host this app is
-        # migrating back to; the previous `NITRO_PRESET: netlify` override is
-        # what changed the output layout in the first place.
+        # NITRO_PRESET is deliberately unset: the Lovable vite config defaults
+        # nitro to a Cloudflare target, which is the host this app deploys to.
         run: npm run build
 
       - name: Report the build output layout
-        # The service worker's precache manifest is rooted at a hard-coded
-        # directory in vite.config.ts (PWA_OUT_DIR). Get it wrong and every
-        # precached URL gains a bad prefix and 404s — silently, because the app
-        # still loads from the network and only offline mode breaks.
-        #
-        # An earlier version of this step searched dist/ only and found nothing
-        # but the two service worker files: under the Cloudflare preset the
-        # build does NOT land in dist/. This one searches the whole workspace,
-        # because the answer is a directory nobody has confirmed yet.
-        #
-        # Cloudflare Pages' "Build output directory" is whichever directory
-        # contains index.html.
+        # Confirmed by an earlier run: nitro emits static assets to
+        # .output/public and the server entry to .output/server. Nothing lands
+        # in dist/ except the service worker. This step now verifies two things
+        # that cannot be checked from a phone any other way.
         if: always()
         run: |
-          echo "--- directories at the workspace root ---"
-          ls -la
+          echo "=== 1. Deploy config emitted by the build ==="
+          # Names the server entry and the static asset directory wrangler will
+          # upload. This is what the Cloudflare dashboard deploy command needs.
+          if [ -f .output/server/wrangler.json ]; then
+            cat .output/server/wrangler.json
+          else
+            echo "MISSING — the build did not emit a wrangler config."
+          fi
           echo
-          echo "--- every index.html (workspace-wide) ---"
-          find . -name index.html -not -path './node_modules/*' -not -path './public/*' | sort
+          echo "=== 2. Service worker location ==="
+          find . \( -name 'sw.js' -o -name 'workbox-*.js' \) \
+            -not -path './node_modules/*' -not -path './public/*' | sort
           echo
-          echo "--- candidate output trees, two levels deep ---"
-          for d in dist .output .nitro .tanstack .vinxi build .netlify; do
-            if [ -d "$d" ]; then
-              echo "== $d =="
-              find "$d" -maxdepth 2 | sort | head -40
-              echo
-            fi
-          done
-          echo "--- service workers and precache manifests ---"
-          find . \( -name 'sw.js' -o -name 'workbox-*.js' -o -name 'manifest.webmanifest' \) -not -path './node_modules/*' -not -path './public/*' | sort
+          echo "=== 3. Precache entry count ==="
+          # THE NUMBER THAT MATTERS. Each precached file appears in the service
+          # worker's inlined manifest with a "revision" key, so counting those
+          # counts the files the app can serve offline. 0 means the manifest
+          # built against an empty directory and offline mode is dead — the app
+          # still loads online, which is why this fails silently in production.
+          SW=".output/public/sw.js"
+          if [ -f "$SW" ]; then
+            echo "sw.js found at $SW"
+            echo "precached files: $(grep -o '"revision"' "$SW" | wc -l)"
+            echo "sw.js size: $(wc -c < "$SW") bytes"
+          else
+            echo "NOT FOUND at $SW — checking dist/ instead"
+            [ -f dist/sw.js ] && echo "dist/sw.js precached files: $(grep -o '"revision"' dist/sw.js | wc -l)"
+          fi
           echo
-          echo "--- server / worker entries ---"
-          find . \( -name '_worker.js' -o -name 'index.mjs' -o -name 'server.js' \) -not -path './node_modules/*' -maxdepth 4 | sort
+          echo "=== 4. Static asset root, one level ==="
+          [ -d .output/public ] && find .output/public -maxdepth 1 | sort | head -20
