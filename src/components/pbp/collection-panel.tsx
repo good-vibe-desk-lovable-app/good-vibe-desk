@@ -4,6 +4,9 @@ import { toast } from "sonner";
 
 import { DATA_VERSION, palById } from "@/data/palworld";
 import {
+  describeAge,
+  loadLastExportAt,
+  markExported,
   getPassive,
   parseCollectionFileDetailed,
   type CollectionEntry,
@@ -43,6 +46,8 @@ interface CollectionPanelProps {
 export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [bulkOpen, setBulkOpen] = useState(false);
+  // Shown in the backup reminder; refreshed whenever the user exports.
+  const [lastExport, setLastExport] = useState<number | null>(() => loadLastExportAt());
   const [editing, setEditing] = useState<CollectionEntry | null>(null);
   const [pendingImport, setPendingImport] = useState<CollectionEntry[] | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -72,6 +77,8 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 0);
+    markExported();
+    setLastExport(Date.now());
   }
 
   async function handleImportFile(file: File) {
@@ -138,6 +145,18 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
       </CardHeader>
 
       <CardContent className="space-y-2">
+        {entries.length > 0 ? (
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border/70 bg-background/40 px-3 py-2">
+            <span className="text-xs text-muted-foreground">
+              {entries.length} {entries.length === 1 ? "Pal" : "Pals"} saved in this browser · last
+              backup {describeAge(lastExport)}
+            </span>
+            <Button variant="secondary" size="sm" onClick={handleExport}>
+              <Download className="size-4" /> Back up now
+            </Button>
+          </div>
+        ) : null}
+
         {entries.length === 0 ? (
           <p className="rounded-lg border border-dashed border-border/70 px-4 py-8 text-center text-sm text-muted-foreground">
             Nothing here yet. Add the Pals you already own — passives can only come from Pals in
