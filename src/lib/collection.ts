@@ -19,6 +19,15 @@ export interface CollectionFile {
 export const COLLECTION_KEY = "pbp:collection:v1";
 export const LAST_TARGET_KEY = "pbp:lastTarget:v1";
 export const FAVORITES_KEY = "pbp:favorites:v1";
+/**
+ * A second, independently written copy of the collection. localStorage writes
+ * are not atomic, and a quota failure or an interrupted write can leave the
+ * primary key truncated. Keeping a mirror means a corrupt primary never takes
+ * the only copy with it.
+ */
+export const COLLECTION_BACKUP_KEY = "pbp:collection:backup:v1";
+/** When the user last exported a real file, so the UI can nag if it has been a while. */
+export const LAST_EXPORT_KEY = "pbp:lastExport:v1";
 
 export const MAX_PASSIVE_SLOTS = 4;
 
@@ -154,25 +163,103 @@ export function newInstanceId(): string {
   return `pal-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-export function loadCollection(): CollectionEntry[] {
-  if (typeof window === "undefined") return [];
+function readCollectionKey(key: string): CollectionEntry[] | null {
   try {
-    const raw = window.localStorage.getItem(COLLECTION_KEY);
-    if (!raw) return [];
-    return parseCollectionFile(JSON.parse(raw)) ?? [];
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    return parseCollectionFile(JSON.parse(raw));
   } catch {
-    return [];
+    return null;
   }
 }
 
-export function saveCollection(entries: CollectionEntry[]) {
-  if (typeof window === "undefined") return;
-  const file: CollectionFile = { version: 1, dataVersion: DATA_VERSION.dataVersion, entries };
-  try {
-    window.localStorage.setItem(COLLECTION_KEY, JSON.stringify(file));
-  } catch {
-    /* quota or private mode — collection stays in memory for this session */
+/**
+ * Reads the collection, falling back to the mirror when the primary key is
+ * missing or unparseable. A collection is hand-entered over many sessions, so
+ * silently returning [] on a corrupt read would look identical to "new user"
+ * and the mistake would only be noticed once the work was already gone.
+ */
+export function loadCollection(): CollectionEntry[] {
+  if (typeof window === "undefined") return [];
+  const primary = readCollectionKey(COLLECTION_KEY);
+  if (primary && primary.length > 0) return primary;
+
+  const backup = readCollectionKey(COLLECTION_BACKUP_KEY);
+  if (backup && backup.length > 0) {
+    // Primary was lost but the mirror survived — restore it so the next write
+    // has something consistent to overwrite.
+    try {
+      window.localStorage.setItem(
+        COLLECTION_KEY,
+        JSON.stringify({ version: 1, dataVersion: DATA_VERSION.dataVersion, entries: backup }),
+      );
+    } catch {
+      /* still out of quota; the in-memory copy is what matters this session */
+    }
+    return backup;
   }
+
+  return primary ?? [];
+}
+
+/**
+ * Persists the collection to both the primary key and its mirror.
+ *
+ * Returns false when the write failed (quota exhausted, private mode). The old
+ * implementation swallowed this, which meant a user could keep adding Pals for
+ * an entire session and lose all of them on reload without ever seeing a
+ * warning. Callers are expected to surface a failure rather than ignore it.
+ */
+export function saveCollection(entries: CollectionEntry[]): boolean {
+  if (typeof window === "undefined") return true;
+  const file: CollectionFile = { version: 1, dataVersion: DATA_VERSION.dataVersion, entries };
+  const payload = JSON.stringify(file);
+  let ok = true;
+  try {
+    window.localStorage.setItem(COLLECTION_KEY, payload);
+  } catch {
+    ok = false;
+  }
+  try {
+    // Written separately so a failure on one key cannot leave both truncated.
+    window.localStorage.setItem(COLLECTION_BACKUP_KEY, payload);
+  } catch {
+    /* mirror is best-effort; the primary result is what we report */
+  }
+  return ok;
+}
+
+/** Timestamp of the last real file export, or null if never. */
+export function loadLastExportAt(): number | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(LAST_EXPORT_KEY);
+    if (!raw) return null;
+    const n = Number(JSON.parse(raw));
+    return Number.isFinite(n) ? n : null;
+  } catch {
+    return null;
+  }
+}
+
+export function markExported(when: number = Date.now()) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(LAST_EXPORT_KEY, JSON.stringify(when));
+  } catch {
+    /* ignore */
+  }
+}
+
+/** "3 days ago" style label for the backup reminder. */
+export function describeAge(timestamp: number | null): string {
+  if (timestamp === null) return "never";
+  const days = Math.floor((Date.now() - timestamp) / 86_400_000);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return `${days} days ago`;
+  const months = Math.floor(days / 30);
+  return months === 1 ? "a month ago" : `${months} months ago`;
 }
 
 export function loadLastTarget(): number | null {
