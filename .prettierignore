@@ -6,3 +6,24 @@ pnpm-lock.yaml
 package-lock.json
 bun.lock
 routeTree.gen.ts
+
+# Generated dataset modules. Every record is emitted as ONE long line by
+# scripts/emit-paldb.py (and by the palcalc import), with lines up to ~2200
+# characters. Prettier would reflow ~43,000 object properties onto their own
+# lines, turning ~4,900 lines of data into ~50,000, and the very next
+# regeneration would revert all of it — a permanent lint failure that can never
+# be fixed by running `format` again. These files are machine output; their
+# formatting is the generator's business, not Prettier's.
+src/data/palworld/drops.ts
+src/data/palworld/elements.ts
+src/data/palworld/habitat.ts
+src/data/palworld/palIcons.ts
+src/data/palworld/palPassives.ts
+src/data/palworld/pals.ts
+src/data/palworld/passives.ts
+src/data/palworld/sameSpeciesOnly.ts
+src/data/palworld/skills.ts
+src/data/palworld/spawns.ts
+src/data/palworld/stats.ts
+src/data/palworld/uniqueCombos.ts
+src/data/palworld/dataGaps.ts
