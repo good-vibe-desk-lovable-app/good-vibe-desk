@@ -20,6 +20,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Lint
+        # CI is the only place ESLint ever runs, since there is no local dev
+        # environment. It catches unused imports and missing hook dependency
+        # arrays — bugs that typecheck cleanly and misbehave at runtime.
+        #
+        # continue-on-error because the config includes eslint-plugin-prettier,
+        # so any formatting drift fails the whole step. Reporting it without
+        # blocking the build means real problems stay visible while cosmetic
+        # ones do not stop a deploy. Drop this flag once `npm run format` has
+        # been run over the tree.
+        continue-on-error: true
+        run: npm run lint
+
       - name: Run tests
         run: npx vitest run
 
