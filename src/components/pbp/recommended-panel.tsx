@@ -36,6 +36,48 @@ function hashOf(collection: CollectionEntry[], desiredSources: string[]): string
   );
 }
 
+/**
+ * Results survive a reload.
+ *
+ * The batch search runs against every breedable target with a 10s budget, so
+ * an in-memory cache meant paying that wait again on every page load even
+ * though the answer only changes when the collection does. Keyed by the same
+ * collection hash, so invalidation is unchanged — it is purely a longer-lived
+ * store behind the existing key.
+ */
+const PERSIST_KEY = "pbp:recommended:v1";
+/** Keep a couple of recent collection states; anything older is not worth the quota. */
+const PERSIST_MAX = 3;
+
+type CachedRun = { entries: BatchEntry[]; truncated: boolean };
+
+function readPersisted(): Record<string, CachedRun> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(PERSIST_KEY);
+    return raw ? (JSON.parse(raw) as Record<string, CachedRun>) : {};
+  } catch {
+    return {};
+  }
+}
+
+function writePersisted(key: string, value: CachedRun) {
+  if (typeof window === "undefined") return;
+  try {
+    const all = readPersisted();
+    all[key] = value;
+    // Trim oldest-first so a long session cannot grow this without bound.
+    const keys = Object.keys(all);
+    while (keys.length > PERSIST_MAX) {
+      const oldest = keys.shift();
+      if (oldest) delete all[oldest];
+    }
+    window.localStorage.setItem(PERSIST_KEY, JSON.stringify(all));
+  } catch {
+    /* quota — the in-memory cache still serves this session */
+  }
+}
+
 export function RecommendedPanel({
   entries,
   desiredSources,
@@ -51,7 +93,8 @@ export function RecommendedPanel({
   const [truncated, setTruncated] = useState(false);
   const [running, setRunning] = useState(false);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
-  const cache = useRef(new Map<string, { entries: BatchEntry[]; truncated: boolean }>());
+  // Seeded from localStorage so a reload does not re-run a 10-second search.
+  const cache = useRef(new Map<string, CachedRun>(Object.entries(readPersisted())));
 
   const key = useMemo(() => hashOf(entries, desiredSources), [entries, desiredSources]);
   const ownedNames = useMemo(
@@ -95,6 +138,8 @@ export function RecommendedPanel({
         if (oldest !== undefined) cache.current.delete(oldest);
       }
       cache.current.set(key, result);
+      // Mirror to storage so the next page load is instant.
+      writePersisted(key, result);
       setRows(result.entries);
       setTruncated(result.truncated);
     } finally {
