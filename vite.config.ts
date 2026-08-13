@@ -7,6 +7,23 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { VitePWA } from "vite-plugin-pwa";
 
+/**
+ * Directory the finished browser bundle lands in.
+ *
+ * Confirmed by the CI build-layout probe, not assumed: under the Cloudflare
+ * target that @lovable.dev/vite-tanstack-config defaults to, nitro emits the
+ * static assets to .output/public and the server entry to .output/server.
+ * Nothing lands in dist/ except these service worker files. The Netlify preset
+ * previously put everything in dist/, which is why this was hard-coded there.
+ *
+ * If the "precache entry count" in CI reports 0, the service worker is being
+ * written before nitro has populated this directory and the glob matches
+ * nothing — the app still works online and only offline mode is dead.
+ * Overridable via the PWA_OUT_DIR environment variable so a fix does not
+ * require a commit.
+ */
+const PWA_OUT_DIR = process.env.PWA_OUT_DIR ?? ".output/public";
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
@@ -17,11 +34,19 @@ export default defineConfig({
     plugins: [
       VitePWA({
         registerType: "autoUpdate",
-        // The Netlify Nitro preset emits the browser bundle into dist (the
-        // Cloudflare preset used dist/client). The SW and its precache
-        // manifest must be rooted wherever the assets actually land, or every
-        // URL gains a wrong prefix and 404s at runtime.
-        outDir: "dist",
+        // The SW and its precache manifest must be rooted wherever the browser
+        // bundle actually lands, or every precached URL gains a wrong prefix
+        // and 404s at runtime — silently, because the app still loads over the
+        // network and only offline mode breaks.
+        //
+        // The layout is preset-dependent: the Netlify preset emitted the
+        // browser bundle into dist/, the Cloudflare preset into dist/client/.
+        // This is an env var rather than a literal so a wrong guess is fixable
+        // from the Cloudflare dashboard (Settings -> Environment variables)
+        // instead of requiring a commit. The CI job's "Report the build output
+        // layout" step prints the real answer: it is the directory containing
+        // index.html.
+        outDir: PWA_OUT_DIR,
         // The guarded wrapper in src/lib/pwa.ts is the ONLY registrar.
         injectRegister: null,
 
@@ -52,8 +77,9 @@ export default defineConfig({
           // TanStack Start builds three environments (client, ssr, nitro) and
           // the PWA plugin's glob runs before the client assets are on disk,
           // which is why the manifest came out empty. Pointing globDirectory
-          // at the finished client output fixes the "0.00 KiB" precache.
-          globDirectory: "dist",
+          // at the finished client output fixes the "0.00 KiB" precache. It
+          // must track outDir — they are the same directory.
+          globDirectory: PWA_OUT_DIR,
           globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,webp}"],
           // Pal artwork is fetched on demand rather than precached, so the
           // service worker install stays small on mobile data.
