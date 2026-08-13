@@ -45,6 +45,14 @@ interface PalPickerProps {
   ownedIds?: number[];
 }
 
+/**
+ * Lowercased display names, built once. The search previously lowercased all
+ * ~300 names on every keystroke; this is the hot path while typing.
+ */
+const LOWER_NAMES: Record<number, string> = Object.fromEntries(
+  PALS.map((p) => [p.id, p.name.toLowerCase()]),
+);
+
 export function PalPicker({
   selectedId,
   onSelect,
@@ -69,19 +77,43 @@ export function PalPicker({
 
   const channels = useMemo(() => channelsInUse(), []);
 
-  const rows = useMemo(() => {
+  /**
+   * Rank rather than merely filter. A name that STARTS with the query is what
+   * the user meant; a substring hit elsewhere, or a dex-number match, is a
+   * fallback. Plain .includes() with an alphabetical sort buried Vanwyrm
+   * among every other name containing "va". -1 means no match.
+   */
+  const rankPal = (pal: Pal, q: string): number => {
+    if (!q) return 0;
+    const name = LOWER_NAMES[pal.id] ?? pal.name.toLowerCase();
+    if (name === q) return 0;
+    if (name.startsWith(q)) return 1;
+    if (name.includes(q)) return 2;
+    if (String(pal.palDexNo).startsWith(q)) return 3;
+    if (pal.internalName.toLowerCase().includes(q)) return 4;
+    return -1;
+  };
 
+  const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return PALS.filter((p) => {
-      if (q && !p.name.toLowerCase().includes(q) && !String(p.palDexNo).startsWith(q)) return false;
+    const matched: Array<{ pal: Pal; rank: number }> = [];
+
+    for (const p of PALS) {
       if (elements.length) {
         const own = PAL_ELEMENTS[p.internalName] ?? [];
-        if (!elements.some((e) => own.includes(e))) return false;
+        if (!elements.some((e) => own.includes(e))) continue;
       }
-      if (works.length && !works.every((w) => workLevelOf(p, w) > 0)) return false;
-      if (acq !== "all" && acquisitionOf(p.internalName).channel !== acq) return false;
-      return true;
-    }).sort((a, b) => a.name.localeCompare(b.name));
+      if (works.length && !works.every((w) => workLevelOf(p, w) > 0)) continue;
+      if (acq !== "all" && acquisitionOf(p.internalName).channel !== acq) continue;
+      const rank = rankPal(p, q);
+      if (rank < 0) continue;
+      matched.push({ pal: p, rank });
+    }
+
+    // Chips narrow the pool; the query orders what survives. Alphabetical is
+    // the tiebreak within a rank band so the list stays stable as you type.
+    matched.sort((a, b) => a.rank - b.rank || a.pal.name.localeCompare(b.pal.name));
+    return matched.map((m) => m.pal);
   }, [query, elements, works, acq]);
 
   const start = Math.max(0, Math.floor(scrollTop / ROW_HEIGHT) - 4);
