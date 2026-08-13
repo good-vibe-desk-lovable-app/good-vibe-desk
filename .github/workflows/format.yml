@@ -1,0 +1,62 @@
+# One-shot formatter.
+#
+# There is no local dev environment for this project — every change is written
+# as a complete file and pasted into GitHub's web editor from a phone. Running
+# `npm run format` over ~90 source files is therefore impossible by hand, so
+# the runner does it and commits the result back.
+#
+# HOW TO RUN IT:
+#   Actions tab -> "Format" (left sidebar) -> "Run workflow" -> Run workflow
+#
+# It is workflow_dispatch only: it must never fire automatically, or it would
+# race the CI job and push commits nobody asked for.
+name: Format
+
+on:
+  workflow_dispatch:
+
+# Default GITHUB_TOKEN permissions are read-only on many repos; the commit
+# below needs write. Nothing else is granted.
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Prettier
+        run: npm run format
+
+      # Generated dataset modules are excluded in .prettierignore. If one shows
+      # up as modified, the ignore list has drifted and reformatting it would
+      # produce a ~50,000-line diff that the next regeneration reverts. Fail
+      # loudly instead of committing it.
+      - name: Refuse to reformat generated data
+        run: |
+          if git diff --name-only | grep -E '^src/data/palworld/(drops|elements|habitat|palIcons|palPassives|pals|passives|sameSpeciesOnly|skills|spawns|stats|uniqueCombos|dataGaps)\.ts$'; then
+            echo "::error::Prettier modified a generated dataset module. Check .prettierignore before rerunning."
+            exit 1
+          fi
+
+      - name: Commit the result
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to format — tree is already clean."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "style: run prettier over the tree"
+          git push
