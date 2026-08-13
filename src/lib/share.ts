@@ -104,9 +104,7 @@ export function decodeShareState(payload: string): DecodedShare | null {
 /** Absolute URL for the current origin carrying the given state. */
 export function buildShareUrl(state: ShareState): string {
   const base =
-    typeof window === "undefined"
-      ? ""
-      : `${window.location.origin}${window.location.pathname}`;
+    typeof window === "undefined" ? "" : `${window.location.origin}${window.location.pathname}`;
   return `${base}${SHARE_HASH_PREFIX}${encodeShareState(state)}`;
 }
 

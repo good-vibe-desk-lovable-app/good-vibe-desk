@@ -64,9 +64,7 @@ export function stepSuccessProbability(input: InheritStepInput): number {
 
   const pool = Math.max(
     k,
-    Number.isFinite(input.parentPassiveCount)
-      ? Math.floor(input.parentPassiveCount)
-      : k,
+    Number.isFinite(input.parentPassiveCount) ? Math.floor(input.parentPassiveCount) : k,
   );
 
   let p = 0;

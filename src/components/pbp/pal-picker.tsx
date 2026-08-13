@@ -212,7 +212,6 @@ export function PalPicker({
         ))}
       </div>
 
-
       {quickRow("Favourites", favorites)}
       {quickRow("Recent", recent)}
 
@@ -294,7 +293,10 @@ export function PalPicker({
           </ul>
         </div>
 
-        <div className="flex w-5 shrink-0 flex-col justify-between py-1" aria-label="Jump to letter">
+        <div
+          className="flex w-5 shrink-0 flex-col justify-between py-1"
+          aria-label="Jump to letter"
+        >
           {LETTERS.map((l) => (
             <button
               key={l}

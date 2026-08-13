@@ -8,7 +8,7 @@ batch handler already exist from the previous pass and get extended, not rewritt
 
 **2.5a Astralym (300th Pal).** Append `WorldTreeDragon` / "Astralym" to `pals.ts` with  
 `breedingEligible: false`, `eggSize` XL→"Huge", elements `[]`, plus its level-80 range and  
-base stats into `stats.ts` with all twelve work levels `0` marked *verified-absent* (not  
+base stats into `stats.ts` with all twelve work levels `0` marked _verified-absent_ (not  
 missing). Self-only unique combo added to `uniqueCombos.ts`. The generator scripts get the  
 same override so a regeneration doesn't drop it. Any test asserting 299 becomes 300.
 
@@ -85,9 +85,9 @@ FIX LOG.
 ## Risks
 
 - Astralym enters an auto-generated file; the generator override is the guard against a  
-future regeneration silently dropping it.
+  future regeneration silently dropping it.
 - Part 7 yield depends on what the ladder actually returns; blocked sources get logged as  
-inaccessible rather than filled in.
+  inaccessible rather than filled in.
 - Approved — execute all parts in one continuous pass. Two corrections first:
 
 1. eggSize derivation. You wrote "eggSize XL→Huge". That reasoning is wrong even
@@ -120,9 +120,9 @@ inaccessible rather than filled in.
 
 &nbsp;
 
-   Also note its elements are [] (ElementType1/2: None per datamine) - so element
+Also note its elements are [] (ElementType1/2: None per datamine) - so element
 
-   coverage is genuinely 0, not missing. Record that distinction too.
+coverage is genuinely 0, not missing. Record that distinction too.
 
 &nbsp;
 

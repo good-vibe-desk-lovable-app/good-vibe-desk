@@ -8,7 +8,7 @@ export const MANUAL_DATA_GAPS: DataGap[] = [
     internalName: "WorldTreeDragon",
     field: "partnerSkill",
     reason:
-      "not-found — the datamine carries the placeholder \"This Pal's abilities are still being investigated.\"",
+      'not-found — the datamine carries the placeholder "This Pal\'s abilities are still being investigated."',
   },
   {
     internalName: "WorldTreeDragon",
@@ -37,6 +37,6 @@ export const MANUAL_DATA_GAPS: DataGap[] = [
     internalName: "*",
     field: "dungeonAcquisition",
     reason:
-      "under-counted, NOT verified-absent — DT_DungeonEnemySpawnDataTable keys through spawn-group IDs rather than Pal names, so dungeon acquisition matched zero rows in the datamine. A Pal with no other channel therefore shows \"acquisition unknown\", never \"not obtainable\".",
+      'under-counted, NOT verified-absent — DT_DungeonEnemySpawnDataTable keys through spawn-group IDs rather than Pal names, so dungeon acquisition matched zero rows in the datamine. A Pal with no other channel therefore shows "acquisition unknown", never "not obtainable".',
   },
 ];

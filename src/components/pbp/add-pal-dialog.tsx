@@ -138,10 +138,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
     [palId],
   );
 
-  const availablePassives = useMemo(
-    () => (palId === null ? [] : passivesForPal(palId)),
-    [palId],
-  );
+  const availablePassives = useMemo(() => (palId === null ? [] : passivesForPal(palId)), [palId]);
 
   const guaranteed = useMemo(
     () => new Set(palId === null ? [] : guaranteedPassiveIds(palId)),
@@ -413,9 +410,9 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
               </ScrollArea>
 
               <p className="text-xs text-muted-foreground">
-                Showing {visiblePassives.length} of {availablePassives.length} passives. Any Pal
-                can roll any passive, so the full list is always offered — the ones this species
-                is guaranteed to have are ticked and sorted first.
+                Showing {visiblePassives.length} of {availablePassives.length} passives. Any Pal can
+                roll any passive, so the full list is always offered — the ones this species is
+                guaranteed to have are ticked and sorted first.
               </p>
             </div>
           ) : null}

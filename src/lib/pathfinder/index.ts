@@ -11,15 +11,8 @@ export type {
 } from "./types";
 
 import { findBreedingChain } from "./pathfinder";
-import type {
-  BatchEntry,
-  BatchInput,
-  PathfinderInput,
-  Result,
-  WorkerOutbound,
-} from "./types";
+import type { BatchEntry, BatchInput, PathfinderInput, Result, WorkerOutbound } from "./types";
 export type { BatchEntry, BatchInput } from "./types";
-
 
 /**
  * One long-lived worker, reused across searches.
@@ -58,7 +51,6 @@ export function warmPathfinder(): void {
   if (typeof Worker === "undefined") return;
   getWorker();
 }
-
 
 /**
  * Runs the search in a Web Worker so the UI stays responsive.
@@ -128,15 +120,12 @@ export function runPathfinder(
           elapsedMs: 0,
           totalExpectedEggs: 0,
         });
-
-
     };
 
     const onError = () => {
-      finish(
-        findBreedingChain(input.targetId, input.collection, input.desiredSources, options),
-        { crashed: true },
-      );
+      finish(findBreedingChain(input.targetId, input.collection, input.desiredSources, options), {
+        crashed: true,
+      });
     };
 
     worker.addEventListener("message", onMessage);
@@ -219,8 +208,5 @@ export function findAlternative(
   const forbidFinalPair: [number, number] | undefined = last
     ? [last.parent1, last.parent2]
     : undefined;
-  return runPathfinder(
-    { ...input, options: { ...input.options, forbidFinalPair } },
-    opts,
-  );
+  return runPathfinder({ ...input, options: { ...input.options, forbidFinalPair } }, opts);
 }

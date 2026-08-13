@@ -24,7 +24,11 @@ function entry(
   return { instanceId, palId, gender, passiveIds: ["p"] };
 }
 
-function makeDeps(pals: ResolverPal[], combos: Parameters<typeof createResolver>[1] = [], locked: number[] = []): SearchDeps {
+function makeDeps(
+  pals: ResolverPal[],
+  combos: Parameters<typeof createResolver>[1] = [],
+  locked: number[] = [],
+): SearchDeps {
   const names = new Map(pals.map((p) => [p.id, p.name!]));
   return {
     resolve: createResolver(pals, combos),
@@ -95,12 +99,7 @@ describe("pathfinder", () => {
 
   it("(f) applies the rank formula and its tie-breaks", () => {
     // floor((570 + 1460 + 1) / 2) = 1015 -> 1010 is the closer candidate.
-    const resolveA = createResolver([
-      pal(1, 570),
-      pal(2, 1460),
-      pal(3, 1010),
-      pal(4, 1030),
-    ]);
+    const resolveA = createResolver([pal(1, 570), pal(2, 1460), pal(3, 1010), pal(4, 1030)]);
     expect(resolveA(1, 2)).toEqual({ childId: 3, via: "formula" });
 
     // Equidistant candidates (1010 and 1020 around 1015) -> lower indexOrder wins.

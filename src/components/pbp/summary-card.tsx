@@ -34,7 +34,6 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
   const hours = (n: number) => Math.round(n);
   const days = (n: number) => (Math.round((n / 24) * 10) / 10).toFixed(1);
 
-
   return (
     <Card className="border-warning/40 bg-card/80">
       <CardHeader>
@@ -76,11 +75,9 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
         </p>
 
         <p className="text-xs text-muted-foreground">
-          Lower bound: randomly-added passives enlarge each later step's parent pool, so long
-          chains cost more eggs in practice than shown.
+          Lower bound: randomly-added passives enlarge each later step's parent pool, so long chains
+          cost more eggs in practice than shown.
         </p>
-
-
 
         <p className="flex gap-2 rounded-lg border border-border/70 bg-background/40 p-3 text-xs text-muted-foreground">
           <Cake className="mt-0.5 size-4 shrink-0 text-primary" />

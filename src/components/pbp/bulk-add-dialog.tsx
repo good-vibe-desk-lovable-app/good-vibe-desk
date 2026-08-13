@@ -78,7 +78,10 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
   }, [query]);
 
   const selectedIds = useMemo(
-    () => Object.keys(counts).map(Number).filter((id) => counts[id] > 0),
+    () =>
+      Object.keys(counts)
+        .map(Number)
+        .filter((id) => counts[id] > 0),
     [counts],
   );
 

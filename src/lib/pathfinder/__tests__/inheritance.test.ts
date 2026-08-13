@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  MAX_EXPECTED_ATTEMPTS,
-  expectedAttempts,
-  stepSuccessProbability,
-} from "../inheritance";
+import { MAX_EXPECTED_ATTEMPTS, expectedAttempts, stepSuccessProbability } from "../inheritance";
 
 describe("inheritance model", () => {
   it("returns certainty when nothing is desired", () => {

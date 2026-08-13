@@ -49,7 +49,10 @@ function OpinionCardView({ card }: { card: OpinionCard }) {
       </CardHeader>
       <CardContent className="space-y-3">
         {card.sources.map((s) => (
-          <figure key={s.url + s.quote.slice(0, 24)} className="rounded-xl border border-border/70 bg-background/40 p-3">
+          <figure
+            key={s.url + s.quote.slice(0, 24)}
+            className="rounded-xl border border-border/70 bg-background/40 p-3"
+          >
             <blockquote className="border-l-2 border-primary/60 pl-3 text-sm italic">
               “{s.quote}”
             </blockquote>

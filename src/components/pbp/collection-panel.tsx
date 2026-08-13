@@ -1,5 +1,15 @@
 import { useRef, useState } from "react";
-import { Download, Mars, Pencil, Plus, Trash2, Upload, Venus, HelpCircle, Layers } from "lucide-react";
+import {
+  Download,
+  Mars,
+  Pencil,
+  Plus,
+  Trash2,
+  Upload,
+  Venus,
+  HelpCircle,
+  Layers,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { DATA_VERSION, palById } from "@/data/palworld";
@@ -54,7 +64,11 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
 
   function handleSave(entry: CollectionEntry) {
     const exists = entries.some((e) => e.instanceId === entry.instanceId);
-    onChange(exists ? entries.map((e) => (e.instanceId === entry.instanceId ? entry : e)) : [...entries, entry]);
+    onChange(
+      exists
+        ? entries.map((e) => (e.instanceId === entry.instanceId ? entry : e))
+        : [...entries, entry],
+    );
   }
 
   /** Bulk entry appends many at once; ids are freshly generated so no clashes. */
@@ -108,7 +122,12 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <CardTitle className="text-lg">Your Collection</CardTitle>
           <div className="flex gap-1">
-            <Button variant="ghost" size="sm" onClick={handleExport} disabled={entries.length === 0}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleExport}
+              disabled={entries.length === 0}
+            >
               <Download className="size-4" /> Export
             </Button>
             <Button variant="ghost" size="sm" onClick={() => fileRef.current?.click()}>
@@ -185,7 +204,9 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
                       </div>
                       <div className="mt-2 flex flex-wrap gap-1">
                         {entry.passiveIds.length === 0 ? (
-                          <span className="text-xs text-muted-foreground">No passives recorded</span>
+                          <span className="text-xs text-muted-foreground">
+                            No passives recorded
+                          </span>
                         ) : (
                           entry.passiveIds.map((id) => (
                             <Badge key={id} variant="secondary" className="text-[11px]">
@@ -244,8 +265,8 @@ export function CollectionPanel({ entries, onChange }: CollectionPanelProps) {
             <AlertDialogTitle>Replace your collection?</AlertDialogTitle>
             <AlertDialogDescription>
               Importing will replace all {entries.length} current{" "}
-              {entries.length === 1 ? "entry" : "entries"} with the {pendingImport?.length ?? 0} from
-              this file. This can't be undone.
+              {entries.length === 1 ? "entry" : "entries"} with the {pendingImport?.length ?? 0}{" "}
+              from this file. This can't be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

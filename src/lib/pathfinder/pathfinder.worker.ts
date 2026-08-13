@@ -1,6 +1,12 @@
 /// <reference lib="webworker" />
 import { findBreedingChain } from "./pathfinder";
-import type { BatchEntry, BatchInput, PathfinderInput, WorkerInbound, WorkerOutbound } from "./types";
+import type {
+  BatchEntry,
+  BatchInput,
+  PathfinderInput,
+  WorkerInbound,
+  WorkerOutbound,
+} from "./types";
 
 function runBatch(input: BatchInput, post: (msg: WorkerOutbound) => void) {
   const perTarget = input.perTargetTimeoutMs ?? 250;

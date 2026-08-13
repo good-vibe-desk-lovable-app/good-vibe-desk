@@ -113,29 +113,25 @@ export const ACQUISITION_CHANNELS: Record<string, ChannelEntry> = {
   WhiteAlienDragon: {
     channel: "meteor_event",
     sourceTier: 3,
-    requirement:
-      "Meteor events in the Astral Mountains, Dessicated Desert and Mount Obsidian",
-    notes: [
-      "Not guaranteed per event — shares its spawn pool with Xenovader and Selyne.",
-    ],
+    requirement: "Meteor events in the Astral Mountains, Dessicated Desert and Mount Obsidian",
+    notes: ["Not guaranteed per event — shares its spawn pool with Xenovader and Selyne."],
   },
   FlowerPrince: {
     channel: "field_alpha",
     sourceTier: 3,
-    requirement: "Field alpha \"Bewitching Lurker Dandilord\" — Lv78",
+    requirement: 'Field alpha "Bewitching Lurker Dandilord" — Lv78',
     notes: ["Drops Rotmist Root."],
   },
   Mothman: {
     channel: "field_alpha",
     sourceTier: 3,
-    requirement: "Field alpha \"Immortal Shade Silvance\" — Lv78",
+    requirement: 'Field alpha "Immortal Shade Silvance" — Lv78',
     notes: ["Drops Shinespore Root."],
   },
   YakushimaBoss001: {
     channel: "sealed_realm",
     sourceTier: 3,
-    requirement:
-      "Sealed Realm of Terraria, Eternal Summer Isle (-422, -795)",
+    requirement: "Sealed Realm of Terraria, Eternal Summer Isle (-422, -795)",
     notes: [
       "Guaranteed alpha boss, roughly a 1 hour respawn.",
       "Directly capturable — no egg or summon step.",

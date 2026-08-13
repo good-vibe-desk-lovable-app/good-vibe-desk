@@ -26,10 +26,7 @@ for (const c of UNIQUE_COMBOS) {
   }
 }
 
-export function resolveChild(
-  parent1Id: number,
-  parent2Id: number,
-): BreedingResult | null {
+export function resolveChild(parent1Id: number, parent2Id: number): BreedingResult | null {
   const p1 = palById.get(parent1Id);
   const p2 = palById.get(parent2Id);
   if (!p1 || !p2) return null;

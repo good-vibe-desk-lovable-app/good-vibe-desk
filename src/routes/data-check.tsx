@@ -59,7 +59,7 @@ function computeChecks(): Check[] {
     const b = named("Cattiva");
     if (a && b) {
       const r = resolveChild(a.id, b.id);
-      const child = r ? palById.get(r.childId)?.name ?? "?" : "null";
+      const child = r ? (palById.get(r.childId)?.name ?? "?") : "null";
       checks.push({
         label: "Anubis + Cattiva resolves via the rank formula (palcalc says Vanwyrm)",
         pass: !!r && r.via === "formula" && child === "Vanwyrm",
@@ -124,8 +124,7 @@ function computeChecks(): Check[] {
     let firstFail = "";
     for (const id of SAME_SPECIES_ONLY) {
       const list = childToParents.get(id) ?? [];
-      const ok =
-        list.length === 1 && list[0][0] === id && list[0][1] === id;
+      const ok = list.length === 1 && list[0][0] === id && list[0][1] === id;
       if (!ok) {
         allOk = false;
         firstFail = `id ${id} (${palById.get(id)?.name}) has ${list.length} pairs`;
@@ -133,8 +132,7 @@ function computeChecks(): Check[] {
       }
     }
     checks.push({
-      label:
-        "Every SAME_SPECIES_ONLY Pal has exactly one producing pair, and it is (self, self)",
+      label: "Every SAME_SPECIES_ONLY Pal has exactly one producing pair, and it is (self, self)",
       pass: allOk,
       detail: allOk ? `${SAME_SPECIES_ONLY.size} Pals verified` : firstFail,
     });
@@ -211,11 +209,7 @@ function DataCheckPage() {
         </TableCell>
         <TableCell className="font-mono">{p.combiRank}</TableCell>
         <TableCell>
-          {p.breedingEligible ? (
-            <Badge>eligible</Badge>
-          ) : (
-            <Badge variant="destructive">no</Badge>
-          )}
+          {p.breedingEligible ? <Badge>eligible</Badge> : <Badge variant="destructive">no</Badge>}
         </TableCell>
         <TableCell className="font-mono">{asChild}</TableCell>
         <TableCell className="font-mono">{asParent}</TableCell>
@@ -227,9 +221,7 @@ function DataCheckPage() {
     <div className="min-h-screen bg-background p-6 md:p-10">
       <div className="mx-auto max-w-6xl space-y-8">
         <header className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">
-            Palworld Breeding — Data Check
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight">Palworld Breeding — Data Check</h1>
           <p className="text-sm text-muted-foreground">
             Offline dataset sanity page. No app UI is wired to this yet.
           </p>
@@ -270,12 +262,8 @@ function DataCheckPage() {
             { label: "Passives", value: totals.passives },
           ].map((s) => (
             <div key={s.label} className="rounded-lg border p-4">
-              <div className="text-xs uppercase text-muted-foreground">
-                {s.label}
-              </div>
-              <div className="mt-1 text-2xl font-semibold">
-                {s.value.toLocaleString()}
-              </div>
+              <div className="text-xs uppercase text-muted-foreground">{s.label}</div>
+              <div className="mt-1 text-2xl font-semibold">{s.value.toLocaleString()}</div>
             </div>
           ))}
         </section>
@@ -284,10 +272,7 @@ function DataCheckPage() {
           <h2 className="text-lg font-semibold">Formula spot-checks</h2>
           <ul className="mt-3 space-y-2">
             {checks.map((c, i) => (
-              <li
-                key={i}
-                className="flex items-start justify-between gap-4 rounded-md border p-3"
-              >
+              <li key={i} className="flex items-start justify-between gap-4 rounded-md border p-3">
                 <div>
                   <div className="text-sm font-medium">
                     {i + 1}. {c.label}

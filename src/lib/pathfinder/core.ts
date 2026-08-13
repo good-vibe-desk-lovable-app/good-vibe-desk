@@ -1,14 +1,7 @@
 // Pure search core. Takes its data through `deps` so tests can run on tiny
 // fixtures without importing the full Palworld dataset.
 import { expectedAttempts } from "./inheritance";
-import type {
-  BreedingVia,
-  CollectionEntry,
-  PathfinderOptions,
-  Result,
-  Step,
-} from "./types";
-
+import type { BreedingVia, CollectionEntry, PathfinderOptions, Result, Step } from "./types";
 
 export interface ResolverPal {
   id: number;
@@ -34,7 +27,6 @@ export interface SearchDeps {
   sameSpeciesOnly: Set<number>;
   nameOf: (palId: number) => string;
 }
-
 
 /**
  * Mirrors src/data/palworld/breeding.ts exactly, but over supplied fixtures.
@@ -251,8 +243,7 @@ export function search(
     if (
       !bestPartial ||
       popcount(s.mask) > popcount(bestPartial.mask) ||
-      (popcount(s.mask) === popcount(bestPartial.mask) &&
-        s.expectedEggs < bestPartial.expectedEggs)
+      (popcount(s.mask) === popcount(bestPartial.mask) && s.expectedEggs < bestPartial.expectedEggs)
     ) {
       bestPartial = s;
     }
@@ -480,4 +471,3 @@ function reconstruct(
     totalExpectedEggs: steps.reduce((sum, s) => sum + s.expectedAttempts, 0),
   };
 }
-

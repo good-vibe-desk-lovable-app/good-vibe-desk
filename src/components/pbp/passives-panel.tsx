@@ -85,9 +85,8 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
 
   const allKeys = entries.flatMap((e) => e.passiveIds.map((p) => selectionKey(e.instanceId, p)));
   const selectedCount = selections.size;
-  const palCount = new Set(
-    Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":"))),
-  ).size;
+  const palCount = new Set(Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":"))))
+    .size;
 
   function toggle(key: string) {
     const next = new Set(selections);
@@ -163,7 +162,9 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
             <FilterChip
               key={t}
               on={tiers.includes(t)}
-              onClick={() => setTiers((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]))}
+              onClick={() =>
+                setTiers((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]))
+              }
             >
               {t}
             </FilterChip>

@@ -26,11 +26,46 @@ export const MAX_BASE_WORK_LEVEL = 8;
  * 48, not the stale pre-1.0 116).
  */
 export const CONDENSE_TABLE = [
-  { rank: 0, sacrifices: 0, cumulative: 0, partnerSkillLevel: 1, bonus: "no bonus", suitability: "none" },
-  { rank: 1, sacrifices: 4, cumulative: 4, partnerSkillLevel: 2, bonus: "+5% HP/Atk/Def", suitability: "+1 to best" },
-  { rank: 2, sacrifices: 8, cumulative: 12, partnerSkillLevel: 3, bonus: "+10% HP/Atk/Def", suitability: "+1 to 2nd-best" },
-  { rank: 3, sacrifices: 12, cumulative: 24, partnerSkillLevel: 4, bonus: "+15% HP/Atk/Def", suitability: "+1 to 3rd-best" },
-  { rank: 4, sacrifices: 24, cumulative: 48, partnerSkillLevel: 5, bonus: "+20% HP/Atk/Def", suitability: "+1 to every suitability" },
+  {
+    rank: 0,
+    sacrifices: 0,
+    cumulative: 0,
+    partnerSkillLevel: 1,
+    bonus: "no bonus",
+    suitability: "none",
+  },
+  {
+    rank: 1,
+    sacrifices: 4,
+    cumulative: 4,
+    partnerSkillLevel: 2,
+    bonus: "+5% HP/Atk/Def",
+    suitability: "+1 to best",
+  },
+  {
+    rank: 2,
+    sacrifices: 8,
+    cumulative: 12,
+    partnerSkillLevel: 3,
+    bonus: "+10% HP/Atk/Def",
+    suitability: "+1 to 2nd-best",
+  },
+  {
+    rank: 3,
+    sacrifices: 12,
+    cumulative: 24,
+    partnerSkillLevel: 4,
+    bonus: "+15% HP/Atk/Def",
+    suitability: "+1 to 3rd-best",
+  },
+  {
+    rank: 4,
+    sacrifices: 24,
+    cumulative: 48,
+    partnerSkillLevel: 5,
+    bonus: "+20% HP/Atk/Def",
+    suitability: "+1 to every suitability",
+  },
 ] as const;
 
 export const WORK_TYPES = [
@@ -81,7 +116,6 @@ export interface TierResult {
 export const STAT_BASIS =
   "Combat scores use base stats as published by paldb.cc — level-80 stat lines were not sourceable for the roster, so absolute values are lower than in-game at cap; relative ordering is unaffected. Work suitability levels normalise against 8, the maximum BASE level in the datamine.";
 
-
 function statOrNull(pal: Pal, key: string): number | null {
   const v = PAL_STATS[pal.internalName]?.stats[key];
   return typeof v === "number" ? v : null;
@@ -115,7 +149,10 @@ export function bestSkillPower(pal: Pal): number | null {
   return best;
 }
 
-function finish(rows: { pal: Pal; score: number; detail: Record<string, number> }[], unranked: UnrankedPal[]): TierResult {
+function finish(
+  rows: { pal: Pal; score: number; detail: Record<string, number> }[],
+  unranked: UnrankedPal[],
+): TierResult {
   const max = rows.reduce((m, s) => Math.max(m, s.score), 0) || 1;
   const ranked = rows
     .map((s) => ({ ...s, score: (s.score / max) * 100 }))
@@ -175,9 +212,10 @@ export function workTier(selected: readonly string[], speedWeight: number): Tier
     if (!hasWorkData(pal) || speed === null) {
       unranked.push({
         pal,
-        missing: [!hasWorkData(pal) ? "work suitability" : null, speed === null ? "work speed" : null].filter(
-          (x): x is string => !!x,
-        ),
+        missing: [
+          !hasWorkData(pal) ? "work suitability" : null,
+          speed === null ? "work speed" : null,
+        ].filter((x): x is string => !!x),
       });
       continue;
     }
@@ -247,7 +285,10 @@ export function overallTier(
   const workScore = new Map(work.ranked.map((r) => [r.pal.id, r.score]));
   const missingMap = new Map<number, string[]>();
   for (const u of [...raid.unranked, ...work.unranked]) {
-    missingMap.set(u.pal.id, Array.from(new Set([...(missingMap.get(u.pal.id) ?? []), ...u.missing])));
+    missingMap.set(
+      u.pal.id,
+      Array.from(new Set([...(missingMap.get(u.pal.id) ?? []), ...u.missing])),
+    );
   }
 
   const rows: { pal: Pal; score: number; detail: Record<string, number> }[] = [];

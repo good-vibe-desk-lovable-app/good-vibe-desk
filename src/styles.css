@@ -120,7 +120,6 @@
   --sidebar-ring: oklch(0.795 0.142 78);
 }
 
-
 @layer base {
   * {
     border-color: var(--color-border);
@@ -139,4 +138,3 @@
     letter-spacing: -0.01em;
   }
 }
-

@@ -37,7 +37,6 @@ export interface Result {
   totalExpectedEggs: number;
 }
 
-
 export interface PathfinderOptions {
   maxDepth?: number;
   timeoutMs?: number;

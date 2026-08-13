@@ -2,11 +2,7 @@ import { useState } from "react";
 import { BookOpen, ChevronsUpDown } from "lucide-react";
 
 import { SAME_SPECIES_ONLY } from "@/data/palworld";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function HowBreedingWorks() {

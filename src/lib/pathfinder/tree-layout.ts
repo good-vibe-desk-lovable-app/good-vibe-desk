@@ -76,9 +76,23 @@ export function layoutTree(steps: Step[], targetId: number | null): TreeLayout {
       x: 0,
       y: 0,
     });
-    edges.push({ id: `${id}:a`, from: aId, to: id, via: step.via, parent1: step.parent1, parent2: step.parent2 });
+    edges.push({
+      id: `${id}:a`,
+      from: aId,
+      to: id,
+      via: step.via,
+      parent1: step.parent1,
+      parent2: step.parent2,
+    });
     if (bId !== aId) {
-      edges.push({ id: `${id}:b`, from: bId, to: id, via: step.via, parent1: step.parent1, parent2: step.parent2 });
+      edges.push({
+        id: `${id}:b`,
+        from: bId,
+        to: id,
+        via: step.via,
+        parent1: step.parent1,
+        parent2: step.parent2,
+      });
     }
     producedByPal.set(step.child, id);
   }

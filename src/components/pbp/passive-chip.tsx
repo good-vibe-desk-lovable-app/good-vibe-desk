@@ -79,7 +79,10 @@ export function PassiveGlossaryDialog({
           <DialogTitle className="flex flex-wrap items-center gap-2">
             {passive?.name ?? passiveId}
             {passive ? (
-              <Badge variant="outline" className={cn("text-[10px] capitalize", TIER_CLASS[passive.tier])}>
+              <Badge
+                variant="outline"
+                className={cn("text-[10px] capitalize", TIER_CLASS[passive.tier])}
+              >
                 {passive.tier}
               </Badge>
             ) : null}

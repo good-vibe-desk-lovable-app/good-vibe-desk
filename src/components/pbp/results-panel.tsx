@@ -163,7 +163,6 @@ export function ResultsPanel({
                       <Badge variant="outline" className="text-[10px] tabular-nums">
                         ~{Math.max(1, Math.round(step.expectedAttempts))} tries
                       </Badge>
-
                     </div>
                     {step.carriedSources.length > 0 ? (
                       <div className="mt-2 flex flex-wrap gap-1">

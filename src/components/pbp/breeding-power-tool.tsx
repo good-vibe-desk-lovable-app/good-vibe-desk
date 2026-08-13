@@ -1,17 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ChevronsUpDown, Calculator, Loader2 } from "lucide-react";
 
-
 import { PALS, palById, resolveChild } from "@/data/palworld";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Command,
   CommandEmpty,
@@ -224,49 +219,48 @@ export function BreedingPowerTool() {
               <ReverseLookup />
             ) : (
               <>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <PalCombo value={a} onChange={setA} label="First parent" />
-              <PalCombo value={b} onChange={setB} label="Second parent" />
-            </div>
-
-
-            {outcome ? (
-              <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
-                <div className="flex flex-wrap items-center gap-2 text-base font-semibold">
-                  {outcome.pa.name} + {outcome.pb.name} ={" "}
-                  <span className="text-primary">{outcome.child?.name ?? "?"}</span>
-                  <Badge variant="outline" className="text-[10px]">
-                    {outcome.res.via === "unique"
-                      ? "Unique combo"
-                      : outcome.res.via === "same-species"
-                        ? "Same species"
-                        : "Breeding power"}
-                  </Badge>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <PalCombo value={a} onChange={setA} label="First parent" />
+                  <PalCombo value={b} onChange={setB} label="Second parent" />
                 </div>
-                {outcome.res.via === "formula" ? (
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    rank {outcome.pa.combiRank} + {outcome.pb.combiRank} → target {outcome.target} →
-                    closest eligible: {outcome.child?.name} ({outcome.child?.combiRank})
-                  </p>
-                ) : outcome.res.via === "unique" ? (
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    This pair is a special override — it ignores the breeding-power formula.
-                  </p>
+
+                {outcome ? (
+                  <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
+                    <div className="flex flex-wrap items-center gap-2 text-base font-semibold">
+                      {outcome.pa.name} + {outcome.pb.name} ={" "}
+                      <span className="text-primary">{outcome.child?.name ?? "?"}</span>
+                      <Badge variant="outline" className="text-[10px]">
+                        {outcome.res.via === "unique"
+                          ? "Unique combo"
+                          : outcome.res.via === "same-species"
+                            ? "Same species"
+                            : "Breeding power"}
+                      </Badge>
+                    </div>
+                    {outcome.res.via === "formula" ? (
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        rank {outcome.pa.combiRank} + {outcome.pb.combiRank} → target{" "}
+                        {outcome.target} → closest eligible: {outcome.child?.name} (
+                        {outcome.child?.combiRank})
+                      </p>
+                    ) : outcome.res.via === "unique" ? (
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        This pair is a special override — it ignores the breeding-power formula.
+                      </p>
+                    ) : (
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Two of the same species always breed true.
+                      </p>
+                    )}
+                  </div>
                 ) : (
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Two of the same species always breed true.
+                  <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
+                    Pick two Pals to see what they produce.
                   </p>
                 )}
-              </div>
-            ) : (
-              <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
-                Pick two Pals to see what they produce.
-              </p>
-            )}
               </>
             )}
           </CardContent>
-
         </CollapsibleContent>
       </Card>
     </Collapsible>

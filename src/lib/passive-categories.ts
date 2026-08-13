@@ -8,7 +8,8 @@ export const PASSIVE_CATEGORIES = ["Combat", "Work", "Movement", "Other"] as con
 export type PassiveCategory = (typeof PASSIVE_CATEGORIES)[number];
 
 const COMBAT = /attack|defen[cs]e|damage|element|shield|critical|hp\b|health/i;
-const WORK = /work speed|work suitability|crafting|gathering|mining|logging|planting|watering|kindling|handiwork|sanity|hunger|food/i;
+const WORK =
+  /work speed|work suitability|crafting|gathering|mining|logging|planting|watering|kindling|handiwork|sanity|hunger|food/i;
 const MOVEMENT = /movement speed|walk|run|sprint|mount|riding|stamina|carry|weight/i;
 
 export function categoryOf(passive: Passive): PassiveCategory {
@@ -19,9 +20,7 @@ export function categoryOf(passive: Passive): PassiveCategory {
   return "Other";
 }
 
-const cache = new Map<string, PassiveCategory>(
-  PASSIVES.map((p) => [p.id, categoryOf(p)] as const),
-);
+const cache = new Map<string, PassiveCategory>(PASSIVES.map((p) => [p.id, categoryOf(p)] as const));
 
 export function categoryOfId(passiveId: string): PassiveCategory {
   return cache.get(passiveId) ?? "Other";

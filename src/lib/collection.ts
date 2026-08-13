@@ -55,7 +55,6 @@ export const HATCH_HOURS: Record<string, [number, number]> = {
   Huge: [36, 72],
 };
 
-
 const passiveById = new Map<string, Passive>(PASSIVES.map((p) => [p.id, p]));
 const palIds = new Set<number>(PALS.map((p) => p.id));
 
@@ -70,9 +69,7 @@ export function getPassive(id: string): Passive | undefined {
 export function passivesForPal(palId: number): Passive[] {
   const guaranteed = guaranteedPassiveIds(palId);
   if (guaranteed.length === 0) return PASSIVES;
-  const first = guaranteed
-    .map((id) => passiveById.get(id))
-    .filter((p): p is Passive => !!p);
+  const first = guaranteed.map((id) => passiveById.get(id)).filter((p): p is Passive => !!p);
   const rest = PASSIVES.filter((p) => !guaranteed.includes(p.id));
   return [...first, ...rest];
 }
@@ -82,7 +79,6 @@ export function guaranteedPassiveIds(palId: number): string[] {
   const entry = PAL_PASSIVES[palId];
   return !entry || entry === "any" ? [] : entry;
 }
-
 
 function isGender(value: unknown): value is Gender {
   return value === "male" || value === "female" || value === "unknown";
@@ -114,7 +110,9 @@ export function parseCollectionFileDetailed(raw: unknown): ParseCollectionResult
   const items =
     file.entries.length > MAX_ENTRIES ? file.entries.slice(0, MAX_ENTRIES) : file.entries;
   if (file.entries.length > MAX_ENTRIES) {
-    notes.push(`File had ${file.entries.length} entries — only the first ${MAX_ENTRIES} were imported.`);
+    notes.push(
+      `File had ${file.entries.length} entries — only the first ${MAX_ENTRIES} were imported.`,
+    );
   }
 
   let regenerated = 0;
@@ -148,7 +146,9 @@ export function parseCollectionFileDetailed(raw: unknown): ParseCollectionResult
     });
   }
   if (regenerated > 0) {
-    notes.push(`${regenerated} ${regenerated === 1 ? "entry" : "entries"} had missing, oversized, or duplicate ids — new ids were assigned.`);
+    notes.push(
+      `${regenerated} ${regenerated === 1 ? "entry" : "entries"} had missing, oversized, or duplicate ids — new ids were assigned.`,
+    );
   }
   return { entries, notes };
 }

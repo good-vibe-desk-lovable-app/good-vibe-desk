@@ -1,6 +1,7 @@
 # Mega-phase plan — Parts 1–7
 
 Verified before planning:
+
 - `palcalc db.json` fetches fine (299 Pals) and carries base Hp/Attack/Defense, walk/run/ride/transport speeds, stamina, food, rarity, size, `Nocturnal`, `MinWildLevel`/`MaxWildLevel`, and `WorkSuitability` on a 0–8 scale, plus top-level `Elements` (9), `ActiveSkills` (320) and `PassiveSkills` (1905) tables. It does **not** carry per-Pal elements, drop tables, spawn regions, learnsets or ranch drops.
 - `paldb.cc/en/<InternalName>` returns real HTML (~88 KB, no challenge page) — e.g. `Anubis`, `Jormuntide_Ignis`. It is the source for the fields palcalc lacks.
 - Current `src/data/palworld/pals.ts` has `elements: []` on every Pal, so elements are genuinely missing today.
@@ -11,11 +12,13 @@ Ground rule for every part: no value is written unless it came from a fetch that
 ## Part 1 — Missing data into the dataset
 
 Fetch pipeline (dev-time scripts under `scripts/`, not shipped in the client bundle):
+
 1. Download `db.json` + `breeding.json` once; cache raw under `scripts/.cache/`.
 2. Fetch all 299 `paldb.cc/en/<internalName>` pages, throttled and resumable, saving raw HTML to `scripts/.cache/paldb/` so a parser bug never costs a re-fetch.
 3. Parse into typed modules; join strictly on `internalName` → existing numeric `id`. Never on `palDexNo`.
 
 New modules under `src/data/palworld/` (each a plain exported const array/record, no init-time computation):
+
 - `elements.ts` — canonical nine + the effectiveness matrix (2.0/1.0/0.5) + per-Pal element list.
 - `stats.ts` — base Hp/Attack/Defense, speeds, stamina, food, rarity, size, nocturnal, wild level range (from palcalc).
 - `spawns.ts` — habitat regions, day/night, level range, alpha/boss flag, dungeon-only, and a `catchable` flag (Part 6).
@@ -38,10 +41,11 @@ Tests: 299 entries; every id resolves in `palById`; work levels integers 0–8; 
 ## Part 3 — `/tiers` computed tier lists
 
 New route with four tabs (Overall · Base/Work · Raiding · Ranch). Scoring lives in a pure `src/lib/tiers/` module (testable, no React):
+
 - Raid = normalised DPS (attack × best skill power/cooldown) + survivability (HP/defense) + element coverage from the matrix.
 - Base = work-suitability spread and peak scaled by work speed.
 - Ranch = farming level + drop value.
-Sliders over preset weightings with live re-ranking; the formula and current weights are displayed; rows expand to show each component's raw and normalised value. S/A/B/C/D bands by percentile with the numeric score next to the band. All 299 listed, owned Pals marked, and a pinned "Your Pals" panel showing each owned Pal's global rank.
+  Sliders over preset weightings with live re-ranking; the formula and current weights are displayed; rows expand to show each component's raw and normalised value. S/A/B/C/D bands by percentile with the numeric score next to the band. All 299 listed, owned Pals marked, and a pinned "Your Pals" panel showing each owned Pal's global rank.
 
 ## Part 4 — Fast picker
 

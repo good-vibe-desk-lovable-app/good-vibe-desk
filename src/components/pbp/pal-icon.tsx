@@ -29,10 +29,7 @@ export function PalIcon({ internalName, name, size = 32, className }: PalIconPro
   const src = palIconPath(internalName);
   const [failed, setFailed] = useState(false);
 
-  const box = cn(
-    "shrink-0 rounded-md bg-muted/40 object-contain",
-    className,
-  );
+  const box = cn("shrink-0 rounded-md bg-muted/40 object-contain", className);
 
   if (!src || failed) {
     return (

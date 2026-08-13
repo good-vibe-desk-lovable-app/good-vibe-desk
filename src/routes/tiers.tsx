@@ -218,7 +218,10 @@ function YourPals({ result, owned }: { result: TierResult; owned: Set<number> })
   if (owned.size === 0) {
     return (
       <p className="rounded-xl border border-dashed border-border/70 p-3 text-xs text-muted-foreground">
-        Add Pals on the <Link to="/" className="underline underline-offset-4">pathfinder page</Link>{" "}
+        Add Pals on the{" "}
+        <Link to="/" className="underline underline-offset-4">
+          pathfinder page
+        </Link>{" "}
         and they'll show up here with their global rank.
       </p>
     );
@@ -418,7 +421,6 @@ function TiersPage() {
             weights="fixed — Farming suitability dominates, work speed breaks ties"
           />
         </TabsContent>
-
       </Tabs>
     </div>
   );

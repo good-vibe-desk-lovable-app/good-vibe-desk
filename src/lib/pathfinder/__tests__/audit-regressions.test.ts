@@ -47,9 +47,7 @@ describe("collection import hardening (audit regressions)", () => {
   it("(c) regenerates oversized instanceIds", () => {
     const parsed = parseCollectionFileDetailed({
       version: 1,
-      entries: [
-        { instanceId: "x".repeat(500), palId: 1, gender: "unknown", passiveIds: [] },
-      ],
+      entries: [{ instanceId: "x".repeat(500), palId: 1, gender: "unknown", passiveIds: [] }],
     });
     expect(parsed).not.toBeNull();
     const id = parsed!.entries[0].instanceId;
