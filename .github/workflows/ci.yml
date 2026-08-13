@@ -25,11 +25,14 @@ jobs:
         # environment. It catches unused imports and missing hook dependency
         # arrays — bugs that typecheck cleanly and misbehave at runtime.
         #
-        # continue-on-error because the config includes eslint-plugin-prettier,
-        # so any formatting drift fails the whole step. Reporting it without
-        # blocking the build means real problems stay visible while cosmetic
-        # ones do not stop a deploy. Drop this flag once `npm run format` has
-        # been run over the tree.
+        # STILL continue-on-error, deliberately, for exactly one more cycle.
+        # The generated dataset modules are now excluded from the formatting
+        # rule (.prettierignore + eslint.config.js) and the Format workflow has
+        # cleaned the rest of the tree, so this step is EXPECTED to be green.
+        # Confirm it is green in this log, then delete this flag and the two
+        # lines above it. Flipping it blind would turn an unknown number of
+        # pre-existing warnings into a blocked deploy with no way to inspect
+        # them first.
         continue-on-error: true
         run: npm run lint
 
@@ -37,6 +40,33 @@ jobs:
         run: npx vitest run
 
       - name: Production build
+        # NITRO_PRESET is deliberately unset. @lovable.dev/vite-tanstack-config
+        # defaults nitro to a Cloudflare target, which is the host this app is
+        # migrating back to; the previous `NITRO_PRESET: netlify` override is
+        # what changed the output layout in the first place.
         run: npm run build
-        env:
-          NITRO_PRESET: netlify
+
+      - name: Report the build output layout
+        # The service worker's precache manifest is rooted at a hard-coded
+        # directory in vite.config.ts (PWA_OUT_DIR). Under the Netlify preset
+        # the browser bundle landed in dist/; under Cloudflare it landed in
+        # dist/client/. If that root is wrong every precached URL gains a bad
+        # prefix and 404s at runtime — silently, because the app still loads
+        # from the network.
+        #
+        # This step prints the real layout so it is read off a log rather than
+        # assumed. Cloudflare Pages' "Build output directory" setting is
+        # whichever directory below contains index.html.
+        if: always()
+        run: |
+          echo "--- top two levels of the build output ---"
+          find dist -maxdepth 2 | sort | head -60
+          echo
+          echo "--- every index.html ---"
+          find dist -name index.html | sort
+          echo
+          echo "--- service worker + precache manifest ---"
+          find dist -maxdepth 2 \( -name 'sw.js' -o -name 'workbox-*.js' -o -name 'manifest.webmanifest' \) | sort
+          echo
+          echo "--- worker / server entry ---"
+          find dist -maxdepth 3 \( -name '_worker.js' -o -name 'index.mjs' -o -name 'server.js' \) | sort
