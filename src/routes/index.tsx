@@ -142,7 +142,13 @@ function Index() {
 
 
   useEffect(() => {
-    if (hydrated) saveCollection(entries);
+    if (!hydrated) return;
+    // saveCollection now reports failure instead of swallowing it. A silent
+    // quota error meant a whole session of added Pals could vanish on reload
+    // with no warning, so surface it once rather than never.
+    if (!saveCollection(entries) && entries.length > 0) {
+      toast.error("Couldn't save your collection to this browser — export a backup to be safe.");
+    }
   }, [entries, hydrated]);
 
   useEffect(() => {
