@@ -35,7 +35,10 @@ import { ResultsErrorBoundary } from "@/components/pbp/results-error-boundary";
 import { ResultsPanel } from "@/components/pbp/results-panel";
 import { TargetPanel } from "@/components/pbp/target-panel";
 
-const SITE = "https://good-vibe-desk.netlify.app";
+// Canonical/og:url origin. Must match the host the app is actually served
+// from, or link previews and the canonical tag point at a dead deployment.
+// Update this in the same commit that switches hosts.
+const SITE = "https://good-vibe-desk.kevinjackson1114.workers.dev";
 // Renders the footer anchor. A literal `<a` open tag gets stripped by some
 // mobile clipboard sanitizers when pasted through GitHub's web editor (this
 // file was corrupted that way once); `A` is just the string "a", which React
@@ -86,7 +89,8 @@ function Index() {
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
   // A #s= share link wins over stored state — the user followed it on purpose.
   useEffect(() => {
-    const shared = typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
+    const shared =
+      typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
     const decoded = shared ? decodeShareState(shared) : null;
 
     if (decoded) {
@@ -137,6 +141,8 @@ function Index() {
       toast.error("Couldn't copy — your browser blocked clipboard access.");
     }
   }
+
+
 
   useEffect(() => {
     if (!hydrated) return;
@@ -222,18 +228,16 @@ function Index() {
         if (next.steps.length === 0) break;
         const signature = next.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
         const baseSig = base.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
-        if (
-          signature === baseSig ||
-          found.some((f) => f.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|") === signature)
-        ) {
+        if (signature === baseSig || found.some((f) =>
+          f.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|") === signature,
+        )) {
           break;
         }
         found.push(next);
         previous = next;
       }
       found.sort(
-        (a, b) =>
-          a.steps.length - b.steps.length || b.coveredSources.length - a.coveredSources.length,
+        (a, b) => a.steps.length - b.steps.length || b.coveredSources.length - a.coveredSources.length,
       );
       setAlternatives(found);
     } finally {
@@ -332,11 +336,27 @@ function Index() {
           />
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-2">
-          <div className="flex w-full flex-col items-center gap-2 sm:w-auto sm:flex-row">
+
+        {/*
+          Thumb reach. On a phone the three panels stack, so the primary action
+          used to sit several screens below the fold: pick a target, scroll,
+          tick passives, scroll, hunt for the button. `sticky bottom-0` keeps it
+          pinned to the bottom edge of the viewport for as long as its container
+          is on screen, then releases into normal flow at the end of the page —
+          pure CSS, no fixed overlay, no layout shift, and nothing to undo on
+          desktop where it simply sits where it always did.
+
+          Requires that no ancestor sets overflow: hidden, which is why this
+          stays inside the plain page wrapper.
+
+          The negative inline margin lets the bar bleed to the screen edges on
+          mobile while the page keeps its px-4 gutter.
+        */}
+        <div className="sticky bottom-0 z-30 -mx-4 mt-8 border-t border-border/60 bg-background/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur supports-[backdrop-filter]:bg-background/75 sm:mx-0 sm:rounded-xl sm:border sm:px-4">
+          <div className="mx-auto flex w-full max-w-md items-center gap-2 sm:max-w-none sm:justify-center">
             <Button
               size="lg"
-              className="w-full sm:w-auto"
+              className="min-h-12 flex-1 sm:flex-none"
               disabled={!canCalculate || running}
               onClick={handleFindChain}
             >
@@ -350,22 +370,26 @@ function Index() {
             <Button
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto"
+              className="min-h-12 shrink-0"
               disabled={entries.length === 0}
               onClick={handleShare}
+              aria-label="Copy share link"
             >
               <Link2 className="size-4" />
-              Copy share link
+              {/* Label collapses to the icon on narrow screens so the primary
+                  action keeps the width it needs; aria-label carries the name. */}
+              <span className="hidden sm:inline">Copy share link</span>
             </Button>
           </div>
           {!canCalculate ? (
-            <p className="text-xs text-muted-foreground">
+            <p className="mt-2 text-center text-xs text-muted-foreground">
               {target === null
                 ? "Pick the Pal you want to breed."
                 : "Tick the passives you want to carry over."}
             </p>
           ) : null}
         </div>
+
 
         {result && targetId !== null ? (
           <ResultsErrorBoundary onRetry={handleFindChain}>
