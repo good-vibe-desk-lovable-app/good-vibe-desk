@@ -53,13 +53,13 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
 
   // Ranking lives in @/lib/search-rank (pure, unit-tested): prefix beats
   // substring beats dex number beats internal name, alphabetical within a band.
-  const results = useMemo(
-    () => searchPals(PALS, normaliseQuery(query), { limit: 300 }),
-    [query],
-  );
+  const results = useMemo(() => searchPals(PALS, normaliseQuery(query), { limit: 300 }), [query]);
 
   const selectedIds = useMemo(
-    () => Object.keys(counts).map(Number).filter((id) => counts[id] > 0),
+    () =>
+      Object.keys(counts)
+        .map(Number)
+        .filter((id) => counts[id] > 0),
     [counts],
   );
 

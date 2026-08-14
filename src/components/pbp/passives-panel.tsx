@@ -44,8 +44,7 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
   // Ranking lives in @/lib/search-rank (pure, unit-tested). This wrapper only
   // resolves the id; an id the dataset no longer knows scores RANK_NO_MATCH
   // under a query and stays visible when the box is empty.
-  const rankById = (passiveId: string, q: string): number =>
-    rankPassive(getPassive(passiveId), q);
+  const rankById = (passiveId: string, q: string): number => rankPassive(getPassive(passiveId), q);
 
   const normalisedQuery = normaliseQuery(query);
 
@@ -75,9 +74,8 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
 
   const allKeys = entries.flatMap((e) => e.passiveIds.map((p) => selectionKey(e.instanceId, p)));
   const selectedCount = selections.size;
-  const palCount = new Set(
-    Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":"))),
-  ).size;
+  const palCount = new Set(Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":"))))
+    .size;
 
   function toggle(key: string) {
     const next = new Set(selections);
@@ -153,7 +151,9 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
             <FilterChip
               key={t}
               on={tiers.includes(t)}
-              onClick={() => setTiers((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]))}
+              onClick={() =>
+                setTiers((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]))
+              }
             >
               {t}
             </FilterChip>
