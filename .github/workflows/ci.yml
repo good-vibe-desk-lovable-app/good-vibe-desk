@@ -22,13 +22,16 @@ jobs:
         run: npm install
 
       - name: Lint
-        # CI is the only place ESLint ever runs, since there is no local dev
-        # environment. It catches unused imports and missing hook dependency
-        # arrays — bugs that typecheck cleanly and misbehave at runtime.
+        # BLOCKING. CI is the only place ESLint ever runs, since there is no
+        # local dev environment, so a lint error here is the last chance to
+        # catch unused imports and missing hook dependency arrays — bugs that
+        # typecheck cleanly and misbehave at runtime.
         #
-        # Still continue-on-error for one more cycle. Confirm this step is
-        # green in the log, then delete this flag and the two lines above it.
-        continue-on-error: true
+        # This was continue-on-error until the generated dataset modules were
+        # excluded from the formatting rule (.prettierignore +
+        # eslint.config.js). Before that, ~43,000 machine-emitted properties
+        # failed prettier/prettier on every run and could never be fixed:
+        # regenerating the data reverted any formatting applied to it.
         run: npm run lint
 
       - name: Run tests
