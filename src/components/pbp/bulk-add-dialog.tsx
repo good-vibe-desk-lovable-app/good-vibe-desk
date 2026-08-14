@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 
 import { PALS } from "@/data/palworld";
-import type { Pal } from "@/data/palworld";
 import {
   MAX_PASSIVE_SLOTS,
   guaranteedPassiveIds,
@@ -22,25 +21,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { normaliseQuery, searchPals } from "@/lib/search-rank";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PalIcon } from "./pal-icon";
-
-/**
- * Rank rather than merely filter. A name that STARTS with the query is what
- * the user meant; a dex-number or internal-name hit is a fallback. -1 means
- * no match at all.
- */
-function rankPal(pal: Pal, q: string): number {
-  if (!q) return 0;
-  const name = pal.name.toLowerCase();
-  if (name === q) return 0;
-  if (name.startsWith(q)) return 1;
-  if (name.includes(q)) return 2;
-  if (String(pal.palDexNo).startsWith(q)) return 3;
-  if (pal.internalName.toLowerCase().includes(q)) return 4;
-  return -1;
-}
 
 interface BulkAddDialogProps {
   open: boolean;
@@ -67,21 +51,15 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
     setCounts({});
   }, [open]);
 
-  const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return PALS.slice(0, 300);
-    return PALS.map((p) => ({ p, r: rankPal(p, q) }))
-      .filter((x) => x.r >= 0)
-      .sort((a, b) => a.r - b.r || a.p.name.localeCompare(b.p.name))
-      .slice(0, 300)
-      .map((x) => x.p);
-  }, [query]);
+  // Ranking lives in @/lib/search-rank (pure, unit-tested): prefix beats
+  // substring beats dex number beats internal name, alphabetical within a band.
+  const results = useMemo(
+    () => searchPals(PALS, normaliseQuery(query), { limit: 300 }),
+    [query],
+  );
 
   const selectedIds = useMemo(
-    () =>
-      Object.keys(counts)
-        .map(Number)
-        .filter((id) => counts[id] > 0),
+    () => Object.keys(counts).map(Number).filter((id) => counts[id] > 0),
     [counts],
   );
 
