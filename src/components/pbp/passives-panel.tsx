@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { palById } from "@/data/palworld";
 import { MAX_PASSIVE_SLOTS, getPassive, type CollectionEntry } from "@/lib/collection";
 import { PASSIVE_CATEGORIES, categoryOfId } from "@/lib/passive-categories";
+import { RANK_NO_MATCH, normaliseQuery, rankPassive } from "@/lib/search-rank";
 import { cn } from "@/lib/utils";
 import { PassiveChip } from "./passive-chip";
 import { Button } from "@/components/ui/button";
@@ -40,24 +41,13 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
     return map;
   }, [entries]);
 
-  /**
-   * Rank rather than merely filter: a name that STARTS with the query is what
-   * the user meant; a description that happens to mention the word is a
-   * distant fallback. -1 means no match at all.
-   */
-  const rankPassive = (passiveId: string, q: string): number => {
-    if (!q) return 0;
-    const passive = getPassive(passiveId);
-    if (!passive) return -1;
-    const name = passive.name.toLowerCase();
-    if (name === q) return 0;
-    if (name.startsWith(q)) return 1;
-    if (name.includes(q)) return 2;
-    if (passive.description.toLowerCase().includes(q)) return 3;
-    return -1;
-  };
+  // Ranking lives in @/lib/search-rank (pure, unit-tested). This wrapper only
+  // resolves the id; an id the dataset no longer knows scores RANK_NO_MATCH
+  // under a query and stays visible when the box is empty.
+  const rankById = (passiveId: string, q: string): number =>
+    rankPassive(getPassive(passiveId), q);
 
-  const normalisedQuery = query.trim().toLowerCase();
+  const normalisedQuery = normaliseQuery(query);
 
   const passiveVisible = (passiveId: string) => {
     if (categories.length && !categories.includes(categoryOfId(passiveId))) return false;
@@ -65,7 +55,7 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
       const tier = getPassive(passiveId)?.tier;
       if (!tier || !tiers.includes(tier)) return false;
     }
-    if (rankPassive(passiveId, normalisedQuery) < 0) return false;
+    if (rankById(passiveId, normalisedQuery) === RANK_NO_MATCH) return false;
     return true;
   };
 
@@ -73,7 +63,7 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
   const visiblePassivesFor = (passiveIds: string[]) =>
     passiveIds
       .filter(passiveVisible)
-      .map((id, i) => ({ id, r: rankPassive(id, normalisedQuery), i }))
+      .map((id, i) => ({ id, r: rankById(id, normalisedQuery), i }))
       .sort((a, b) => a.r - b.r || a.i - b.i)
       .map((x) => x.id);
 
@@ -85,8 +75,9 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
 
   const allKeys = entries.flatMap((e) => e.passiveIds.map((p) => selectionKey(e.instanceId, p)));
   const selectedCount = selections.size;
-  const palCount = new Set(Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":"))))
-    .size;
+  const palCount = new Set(
+    Array.from(selections).map((key) => key.slice(0, key.lastIndexOf(":"))),
+  ).size;
 
   function toggle(key: string) {
     const next = new Set(selections);
@@ -162,9 +153,7 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
             <FilterChip
               key={t}
               on={tiers.includes(t)}
-              onClick={() =>
-                setTiers((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]))
-              }
+              onClick={() => setTiers((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]))}
             >
               {t}
             </FilterChip>
