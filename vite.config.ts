@@ -50,18 +50,14 @@ export default defineConfig({
         // The guarded wrapper in src/lib/pwa.ts is the ONLY registrar.
         injectRegister: null,
 
-        // IMPORTANT: the sw.js this plugin writes is a THROWAWAY.
+        // This plugin generates the real service worker. The only thing that
+        // ever went wrong here was outDir: under the Netlify preset the client
+        // bundle landed in dist/, under Cloudflare it lands in .output/public,
+        // and globbing the wrong one silently yields an EMPTY precache
+        // manifest — the app still works online, so nothing looks broken.
         //
-        // Under the Cloudflare target, nitro copies the client assets into
-        // .output/public AFTER the Vite build, so the glob below runs against
-        // a directory that is not populated yet and yields a precache manifest
-        // with zero entries. CI measured exactly that, twice.
-        //
-        // scripts/build-sw.mjs regenerates sw.js from the finished directory
-        // once `vite build` has exited, and OVERWRITES this file. See
-        // package.json -> "build". This plugin is kept because it also emits
-        // manifest.webmanifest, which has no ordering problem; disabling it
-        // outright would take the web app manifest with it.
+        // scripts/check-sw.mjs runs after `vite build` and fails the build if
+        // the manifest comes out empty. See package.json -> "build".
 
         devOptions: { enabled: false },
         filename: "sw.js",
@@ -86,9 +82,6 @@ export default defineConfig({
             },
           ],
         },
-        // Kept in sync with scripts/build-sw.mjs by hand. Only the copy in that
-        // script reaches production; this one shapes the file that gets
-        // overwritten. If you change one, change both.
         workbox: {
           // TanStack Start builds three environments (client, ssr, nitro) and
           // the PWA plugin's glob runs before the client assets are on disk,
