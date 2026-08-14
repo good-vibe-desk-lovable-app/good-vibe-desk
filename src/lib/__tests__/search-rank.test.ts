@@ -33,8 +33,13 @@ describe("rankPal — band contract", () => {
     // PalPicker lowercases all ~300 names once at init instead of per keystroke.
     // The cached value is authoritative, so a deliberately wrong cache proves
     // the parameter is actually consulted rather than silently ignored.
-    expect(rankPal(pal("Vanwyrm"), "van", "vanwyrm")).toBe(1);
-    expect(rankPal(pal("Vanwyrm"), "van", "zzzz")).toBe(RANK_NO_MATCH);
+    //
+    // The internal name here MUST NOT contain the query. Ranking falls through
+    // to the internal name at band 4, so a fixture defaulting internalName to
+    // "Vanwyrm" scores 4 rather than no-match no matter what the cache says —
+    // correct behaviour, but it hides whether the cache was read at all.
+    expect(rankPal(pal("Vanwyrm", 1, "Foxparks"), "van", "vanwyrm")).toBe(1);
+    expect(rankPal(pal("Vanwyrm", 1, "Foxparks"), "van", "zzzz")).toBe(RANK_NO_MATCH);
   });
 
   it("never returns a rank above MAX_PAL_RANK for a match", () => {
