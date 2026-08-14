@@ -13,6 +13,7 @@ import {
   type Gender,
 } from "@/lib/collection";
 import { categoryOfId, PASSIVE_CATEGORIES, type PassiveCategory } from "@/lib/passive-categories";
+import { RANK_NO_MATCH, normaliseQuery, rankPassive, searchPals } from "@/lib/search-rank";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -66,33 +67,6 @@ function effectSign(passive: Passive): "positive" | "negative" | "neutral" {
   return "neutral";
 }
 
-/**
- * Rank rather than merely filter. A name that STARTS with the query is what
- * the user meant; a description that happens to mention the word is a distant
- * fallback. Lower rank sorts first; -1 means "no match at all".
- */
-function rankPassive(passive: Passive, q: string): number {
-  if (!q) return 0;
-  const name = passive.name.toLowerCase();
-  if (name === q) return 0;
-  if (name.startsWith(q)) return 1;
-  if (name.includes(q)) return 2;
-  if (passive.description.toLowerCase().includes(q)) return 3;
-  return -1;
-}
-
-/** Same idea for the species list: prefix beats substring beats dex number. */
-function rankPal(pal: Pal, q: string): number {
-  if (!q) return 0;
-  const name = pal.name.toLowerCase();
-  if (name === q) return 0;
-  if (name.startsWith(q)) return 1;
-  if (name.includes(q)) return 2;
-  if (String(pal.palDexNo).startsWith(q)) return 3;
-  if (pal.internalName.toLowerCase().includes(q)) return 4;
-  return -1;
-}
-
 interface AddPalDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -123,22 +97,21 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
     setTierFilter(null);
   }, [open, editing]);
 
-  const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return PALS.slice(0, 200);
-    return PALS.map((p) => ({ p, r: rankPal(p, q) }))
-      .filter((x) => x.r >= 0)
-      .sort((a, b) => a.r - b.r || a.p.name.localeCompare(b.p.name))
-      .slice(0, 200)
-      .map((x) => x.p);
-  }, [query]);
+  // Ranking lives in @/lib/search-rank (pure, unit-tested).
+  const results = useMemo(
+    () => searchPals(PALS, normaliseQuery(query), { limit: 200 }),
+    [query],
+  );
 
   const selected: Pal | undefined = useMemo(
     () => (palId === null ? undefined : PALS.find((p) => p.id === palId)),
     [palId],
   );
 
-  const availablePassives = useMemo(() => (palId === null ? [] : passivesForPal(palId)), [palId]);
+  const availablePassives = useMemo(
+    () => (palId === null ? [] : passivesForPal(palId)),
+    [palId],
+  );
 
   const guaranteed = useMemo(
     () => new Set(palId === null ? [] : guaranteedPassiveIds(palId)),
@@ -151,7 +124,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
    * guaranteed passives hoisted to the top where passivesForPal put them.
    */
   const visiblePassives = useMemo(() => {
-    const q = passiveQuery.trim().toLowerCase();
+    const q = normaliseQuery(passiveQuery);
     const pool = availablePassives.filter((p) => {
       if (categoryFilter && categoryOfId(p.id) !== categoryFilter) return false;
       if (tierFilter && p.tier !== tierFilter) return false;
@@ -160,7 +133,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
     if (!q) return pool;
     return pool
       .map((p, i) => ({ p, r: rankPassive(p, q), i }))
-      .filter((x) => x.r >= 0)
+      .filter((x) => x.r !== RANK_NO_MATCH)
       .sort((a, b) => a.r - b.r || a.i - b.i)
       .map((x) => x.p);
   }, [availablePassives, passiveQuery, categoryFilter, tierFilter]);
@@ -410,9 +383,9 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
               </ScrollArea>
 
               <p className="text-xs text-muted-foreground">
-                Showing {visiblePassives.length} of {availablePassives.length} passives. Any Pal can
-                roll any passive, so the full list is always offered — the ones this species is
-                guaranteed to have are ticked and sorted first.
+                Showing {visiblePassives.length} of {availablePassives.length} passives. Any Pal
+                can roll any passive, so the full list is always offered — the ones this species
+                is guaranteed to have are ticked and sorted first.
               </p>
             </div>
           ) : null}
