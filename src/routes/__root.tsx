@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { registerServiceWorker } from "../lib/pwa";
 import { Toaster } from "../components/ui/sonner";
 
+
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -78,16 +80,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      // viewport-fit=cover is what makes env(safe-area-inset-bottom) resolve to
+      // a real value. Without it the sticky action bar on / sits under the
+      // gesture-navigation strip on phones that have one.
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      // Root-level defaults for routes that do not set their own head. The
+      // template's placeholders were being served as the title and description
+      // of /tiers, /opinions and /data-check.
+      { title: "Palworld Breeding Pathfinder" },
+      {
+        name: "description",
+        content:
+          "Plan breeding chains that carry the passives you want onto any Pal — fully offline.",
+      },
+      { property: "og:title", content: "Palworld Breeding Pathfinder" },
+      {
+        property: "og:description",
+        content:
+          "Plan breeding chains that carry the passives you want onto any Pal — fully offline.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
       { name: "theme-color", content: "#0a0d14" },
+
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -104,6 +119,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "apple-touch-icon", href: "/pwa-192x192.png" },
       { rel: "manifest", href: "/manifest.webmanifest" },
     ],
+
   }),
 
   shellComponent: RootShell,
