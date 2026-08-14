@@ -16,6 +16,7 @@ import {
 
 import { WORK_TYPES, workLevelOf } from "@/lib/tiers";
 import { loadRecentPals, pushRecentPal } from "@/lib/recents";
+import { RANK_NO_MATCH, normaliseQuery, rankPal } from "@/lib/search-rank";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -77,25 +78,8 @@ export function PalPicker({
 
   const channels = useMemo(() => channelsInUse(), []);
 
-  /**
-   * Rank rather than merely filter. A name that STARTS with the query is what
-   * the user meant; a substring hit elsewhere, or a dex-number match, is a
-   * fallback. Plain .includes() with an alphabetical sort buried Vanwyrm
-   * among every other name containing "va". -1 means no match.
-   */
-  const rankPal = (pal: Pal, q: string): number => {
-    if (!q) return 0;
-    const name = LOWER_NAMES[pal.id] ?? pal.name.toLowerCase();
-    if (name === q) return 0;
-    if (name.startsWith(q)) return 1;
-    if (name.includes(q)) return 2;
-    if (String(pal.palDexNo).startsWith(q)) return 3;
-    if (pal.internalName.toLowerCase().includes(q)) return 4;
-    return -1;
-  };
-
   const rows = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = normaliseQuery(query);
     const matched: Array<{ pal: Pal; rank: number }> = [];
 
     for (const p of PALS) {
@@ -105,8 +89,11 @@ export function PalPicker({
       }
       if (works.length && !works.every((w) => workLevelOf(p, w) > 0)) continue;
       if (acq !== "all" && acquisitionOf(p.internalName).channel !== acq) continue;
-      const rank = rankPal(p, q);
-      if (rank < 0) continue;
+      // Ranking lives in @/lib/search-rank (pure, unit-tested). LOWER_NAMES is
+      // the per-keystroke cache: lowercasing ~300 names on every input event
+      // was the hot path while typing.
+      const rank = rankPal(p, q, LOWER_NAMES[p.id]);
+      if (rank === RANK_NO_MATCH) continue;
       matched.push({ pal: p, rank });
     }
 
@@ -212,6 +199,7 @@ export function PalPicker({
         ))}
       </div>
 
+
       {quickRow("Favourites", favorites)}
       {quickRow("Recent", recent)}
 
@@ -293,10 +281,7 @@ export function PalPicker({
           </ul>
         </div>
 
-        <div
-          className="flex w-5 shrink-0 flex-col justify-between py-1"
-          aria-label="Jump to letter"
-        >
+        <div className="flex w-5 shrink-0 flex-col justify-between py-1" aria-label="Jump to letter">
           {LETTERS.map((l) => (
             <button
               key={l}
