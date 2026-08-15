@@ -132,9 +132,8 @@ export function MergeTree({ steps, targetId, sourceName, sourcePassives }: Merge
                 {carried.length > 0 ? (
                   <p className="mt-1 text-xs">
                     Carries:{" "}
-                    {carried
-                      .flatMap((id) => sourcePassives(id))
-                      .join(", ") || carried.map(sourceName).join(", ")}
+                    {carried.flatMap((id) => sourcePassives(id)).join(", ") ||
+                      carried.map(sourceName).join(", ")}
                   </p>
                 ) : null}
               </TooltipContent>

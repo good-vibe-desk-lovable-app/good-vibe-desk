@@ -5,7 +5,15 @@ import type { TreeNode } from "../tree-layout";
 import type { Step } from "../types";
 
 function step(index: number, parent1: number, parent2: number, child: number): Step {
-  return { index, parent1, parent2, child, via: "formula", carriedSources: [], expectedAttempts: 1 };
+  return {
+    index,
+    parent1,
+    parent2,
+    child,
+    via: "formula",
+    carriedSources: [],
+    expectedAttempts: 1,
+  };
 }
 
 describe("layoutTree", () => {

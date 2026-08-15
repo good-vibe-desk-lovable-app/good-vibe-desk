@@ -82,9 +82,23 @@ export function layoutTree(steps: Step[], targetId: number | null): TreeLayout {
       x: 0,
       y: 0,
     });
-    edges.push({ id: `${id}:a`, from: aId, to: id, via: step.via, parent1: step.parent1, parent2: step.parent2 });
+    edges.push({
+      id: `${id}:a`,
+      from: aId,
+      to: id,
+      via: step.via,
+      parent1: step.parent1,
+      parent2: step.parent2,
+    });
     if (bId !== aId) {
-      edges.push({ id: `${id}:b`, from: bId, to: id, via: step.via, parent1: step.parent1, parent2: step.parent2 });
+      edges.push({
+        id: `${id}:b`,
+        from: bId,
+        to: id,
+        via: step.via,
+        parent1: step.parent1,
+        parent2: step.parent2,
+      });
     }
     producedByPal.set(step.child, id);
   }
@@ -145,7 +159,6 @@ export function layoutTree(steps: Step[], targetId: number | null): TreeLayout {
     rootId,
   };
 }
-
 
 /** Midpoint of the edge segment drawn between two nodes, for crossing tests. */
 function edgeSegment(from: TreeNode, to: TreeNode): [number, number, number, number] {
@@ -259,9 +272,7 @@ function orderRows(
         const use = directional.length > 0 ? directional : linked;
         barycentre.set(
           node.id,
-          use.length > 0
-            ? use.reduce((sum, id) => sum + nodes.get(id)!.x, 0) / use.length
-            : node.x,
+          use.length > 0 ? use.reduce((sum, id) => sum + nodes.get(id)!.x, 0) / use.length : node.x,
         );
       }
       list.sort((a, b) => barycentre.get(a.id)! - barycentre.get(b.id)! || baseOrder(a, b));
