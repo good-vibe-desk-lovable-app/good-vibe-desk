@@ -52,7 +52,12 @@ jobs:
         # even when Lint or the build failed first, in which case there IS no
         # build output and every check below reports MISSING — a second red X
         # for a problem that does not exist, on top of the real failure.
-        if: always()
+        # success(), NOT always(). With always() this step ran even when Lint or
+        # the tests failed and the build was therefore skipped — reporting
+        # "MISSING — the build did not emit a wrangler config" against an empty
+        # workspace. That turned one real failure into two, and the invented one
+        # looked far more serious than the actual problem.
+        if: success()
         continue-on-error: true
         run: |
           echo "=== 1. Deploy config emitted by the build ==="
