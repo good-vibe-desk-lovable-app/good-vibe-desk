@@ -34,6 +34,7 @@ import { RecommendedPanel } from "@/components/pbp/recommended-panel";
 import { ResultsErrorBoundary } from "@/components/pbp/results-error-boundary";
 import { ResultsPanel } from "@/components/pbp/results-panel";
 import { TargetPanel } from "@/components/pbp/target-panel";
+import { TargetParentsPanel } from "@/components/pbp/target-parents-panel";
 
 // Canonical/og:url origin. Must match the host the app is actually served
 // from, or link previews and the canonical tag point at a dead deployment.
@@ -89,7 +90,8 @@ function Index() {
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
   // A #s= share link wins over stored state — the user followed it on purpose.
   useEffect(() => {
-    const shared = typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
+    const shared =
+      typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
     const decoded = shared ? decodeShareState(shared) : null;
 
     if (decoded) {
@@ -141,6 +143,8 @@ function Index() {
     }
   }
 
+
+
   useEffect(() => {
     if (!hydrated) return;
     // saveCollection now reports failure instead of swallowing it. A silent
@@ -163,6 +167,10 @@ function Index() {
     () => (targetId === null ? null : (PALS.find((p) => p.id === targetId) ?? null)),
     [targetId],
   );
+
+  /** Species already in the collection, so TargetParentsPanel can float the
+   *  pairs you could actually breed today to the top of its list. */
+  const ownedIds = useMemo(() => new Set(entries.map((e) => e.palId)), [entries]);
 
   function toggleFavorite(palId: number) {
     setFavorites((prev) =>
@@ -225,18 +233,16 @@ function Index() {
         if (next.steps.length === 0) break;
         const signature = next.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
         const baseSig = base.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
-        if (
-          signature === baseSig ||
-          found.some((f) => f.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|") === signature)
-        ) {
+        if (signature === baseSig || found.some((f) =>
+          f.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|") === signature,
+        )) {
           break;
         }
         found.push(next);
         previous = next;
       }
       found.sort(
-        (a, b) =>
-          a.steps.length - b.steps.length || b.coveredSources.length - a.coveredSources.length,
+        (a, b) => a.steps.length - b.steps.length || b.coveredSources.length - a.coveredSources.length,
       );
       setAlternatives(found);
     } finally {
@@ -326,6 +332,18 @@ function Index() {
           )}
         </div>
 
+        {/*
+          "Every way to breed X", directly under the target you just picked.
+          Without this, choosing a target you cannot yet reach showed only
+          "Cheapest targets for your collection" — a list of OTHER Pals, which
+          does not answer "what makes this one". The same lookup existed under
+          Breeding lookup, but collapsed at the bottom of the page and asking
+          you to select the target a second time.
+        */}
+        <div className="mt-6">
+          <TargetParentsPanel target={target} ownedIds={ownedIds} />
+        </div>
+
         <div className="mt-6">
           <RecommendedPanel
             entries={entries}
@@ -334,6 +352,7 @@ function Index() {
             runEpoch={runEpoch}
           />
         </div>
+
 
         {/*
           Thumb reach. On a phone the three panels stack, so the primary action
@@ -387,6 +406,7 @@ function Index() {
             </p>
           ) : null}
         </div>
+
 
         {result && targetId !== null ? (
           <ResultsErrorBoundary onRetry={handleFindChain}>
