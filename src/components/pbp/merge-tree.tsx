@@ -61,26 +61,25 @@ export function MergeTree({ steps, targetId, sourceName, sourcePassives }: Merge
             const y1 = PAD + from.y + NODE_H;
             const x2 = PAD + to.x + NODE_W / 2;
             const y2 = PAD + to.y;
+
+            // Cubic curve with vertical control points. Straight diagonals from
+            // several parents converging on one child arrive at the same point
+            // at similar angles and read as a single scribble; curves that
+            // leave and arrive vertically stay visually separate, and the eye
+            // can follow one strand through a crossing.
+            const bend = Math.max(24, (y2 - y1) * 0.45);
+            const path = `M ${x1} ${y1} C ${x1} ${y1 + bend}, ${x2} ${y2 - bend}, ${x2} ${y2}`;
+
             return (
-              <g key={edge.id}>
-                <line
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
-                  stroke="currentColor"
-                  className="text-border"
-                  strokeWidth={1.5}
-                />
-                <text
-                  x={(x1 + x2) / 2}
-                  y={(y1 + y2) / 2 - 4}
-                  textAnchor="middle"
-                  className="fill-muted-foreground text-[10px]"
-                >
-                  {edgeLabel(edge.via, edge.parent1, edge.parent2)}
-                </text>
-              </g>
+              <path
+                key={edge.id}
+                d={path}
+                fill="none"
+                stroke="currentColor"
+                className="text-border"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+              />
             );
           })}
         </svg>
@@ -110,6 +109,18 @@ export function MergeTree({ steps, targetId, sourceName, sourcePassives }: Merge
                       ? "you own this"
                       : `Step ${node.stepIndex} · ${pal?.eggSize ?? "?"} egg`}
                   </span>
+                  {/*
+                    The merge rule, shown ONCE on the child. It used to be drawn
+                    on each edge — but both edges of a merge derive their label
+                    from the same step, so every rule was painted twice at two
+                    different midpoints. Half the text on the diagram was a
+                    duplicate competing for the same space.
+                  */}
+                  {node.kind !== "leaf" && node.via ? (
+                    <span className="text-[9px] leading-none text-muted-foreground/80">
+                      {edgeLabel(node.via, node.parent1 ?? 0, node.parent2 ?? 0)}
+                    </span>
+                  ) : null}
                 </div>
               </TooltipTrigger>
               <TooltipContent className="max-w-64">
@@ -121,8 +132,9 @@ export function MergeTree({ steps, targetId, sourceName, sourcePassives }: Merge
                 {carried.length > 0 ? (
                   <p className="mt-1 text-xs">
                     Carries:{" "}
-                    {carried.flatMap((id) => sourcePassives(id)).join(", ") ||
-                      carried.map(sourceName).join(", ")}
+                    {carried
+                      .flatMap((id) => sourcePassives(id))
+                      .join(", ") || carried.map(sourceName).join(", ")}
                   </p>
                 ) : null}
               </TooltipContent>
