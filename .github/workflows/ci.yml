@@ -47,7 +47,13 @@ jobs:
         # .output/public and the server entry to .output/server. Nothing lands
         # in dist/ except the service worker. This step now verifies two things
         # that cannot be checked from a phone any other way.
+        #
+        # Diagnostic only: never fail the run. `if: always()` means this fires
+        # even when Lint or the build failed first, in which case there IS no
+        # build output and every check below reports MISSING — a second red X
+        # for a problem that does not exist, on top of the real failure.
         if: always()
+        continue-on-error: true
         run: |
           echo "=== 1. Deploy config emitted by the build ==="
           # Names the server entry and the static asset directory wrangler will
@@ -79,4 +85,8 @@ jobs:
           fi
           echo
           echo "=== 4. Static asset root, one level ==="
-          [ -d .output/public ] && find .output/public -maxdepth 1 | sort | head -20
+          if [ -d .output/public ]; then
+            find .output/public -maxdepth 1 | sort | head -20
+          else
+            echo "no .output/public — the build did not run or did not complete"
+          fi
