@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const TITLE = "Palworld Community Opinion — Raids, Base Pals and Known Quirks";
 const DESCRIPTION =
   "What players and guide writers actually say about Palworld raid armies, base workers and buggy Pals — every claim quoted verbatim with its source, kept separate from the computed tier lists.";
-const SITE = "https://good-vibe-desk.lovable.app/opinions";
+const SITE = "https://good-vibe-desk.kevinjackson1114.workers.dev/opinions";
 
 export const Route = createFileRoute("/opinions")({
   head: () => ({
@@ -49,10 +49,7 @@ function OpinionCardView({ card }: { card: OpinionCard }) {
       </CardHeader>
       <CardContent className="space-y-3">
         {card.sources.map((s) => (
-          <figure
-            key={s.url + s.quote.slice(0, 24)}
-            className="rounded-xl border border-border/70 bg-background/40 p-3"
-          >
+          <figure key={s.url + s.quote.slice(0, 24)} className="rounded-xl border border-border/70 bg-background/40 p-3">
             <blockquote className="border-l-2 border-primary/60 pl-3 text-sm italic">
               “{s.quote}”
             </blockquote>
