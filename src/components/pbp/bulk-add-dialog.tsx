@@ -25,11 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { normaliseQuery, searchPals } from "@/lib/search-rank";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { PalIcon } from "./pal-icon";
 
 const passiveNameById = new Map(PASSIVES.map((p) => [p.id, p.name]));
@@ -149,13 +145,13 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
 
   // Ranking lives in @/lib/search-rank (pure, unit-tested): prefix beats
   // substring beats dex number beats internal name, alphabetical within a band.
-  const results = useMemo(
-    () => searchPals(PALS, normaliseQuery(query), { limit: 300 }),
-    [query],
-  );
+  const results = useMemo(() => searchPals(PALS, normaliseQuery(query), { limit: 300 }), [query]);
 
   const selectedIds = useMemo(
-    () => Object.keys(counts).map(Number).filter((id) => counts[id] > 0),
+    () =>
+      Object.keys(counts)
+        .map(Number)
+        .filter((id) => counts[id] > 0),
     [counts],
   );
 
@@ -339,9 +335,7 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
                               key={g}
                               type="button"
                               size="sm"
-                              variant={
-                                (genders[pal.id] ?? "unknown") === g ? "default" : "outline"
-                              }
+                              variant={(genders[pal.id] ?? "unknown") === g ? "default" : "outline"}
                               className="h-6 px-2 text-[11px] capitalize"
                               onClick={() => setGenders((prev) => ({ ...prev, [pal.id]: g }))}
                             >

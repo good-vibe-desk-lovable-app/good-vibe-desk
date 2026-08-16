@@ -104,7 +104,11 @@ export interface ExploreNode {
  * make the recursion loop forever. Note this prunes per-branch, not globally:
  * two different branches may each legitimately reach the same species.
  */
-export function exploreTree(rootId: number, depth: number, seen: Set<number> = new Set()): ExploreNode[] {
+export function exploreTree(
+  rootId: number,
+  depth: number,
+  seen: Set<number> = new Set(),
+): ExploreNode[] {
   if (depth < 1) return [];
   if (seen.has(rootId)) return [];
 

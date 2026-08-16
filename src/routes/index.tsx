@@ -90,8 +90,7 @@ function Index() {
   // localStorage is browser-only; hydrate after mount so SSR markup matches.
   // A #s= share link wins over stored state — the user followed it on purpose.
   useEffect(() => {
-    const shared =
-      typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
+    const shared = typeof window !== "undefined" ? readShareHash(window.location.hash) : null;
     const decoded = shared ? decodeShareState(shared) : null;
 
     if (decoded) {
@@ -142,8 +141,6 @@ function Index() {
       toast.error("Couldn't copy — your browser blocked clipboard access.");
     }
   }
-
-
 
   useEffect(() => {
     if (!hydrated) return;
@@ -233,16 +230,18 @@ function Index() {
         if (next.steps.length === 0) break;
         const signature = next.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
         const baseSig = base.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|");
-        if (signature === baseSig || found.some((f) =>
-          f.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|") === signature,
-        )) {
+        if (
+          signature === baseSig ||
+          found.some((f) => f.steps.map((s) => `${s.parent1}+${s.parent2}`).join("|") === signature)
+        ) {
           break;
         }
         found.push(next);
         previous = next;
       }
       found.sort(
-        (a, b) => a.steps.length - b.steps.length || b.coveredSources.length - a.coveredSources.length,
+        (a, b) =>
+          a.steps.length - b.steps.length || b.coveredSources.length - a.coveredSources.length,
       );
       setAlternatives(found);
     } finally {
@@ -353,7 +352,6 @@ function Index() {
           />
         </div>
 
-
         {/*
           Thumb reach. On a phone the three panels stack, so the primary action
           used to sit several screens below the fold: pick a target, scroll,
@@ -407,7 +405,6 @@ function Index() {
           ) : null}
         </div>
 
-
         {result && targetId !== null ? (
           <ResultsErrorBoundary onRetry={handleFindChain}>
             <ResultsPanel
@@ -449,8 +446,8 @@ function Index() {
           <span className="min-w-0 flex-1">
             <span className="block font-semibold text-foreground">Breeding Explorer</span>
             <span className="block text-xs text-muted-foreground">
-              Pick any Pal and see everything it can produce, then walk down the line. No
-              collection needed.
+              Pick any Pal and see everything it can produce, then walk down the line. No collection
+              needed.
             </span>
           </span>
           <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
