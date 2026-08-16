@@ -30,7 +30,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const TITLE = "Palworld Tier Lists — Computed From Game Data";
 const DESCRIPTION =
   "Raid, base work and ranch tier lists computed from Palworld's own stat and work-suitability data, with the formula and every weight shown on screen.";
-const SITE = "https://good-vibe-desk.lovable.app/tiers";
+const SITE = "https://good-vibe-desk.kevinjackson1114.workers.dev/tiers";
 
 export const Route = createFileRoute("/tiers")({
   head: () => ({
@@ -218,10 +218,7 @@ function YourPals({ result, owned }: { result: TierResult; owned: Set<number> })
   if (owned.size === 0) {
     return (
       <p className="rounded-xl border border-dashed border-border/70 p-3 text-xs text-muted-foreground">
-        Add Pals on the{" "}
-        <Link to="/" className="underline underline-offset-4">
-          pathfinder page
-        </Link>{" "}
+        Add Pals on the <Link to="/" className="underline underline-offset-4">pathfinder page</Link>{" "}
         and they'll show up here with their global rank.
       </p>
     );
@@ -421,6 +418,7 @@ function TiersPage() {
             weights="fixed — Farming suitability dominates, work speed breaks ties"
           />
         </TabsContent>
+
       </Tabs>
     </div>
   );
