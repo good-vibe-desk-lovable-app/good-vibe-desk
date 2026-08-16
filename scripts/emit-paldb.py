@@ -1,17 +1,39 @@
 #!/usr/bin/env python3
 """Emits src/data/palworld/{elements,stats,spawns,drops,skills,dataGaps}.ts
 from scripts/.cache/paldb-parsed.json. Keyed by internalName (the join key)."""
+import datetime
 import json
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "src", "data", "palworld")
-d = json.load(open(os.path.join(ROOT, "scripts", ".cache", "paldb-parsed.json")))
+CACHE = os.path.join(ROOT, "scripts", ".cache", "paldb-parsed.json")
+d = json.load(open(CACHE))
 recs, gaps = d["records"], d["gaps"]
 keys = sorted(recs)
 
+# When the paldb.cc scrape these files come from was actually taken.
+#
+# WHY THIS EXISTS: version.ts records a sourcedAt for the palcalc side of the
+# dataset (the breeding graph) but nothing recorded it for the paldb.cc side
+# (work suitability, stats, active skills, spawns, drops). After the 1.0
+# release it took an afternoon of forensics to establish these files were
+# post-1.0 — the proof in the end was that ten Pals sit at work suitability 8,
+# a level that could not exist before 1.0, and that they are exactly the ten
+# published 1.0 Level 8 specialists. That should have been one line in a
+# header. Now it is.
+#
+# Uses the cache file's mtime rather than "now", because emit can be re-run
+# long after the scrape and the date that matters is when the DATA was taken.
+SCRAPED_AT = datetime.datetime.fromtimestamp(
+    os.path.getmtime(CACHE), datetime.timezone.utc
+).strftime("%Y-%m-%d")
+GENERATED_AT = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+
 HEAD = ("// AUTO-GENERATED from paldb.cc by scripts/parse-paldb.py + emit-paldb.py.\n"
-        "// Join key is internalName. Do not hand-edit.\n")
+        "// Join key is internalName. Do not hand-edit.\n"
+        f"// paldb.cc scrape taken: {SCRAPED_AT}\n"
+        f"// This file emitted:     {GENERATED_AT}\n")
 
 
 def j(v):
