@@ -52,4 +52,45 @@ export const MODEL_GAPS: ModelGap[] = [
       "not 'breed only'. Re-crawling paldb.cc with a dungeon/raid parser would resolve this.",
     status: "unresolved",
   },
+  {
+    area: "data/palworld — mutation breeding (v1.0)",
+    summary: "Mutations are a separate species-selection system and are NOT modelled at all.",
+    detail:
+      "Palworld 1.0 added mutated eggs. A mutation does NOT produce a stronger copy of the pair's " +
+      "normal child — it produces a DIFFERENT species, drawn from a band below the normal child's " +
+      "CombiRank, and only ever one with a stronger breeding score than the parents. The egg " +
+      "arrives Alpha with 90-100 IVs, 2 condensing stars and 2-4 mutation-exclusive 'rainbow' " +
+      "passives (Babysitter, Heavily Armored, Idiosyncratic, Immortality, Skymarcher). Base rate " +
+      "is reported as ~1% by calculators and ~0.6% by pooled player data, rising to ~3% with an " +
+      "Extravagant Vegetable Cake; neither figure is game-file confirmed. resolveChild() models " +
+      "only the deterministic child, so the pathfinder never proposes a mutation route and never " +
+      "counts one against expected eggs. Adding it would need its own graph layer, not extra " +
+      "edges in the existing one.",
+    status: "unresolved",
+  },
+  {
+    area: "data/palworld/skills.ts — active skill totals",
+    summary: "The dataset holds 291 distinct active skills; published totals range 300-315.",
+    detail:
+      "PAL_SKILLS contains 2,364 learnset rows covering 291 distinct active skill names. Public " +
+      "sources count differently: palworld-db reports 300 'in the game', palworldbestpals 308, " +
+      "pindrop 310 (attack and buff only), and paldb.cc 315 plus 11 breeding-only, 30 boss-only " +
+      "and 39 unrevealed. The gap is classification, not corruption — a player-facing learnset " +
+      "excludes boss-only and unrevealed skills. 291 is what this app has and what it should " +
+      "claim; an earlier project note saying 320 was wrong.",
+    status: "known-limitation",
+  },
+  {
+    area: "data/palworld/stats.ts — Transporting ceiling",
+    summary: "Transporting peaks at 6 here; one 1.0 source reports a natural 7.",
+    detail:
+      "Work suitability in this dataset peaks at 8 for ten of the twelve work types, matching the " +
+      "published 1.0 Level 8 specialist list exactly (Solenne Handiwork, Shaolong Watering, " +
+      "Dandilord Planting, Renjishi Kindling, Aegidron Mining, Silvance Medicine, Celesdir Noct " +
+      "Lumbering, Orserk Electricity, Bastigor Cooling, Jetragon Gathering). Farming caps at 4 in " +
+      "both this dataset and published sources. Transporting caps at 6 here while palmods.gg " +
+      "reports a natural 7. One work type off by one, unresolved — spot-check against a specific " +
+      "Transporting Pal before trusting Transporting tier positions.",
+    status: "unresolved",
+  },
 ];
