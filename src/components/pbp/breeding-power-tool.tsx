@@ -1,85 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, ChevronsUpDown, Calculator, Loader2 } from "lucide-react";
+import { Calculator, ChevronsUpDown, Loader2 } from "lucide-react";
 
-import { PALS, palById, resolveChild } from "@/data/palworld";
-import { cn } from "@/lib/utils";
+import { palById, resolveChild } from "@/data/palworld";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
-  Command,
-  CommandEmpty,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { normaliseQuery, searchPals } from "@/lib/search-rank";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+
+import { PalCombo } from "./pal-combo";
 import { PalIcon } from "./pal-icon";
-
-function PalCombo({
-  value,
-  onChange,
-  label,
-}: {
-  value: number | null;
-  onChange: (id: number) => void;
-  label: string;
-}) {
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const pal = value === null ? null : palById.get(value);
-
-  // Ranked, not substring-matched. cmdk's built-in filter scores every row it
-  // is given; shouldFilter={false} hands it a list already ordered by
-  // @/lib/search-rank, so "van" surfaces Vanwyrm rather than burying it under
-  // every name that happens to contain those letters.
-  const results = useMemo(() => searchPals(PALS, normaliseQuery(query)), [query]);
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          aria-label={label}
-          className="w-full justify-between"
-        >
-          <span className="flex min-w-0 items-center gap-2">
-            {pal ? <PalIcon internalName={pal.internalName} name={pal.name} size={20} /> : null}
-            <span className="truncate">{pal?.name ?? label}</span>
-          </span>
-          <ChevronsUpDown className="size-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[min(20rem,90vw)] p-0" align="start">
-        <Command shouldFilter={false}>
-          <CommandInput placeholder="Search Pals…" value={query} onValueChange={setQuery} />
-          <CommandList>
-            <CommandEmpty>No Pal found.</CommandEmpty>
-            {results.map((p) => (
-              <CommandItem
-                key={p.id}
-                value={String(p.id)}
-                onSelect={() => {
-                  onChange(p.id);
-                  setOpen(false);
-                }}
-              >
-                <Check className={cn("size-4", p.id === value ? "opacity-100" : "opacity-0")} />
-                <PalIcon internalName={p.internalName} name={p.name} size={22} />
-                <span className="flex-1 truncate">{p.name}</span>
-                <span className="text-xs tabular-nums text-muted-foreground">#{p.palDexNo}</span>
-              </CommandItem>
-            ))}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
 
 type Mode = "forward" | "reverse";
 
@@ -240,66 +173,67 @@ export function BreedingPowerTool() {
               <ReverseLookup />
             ) : (
               <>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <PalCombo value={a} onChange={setA} label="First parent" />
-                  <PalCombo value={b} onChange={setB} label="Second parent" />
-                </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <PalCombo value={a} onChange={setA} label="First parent" />
+              <PalCombo value={b} onChange={setB} label="Second parent" />
+            </div>
 
-                {outcome ? (
-                  <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
-                    <div className="flex flex-wrap items-center gap-2 text-base font-semibold">
-                      <PalIcon
-                        internalName={outcome.pa.internalName}
-                        name={outcome.pa.name}
-                        size={28}
-                      />
-                      {outcome.pa.name} +
-                      <PalIcon
-                        internalName={outcome.pb.internalName}
-                        name={outcome.pb.name}
-                        size={28}
-                      />
-                      {outcome.pb.name} =
-                      {outcome.child ? (
-                        <PalIcon
-                          internalName={outcome.child.internalName}
-                          name={outcome.child.name}
-                          size={28}
-                        />
-                      ) : null}
-                      <span className="text-primary">{outcome.child?.name ?? "?"}</span>
-                      <Badge variant="outline" className="text-[10px]">
-                        {outcome.res.via === "unique"
-                          ? "Unique combo"
-                          : outcome.res.via === "same-species"
-                            ? "Same species"
-                            : "Breeding power"}
-                      </Badge>
-                    </div>
-                    {outcome.res.via === "formula" ? (
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        rank {outcome.pa.combiRank} + {outcome.pb.combiRank} → target{" "}
-                        {outcome.target} → closest eligible: {outcome.child?.name} (
-                        {outcome.child?.combiRank})
-                      </p>
-                    ) : outcome.res.via === "unique" ? (
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        This pair is a special override — it ignores the breeding-power formula.
-                      </p>
-                    ) : (
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        Two of the same species always breed true.
-                      </p>
-                    )}
-                  </div>
+
+            {outcome ? (
+              <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
+                <div className="flex flex-wrap items-center gap-2 text-base font-semibold">
+                  <PalIcon
+                    internalName={outcome.pa.internalName}
+                    name={outcome.pa.name}
+                    size={28}
+                  />
+                  {outcome.pa.name} +
+                  <PalIcon
+                    internalName={outcome.pb.internalName}
+                    name={outcome.pb.name}
+                    size={28}
+                  />
+                  {outcome.pb.name} ={" "}
+                  {outcome.child ? (
+                    <PalIcon
+                      internalName={outcome.child.internalName}
+                      name={outcome.child.name}
+                      size={28}
+                    />
+                  ) : null}
+                  <span className="text-primary">{outcome.child?.name ?? "?"}</span>
+                  <Badge variant="outline" className="text-[10px]">
+                    {outcome.res.via === "unique"
+                      ? "Unique combo"
+                      : outcome.res.via === "same-species"
+                        ? "Same species"
+                        : "Breeding power"}
+                  </Badge>
+                </div>
+                {outcome.res.via === "formula" ? (
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    rank {outcome.pa.combiRank} + {outcome.pb.combiRank} → target {outcome.target} →
+                    closest eligible: {outcome.child?.name} ({outcome.child?.combiRank})
+                  </p>
+                ) : outcome.res.via === "unique" ? (
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    This pair is a special override — it ignores the breeding-power formula.
+                  </p>
                 ) : (
-                  <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
-                    Pick two Pals to see what they produce.
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Two of the same species always breed true.
                   </p>
                 )}
+              </div>
+            ) : (
+              <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
+                Pick two Pals to see what they produce.
+              </p>
+            )}
               </>
             )}
           </CardContent>
+
         </CollapsibleContent>
       </Card>
     </Collapsible>
