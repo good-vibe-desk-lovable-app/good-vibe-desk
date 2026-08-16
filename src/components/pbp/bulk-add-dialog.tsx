@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 
-import { PALS } from "@/data/palworld";
+import { PALS, PASSIVES } from "@/data/palworld";
 import {
   MAX_PASSIVE_SLOTS,
   guaranteedPassiveIds,
   newInstanceId,
+  passivesForPal,
   type CollectionEntry,
+  type Gender,
 } from "@/lib/collection";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -22,9 +24,103 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { normaliseQuery, searchPals } from "@/lib/search-rank";
-import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { PalIcon } from "./pal-icon";
+
+const passiveNameById = new Map(PASSIVES.map((p) => [p.id, p.name]));
+
+/** Display name for a passive id, falling back to the raw id if unknown. */
+function passiveNameOf(id: string): string {
+  return passiveNameById.get(id) ?? id;
+}
+
+/**
+ * Compact passive chooser for one species in the bulk list.
+ *
+ * Deliberately a popover rather than an inline list: 115 passives inline, on
+ * every selected row, would bury the Pal list this dialog exists for. Ranked
+ * with the shared search module so typing behaves the same as everywhere else.
+ */
+function PassivePicker({
+  palId,
+  chosen,
+  onToggle,
+}: {
+  palId: number;
+  chosen: string[];
+  onToggle: (passiveId: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const guaranteed = guaranteedPassiveIds(palId);
+  const room = Math.max(0, MAX_PASSIVE_SLOTS - guaranteed.length);
+  const full = chosen.length >= room;
+
+  const options = useMemo(() => {
+    const q = normaliseQuery(query);
+    const all = passivesForPal(palId).filter((p) => !guaranteed.includes(p.id));
+    if (!q) return all.slice(0, 60);
+    return all
+      .filter((p) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
+      .slice(0, 60);
+  }, [palId, query, guaranteed]);
+
+  if (room === 0) return null;
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button type="button" size="sm" variant="outline" className="h-6 px-2 text-[11px]">
+          + Add passive
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[min(20rem,92vw)] p-2" align="start">
+        <Input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search passives…"
+          className="mb-2 h-8"
+          autoComplete="off"
+        />
+        {full ? (
+          <p className="mb-2 text-[11px] text-muted-foreground">
+            All {MAX_PASSIVE_SLOTS} slots used. Remove one to add another.
+          </p>
+        ) : null}
+        <ul className="max-h-56 space-y-0.5 overflow-y-auto">
+          {options.map((p) => {
+            const picked = chosen.includes(p.id);
+            return (
+              <li key={p.id}>
+                <button
+                  type="button"
+                  disabled={full && !picked}
+                  onClick={() => onToggle(p.id)}
+                  className={cn(
+                    "w-full rounded px-2 py-1 text-left text-xs",
+                    picked ? "bg-primary/15 font-medium" : "hover:bg-accent/60",
+                    full && !picked ? "cursor-not-allowed opacity-40" : "",
+                  )}
+                >
+                  {p.name}
+                </button>
+              </li>
+            );
+          })}
+          {options.length === 0 ? (
+            <li className="px-2 py-2 text-xs text-muted-foreground">No passive matches that.</li>
+          ) : null}
+        </ul>
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 interface BulkAddDialogProps {
   open: boolean;
@@ -53,13 +149,13 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
 
   // Ranking lives in @/lib/search-rank (pure, unit-tested): prefix beats
   // substring beats dex number beats internal name, alphabetical within a band.
-  const results = useMemo(() => searchPals(PALS, normaliseQuery(query), { limit: 300 }), [query]);
+  const results = useMemo(
+    () => searchPals(PALS, normaliseQuery(query), { limit: 300 }),
+    [query],
+  );
 
   const selectedIds = useMemo(
-    () =>
-      Object.keys(counts)
-        .map(Number)
-        .filter((id) => counts[id] > 0),
+    () => Object.keys(counts).map(Number).filter((id) => counts[id] > 0),
     [counts],
   );
 
@@ -78,20 +174,62 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
     });
   }
 
+  /**
+   * Gender chosen per species, applied to every copy of it being added.
+   *
+   * Bulk add used to hardcode "unknown" with no way to change it, so a bulk
+   * import produced a collection the search could never warn about: core.ts
+   * only raises the same-gender warning when BOTH parents have a known gender
+   * (see genderWarning, core.ts:312). Everything unknown means the warning can
+   * never fire. It does not change which chains are found — gender is advisory,
+   * not a constraint — but it is the difference between being told "these are
+   * both male" and finding out at the breeding pen.
+   */
+  const [genders, setGenders] = useState<Record<number, Gender>>({});
+
+  /**
+   * Extra passives per species, on top of the guaranteed ones. Applied to every
+   * copy. Bulk add previously assigned ONLY guaranteed passives, and most
+   * species have none, so bulk-added Pals arrived with an empty passive list
+   * and were invisible to the pathfinder — passives can only come from Pals in
+   * the collection, so a Pal carrying none contributes nothing to a chain.
+   */
+  const [extraPassives, setExtraPassives] = useState<Record<number, string[]>>({});
+
+  function toggleExtraPassive(palId: number, passiveId: string) {
+    setExtraPassives((prev) => {
+      const current = prev[palId] ?? [];
+      const guaranteed = guaranteedPassiveIds(palId);
+      const next = current.includes(passiveId)
+        ? current.filter((id) => id !== passiveId)
+        : [...current, passiveId];
+      // MAX_PASSIVE_SLOTS is the in-game cap and the collection invariant;
+      // guaranteed passives already occupy slots, so budget against both.
+      const room = Math.max(0, MAX_PASSIVE_SLOTS - guaranteed.length);
+      return { ...prev, [palId]: next.slice(0, room) };
+    });
+  }
+
   function handleAdd() {
     const entries: CollectionEntry[] = [];
     for (const palId of selectedIds) {
+      const guaranteed = guaranteedPassiveIds(palId);
+      const passiveIds = [...guaranteed, ...(extraPassives[palId] ?? [])].slice(
+        0,
+        MAX_PASSIVE_SLOTS,
+      );
       for (let i = 0; i < counts[palId]; i++) {
         entries.push({
           instanceId: newInstanceId(),
           palId,
-          gender: "unknown",
-          // Guaranteed passives are always on the Pal, so start them ticked.
-          passiveIds: guaranteedPassiveIds(palId).slice(0, MAX_PASSIVE_SLOTS),
+          gender: genders[palId] ?? "unknown",
+          passiveIds,
         });
       }
     }
     if (entries.length > 0) onAddMany(entries);
+    setGenders({});
+    setExtraPassives({});
     onOpenChange(false);
   }
 
@@ -191,6 +329,59 @@ export function BulkAddDialog({ open, onOpenChange, onAddMany }: BulkAddDialogPr
                         </span>
                       ) : null}
                     </div>
+
+                    {count > 0 ? (
+                      <div className="mb-1 ml-9 space-y-2 rounded-md bg-muted/30 p-2">
+                        <div className="flex flex-wrap items-center gap-1">
+                          <span className="mr-1 text-xs text-muted-foreground">Gender</span>
+                          {(["female", "male", "unknown"] as const).map((g) => (
+                            <Button
+                              key={g}
+                              type="button"
+                              size="sm"
+                              variant={
+                                (genders[pal.id] ?? "unknown") === g ? "default" : "outline"
+                              }
+                              className="h-6 px-2 text-[11px] capitalize"
+                              onClick={() => setGenders((prev) => ({ ...prev, [pal.id]: g }))}
+                            >
+                              {g}
+                            </Button>
+                          ))}
+                          {count > 1 ? (
+                            <span className="text-[11px] text-muted-foreground">
+                              applies to all {count}
+                            </span>
+                          ) : null}
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-1">
+                          <span className="mr-1 text-xs text-muted-foreground">Passives</span>
+                          {guaranteedPassiveIds(pal.id).map((id) => (
+                            <Badge key={id} variant="secondary" className="text-[10px]">
+                              {passiveNameOf(id)}
+                            </Badge>
+                          ))}
+                          {(extraPassives[pal.id] ?? []).map((id) => (
+                            <Button
+                              key={id}
+                              type="button"
+                              size="sm"
+                              variant="default"
+                              className="h-6 px-2 text-[11px]"
+                              onClick={() => toggleExtraPassive(pal.id, id)}
+                            >
+                              {passiveNameOf(id)} ×
+                            </Button>
+                          ))}
+                          <PassivePicker
+                            palId={pal.id}
+                            chosen={extraPassives[pal.id] ?? []}
+                            onToggle={(id) => toggleExtraPassive(pal.id, id)}
+                          />
+                        </div>
+                      </div>
+                    ) : null}
                   </li>
                 );
               })}
