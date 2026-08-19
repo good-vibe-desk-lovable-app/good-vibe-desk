@@ -77,6 +77,15 @@ export const MODEL_GAPS: ModelGap[] = [
     status: "resolved",
   },
   {
+    area: "data/palworld — dungeon-boss classification",
+    summary: "Resolved: hard-validated PalDB dungeon boss evidence is generated independently.",
+    detail:
+      "The generated dungeons.ts module hard-validates all 14 PalDB Dungeons index families and records " +
+      "190 Boss Spawns rows joined to 150 exact roster internal names. Dungeon evidence remains a positive " +
+      "acquisition flag and does not infer or override raid, tower, habitat, or breed-only status.",
+    status: "resolved",
+  },
+  {
     area: "data/palworld — mutation breeding (v1.0)",
     summary: "Mutations are a separate species-selection system and are NOT modelled at all.",
     detail:

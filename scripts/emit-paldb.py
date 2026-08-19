@@ -16,6 +16,7 @@ DATA = ROOT / "src" / "data" / "palworld"
 CACHE = ROOT / "scripts" / ".cache" / "paldb-parsed.json"
 TOWER_CACHE = ROOT / "scripts" / ".cache" / "tower-bosses.json"
 RAID_CACHE = ROOT / "scripts" / ".cache" / "raid-bosses.json"
+DUNGEON_CACHE = ROOT / "scripts" / ".cache" / "dungeon-bosses.json"
 MANIFEST = ROOT / "scripts" / ".cache-manifest.json"
 
 dataset = json.loads(CACHE.read_text())
@@ -26,6 +27,9 @@ tower_excluded = tower_payload["excluded"]
 raid_payload = json.loads(RAID_CACHE.read_text()) if RAID_CACHE.exists() else {"joined": {}, "unmatched": []}
 raid_records = raid_payload["joined"]
 raid_unmatched = raid_payload["unmatched"]
+dungeon_payload = json.loads(DUNGEON_CACHE.read_text()) if DUNGEON_CACHE.exists() else {"joined": {}, "families": []}
+dungeon_records = dungeon_payload["joined"]
+dungeon_families = dungeon_payload["families"]
 keys = sorted(recs)
 manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
 paldb = manifest.get("paldb", {})
@@ -184,6 +188,34 @@ write(
     + ";\n\n"
     "export function raidBossesOf(internalName: string): readonly RaidBossEvidence[] {\n"
     "  return PAL_RAID_BOSSES[internalName] ?? [];\n}\n",
+)
+
+# dungeon acquisition evidence
+dungeon_source = paldb.get("acquisitionPages", {}).get("dungeons", {})
+write(
+    "dungeons.ts",
+    "export interface DungeonBossEvidence {\n"
+    "  sourceId: string;\n  name: string;\n  dungeon: string;\n  dungeonLevel: number;\n"
+    "  minLevel: number;\n  maxLevel: number;\n  sourceUrl: string;\n}\n\n"
+    "export const PAL_DUNGEON_BOSSES: Record<string, readonly DungeonBossEvidence[]> = "
+    + j(dungeon_records)
+    + ";\n\n"
+    "export const DUNGEON_FAMILIES = "
+    + j(dungeon_families)
+    + ";\n\n"
+    "export const DUNGEON_PROVENANCE = "
+    + j(
+        {
+            "sourceTier": dungeon_payload.get("sourceTier", 3),
+            "sourceKind": dungeon_payload.get("sourceKind", "wiki-sourced"),
+            "indexUrl": dungeon_source.get("index", {}).get("url", "https://paldb.cc/en/Dungeons"),
+            "families": len(dungeon_families),
+            "pages": len(dungeon_source.get("pages", {})),
+        }
+    )
+    + ";\n\n"
+    "export function dungeonBossesOf(internalName: string): readonly DungeonBossEvidence[] {\n"
+    "  return PAL_DUNGEON_BOSSES[internalName] ?? [];\n}\n",
 )
 
 # habitat
