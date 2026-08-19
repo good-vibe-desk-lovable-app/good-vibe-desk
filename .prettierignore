@@ -28,4 +28,5 @@ src/data/palworld/spawns.ts
 src/data/palworld/stats.ts
 src/data/palworld/uniqueCombos.ts
 src/data/palworld/dataGaps.ts
+src/data/palworld/raid.ts
 src/data/palworld/towers.ts
