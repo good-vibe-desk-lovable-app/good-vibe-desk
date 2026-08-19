@@ -1,66 +1,22 @@
-// HAND-MAINTAINED additions that the paldb.cc crawl cannot supply.
-//
-// Source: Dhampyru/Palworld-Extracted datamine "Game Data Parsed 7-22-26",
-// cross-checked against paldb.cc and palworld.wiki.gg. Merged into PAL_STATS at
-// the bottom of stats.ts; scripts/emit-paldb.py re-emits that merge so a
-// regeneration cannot silently drop these rows.
-import type { PalStatBlock } from "./stats";
+// HAND-MAINTAINED source-status markers for data that the generated modules cannot
+// encode by shape alone. These are deliberately not values or generated records.
 
 /**
- * Astralym (WorldTreeDragon, Paldex 204) is absent from the palcalc roster and
- * from the paldb crawl. Every value below is datamined, none inferred.
- *
- * Its paldb.cc page renders a ten-icon row with nine filled next to "Work
- * Suitability" — that row is FoodAmount (9). Astralym's actual work suitability
- * is 0 across all twelve types, which is VERIFIED ABSENT, not missing data.
+ * An empty work list is normally an unavailable source field. KingWhale is the
+ * exception: PalCalc's full twelve-type game-data row is all zero, so it is
+ * known to rank last rather than be marked uncomputable.
  */
-export const STAT_OVERRIDES: Record<string, PalStatBlock> = {
-  WorldTreeDragon: {
-    stats: {
-      size: "XL",
-      rarity: 10,
-      health: 200,
-      food: 0,
-      meleeAttack: 100,
-      attack: 200,
-      defense: 200,
-      workSpeed: 100,
-      support: 100,
-      captureRate: 1.0,
-      maleProbability: 50,
-      combiRank: 10,
-      price: 10000,
-      // Level-80 stat ranges, datamined. Other Pals have no level-80 line in the
-      // paldb crawl, so tier scoring still runs on base stats for consistency.
-      level80HealthMin: 8900,
-      level80HealthMax: 11300,
-      level80AttackMin: 1300,
-      level80AttackMax: 1660,
-      level80DefenseMin: 1250,
-      level80DefenseMax: 1610,
-    },
-    movement: {},
-    work: [],
-    genus: null,
-    foodAmount: 9,
-    nocturnal: false,
-  },
-};
+export const WORK_VERIFIED_ABSENT: ReadonlySet<string> = new Set(["KingWhale"]);
 
 /**
- * Pals whose empty work list is a datamined ZERO, not absent data. Tier scoring
- * must score these (they rank last) rather than reporting "insufficient data".
- */
-export const WORK_VERIFIED_ABSENT: ReadonlySet<string> = new Set(["WorldTreeDragon"]);
-
-/**
- * Pals with no active-skill learnset in any source. Combat scores are genuinely
- * UNCOMPUTABLE for these — distinct from a zero.
+ * Astralym (WorldTreeDragon) is absent from PalCalc's 299-Pal export and has no
+ * active-skill learnset in the PalDB page data. It intentionally has no
+ * PAL_STATS block, which keeps combat and work tiers visibly uncomputable.
  */
 export const LEARNSET_NOT_FOUND: ReadonlySet<string> = new Set(["WorldTreeDragon"]);
 
 /**
- * Pals whose empty element list is a datamined "None", not missing data.
- * Element coverage is genuinely 0 for these.
+ * No Pal currently needs a manual "verified no element" exception. An empty
+ * generated element list remains unknown unless a future source proves zero.
  */
-export const ELEMENTS_VERIFIED_NONE: ReadonlySet<string> = new Set(["WorldTreeDragon"]);
+export const ELEMENTS_VERIFIED_NONE: ReadonlySet<string> = new Set();

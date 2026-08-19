@@ -9,19 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TiersRouteImport } from './routes/tiers'
-import { Route as OpinionsRouteImport } from './routes/opinions'
-import { Route as DataCheckRouteImport } from './routes/data-check'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DataCheckRouteImport } from './routes/data-check'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as OpinionsRouteImport } from './routes/opinions'
+import { Route as TiersRouteImport } from './routes/tiers'
 
-const TiersRoute = TiersRouteImport.update({
-  id: '/tiers',
-  path: '/tiers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OpinionsRoute = OpinionsRouteImport.update({
-  id: '/opinions',
-  path: '/opinions',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DataCheckRoute = DataCheckRouteImport.update({
@@ -29,21 +25,33 @@ const DataCheckRoute = DataCheckRouteImport.update({
   path: '/data-check',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpinionsRoute = OpinionsRouteImport.update({
+  id: '/opinions',
+  path: '/opinions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TiersRoute = TiersRouteImport.update({
+  id: '/tiers',
+  path: '/tiers',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/data-check': typeof DataCheckRoute
+  '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/data-check': typeof DataCheckRoute
+  '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
 }
@@ -51,38 +59,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/data-check': typeof DataCheckRoute
+  '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/data-check' | '/opinions' | '/tiers'
+  fullPaths: '/' | '/data-check' | '/explore' | '/opinions' | '/tiers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/data-check' | '/opinions' | '/tiers'
-  id: '__root__' | '/' | '/data-check' | '/opinions' | '/tiers'
+  to: '/' | '/data-check' | '/explore' | '/opinions' | '/tiers'
+  id: '__root__' | '/' | '/data-check' | '/explore' | '/opinions' | '/tiers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DataCheckRoute: typeof DataCheckRoute
+  ExploreRoute: typeof ExploreRoute
   OpinionsRoute: typeof OpinionsRoute
   TiersRoute: typeof TiersRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tiers': {
-      id: '/tiers'
-      path: '/tiers'
-      fullPath: '/tiers'
-      preLoaderRoute: typeof TiersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/opinions': {
-      id: '/opinions'
-      path: '/opinions'
-      fullPath: '/opinions'
-      preLoaderRoute: typeof OpinionsRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/data-check': {
@@ -92,11 +95,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DataCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/opinions': {
+      id: '/opinions'
+      path: '/opinions'
+      fullPath: '/opinions'
+      preLoaderRoute: typeof OpinionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tiers': {
+      id: '/tiers'
+      path: '/tiers'
+      fullPath: '/tiers'
+      preLoaderRoute: typeof TiersRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -105,9 +122,20 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DataCheckRoute: DataCheckRoute,
+  ExploreRoute: ExploreRoute,
   OpinionsRoute: OpinionsRoute,
   TiersRoute: TiersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
