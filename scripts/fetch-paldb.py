@@ -1,98 +1,169 @@
 #!/usr/bin/env python3
-"""Downloads one paldb.cc page per Pal into scripts/.cache/paldb/.
+"""Fetch one PalDB page per Pal into ``scripts/.cache/paldb``.
 
-URLs are built from the DISPLAY name (spaces -> underscores); the cache file is
-keyed by internalName, which stays the join key everywhere else.
+URLs are built from display names, while cached files and all downstream joins use
+``internalName``. Fetching uses at most two rate-limited workers. The HTML
+cache remains local-only; ``scripts/.cache-manifest.json`` records reproducible
+provenance without committing fetched pages.
 
-Resumable and chunkable:  python3 scripts/fetch-paldb.py <offset> <limit>
+Usage: ``python3 scripts/fetch-paldb.py [offset] [limit]``
 """
+from __future__ import annotations
+
+import datetime as dt
+import hashlib
 import json
-import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CACHE = os.path.join(ROOT, "scripts", ".cache", "paldb")
-GAPS = os.path.join(ROOT, "scripts", ".cache", "paldb-gaps.json")
-os.makedirs(CACHE, exist_ok=True)
+ROOT = Path(__file__).resolve().parent.parent
+CACHE = ROOT / "scripts" / ".cache" / "paldb"
+GAPS = ROOT / "scripts" / ".cache" / "paldb-gaps.json"
+MANIFEST = ROOT / "scripts" / ".cache-manifest.json"
+PALS_FILE = ROOT / "src" / "data" / "palworld" / "pals.ts"
+MAX_WORKERS = 2
+REQUEST_DELAY_SECONDS = 1.0
+USER_AGENT = "good-vibe-desk-data-pipeline/1.0 (+https://github.com/good-vibe-desk-lovable-app/good-vibe-desk)"
+BLOCK = (
+    "just a moment",
+    "cf_chl_opt",
+    "challenges.cloudflare.com",
+    "enable javascript and cookies to continue",
+)
+VERSION_RE = re.compile(
+    r'href="version"[^>]*>\s*(v[^<\s]+)\s*</a>\s*([^<\n]+)', re.IGNORECASE
+)
 
-src = open(os.path.join(ROOT, "src/data/palworld/pals.ts")).read()
-pairs = re.findall(r'internalName:\s*"([^"]+)",\s*name:\s*"([^"]+)"', src)
-# de-dup on internalName, keep order
-seen = set()
-PALS = []
-for internal, display in pairs:
-    if internal in seen:
-        continue
-    seen.add(internal)
-    PALS.append((internal, display))
 
-BLOCK = ("just a moment", "cf_chl_opt", "challenges.cloudflare.com",
-         "enable javascript and cookies to continue")
+def pals() -> list[tuple[str, str]]:
+    source = PALS_FILE.read_text()
+    pairs = re.findall(r'internalName:\s*"([^"]+)",\s*name:\s*"([^"]+)"', source)
+    seen: set[str] = set()
+    return [(internal, display) for internal, display in pairs if not (internal in seen or seen.add(internal))]
 
 
-def candidates(display):
+def candidates(display: str):
     slug = display.replace(" ", "_")
     yield "https://paldb.cc/en/" + slug
-    enc = urllib.parse.quote(slug, safe="_")
-    if enc != slug:
-        yield "https://paldb.cc/en/" + enc
+    encoded = urllib.parse.quote(slug, safe="_")
+    if encoded != slug:
+        yield "https://paldb.cc/en/" + encoded
 
 
-def get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=40) as r:
-        body = r.read().decode("utf-8", "replace")
-    low = body[:4000].lower()
-    if len(body) < 2048 or any(b in low for b in BLOCK):
-        raise RuntimeError("challenge/short page")
-    return body
+def get(url: str) -> tuple[str, str]:
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(request, timeout=40) as response:
+        body = response.read().decode("utf-8", "replace")
+        final_url = response.geturl()
+    preview = body[:4000].lower()
+    if len(body) < 2048 or any(marker in preview for marker in BLOCK):
+        raise RuntimeError("blocked-or-short-response")
+    return body, final_url
 
 
-def fetch(item):
-    internal, display = item
-    path = os.path.join(CACHE, internal + ".html")
-    if os.path.exists(path) and os.path.getsize(path) > 20000:
-        return (internal, "cached", None)
-    tried = []
+def page_version(body: str) -> dict[str, str] | None:
+    match = VERSION_RE.search(body)
+    if not match:
+        return None
+    return {"version": match.group(1), "date": match.group(2).strip()}
+
+
+def load_manifest() -> dict:
+    if MANIFEST.exists():
+        return json.loads(MANIFEST.read_text())
+    return {"schemaVersion": 1, "paldb": {"pages": {}}}
+
+
+def fingerprint(path: Path, url: str) -> dict:
+    body = path.read_bytes()
+    fetched_at = dt.datetime.fromtimestamp(path.stat().st_mtime, dt.timezone.utc).replace(microsecond=0).isoformat()
+    stamp = page_version(body.decode("utf-8", "replace"))
+    result = {
+        "url": url,
+        "fetchedAt": fetched_at,
+        "sha256": hashlib.sha256(body).hexdigest(),
+        "bytes": len(body),
+    }
+    if stamp:
+        result["paldbVersion"] = stamp
+    return result
+
+
+def fetch(internal: str, display: str) -> tuple[str, str, dict | None]:
+    path = CACHE / f"{internal}.html"
+    if path.exists() and path.stat().st_size > 20_000:
+        return internal, "cached", fingerprint(path, next(candidates(display)))
+
+    failures: list[dict[str, str]] = []
     for url in candidates(display):
         for attempt in range(3):
+            time.sleep(REQUEST_DELAY_SECONDS)
             try:
-                body = get(url)
-                open(path, "w").write(body)
-                return (internal, "ok", None)
-            except Exception as e:  # noqa: BLE001
-                err = f"{url} -> {e}"
-                if "404" in str(e):
+                body, final_url = get(url)
+                path.write_text(body)
+                return internal, "fetched", fingerprint(path, final_url)
+            except urllib.error.HTTPError as error:
+                failures.append({"url": url, "error": f"HTTP {error.code}"})
+                if error.code == 404:
                     break
-                time.sleep(1 + attempt * 2)
-        tried.append(err)
-    return (internal, "FAIL", {"internalName": internal, "displayName": display, "tried": tried})
+            except Exception as error:  # noqa: BLE001 - record upstream failures verbatim
+                failures.append({"url": url, "error": str(error)})
+            time.sleep(1 + attempt * 2)
+    return internal, "failed", {
+        "internalName": internal,
+        "displayName": display,
+        "field": "page",
+        "reason": "fetch failed; no page was available to parse",
+        "attempts": failures,
+    }
 
 
-offset = int(sys.argv[1]) if len(sys.argv) > 1 else 0
-limit = int(sys.argv[2]) if len(sys.argv) > 2 else len(PALS)
-batch = PALS[offset:offset + limit]
+def main() -> None:
+    CACHE.mkdir(parents=True, exist_ok=True)
+    all_pals = pals()
+    offset = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+    limit = int(sys.argv[2]) if len(sys.argv) > 2 else len(all_pals)
+    batch = all_pals[offset : offset + limit]
 
-with ThreadPoolExecutor(max_workers=6) as ex:
-    results = list(ex.map(fetch, batch))
+    # Two workers with a delay cap upstream load while avoiding the old six-way
+    # burst that could turn a challenge page into apparently missing data.
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        results = list(executor.map(lambda item: fetch(*item), batch))
 
-gaps = []
-if os.path.exists(GAPS):
-    gaps = json.load(open(GAPS))
-gaps = [g for g in gaps if g["internalName"] not in {r[0] for r in results}]
-gaps += [r[2] for r in results if r[2]]
-json.dump(gaps, open(GAPS, "w"), indent=2)
+    existing_gaps = json.loads(GAPS.read_text()) if GAPS.exists() else []
+    processed = {internal for internal, _, _ in results}
+    gaps = [gap for gap in existing_gaps if gap.get("internalName") not in processed]
+    gaps.extend(result for _, status, result in results if status == "failed" and result)
+    GAPS.write_text(json.dumps(gaps, indent=2, sort_keys=True) + "\n")
 
-total_cached = len([f for f in os.listdir(CACHE) if f.endswith(".html")])
-print(f"batch {offset}-{offset+len(batch)}: ok={sum(1 for r in results if r[1]=='ok')} "
-      f"cached={sum(1 for r in results if r[1]=='cached')} "
-      f"failed={sum(1 for r in results if r[1]=='FAIL')} | "
-      f"{total_cached}/{len(PALS)} on disk")
-for r in results:
-    if r[1] == "FAIL":
-        print("  FAIL", r[0], r[2]["displayName"])
+    manifest = load_manifest()
+    manifest["schemaVersion"] = 1
+    paldb = manifest.setdefault("paldb", {"pages": {}})
+    pages = paldb.setdefault("pages", {})
+    for internal, status, result in results:
+        if status != "failed" and result:
+            pages[internal] = result
+    stamps = [page.get("paldbVersion") for page in pages.values() if page.get("paldbVersion")]
+    if stamps:
+        paldb["displayedVersion"] = stamps[-1]
+    MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+
+    print(
+        f"batch {offset}-{offset + len(batch)}: fetched={sum(status == 'fetched' for _, status, _ in results)} "
+        f"cached={sum(status == 'cached' for _, status, _ in results)} "
+        f"failed={sum(status == 'failed' for _, status, _ in results)} | "
+        f"{len(list(CACHE.glob('*.html')))}/{len(all_pals)} on disk"
+    )
+    for internal, status, result in results:
+        if status == "failed":
+            print(f"  FETCH FAILED {internal}: {result['displayName']}")
+
+
+if __name__ == "__main__":
+    main()

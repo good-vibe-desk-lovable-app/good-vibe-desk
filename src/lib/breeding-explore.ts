@@ -104,22 +104,54 @@ export interface ExploreNode {
  * make the recursion loop forever. Note this prunes per-branch, not globally:
  * two different branches may each legitimately reach the same species.
  */
-export function exploreTree(
+const MAX_EXPLORE_TREE_NODES = 5_000;
+
+export function exploreTree(rootId: number, depth: number): ExploreNode[] {
+  // Cache only direct, pure offspring grouping for this one call. It does not
+  // globally prune a species or change branch semantics; it avoids resolving
+  // the same 300 pairings repeatedly when that species occurs on many branches.
+  // The cap is unreachable in the shipped one- and two-level UI, but prevents a
+  // depth-three request from allocating millions of unrenderable nodes.
+  return exploreBranch(rootId, depth, new Set(), new Map(), { remaining: MAX_EXPLORE_TREE_NODES });
+}
+
+function exploreBranch(
   rootId: number,
   depth: number,
-  seen: Set<number> = new Set(),
+  seen: ReadonlySet<number>,
+  offspringCache: Map<number, OffspringGroup[]>,
+  budget: { remaining: number },
 ): ExploreNode[] {
-  if (depth < 1) return [];
-  if (seen.has(rootId)) return [];
+  if (depth < 1 || seen.has(rootId) || budget.remaining === 0) return [];
 
   const nextSeen = new Set(seen);
   nextSeen.add(rootId);
+  let direct = offspringCache.get(rootId);
+  if (!direct) {
+    direct = offspringOf(rootId);
+    offspringCache.set(rootId, direct);
+  }
 
-  return offspringOf(rootId).map((group) => ({
-    child: group.child,
-    partners: group.partners,
-    selfPair: group.selfPair,
-    via: group.via,
-    children: depth > 1 ? exploreTree(group.child.id, depth - 1, nextSeen) : [],
-  }));
+  // A one-level request is an exhaustive view of direct offspring, including
+  // the documented X + X = X self-pair. Once a caller asks for a tree, however,
+  // every visible branch must be a simple path: do not render an ancestor as a
+  // descendant, even as a leaf at the final requested depth.
+  const groups = direct.filter(
+    (group) => (depth === 1 && seen.size === 0) || !nextSeen.has(group.child.id),
+  );
+
+  const nodes: ExploreNode[] = [];
+  for (const group of groups) {
+    if (budget.remaining === 0) break;
+    budget.remaining -= 1;
+    nodes.push({
+      child: group.child,
+      partners: group.partners,
+      selfPair: group.selfPair,
+      via: group.via,
+      children:
+        depth > 1 ? exploreBranch(group.child.id, depth - 1, nextSeen, offspringCache, budget) : [],
+    });
+  }
+  return nodes;
 }
