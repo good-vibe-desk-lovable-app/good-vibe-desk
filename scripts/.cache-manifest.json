@@ -3016,5 +3016,25 @@
       }
     }
   },
-  "schemaVersion": 1
+  "schemaVersion": 1,
+  "towerSources": {
+    "sources": {
+      "game8": {
+        "bytes": 290456,
+        "fetchedAt": "2026-08-19T23:51:39+00:00",
+        "sha256": "8b9d9c0dcc08a43e836f5c4375027ca11af052d1ad1f0a169522f11034ee8dc3",
+        "sourceKind": "wiki-sourced",
+        "sourceTier": 3,
+        "url": "https://game8.co/games/Palworld/archives/440436"
+      },
+      "palworldWiki": {
+        "bytes": 46334,
+        "fetchedAt": "2026-08-19T23:51:30+00:00",
+        "sha256": "bceb9b1244e6ac8a23b91e80f12c6d19c7a2a6d4fcbb931430b0a839cb0789d2",
+        "sourceKind": "wiki-sourced",
+        "sourceTier": 3,
+        "url": "https://palworld.wiki.gg/wiki/Tower"
+      }
+    }
+  }
 }

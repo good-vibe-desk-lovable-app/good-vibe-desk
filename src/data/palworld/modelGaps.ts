@@ -44,13 +44,15 @@ export const MODEL_GAPS: ModelGap[] = [
     status: "known-limitation",
   },
   {
-    area: "data/palworld — dungeon / boss / raid classification",
-    summary: "No dungeon, tower-boss or raid-boss source data exists in the dataset.",
+    area: "data/palworld — tower-boss source coverage",
+    summary:
+      "Eight tower Pal entries are two-source corroborated; one source-only pair remains excluded.",
     detail:
-      "Nothing in the generated data distinguishes a dungeon-only Pal, a tower boss or a raid boss. " +
-      "The 12 Pals with zero habitat spawn points are therefore classified 'acquisition unknown', " +
-      "not 'breed only'. Re-crawling paldb.cc with a dungeon/raid parser would resolve this.",
-    status: "unresolved",
+      "The generated towers.ts module retains both source URLs, sourceTier 3, and sourceKind " +
+      "'wiki-corroborated' on each of the eight shared Palworld Wiki and Game8 records. Game8's " +
+      "Zenara and Astralym pair is intentionally retained only in TOWER_SOURCE_EXCLUSIONS until an " +
+      "independent second source corroborates it; the app does not resolve it by guess.",
+    status: "known-limitation",
   },
   {
     area: "data/palworld — mutation breeding (v1.0)",

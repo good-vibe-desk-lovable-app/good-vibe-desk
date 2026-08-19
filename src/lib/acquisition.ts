@@ -17,6 +17,7 @@
 import { PALS } from "@/data/palworld";
 import { PAL_HABITAT } from "@/data/palworld/habitat";
 import { PAL_SPAWNS, type SpawnPoint } from "@/data/palworld/spawns";
+import { towerBossesOf, type TowerBossEvidence } from "@/data/palworld/towers";
 import {
   ACQUISITION_CHANNELS,
   CHANNEL_LABEL,
@@ -44,6 +45,9 @@ export interface AcquisitionInfo {
   /** Maps the Pal appears on, with per-window counts. */
   windows: { map: string; day: number; night: number }[];
   eggOnlyRows: boolean;
+  /** Two-source wiki-corroborated tower evidence; distinct from spawn and raid data. */
+  towerBoss: boolean;
+  towerBosses: readonly TowerBossEvidence[];
   reason: string;
 }
 
@@ -74,6 +78,7 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
   );
 
   const known = ACQUISITION_CHANNELS[internalName];
+  const towerBosses = towerBossesOf(internalName);
   const channel: AcquisitionChannel = known
     ? known.channel
     : habitatPoints > 0
@@ -99,6 +104,8 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
     nightPoints: night,
     windows: Array.from(byMap.values()).filter((w) => w.day > 0 || w.night > 0),
     eggOnlyRows: rows.length > 0 && rows.every((r) => r.kind === "egg"),
+    towerBoss: towerBosses.length > 0,
+    towerBosses,
     reason: requirement,
   };
 }

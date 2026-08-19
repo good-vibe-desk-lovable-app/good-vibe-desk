@@ -14,10 +14,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "src" / "data" / "palworld"
 CACHE = ROOT / "scripts" / ".cache" / "paldb-parsed.json"
+TOWER_CACHE = ROOT / "scripts" / ".cache" / "tower-bosses.json"
 MANIFEST = ROOT / "scripts" / ".cache-manifest.json"
 
 dataset = json.loads(CACHE.read_text())
 recs, gaps = dataset["records"], dataset["gaps"]
+tower_payload = json.loads(TOWER_CACHE.read_text()) if TOWER_CACHE.exists() else {"records": [], "excluded": {}}
+tower_records = tower_payload["records"]
+tower_excluded = tower_payload["excluded"]
 keys = sorted(recs)
 manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
 paldb = manifest.get("paldb", {})
@@ -116,6 +120,39 @@ write(
     "/** A Pal with no field spawner can only be obtained by breeding/eggs. */\n"
     "export function isBreedOnly(internalName: string): boolean {\n"
     "  return spawnsOf(internalName).every((spawn) => spawn.kind === \"egg\");\n}\n",
+)
+
+# tower acquisition evidence
+tower_by_pal: dict[str, list[dict]] = {}
+for tower in tower_records:
+    tower_by_pal.setdefault(tower["internalName"], []).append(tower)
+tower_sources = manifest.get("towerSources", {}).get("sources", {})
+write(
+    "towers.ts",
+    "export interface TowerEvidenceSource {\n  name: string;\n  url: string;\n}\n\n"
+    "export interface TowerBossEvidence {\n"
+    "  tower: string;\n  region: string;\n  coordinates: string;\n  leader: string;\n  pal: string;\n"
+    "  internalName: string;\n  normalLevel: number;\n  hardModeLevel: number;\n"
+    "  sourceTier: 3;\n  sourceKind: \"wiki-corroborated\";\n  sources: readonly [TowerEvidenceSource, TowerEvidenceSource];\n}\n\n"
+    "export const PAL_TOWER_BOSSES: Record<string, readonly TowerBossEvidence[]> = "
+    + j(tower_by_pal)
+    + ";\n\n"
+    "export const TOWER_SOURCE_EXCLUSIONS = "
+    + j(tower_excluded)
+    + ";\n\n"
+    "export const TOWER_PROVENANCE = "
+    + j(
+        {
+            "sourceTier": 3,
+            "sourceKind": "wiki-corroborated",
+            "sourceCount": len(tower_sources),
+            "entryCount": len(tower_records),
+            "sources": [source.get("url") for source in tower_sources.values()],
+        }
+    )
+    + ";\n\n"
+    "export function towerBossesOf(internalName: string): readonly TowerBossEvidence[] {\n"
+    "  return PAL_TOWER_BOSSES[internalName] ?? [];\n}\n",
 )
 
 # habitat
