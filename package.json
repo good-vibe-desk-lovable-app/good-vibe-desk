@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && node scripts/prerender-root.mjs && node scripts/check-sw.mjs",
-    "build:dev": "vite build --mode development",
+    "build": "node scripts/check-paldb-coverage.mjs && vite build && node scripts/prerender-root.mjs && node scripts/check-sw.mjs",
+    "build:dev": "node scripts/check-paldb-coverage.mjs && vite build --mode development",
+    "data:check": "python3 scripts/check-paldb-sections.py",
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest run",

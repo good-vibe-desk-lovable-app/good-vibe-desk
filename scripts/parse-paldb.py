@@ -78,6 +78,22 @@ def section_table(soup: BeautifulSoup, title: str) -> Tag | None:
     return card.find("table") if card else None
 
 
+def required_card(soup: BeautifulSoup, internal: str, *titles: str) -> Tag:
+    for title in titles:
+        card = section_card(soup, title)
+        if card:
+            return card
+    expected = " or ".join(repr(title) for title in titles)
+    raise AssertionError(f"{internal}: missing required PalDB card {expected}")
+
+
+def required_table(soup: BeautifulSoup, internal: str, title: str) -> Tag:
+    table = section_table(soup, title)
+    if not table:
+        raise AssertionError(f"{internal}: missing required PalDB table in {title!r} card")
+    return table
+
+
 def num(value: str) -> float | None:
     match = re.search(r"-?\d+(?:\.\d+)?", value.replace(",", ""))
     return float(match.group(0)) if match else None
@@ -105,25 +121,25 @@ def card_kv_pairs(card: Tag | None) -> dict[str, str]:
     return out
 
 
-def kv_pairs(soup: BeautifulSoup) -> dict[str, str]:
-    """Read only Stats, Movement, and Others cards; never the whole page."""
+def kv_pairs(soup: BeautifulSoup, internal: str) -> dict[str, str]:
+    """Read required Stats, Movement, and Others cards; never page-wide data."""
     out: dict[str, str] = {}
-    for title in ("Stats", "Movement", "Others", "Other"):
-        for key, value in card_kv_pairs(section_card(soup, title)).items():
+    for titles in (("Stats",), ("Movement",), ("Others", "Other")):
+        for key, value in card_kv_pairs(required_card(soup, internal, *titles)).items():
             out.setdefault(key, value)
     return out
 
 
-def others_table(soup: BeautifulSoup) -> dict[str, str]:
-    """Return key/value fields from the bounded Others card."""
-    return card_kv_pairs(section_card(soup, "Others") or section_card(soup, "Other"))
+def others_table(soup: BeautifulSoup, internal: str) -> dict[str, str]:
+    """Return key/value fields from the required bounded Others card."""
+    return card_kv_pairs(required_card(soup, internal, "Others", "Other"))
 
 
-def parse_work(soup: BeautifulSoup) -> list[dict[str, Any]]:
-    """Read only ``div.workArray`` rows, never navigation links or food icons."""
+def parse_work(soup: BeautifulSoup, internal: str) -> list[dict[str, Any]]:
+    """Read only required ``div.workArray`` rows, never navigation links or food icons."""
     root = soup.find("div", class_="workArray")
     if not root:
-        return []
+        raise AssertionError(f"{internal}: missing required PalDB workArray")
     out: list[dict[str, Any]] = []
     for row in direct_divs(root):
         head = row.find("div", class_=lambda classes: classes and "justify-content-between" in classes)
@@ -139,10 +155,8 @@ def parse_work(soup: BeautifulSoup) -> list[dict[str, Any]]:
     return out
 
 
-def parse_drops(soup: BeautifulSoup) -> list[dict[str, Any]]:
-    table = section_table(soup, "Possible Drops")
-    if not table:
-        return []
+def parse_drops(soup: BeautifulSoup, internal: str) -> list[dict[str, Any]]:
+    table = required_table(soup, internal, "Possible Drops")
     out: list[dict[str, Any]] = []
     for row in table.find_all("tr"):
         cells = row.find_all("td")
@@ -159,10 +173,12 @@ def parse_drops(soup: BeautifulSoup) -> list[dict[str, Any]]:
     return out
 
 
-def parse_spawns(soup: BeautifulSoup) -> list[dict[str, Any]]:
-    table = section_table(soup, "Spawner")
-    if not table:
+def parse_spawns(soup: BeautifulSoup, internal: str) -> list[dict[str, Any]]:
+    # Astralym is the one current exception: it has no Spawner card, so the
+    # absence stays explicit rather than being mistaken for a renamed section.
+    if internal == "WorldTreeDragon":
         return []
+    table = required_table(soup, internal, "Spawner")
     out: list[dict[str, Any]] = []
     for row in table.find_all("tr"):
         cells = row.find_all("td")
@@ -196,13 +212,11 @@ def parse_spawns(soup: BeautifulSoup) -> list[dict[str, Any]]:
     return out
 
 
-def parse_habitat(soup: BeautifulSoup) -> list[dict[str, Any]]:
+def parse_habitat(soup: BeautifulSoup, internal: str) -> list[dict[str, Any]]:
     # PalDB's bounded distribution card is currently titled "Map". Restrict
     # extraction to that exact card so matching the shared `?pal=...` URL shape
     # elsewhere on the page can never create habitat data.
-    card = section_card(soup, "Map")
-    if not card:
-        return []
+    card = required_card(soup, internal, "Map")
     out: list[dict[str, Any]] = []
     for anchor in card.find_all("a", href=True):
         href = anchor["href"]
@@ -219,11 +233,9 @@ def parse_habitat(soup: BeautifulSoup) -> list[dict[str, Any]]:
     return out
 
 
-def parse_active_skills(soup: BeautifulSoup) -> list[dict[str, Any]]:
-    """Read individual cards inside the Active Skills card only."""
-    card = section_card(soup, "Active Skills")
-    if not card:
-        return []
+def parse_active_skills(soup: BeautifulSoup, internal: str) -> list[dict[str, Any]]:
+    """Read individual cards inside the required Active Skills card only."""
+    card = required_card(soup, internal, "Active Skills")
     out: list[dict[str, Any]] = []
     for skill in card.select(".activeSkill"):
         head = skill.select_one(".itemHead")
@@ -250,13 +262,13 @@ def parse_active_skills(soup: BeautifulSoup) -> list[dict[str, Any]]:
     return out
 
 
-def parse_partner(soup: BeautifulSoup) -> str | None:
+def parse_partner(soup: BeautifulSoup, internal: str) -> str | None:
     anchor = soup.find("a", href="Partner_Skill")
     if not anchor:
-        return None
+        raise AssertionError(f"{internal}: missing required PalDB Partner Skill anchor")
     card = anchor.find_parent(lambda tag: isinstance(tag, Tag) and class_has(tag, "card"))
     if not card:
-        return None
+        raise AssertionError(f"{internal}: Partner Skill anchor is outside its required card")
     strings = [clean(value) for value in card.stripped_strings]
     try:
         index = strings.index("Partner Skill")
@@ -267,6 +279,25 @@ def parse_partner(soup: BeautifulSoup) -> str | None:
         if candidate and candidate not in {"Partner Skill", "Active Skills"}:
             return candidate
     return None
+
+
+def validate_required_sections(soup: BeautifulSoup, internal: str) -> None:
+    """Hard-fail source-shape drift before any scoped extractor can emit empties."""
+    required_card(soup, internal, "Stats")
+    required_card(soup, internal, "Movement")
+    required_card(soup, internal, "Others", "Other")
+    if not soup.find("div", class_="workArray"):
+        raise AssertionError(f"{internal}: missing required PalDB workArray")
+    required_table(soup, internal, "Possible Drops")
+    if internal != "WorldTreeDragon":
+        required_table(soup, internal, "Spawner")
+    required_card(soup, internal, "Map")
+    required_card(soup, internal, "Active Skills")
+    anchor = soup.find("a", href="Partner_Skill")
+    if not anchor:
+        raise AssertionError(f"{internal}: missing required PalDB Partner Skill anchor")
+    if not anchor.find_parent(lambda tag: isinstance(tag, Tag) and class_has(tag, "card")):
+        raise AssertionError(f"{internal}: Partner Skill anchor is outside its required card")
 
 
 def load_palcalc_work() -> dict[str, list[dict[str, Any]]]:
@@ -306,8 +337,9 @@ def main() -> None:
         # PalDB omits some closing table-cell tags. html5lib recovers that markup
         # before extraction while preserving the parser's section boundaries.
         soup = BeautifulSoup(path.read_text(errors="replace"), "html5lib")
-        kv = kv_pairs(soup)
-        page_work = parse_work(soup)
+        validate_required_sections(soup, internal)
+        kv = kv_pairs(soup, internal)
+        page_work = parse_work(soup, internal)
         authoritative_work = palcalc_work.get(internal)
         if authoritative_work is None:
             gaps.append(
@@ -356,14 +388,14 @@ def main() -> None:
             "work": work,
             "workSource": work_source,
             "hasPalcalcWork": authoritative_work is not None,
-            "drops": parse_drops(soup),
-            "spawns": parse_spawns(soup),
-            "habitat": parse_habitat(soup),
-            "activeSkills": parse_active_skills(soup),
-            "partnerSkill": parse_partner(soup),
-            "nocturnal": "Nocturnal" in text(section_card(soup, "Stats")),
-            "genus": others_table(soup).get("GenusCategory"),
-            "foodAmount": num(others_table(soup).get("FoodAmount", "")),
+            "drops": parse_drops(soup, internal),
+            "spawns": parse_spawns(soup, internal),
+            "habitat": parse_habitat(soup, internal),
+            "activeSkills": parse_active_skills(soup, internal),
+            "partnerSkill": parse_partner(soup, internal),
+            "nocturnal": "Nocturnal" in text(required_card(soup, internal, "Stats")),
+            "genus": others_table(soup, internal).get("GenusCategory"),
+            "foodAmount": num(others_table(soup, internal).get("FoodAmount", "")),
         }
         if not elements:
             gaps.append({"internalName": internal, "field": "elements", "reason": "absent from the Stats/Other sections"})
