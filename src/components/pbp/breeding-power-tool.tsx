@@ -2,6 +2,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Calculator, ChevronsUpDown, Loader2 } from "lucide-react";
 
 import { palById, resolveChild } from "@/data/palworld";
+import {
+  isUnresolvedCircularSelfPair,
+  unresolvedCircularBreedingMessage,
+} from "@/lib/unresolved-circular-breeding";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -65,6 +69,19 @@ function ReverseLookup() {
     };
   }, [child]);
 
+  const target = child === null ? null : (palById.get(child) ?? null);
+  const actionableParents = useMemo(() => {
+    if (!parents || !target) return null;
+    return parents.filter(
+      ([parent1Id, parent2Id]) => !isUnresolvedCircularSelfPair(target, parent1Id, parent2Id),
+    );
+  }, [parents, target]);
+  const onlyCircularParents =
+    parents !== null &&
+    parents.length > 0 &&
+    actionableParents !== null &&
+    actionableParents.length === 0;
+
   return (
     <div className="space-y-4">
       <PalCombo value={child} onChange={setChild} label="Pal you want" />
@@ -77,18 +94,23 @@ function ReverseLookup() {
         <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
           Pick a Pal to see every pair that produces it.
         </p>
+      ) : onlyCircularParents ? (
+        <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
+          {unresolvedCircularBreedingMessage(target!)}
+        </p>
       ) : parents.length === 0 ? (
         <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
-          No pair produces {palById.get(child!)?.name} — it can only be caught in the wild.
+          No pair produces {target?.name} — it can only be caught or obtained another way.
         </p>
       ) : (
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">
-            {parents.length} {parents.length === 1 ? "pair produces" : "pairs produce"}{" "}
-            <span className="font-medium text-foreground">{palById.get(child!)?.name}</span>
+            {actionableParents!.length}{" "}
+            {actionableParents!.length === 1 ? "pair produces" : "pairs produce"}{" "}
+            <span className="font-medium text-foreground">{target?.name}</span>
           </p>
           <ul className="max-h-72 space-y-1 overflow-y-auto rounded-lg border border-border/70 p-2">
-            {parents.map(([p1, p2]) => {
+            {actionableParents!.map(([p1, p2]) => {
               const a = palById.get(p1);
               const b = palById.get(p2);
               return (
@@ -135,6 +157,11 @@ export function BreedingPowerTool() {
     return { res, pa, pb, child, target };
   }, [a, b]);
 
+  const circularOutcome =
+    outcome?.child && isUnresolvedCircularSelfPair(outcome.child, outcome.pa.id, outcome.pb.id)
+      ? outcome.child
+      : null;
+
   return (
     <Collapsible open={open} onOpenChange={setOpen} className="mt-8">
       <Card className="border-border/70 bg-card/80">
@@ -175,52 +202,58 @@ export function BreedingPowerTool() {
                 </div>
 
                 {outcome ? (
-                  <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
-                    <div className="flex flex-wrap items-center gap-2 text-base font-semibold">
-                      <PalIcon
-                        internalName={outcome.pa.internalName}
-                        name={outcome.pa.name}
-                        size={28}
-                      />
-                      {outcome.pa.name} +
-                      <PalIcon
-                        internalName={outcome.pb.internalName}
-                        name={outcome.pb.name}
-                        size={28}
-                      />
-                      {outcome.pb.name} ={" "}
-                      {outcome.child ? (
+                  circularOutcome ? (
+                    <p className="rounded-xl border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
+                      {unresolvedCircularBreedingMessage(circularOutcome)}
+                    </p>
+                  ) : (
+                    <div className="rounded-xl border border-primary/40 bg-primary/5 p-4">
+                      <div className="flex flex-wrap items-center gap-2 text-base font-semibold">
                         <PalIcon
-                          internalName={outcome.child.internalName}
-                          name={outcome.child.name}
+                          internalName={outcome.pa.internalName}
+                          name={outcome.pa.name}
                           size={28}
                         />
-                      ) : null}
-                      <span className="text-primary">{outcome.child?.name ?? "?"}</span>
-                      <Badge variant="outline" className="text-[10px]">
-                        {outcome.res.via === "unique"
-                          ? "Unique combo"
-                          : outcome.res.via === "same-species"
-                            ? "Same species"
-                            : "Breeding power"}
-                      </Badge>
+                        {outcome.pa.name} +
+                        <PalIcon
+                          internalName={outcome.pb.internalName}
+                          name={outcome.pb.name}
+                          size={28}
+                        />
+                        {outcome.pb.name} ={" "}
+                        {outcome.child ? (
+                          <PalIcon
+                            internalName={outcome.child.internalName}
+                            name={outcome.child.name}
+                            size={28}
+                          />
+                        ) : null}
+                        <span className="text-primary">{outcome.child?.name ?? "?"}</span>
+                        <Badge variant="outline" className="text-[10px]">
+                          {outcome.res.via === "unique"
+                            ? "Unique combo"
+                            : outcome.res.via === "same-species"
+                              ? "Same species"
+                              : "Breeding power"}
+                        </Badge>
+                      </div>
+                      {outcome.res.via === "formula" ? (
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          rank {outcome.pa.combiRank} + {outcome.pb.combiRank} → target{" "}
+                          {outcome.target} → closest eligible: {outcome.child?.name} (
+                          {outcome.child?.combiRank})
+                        </p>
+                      ) : outcome.res.via === "unique" ? (
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          This pair is a special override — it ignores the breeding-power formula.
+                        </p>
+                      ) : (
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          Two of the same species always breed true.
+                        </p>
+                      )}
                     </div>
-                    {outcome.res.via === "formula" ? (
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        rank {outcome.pa.combiRank} + {outcome.pb.combiRank} → target{" "}
-                        {outcome.target} → closest eligible: {outcome.child?.name} (
-                        {outcome.child?.combiRank})
-                      </p>
-                    ) : outcome.res.via === "unique" ? (
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        This pair is a special override — it ignores the breeding-power formula.
-                      </p>
-                    ) : (
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        Two of the same species always breed true.
-                      </p>
-                    )}
-                  </div>
+                  )
                 ) : (
                   <p className="rounded-lg border border-dashed border-border/70 px-4 py-6 text-center text-sm text-muted-foreground">
                     Pick two Pals to see what they produce.

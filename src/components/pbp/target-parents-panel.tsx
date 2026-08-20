@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { palById, type Pal } from "@/data/palworld";
 import { normaliseQuery } from "@/lib/search-rank";
+import {
+  isUnresolvedCircularSelfPair,
+  unresolvedCircularBreedingMessage,
+} from "@/lib/unresolved-circular-breeding";
 
 import { PalIcon } from "./pal-icon";
 
@@ -65,10 +69,17 @@ export function TargetParentsPanel({ target, ownedIds }: TargetParentsPanelProps
     };
   }, [target]);
 
+  const actionablePairs = useMemo(() => {
+    if (!pairs || !target) return null;
+    return pairs.filter(
+      ([parent1Id, parent2Id]) => !isUnresolvedCircularSelfPair(target, parent1Id, parent2Id),
+    );
+  }, [pairs, target]);
+
   const rows = useMemo(() => {
-    if (!pairs) return [];
+    if (!actionablePairs) return [];
     const q = normaliseQuery(query);
-    const scored = pairs.map(([p1, p2]) => {
+    const scored = actionablePairs.map(([p1, p2]) => {
       const a = palById.get(p1);
       const b = palById.get(p2);
       // Pairs you can breed right now are the useful ones; a pair where you own
@@ -87,10 +98,12 @@ export function TargetParentsPanel({ target, ownedIds }: TargetParentsPanelProps
       (x, y) =>
         y.owned - x.owned || (x.a?.name ?? "").localeCompare(y.a?.name ?? "") || x.p2 - y.p2,
     );
-  }, [pairs, query, ownedIds]);
+  }, [actionablePairs, query, ownedIds]);
 
   if (!target) return null;
 
+  const onlyCircularPairs =
+    pairs !== null && pairs.length > 0 && actionablePairs !== null && actionablePairs.length === 0;
   const readyCount = rows.filter((r) => r.owned === 2).length;
 
   return (
@@ -102,6 +115,8 @@ export function TargetParentsPanel({ target, ownedIds }: TargetParentsPanelProps
 
       {pairs === null ? (
         <p className="text-sm text-muted-foreground">Loading pair tables…</p>
+      ) : onlyCircularPairs ? (
+        <p className="text-sm text-muted-foreground">{unresolvedCircularBreedingMessage(target)}</p>
       ) : pairs.length === 0 ? (
         <p className="text-sm text-muted-foreground">
           No pair produces {target.name}. It has to be caught or obtained another way — check the
@@ -110,7 +125,8 @@ export function TargetParentsPanel({ target, ownedIds }: TargetParentsPanelProps
       ) : (
         <>
           <p className="mb-3 text-xs text-muted-foreground">
-            {pairs.length} {pairs.length === 1 ? "pair produces" : "pairs produce"} {target.name}
+            {actionablePairs!.length}{" "}
+            {actionablePairs!.length === 1 ? "pair produces" : "pairs produce"} {target.name}
             {readyCount > 0
               ? ` · you can breed ${readyCount} of them right now`
               : " · none of them from Pals you own yet"}
