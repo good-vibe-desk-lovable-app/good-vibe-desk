@@ -75,8 +75,8 @@ export function SummaryCard({ result, targetId, carriedPassiveIds }: SummaryCard
         </p>
 
         <p className="text-xs text-muted-foreground">
-          Lower bound: randomly-added passives enlarge each later step's parent pool, so long chains
-          cost more eggs in practice than shown.
+          Approximate: random passives can enlarge a later pool, duplicate one already present, or
+          supply a desired trait, so no universal direction is guaranteed.
         </p>
 
         <p className="flex gap-2 rounded-lg border border-border/70 bg-background/40 p-3 text-xs text-muted-foreground">

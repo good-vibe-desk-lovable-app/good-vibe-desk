@@ -221,8 +221,8 @@ export function RecommendedPanel({
               })}
             </ul>
             <p className="text-xs text-muted-foreground">
-              Egg counts are a lower bound — random passives on intermediate Pals push real costs
-              higher, more so the longer the chain.
+              Egg counts are approximate — random passives can enlarge a later pool, duplicate one
+              already present, or supply a desired trait, so no universal direction is guaranteed.
               {truncated ? " The budget ran out, so this is a partial ranking." : ""}
             </p>
           </>
