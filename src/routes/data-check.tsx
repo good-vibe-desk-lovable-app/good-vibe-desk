@@ -459,8 +459,8 @@ function DataCheckPage() {
           <h2 className="text-lg font-semibold">Acquisition evidence spot-checks</h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Bellanoir, Mau Cryst, and Grizzbolt exercise the independent raid, dungeon, and
-            two-source tower paths. Astralym is excluded because it remains a one-source tower
-            claim.
+            two-source tower paths. The Game8-only Zenara and Astralym exclusion is not positive
+            tower evidence and never creates a Tower boss channel.
           </p>
           <div className="mt-3 overflow-x-auto">
             <Table>

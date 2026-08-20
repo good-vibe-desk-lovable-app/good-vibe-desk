@@ -197,7 +197,10 @@ def parse_spawns(soup: BeautifulSoup) -> list[dict[str, Any]]:
 
 
 def parse_habitat(soup: BeautifulSoup) -> list[dict[str, Any]]:
-    card = section_card(soup, "Habitat")
+    # PalDB's bounded distribution card is currently titled "Map". Restrict
+    # extraction to that exact card so matching the shared `?pal=...` URL shape
+    # elsewhere on the page can never create habitat data.
+    card = section_card(soup, "Map")
     if not card:
         return []
     out: list[dict[str, Any]] = []
@@ -367,6 +370,17 @@ def main() -> None:
         if authoritative_work is None and not page_work:
             gaps.append({"internalName": internal, "field": "work", "reason": "absent from the PalDB work container"})
         records[internal] = record
+
+    # Each cached roster page currently exposes one bounded Map card, including
+    # pages whose individual day/night counts are legitimately zero. Treat a
+    # missing card as a parser/source-shape failure rather than silently emitting
+    # an empty habitat module that would collapse supported wild acquisition into
+    # unknown.
+    missing_map_cards = [internal for internal, record in records.items() if not record["habitat"]]
+    if missing_map_cards:
+        raise AssertionError(
+            "PalDB Map card missing or unparsed for " + ", ".join(sorted(missing_map_cards))
+        )
 
     if FETCH_GAPS.exists():
         gaps = json.loads(FETCH_GAPS.read_text()) + gaps
