@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { acquisitionOf } from "../acquisition";
+import { PALS } from "@/data/palworld";
 import { DUNGEON_FAMILIES, PAL_DUNGEON_BOSSES, dungeonBossesOf } from "@/data/palworld/dungeons";
 import { NON_ROSTER_RAID_CARDS, PAL_RAID_BOSSES, raidBossesOf } from "@/data/palworld/raid";
 import {
@@ -77,12 +78,13 @@ describe("independent raid, dungeon, and tower acquisition evidence", () => {
     expect(bellanoir.towerBoss).toBe(false);
 
     const mauCryst = acquisitionOf("Bastet_Ice");
-    expect(mauCryst.channel).toBe("dungeon");
+    expect(mauCryst.channel).toBe("wild_spawn");
     expect(mauCryst.raidBoss).toBe(false);
     expect(mauCryst.dungeonBossSourceCount).toBe(1);
     expect(mauCryst.towerBoss).toBe(false);
 
     const grizzbolt = acquisitionOf("ElecPanda");
+    expect(grizzbolt.channel).toBe("wild_spawn");
     expect(grizzbolt.raidBoss).toBe(false);
     expect(grizzbolt.dungeonBossSourceCount).toBe(0);
     expect(grizzbolt.towerBoss).toBe(true);
@@ -91,5 +93,34 @@ describe("independent raid, dungeon, and tower acquisition evidence", () => {
     const eyeOfCthulhu = acquisitionOf("YakushimaBoss001");
     expect(eyeOfCthulhu.channel).toBe("sealed_realm");
     expect(eyeOfCthulhu.dungeonBossSourceCount).toBe(1);
+  });
+
+  it("restores bounded Map-card habitat evidence without inventing an Astralym channel", () => {
+    expect(acquisitionOf("Anubis")).toMatchObject({
+      channel: "wild_spawn",
+      habitatPoints: 114,
+      areas: ["Anubis Dunes"],
+    });
+    expect(acquisitionOf("BlackMetalDragon")).toMatchObject({
+      channel: "wild_spawn",
+      habitatPoints: 44,
+      areas: ["Isle of Silence"],
+    });
+    expect(acquisitionOf("ClioneTwins")).toMatchObject({
+      channel: "wild_spawn",
+      habitatPoints: 132,
+      eggOnlyRows: true,
+    });
+
+    const astralym = acquisitionOf("WorldTreeDragon");
+    expect(astralym).toMatchObject({
+      channel: "unknown",
+      towerBoss: false,
+      towerBosses: [],
+      habitatPoints: 0,
+    });
+
+    const unknowns = PALS.filter((pal) => acquisitionOf(pal.internalName).channel === "unknown");
+    expect(unknowns.map((pal) => pal.internalName)).toEqual(["WorldTreeDragon"]);
   });
 });

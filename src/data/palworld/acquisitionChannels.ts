@@ -143,9 +143,4 @@ export const ACQUISITION_CHANNELS: Record<string, ChannelEntry> = {
     sourceTier: 1,
     requirement: "Overworld spawn",
   },
-  WorldTreeDragon: {
-    channel: "tower_boss",
-    sourceTier: 1,
-    requirement: "Tower boss fight — no overworld spawners on either map",
-  },
 };

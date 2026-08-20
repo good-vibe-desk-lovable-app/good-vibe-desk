@@ -70,9 +70,10 @@ export const MODEL_GAPS: ModelGap[] = [
       "Eight tower Pal entries are two-source corroborated; one source-only pair remains excluded.",
     detail:
       "The generated towers.ts module retains both source URLs, sourceTier 3, and sourceKind " +
-      "'wiki-corroborated' on each of the eight shared Palworld Wiki and Game8 records. Game8's " +
-      "Zenara and Astralym pair is intentionally retained only in TOWER_SOURCE_EXCLUSIONS until an " +
-      "independent second source corroborates it; the app does not resolve it by guess.",
+      "'wiki-corroborated' on each of the eight shared Palworld Wiki and Game8 records. The Game8-only " +
+      "Zenara and Astralym pair is retained solely as an exclusion record: it is not positive tower " +
+      "evidence and must never create a Tower boss channel or badge. The app leaves unsupported " +
+      "acquisition unknown rather than resolving it by guess.",
     status: "known-limitation",
   },
   {
