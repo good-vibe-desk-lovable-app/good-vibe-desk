@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, Hammer, Search, Footprints, Sparkles, Swords } from "lucide-react";
+import { Check, Search } from "lucide-react";
 
 import { PALS } from "@/data/palworld";
-import type { Pal, Passive } from "@/data/palworld";
+import type { Pal } from "@/data/palworld";
 import {
   MAX_PASSIVE_SLOTS,
   genderRatioNote,
@@ -31,6 +31,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PalIcon } from "./pal-icon";
+import { effectSign, PASSIVE_CATEGORY_ICON, PASSIVE_TIER_CLASS } from "./passive-visuals";
+import { PassivePolarityCue } from "./passive-polarity-cue";
 
 const GENDERS: Array<{ value: Gender; label: string }> = [
   { value: "male", label: "Male" },
@@ -40,32 +42,6 @@ const GENDERS: Array<{ value: Gender; label: string }> = [
 
 const TIERS = ["common", "rare", "epic", "legendary"] as const;
 type Tier = (typeof TIERS)[number];
-
-/** Matches the tier colours already used by PassiveChip. */
-const TIER_CLASS: Record<Tier, string> = {
-  common: "border-border/70 text-muted-foreground",
-  rare: "border-info/50 text-info",
-  epic: "border-primary/50 text-primary",
-  legendary: "border-warning/60 text-warning",
-};
-
-const CATEGORY_ICON: Record<PassiveCategory, typeof Swords> = {
-  Combat: Swords,
-  Work: Hammer,
-  Movement: Footprints,
-  Other: Sparkles,
-};
-
-/**
- * A passive is a downside when its description carries a negative percentage
- * ("Work Speed -10%"). Read off the text rather than guessed, so anything
- * without a clear sign renders neutral.
- */
-function effectSign(passive: Passive): "positive" | "negative" | "neutral" {
-  if (/-\s*\d/.test(passive.description)) return "negative";
-  if (/\+\s*\d/.test(passive.description)) return "positive";
-  return "neutral";
-}
 
 interface AddPalDialogProps {
   open: boolean;
@@ -276,7 +252,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
 
               <div className="flex flex-wrap gap-1.5">
                 {PASSIVE_CATEGORIES.map((c) => {
-                  const Icon = CATEGORY_ICON[c];
+                  const Icon = PASSIVE_CATEGORY_ICON[c];
                   const active = categoryFilter === c;
                   return (
                     <button
@@ -284,7 +260,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                       type="button"
                       onClick={() => setCategoryFilter(active ? null : c)}
                       className={cn(
-                        "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors",
+                        "inline-flex min-h-11 items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors",
                         active
                           ? "border-primary/60 bg-primary/15 text-foreground"
                           : "border-border/70 text-muted-foreground hover:text-foreground",
@@ -303,8 +279,8 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                       type="button"
                       onClick={() => setTierFilter(active ? null : t)}
                       className={cn(
-                        "rounded-full border px-2.5 py-1 text-xs capitalize transition-colors",
-                        TIER_CLASS[t],
+                        "min-h-11 rounded-full border px-2.5 py-1 text-xs capitalize transition-colors",
+                        PASSIVE_TIER_CLASS[t],
                         active ? "bg-accent/60 text-foreground" : "hover:text-foreground",
                       )}
                     >
@@ -318,7 +294,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                 <div className="grid gap-1 p-2 sm:grid-cols-2">
                   {visiblePassives.map((passive) => {
                     const checked = passiveIds.includes(passive.id);
-                    const Icon = CATEGORY_ICON[categoryOfId(passive.id)];
+                    const Icon = PASSIVE_CATEGORY_ICON[categoryOfId(passive.id)];
                     const sign = effectSign(passive);
                     return (
                       <label
@@ -342,7 +318,10 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                             <span className="font-medium">{passive.name}</span>
                             <Badge
                               variant="outline"
-                              className={cn("text-[10px] capitalize", TIER_CLASS[passive.tier])}
+                              className={cn(
+                                "text-[10px] capitalize",
+                                PASSIVE_TIER_CLASS[passive.tier],
+                              )}
                             >
                               {passive.tier}
                             </Badge>
@@ -362,6 +341,7 @@ export function AddPalDialog({ open, onOpenChange, editing, onSave }: AddPalDial
                                   : "text-muted-foreground",
                             )}
                           >
+                            <PassivePolarityCue sign={sign} className="mr-1 text-[10px]" />
                             {passive.description}
                           </span>
                         </span>

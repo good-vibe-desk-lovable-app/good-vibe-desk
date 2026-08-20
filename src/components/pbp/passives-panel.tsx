@@ -7,6 +7,7 @@ import { PASSIVE_CATEGORIES, categoryOfId } from "@/lib/passive-categories";
 import { RANK_NO_MATCH, normaliseQuery, rankPassive } from "@/lib/search-rank";
 import { cn } from "@/lib/utils";
 import { PassiveChip } from "./passive-chip";
+import { PASSIVE_CATEGORY_ICON } from "./passive-visuals";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -136,17 +137,21 @@ export function PassivesPanel({ entries, selections, onChange }: PassivesPanelPr
         </div>
 
         <div className="flex flex-wrap gap-1">
-          {PASSIVE_CATEGORIES.map((c) => (
-            <FilterChip
-              key={c}
-              on={categories.includes(c)}
-              onClick={() =>
-                setCategories((p) => (p.includes(c) ? p.filter((x) => x !== c) : [...p, c]))
-              }
-            >
-              {c}
-            </FilterChip>
-          ))}
+          {PASSIVE_CATEGORIES.map((c) => {
+            const Icon = PASSIVE_CATEGORY_ICON[c];
+            return (
+              <FilterChip
+                key={c}
+                on={categories.includes(c)}
+                onClick={() =>
+                  setCategories((p) => (p.includes(c) ? p.filter((x) => x !== c) : [...p, c]))
+                }
+              >
+                <Icon className="size-3" aria-hidden="true" />
+                {c}
+              </FilterChip>
+            );
+          })}
           {(["common", "rare", "epic", "legendary"] as const).map((t) => (
             <FilterChip
               key={t}
@@ -241,7 +246,7 @@ function FilterChip({
       onClick={onClick}
       aria-pressed={on}
       className={cn(
-        "rounded-full border px-2 py-1 text-[11px] capitalize transition-colors",
+        "inline-flex min-h-11 items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] capitalize transition-colors",
         on
           ? "border-primary bg-primary/15 text-foreground"
           : "border-border/70 text-muted-foreground hover:bg-accent/60",
