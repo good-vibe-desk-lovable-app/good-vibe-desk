@@ -45,12 +45,15 @@ export const MODEL_GAPS: ModelGap[] = [
   },
   {
     area: "pathfinder/inheritance.ts — expected eggs",
-    summary: "Expected-egg totals are a lower bound.",
+    summary: "Expected-egg totals are approximate, with no universal directional guarantee.",
     detail:
-      "Randomly-added passives are ignored. That is exact for a single step (randoms fill leftover " +
-      "slots and never displace inherited passives), but across a multi-step chain those extras " +
-      "enlarge the next step's parent pool and lower its success probability. Real chains therefore " +
-      "cost at least the number shown, usually more the longer they get.",
+      "PalCalc's published 4/3/2/1 parent-inheritance and 4/3/2/1 random-addition weights were " +
+      "checked. They validate the existing one-step inherited-passive marginal but are insufficient " +
+      "for an exact chain model: random-passive identities and selection rules, duplicate behaviour, " +
+      "and full intermediate passive-set distributions are unavailable. Random additions can enlarge " +
+      "a later pool, duplicate an existing trait, or supply a desired trait, so totals are not proven " +
+      "lower or upper bounds. PalCalc's own solver documents the same placeholder-random-passive " +
+      "limitation.",
     status: "known-limitation",
   },
   {
