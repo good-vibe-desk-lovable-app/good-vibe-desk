@@ -3,7 +3,15 @@ import { useState } from "react";
 import { palById } from "@/data/palworld";
 import type { Passive } from "@/data/palworld";
 import { getPassive, palsGuaranteeing } from "@/lib/collection";
+import { categoryOfId } from "@/lib/passive-categories";
 import { cn } from "@/lib/utils";
+import {
+  effectSign,
+  PASSIVE_CATEGORY_CLASS,
+  PASSIVE_CATEGORY_ICON,
+  PASSIVE_TIER_CLASS,
+} from "./passive-visuals";
+import { PassivePolarityCue } from "./passive-polarity-cue";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -13,13 +21,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-const TIER_CLASS: Record<Passive["tier"], string> = {
-  common: "border-border/70 text-muted-foreground",
-  rare: "border-info/50 text-info",
-  epic: "border-primary/50 text-primary",
-  legendary: "border-warning/60 text-warning",
-};
 
 interface PassiveChipProps {
   passiveId: string;
@@ -33,6 +34,9 @@ export function PassiveChip({ passiveId, carried, className }: PassiveChipProps)
   const [open, setOpen] = useState(false);
   const passive = getPassive(passiveId);
   const label = passive?.name ?? passiveId;
+  const category = categoryOfId(passiveId);
+  const CategoryIcon = PASSIVE_CATEGORY_ICON[category];
+  const sign = passive ? effectSign(passive) : "neutral";
 
   return (
     <>
@@ -46,14 +50,34 @@ export function PassiveChip({ passiveId, carried, className }: PassiveChipProps)
 
         title={`What does ${label} do?`}
         className={cn(
-          "inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium transition-colors",
+          "inline-flex min-h-11 items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors",
           carried
             ? "border-success/60 bg-success/15 text-success shadow-[0_0_10px_-2px_var(--success)]"
             : "border-border/70 bg-background/60 text-muted-foreground hover:text-foreground",
           className,
         )}
       >
-        {label}
+        <span
+          className={cn(
+            "inline-flex size-4 shrink-0 items-center justify-center rounded-full border",
+            PASSIVE_CATEGORY_CLASS[category],
+          )}
+          aria-label={`${category} passive`}
+        >
+          <CategoryIcon className="size-2.5" aria-hidden="true" />
+        </span>
+        <span>{label}</span>
+        {passive ? (
+          <span
+            className={cn(
+              "rounded-full border px-1 text-[9px] capitalize",
+              PASSIVE_TIER_CLASS[passive.tier],
+            )}
+          >
+            {passive.tier}
+          </span>
+        ) : null}
+        <PassivePolarityCue sign={sign} className="text-[9px]" />
       </button>
       <PassiveGlossaryDialog passiveId={passiveId} open={open} onOpenChange={setOpen} />
     </>
@@ -81,7 +105,7 @@ export function PassiveGlossaryDialog({
             {passive ? (
               <Badge
                 variant="outline"
-                className={cn("text-[10px] capitalize", TIER_CLASS[passive.tier])}
+                className={cn("text-[10px] capitalize", PASSIVE_TIER_CLASS[passive.tier])}
               >
                 {passive.tier}
               </Badge>
