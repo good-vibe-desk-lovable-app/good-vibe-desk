@@ -1,13 +1,35 @@
 // HAND-MAINTAINED (not emitted by scripts/emit-paldb.py, which owns dataGaps.ts).
-// Known modelling limitations — things the app computes approximately, where the
-// approximation is documented rather than hidden. Surfaced on /data-check.
+// MODEL_GAPS contains only limitations that currently affect what the app can
+// compute or claim. Settled reconciliations live in MODEL_FACTS instead.
 
 export interface ModelGap {
   area: string;
   summary: string;
   detail: string;
-  status: "known-limitation" | "unresolved" | "resolved";
+  status: "known-limitation" | "unresolved";
 }
+
+export interface ModelFact {
+  area: string;
+  summary: string;
+  detail: string;
+}
+
+/** Settled data reconciliations; these are facts, not current limitations. */
+export const MODEL_FACTS: ModelFact[] = [
+  {
+    area: "data/palworld/skills.ts — active-skill catalogue reconciliation",
+    summary: "Settled: the roster exposes all 307 unique PalDB Active Skills names.",
+    detail:
+      "PalDB's Active Skills catalogue lists 315 cards, comprising 307 unique display names and " +
+      "eight duplicate-label rows. The 300 parsed roster pages expose every one of those 307 unique " +
+      "catalogue names. PalCalc db.json v27 has 320 internal active-skill rows (312 unique display " +
+      "names); its five additional display names are Predator Blast, Predator Mark, Predator Surge, " +
+      "Psycho Gravity, and Use Weapon, which are not listed by PalDB's catalogue and are marked " +
+      "CanInherit: false in PalCalc. The user-facing active-skill total is therefore 307, not an " +
+      "unexplained shortfall.",
+  },
+];
 
 export const MODEL_GAPS: ModelGap[] = [
   {
@@ -37,10 +59,9 @@ export const MODEL_GAPS: ModelGap[] = [
     detail:
       "Only 187 field spawn points were parsed across 299 Pals — Chikipi and Lamball, which are " +
       "everywhere in the overworld, have zero field rows yet 558 and 723 habitat spawn points " +
-      "respectively. The exported isBreedOnly() helper in spawns.ts is therefore NOT trustworthy " +
-      "and is not used by the UI. Acquisition classification (src/lib/acquisition.ts) uses " +
-      "PAL_HABITAT totals instead, and reports 'unknown' rather than 'breed only' wherever there " +
-      "is no positive evidence.",
+      "respectively. Acquisition classification (src/lib/acquisition.ts) uses PAL_HABITAT totals and " +
+      "positive raid, dungeon, tower, and manual channel evidence; it reports 'unknown' rather than " +
+      "an unsupported negative acquisition conclusion where no positive evidence exists.",
     status: "known-limitation",
   },
   {
@@ -53,37 +74,6 @@ export const MODEL_GAPS: ModelGap[] = [
       "Zenara and Astralym pair is intentionally retained only in TOWER_SOURCE_EXCLUSIONS until an " +
       "independent second source corroborates it; the app does not resolve it by guess.",
     status: "known-limitation",
-  },
-  {
-    area: "PWA navigation — cold offline root document",
-    summary: "Resolved: offline navigation now has a precached root application shell.",
-    detail:
-      "The 2026-08-19 production-shaped investigation found that SSR-on-Workers emitted no HTML " +
-      "document for Workbox's navigateFallback to serve, so a cold offline navigation failed. The production " +
-      "build now renders its completed Cloudflare worker at '/' into index.html, while all non-root online routes " +
-      "remain SSR-rendered with their own metadata. scripts/check-sw.mjs hard-fails unless that root document " +
-      "exists and is precached; browser acceptance covers '/', '/explore', and a hash-based share link after " +
-      "the server is withdrawn.",
-    status: "resolved",
-  },
-  {
-    area: "data/palworld — raid-boss classification",
-    summary: "Resolved: PalDB Summoning Altar encounter evidence is generated independently.",
-    detail:
-      "The generated raid.ts module records all 11 PalDB Summoning Altar cards: nine encounters join to " +
-      "five roster Pals, while two Moon Lord cards are retained explicitly as non-roster source evidence. " +
-      "Raid evidence remains a positive acquisition flag and does not infer or override dungeon, tower, habitat, " +
-      "or breed-only status.",
-    status: "resolved",
-  },
-  {
-    area: "data/palworld — dungeon-boss classification",
-    summary: "Resolved: hard-validated PalDB dungeon boss evidence is generated independently.",
-    detail:
-      "The generated dungeons.ts module hard-validates all 14 PalDB Dungeons index families and records " +
-      "190 Boss Spawns rows joined to 150 exact roster internal names. Dungeon evidence remains a positive " +
-      "acquisition flag and does not infer or override raid, tower, habitat, or breed-only status.",
-    status: "resolved",
   },
   {
     area: "data/palworld — mutation breeding (v1.0)",

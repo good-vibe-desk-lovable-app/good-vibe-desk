@@ -2,7 +2,7 @@
 // Join key is internalName. Do not hand-edit.
 // PalDB pages fetched: 2026-08-19; displayed version: v1.0.3 2026/8/12
 // Work suitability: PalCalc db.json v27 fetched 2026-08-19.
-// This file emitted: 2026-08-19
+// This file emitted: 2026-08-20
 export interface SpawnPoint {
   area: string;
   coords?: number[];
@@ -315,9 +315,4 @@ export const PAL_SPAWNS: Record<string, SpawnPoint[]> = {
 
 export function spawnsOf(internalName: string): SpawnPoint[] {
   return PAL_SPAWNS[internalName] ?? [];
-}
-
-/** A Pal with no field spawner can only be obtained by breeding/eggs. */
-export function isBreedOnly(internalName: string): boolean {
-  return spawnsOf(internalName).every((spawn) => spawn.kind === "egg");
 }

@@ -124,10 +124,7 @@ write(
     + "\n".join(lines)
     + "\n};\n\n"
     "export function spawnsOf(internalName: string): SpawnPoint[] {\n"
-    "  return PAL_SPAWNS[internalName] ?? [];\n}\n\n"
-    "/** A Pal with no field spawner can only be obtained by breeding/eggs. */\n"
-    "export function isBreedOnly(internalName: string): boolean {\n"
-    "  return spawnsOf(internalName).every((spawn) => spawn.kind === \"egg\");\n}\n",
+    "  return PAL_SPAWNS[internalName] ?? [];\n}\n",
 )
 
 # tower acquisition evidence
