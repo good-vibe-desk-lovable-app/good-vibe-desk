@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Hard-fail the build when a required bounded PalDB section changes shape."""
+"""Audit cached PalDB pages for required bounded source sections.
+
+This intentionally does not run from ``npm run build``: Cloudflare Workers
+Builds do not receive ``scripts/.cache/paldb`` or a Python runtime. Run
+``npm run data:check`` locally after refreshing the cache. Deploy builds use
+``check-paldb-coverage.mjs`` to verify the checked-in generated-data contract.
+"""
 from __future__ import annotations
 
 import importlib.util

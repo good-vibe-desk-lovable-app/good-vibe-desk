@@ -1,3 +1,12 @@
+/**
+ * Deploy-safe PalDB coverage contract.
+ *
+ * `npm run build` and `npm run build:dev` execute this Node-only check because
+ * Cloudflare Workers Builds receive tracked generated modules but neither the
+ * untracked `scripts/.cache/paldb` corpus nor a Python runtime. Do not replace
+ * this preflight with the source-section audit: run `npm run data:check` after
+ * refreshing the local PalDB cache to validate the underlying HTML contracts.
+ */
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
