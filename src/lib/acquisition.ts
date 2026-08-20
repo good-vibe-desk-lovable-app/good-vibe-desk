@@ -15,9 +15,10 @@
 // Dungeon acquisition is UNDER-COUNTED (see manualDataGaps.ts), so a Pal with no
 // channel and no habitat presence reports "unknown" — never "not obtainable".
 import { PALS } from "@/data/palworld";
+import { dungeonBossesOf, type DungeonBossEvidence } from "@/data/palworld/dungeons";
 import { PAL_HABITAT } from "@/data/palworld/habitat";
-import { PAL_SPAWNS, type SpawnPoint } from "@/data/palworld/spawns";
 import { raidBossesOf, type RaidBossEvidence } from "@/data/palworld/raid";
+import { PAL_SPAWNS, type SpawnPoint } from "@/data/palworld/spawns";
 import { towerBossesOf, type TowerBossEvidence } from "@/data/palworld/towers";
 import {
   ACQUISITION_CHANNELS,
@@ -49,7 +50,10 @@ export interface AcquisitionInfo {
   /** Independently generated PalDB Summoning Altar evidence; not a field-spawn substitute. */
   raidBoss: boolean;
   raidBosses: readonly RaidBossEvidence[];
-  /** Two-source wiki-corroborated tower evidence; distinct from spawn and raid data. */
+  /** Independently generated PalDB dungeon boss evidence; field habitat remains separate. */
+  dungeonBossSourceCount: number;
+  dungeonBosses: readonly DungeonBossEvidence[];
+  /** Two-source wiki-corroborated tower evidence; distinct from spawn, raid, and dungeon data. */
   towerBoss: boolean;
   towerBosses: readonly TowerBossEvidence[];
   reason: string;
@@ -83,6 +87,8 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
 
   const known = ACQUISITION_CHANNELS[internalName];
   const raidBosses = raidBossesOf(internalName);
+  const dungeonBosses = dungeonBossesOf(internalName);
+  const dungeonBossSourceCount = new Set(dungeonBosses.map((entry) => entry.dungeon)).size;
   const towerBosses = towerBossesOf(internalName);
   const channel: AcquisitionChannel = known
     ? known.channel
@@ -90,7 +96,9 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
       ? "raid_altar"
       : habitatPoints > 0
         ? "wild_spawn"
-        : "unknown";
+        : dungeonBosses.length > 0
+          ? "dungeon"
+          : "unknown";
 
   const requirement = known
     ? known.requirement
@@ -98,7 +106,9 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
       ? "Summoning Altar raid — see the recorded PalDB encounter variants."
       : habitatPoints > 0
         ? `Catchable in the overworld — ${habitatPoints} spawn points recorded.`
-        : "No channel resolved. Dungeon spawn tables key through group IDs and could not be matched, so this is unconfirmed rather than unobtainable.";
+        : dungeonBosses.length > 0
+          ? `Dungeon boss — ${dungeonBossSourceCount} recorded dungeon source${dungeonBossSourceCount === 1 ? "" : "s"}.`
+          : "No channel resolved. Dungeon spawn tables key through group IDs and could not be matched, so this is unconfirmed rather than unobtainable.";
 
   return {
     channel,
@@ -115,6 +125,8 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
     eggOnlyRows: rows.length > 0 && rows.every((r) => r.kind === "egg"),
     raidBoss: raidBosses.length > 0,
     raidBosses,
+    dungeonBossSourceCount,
+    dungeonBosses,
     towerBoss: towerBosses.length > 0,
     towerBosses,
     reason: requirement,
