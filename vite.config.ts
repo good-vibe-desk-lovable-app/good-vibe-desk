@@ -7,6 +7,8 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { VitePWA } from "vite-plugin-pwa";
 
+import { createWorkboxOptions } from "./scripts/pwa-workbox-config.mjs";
+
 /**
  * Directory the finished browser bundle lands in.
  *
@@ -82,38 +84,7 @@ export default defineConfig({
             },
           ],
         },
-        workbox: {
-          // TanStack Start builds three environments (client, ssr, nitro) and
-          // the PWA plugin's glob runs before the client assets are on disk,
-          // which is why the manifest came out empty. Pointing globDirectory
-          // at the finished client output fixes the "0.00 KiB" precache. It
-          // must track outDir — they are the same directory.
-          globDirectory: PWA_OUT_DIR,
-          globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,webp}"],
-          // Pal artwork is fetched on demand rather than precached, so the
-          // service worker install stays small on mobile data.
-          globIgnores: ["**/node_modules/**/*", "sw.js", "workbox-*.js", "pals/**"],
-          maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
-          navigateFallback: "/",
-          navigateFallbackDenylist: [/^\/~oauth/, /^\/api\//],
-          runtimeCaching: [
-            {
-              urlPattern: ({ request }: { request: Request }) => request.mode === "navigate",
-              handler: "NetworkFirst",
-              options: { cacheName: "pages" },
-            },
-            {
-              // Pal artwork: cache each image the first time it is actually
-              // viewed, rather than shipping 300 files in the SW install.
-              urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith("/pals/"),
-              handler: "CacheFirst",
-              options: {
-                cacheName: "pal-images",
-                expiration: { maxEntries: 700, maxAgeSeconds: 60 * 60 * 24 * 90 },
-              },
-            },
-          ],
-        },
+        workbox: createWorkboxOptions(PWA_OUT_DIR),
       }),
     ],
   },

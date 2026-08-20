@@ -16,10 +16,11 @@
 // phone. Anything added to package.json that is not already in the lockfile
 // fails the deploy before the build starts. Node built-ins only.
 
-import { readFileSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 
 const OUT_DIR = process.env.PWA_OUT_DIR ?? ".output/public";
 const SW_PATH = `${OUT_DIR}/sw.js`;
+const ROOT_DOCUMENT_PATH = `${OUT_DIR}/index.html`;
 
 let source;
 try {
@@ -51,3 +52,27 @@ if (entries === 0) {
   );
   process.exit(1);
 }
+
+// A navigation fallback can only boot the app offline when its root document
+// was emitted by Nitro and included in Workbox's precache. Static JS/CSS alone
+// is insufficient for a cold navigation in this SSR-on-Workers build.
+if (!existsSync(ROOT_DOCUMENT_PATH)) {
+  console.error(
+    `[check-sw] FAILED: no prerendered root document at ${ROOT_DOCUMENT_PATH}.\n` +
+      "  Offline navigation falls back to /, so the build must emit index.html.\n" +
+      "  Fix: run the post-worker root-prerender step before this validator.\n",
+  );
+  process.exit(1);
+}
+
+const rootDocumentPrecached = /(?:url\s*:\s*)?["']\/?index\.html["']/.test(source);
+if (!rootDocumentPrecached) {
+  console.error(
+    `[check-sw] FAILED: ${ROOT_DOCUMENT_PATH} exists but is not precached by ${SW_PATH}.\n` +
+      "  The service worker cannot serve the offline navigation shell without it.\n" +
+      "  Fix: ensure the PWA glob includes the prerendered HTML output.\n",
+  );
+  process.exit(1);
+}
+
+console.log(`[check-sw] verified root document: ${ROOT_DOCUMENT_PATH} is precached`);
