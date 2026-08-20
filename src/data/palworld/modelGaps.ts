@@ -6,7 +6,7 @@ export interface ModelGap {
   area: string;
   summary: string;
   detail: string;
-  status: "known-limitation" | "unresolved";
+  status: "known-limitation" | "unresolved" | "resolved";
 }
 
 export const MODEL_GAPS: ModelGap[] = [
@@ -53,6 +53,18 @@ export const MODEL_GAPS: ModelGap[] = [
       "Zenara and Astralym pair is intentionally retained only in TOWER_SOURCE_EXCLUSIONS until an " +
       "independent second source corroborates it; the app does not resolve it by guess.",
     status: "known-limitation",
+  },
+  {
+    area: "PWA navigation — cold offline root document",
+    summary: "Resolved: offline navigation now has a precached root application shell.",
+    detail:
+      "The 2026-08-19 production-shaped investigation found that SSR-on-Workers emitted no HTML " +
+      "document for Workbox's navigateFallback to serve, so a cold offline navigation failed. The production " +
+      "build now renders its completed Cloudflare worker at '/' into index.html, while all non-root online routes " +
+      "remain SSR-rendered with their own metadata. scripts/check-sw.mjs hard-fails unless that root document " +
+      "exists and is precached; browser acceptance covers '/', '/explore', and a hash-based share link after " +
+      "the server is withdrawn.",
+    status: "resolved",
   },
   {
     area: "data/palworld — mutation breeding (v1.0)",
