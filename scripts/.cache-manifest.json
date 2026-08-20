@@ -9,6 +9,18 @@
     "url": "https://raw.githubusercontent.com/tylercamp/palcalc/main/PalCalc.Model/db.json"
   },
   "paldb": {
+    "acquisitionPages": {
+      "raid": {
+        "bytes": 343607,
+        "fetchedAt": "2026-08-19T23:20:11+00:00",
+        "paldbVersion": {
+          "date": "2026/8/12",
+          "version": "v1.0.3"
+        },
+        "sha256": "3021c3362be7da90894ae2f9dbf05b3236d8538620cddbf3b2d88b559473b519",
+        "url": "https://paldb.cc/en/Raid"
+      }
+    },
     "displayedVersion": {
       "date": "2026/8/12",
       "version": "v1.0.3"

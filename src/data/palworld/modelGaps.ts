@@ -67,6 +67,16 @@ export const MODEL_GAPS: ModelGap[] = [
     status: "resolved",
   },
   {
+    area: "data/palworld — raid-boss classification",
+    summary: "Resolved: PalDB Summoning Altar encounter evidence is generated independently.",
+    detail:
+      "The generated raid.ts module records all 11 PalDB Summoning Altar cards: nine encounters join to " +
+      "five roster Pals, while two Moon Lord cards are retained explicitly as non-roster source evidence. " +
+      "Raid evidence remains a positive acquisition flag and does not infer or override dungeon, tower, habitat, " +
+      "or breed-only status.",
+    status: "resolved",
+  },
+  {
     area: "data/palworld — mutation breeding (v1.0)",
     summary: "Mutations are a separate species-selection system and are NOT modelled at all.",
     detail:

@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "src" / "data" / "palworld"
 CACHE = ROOT / "scripts" / ".cache" / "paldb-parsed.json"
 TOWER_CACHE = ROOT / "scripts" / ".cache" / "tower-bosses.json"
+RAID_CACHE = ROOT / "scripts" / ".cache" / "raid-bosses.json"
 MANIFEST = ROOT / "scripts" / ".cache-manifest.json"
 
 dataset = json.loads(CACHE.read_text())
@@ -22,6 +23,9 @@ recs, gaps = dataset["records"], dataset["gaps"]
 tower_payload = json.loads(TOWER_CACHE.read_text()) if TOWER_CACHE.exists() else {"records": [], "excluded": {}}
 tower_records = tower_payload["records"]
 tower_excluded = tower_payload["excluded"]
+raid_payload = json.loads(RAID_CACHE.read_text()) if RAID_CACHE.exists() else {"joined": {}, "unmatched": []}
+raid_records = raid_payload["joined"]
+raid_unmatched = raid_payload["unmatched"]
 keys = sorted(recs)
 manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
 paldb = manifest.get("paldb", {})
@@ -153,6 +157,33 @@ write(
     + ";\n\n"
     "export function towerBossesOf(internalName: string): readonly TowerBossEvidence[] {\n"
     "  return PAL_TOWER_BOSSES[internalName] ?? [];\n}\n",
+)
+
+# raid acquisition evidence
+raid_source = paldb.get("acquisitionPages", {}).get("raid", {})
+write(
+    "raid.ts",
+    "export interface RaidBossEvidence {\n"
+    "  sourceId: string;\n  name: string;\n  level: number | null;\n  sourceUrl: string;\n}\n\n"
+    "export const PAL_RAID_BOSSES: Record<string, readonly RaidBossEvidence[]> = "
+    + j(raid_records)
+    + ";\n\n"
+    "/** PalDB Summoning Altar cards that have no corresponding entry in PALS. */\n"
+    "export const NON_ROSTER_RAID_CARDS: readonly RaidBossEvidence[] = "
+    + j(raid_unmatched)
+    + ";\n\n"
+    "export const RAID_PROVENANCE = "
+    + j(
+        {
+            "sourceTier": 3,
+            "sourceUrl": raid_source.get("url", "https://paldb.cc/en/Raid"),
+            "fetchedAt": raid_source.get("fetchedAt"),
+            "paldbVersion": raid_source.get("paldbVersion"),
+        }
+    )
+    + ";\n\n"
+    "export function raidBossesOf(internalName: string): readonly RaidBossEvidence[] {\n"
+    "  return PAL_RAID_BOSSES[internalName] ?? [];\n}\n",
 )
 
 # habitat

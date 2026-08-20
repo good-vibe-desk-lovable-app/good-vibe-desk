@@ -17,6 +17,7 @@
 import { PALS } from "@/data/palworld";
 import { PAL_HABITAT } from "@/data/palworld/habitat";
 import { PAL_SPAWNS, type SpawnPoint } from "@/data/palworld/spawns";
+import { raidBossesOf, type RaidBossEvidence } from "@/data/palworld/raid";
 import { towerBossesOf, type TowerBossEvidence } from "@/data/palworld/towers";
 import {
   ACQUISITION_CHANNELS,
@@ -45,6 +46,9 @@ export interface AcquisitionInfo {
   /** Maps the Pal appears on, with per-window counts. */
   windows: { map: string; day: number; night: number }[];
   eggOnlyRows: boolean;
+  /** Independently generated PalDB Summoning Altar evidence; not a field-spawn substitute. */
+  raidBoss: boolean;
+  raidBosses: readonly RaidBossEvidence[];
   /** Two-source wiki-corroborated tower evidence; distinct from spawn and raid data. */
   towerBoss: boolean;
   towerBosses: readonly TowerBossEvidence[];
@@ -78,18 +82,23 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
   );
 
   const known = ACQUISITION_CHANNELS[internalName];
+  const raidBosses = raidBossesOf(internalName);
   const towerBosses = towerBossesOf(internalName);
   const channel: AcquisitionChannel = known
     ? known.channel
-    : habitatPoints > 0
-      ? "wild_spawn"
-      : "unknown";
+    : raidBosses.length > 0
+      ? "raid_altar"
+      : habitatPoints > 0
+        ? "wild_spawn"
+        : "unknown";
 
   const requirement = known
     ? known.requirement
-    : habitatPoints > 0
-      ? `Catchable in the overworld — ${habitatPoints} spawn points recorded.`
-      : "No channel resolved. Dungeon spawn tables key through group IDs and could not be matched, so this is unconfirmed rather than unobtainable.";
+    : raidBosses.length > 0
+      ? "Summoning Altar raid — see the recorded PalDB encounter variants."
+      : habitatPoints > 0
+        ? `Catchable in the overworld — ${habitatPoints} spawn points recorded.`
+        : "No channel resolved. Dungeon spawn tables key through group IDs and could not be matched, so this is unconfirmed rather than unobtainable.";
 
   return {
     channel,
@@ -104,6 +113,8 @@ export function acquisitionOf(internalName: string): AcquisitionInfo {
     nightPoints: night,
     windows: Array.from(byMap.values()).filter((w) => w.day > 0 || w.night > 0),
     eggOnlyRows: rows.length > 0 && rows.every((r) => r.kind === "egg"),
+    raidBoss: raidBosses.length > 0,
+    raidBosses,
     towerBoss: towerBosses.length > 0,
     towerBosses,
     reason: requirement,
