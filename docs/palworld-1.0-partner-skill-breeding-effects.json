@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Palworld 1.0 egg-pipeline Partner Skill effects",
+  "documentedVersion": "1.0.3",
+  "lastVerified": "2026-08-20",
+  "scope": "Pal-specific Partner Skills with a documented effect on breeding-farm production, manually collected Pal Eggs, or egg incubation. This file deliberately excludes ordinary inherited Passive Skills.",
+  "sourceTierOrder": ["datamined", "official", "wiki", "community"],
+  "effects": [
+    {
+      "pal": {"displayName": "Broncherry"},
+      "partnerSkill": "Love's First Blossom",
+      "gear": "Broncherry Saddle",
+      "activation": "while_in_party_on_manual_pal_egg_pickup",
+      "effectKind": "alpha_egg_conversion_probability",
+      "levels": {"1": 0.35, "2": 0.37, "3": 0.39, "4": 0.41, "5": 0.45},
+      "unit": "probability",
+      "stacking": "does_not_stack",
+      "documentedEffect": "A manually picked-up Pal Egg has the listed chance to become an Alpha Pal Egg.",
+      "explicitlyNotEstablished": ["child_species_reroll", "mutation_selection_reroll", "passive_selection_reroll", "active_skill_selection_reroll", "egg_element_reroll"],
+      "source": {"url": "https://paldb.cc/en/Broncherry", "tier": "wiki", "dateChecked": "2026-08-20"},
+      "corroboratingSources": ["https://game8.co/games/Palworld/archives/442554"]
+    },
+    {
+      "pal": {"displayName": "Broncherry Aqua"},
+      "partnerSkill": "Purity's Full Bloom",
+      "gear": "Broncherry Aqua Saddle",
+      "activation": "while_in_party_on_manual_pal_egg_pickup",
+      "effectKind": "alpha_egg_conversion_probability",
+      "levels": {"1": 0.45, "2": 0.47, "3": 0.49, "4": 0.51, "5": 0.55},
+      "unit": "probability",
+      "stacking": "not_stated_in_current_corroborating_page",
+      "documentedEffect": "A manually picked-up Pal Egg has the listed chance to become an Alpha Pal Egg.",
+      "explicitlyNotEstablished": ["child_species_reroll", "mutation_selection_reroll", "passive_selection_reroll", "active_skill_selection_reroll", "egg_element_reroll"],
+      "source": {"url": "https://paldb.cc/en/Broncherry_Aqua", "tier": "wiki", "dateChecked": "2026-08-20"},
+      "corroboratingSources": ["https://game8.co/games/Palworld/archives/610025"]
+    },
+    {
+      "pal": {"displayName": "Grintale"},
+      "partnerSkill": "Glaring Cat's Eye",
+      "gear": "Grintale Saddle",
+      "activation": "while_in_party_on_manual_pal_egg_pickup",
+      "effectKind": "one_extra_egg_probability",
+      "levels": {"1": 0.5, "2": 0.55, "3": 0.6, "4": 0.65, "5": 0.75},
+      "unit": "probability",
+      "stacking": "does_not_stack",
+      "documentedEffect": "A manually picked-up Pal Egg has the listed chance to award one extra egg.",
+      "explicitlyNotEstablished": ["independent_duplicate_rolls", "complete_duplicate_iv_behavior", "complete_duplicate_passive_behavior"],
+      "source": {"url": "https://paldb.cc/en/Grintale", "tier": "wiki", "dateChecked": "2026-08-20"},
+      "corroboratingSources": ["https://game8.co/games/Palworld/archives/442622"]
+    },
+    {
+      "pal": {"displayName": "Braloha"},
+      "partnerSkill": "Balmy Weather",
+      "gear": "Braloha Saddle",
+      "activation": "while_at_base_with_pals_assigned_to_breeding_farm",
+      "effectKind": "breeding_farm_egg_production_speed_bonus",
+      "levels": {"1": 0.2, "2": 0.26, "3": 0.32, "4": 0.38, "5": 0.5},
+      "unit": "additive_speed_bonus",
+      "stacking": "does_not_stack",
+      "documentedEffect": "Increases egg-production speed for Pals assigned to the Breeding Farm.",
+      "explicitlyNotEstablished": ["per_egg_species_change", "alpha_change", "egg_size_change", "passive_change", "mutation_rate_change"],
+      "source": {"url": "https://paldb.cc/en/Braloha", "tier": "wiki", "dateChecked": "2026-08-20"},
+      "corroboratingSources": ["https://game8.co/games/Palworld/archives/532274"]
+    },
+    {
+      "pal": {"displayName": "Dynamoff"},
+      "partnerSkill": "Electro-Massage Incubation",
+      "gear": "Dynamoff Saddle",
+      "activation": "while_in_party_during_incubation",
+      "effectKind": "incubation_time_reduction",
+      "levels": {"1": 0.2, "2": 0.22, "3": 0.26, "4": 0.32, "5": 0.4},
+      "unit": "time_reduction",
+      "stacking": "does_not_stack",
+      "documentedEffect": "Reduces incubation time by the listed percentage.",
+      "explicitlyNotEstablished": ["hatched_species_change", "alpha_change", "passive_change", "mutation_rate_change"],
+      "source": {"url": "https://paldb.cc/en/Dynamoff", "tier": "wiki", "dateChecked": "2026-08-20"},
+      "corroboratingSources": []
+    }
+  ],
+  "machineReadableLimitations": [
+    "These values are structured evidence, not an application-ready simulation specification.",
+    "The Ancient Hatchery rare-skill inheritance effect is excluded because no numeric modifier or selection algorithm is publicly established.",
+    "The unknown fields listed per effect must not be assumed false; they are simply unsupported by the cited effect descriptions."
+  ]
+}
