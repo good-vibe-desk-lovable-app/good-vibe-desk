@@ -11,6 +11,10 @@
 
 <!-- LOVABLE:END -->
 
+## Pull request workflow
+
+Open **every** pull request against `main`. Do **not** stack pull requests on feature branches, including during bulk data acquisition. Resolve any conflict visibly against current `main`; never merge a domain PR into an intermediate branch or rely on a later retarget. One PR may contain several already-related commits only when explicitly recovering or consolidating work, but its base must still be `main`.
+
 ## Palworld mechanics reference
 
 Before making, changing, or documenting a claim about Palworld game mechanics, read [`docs/PALWORLD-1.0-REFERENCE.md`](docs/PALWORLD-1.0-REFERENCE.md). It records the project’s source-tier rules, verified 1.0 breeding and egg mechanics, current model boundaries, and remaining `UNKNOWN` items. Do not turn a documented unknown or community-tier observation into application data without stronger evidence.
