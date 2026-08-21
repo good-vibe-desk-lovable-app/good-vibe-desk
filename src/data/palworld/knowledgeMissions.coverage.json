@@ -1,0 +1,16 @@
+{
+  "dataset": "knowledge-missions",
+  "generatedAt": "2026-08-21T14:21:28Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 117,
+  "counts": {
+    "main": 58,
+    "sub": 59,
+    "withMapTargets": 81,
+    "untitled": 10,
+    "undocumentedDescription": 10
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Mission"
+  ]
+}
