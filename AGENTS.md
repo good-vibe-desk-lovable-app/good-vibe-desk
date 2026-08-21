@@ -10,3 +10,7 @@
 > the editor, so keep the branch in a working state.
 
 <!-- LOVABLE:END -->
+
+## Palworld mechanics reference
+
+Before making, changing, or documenting a claim about Palworld game mechanics, read [`docs/PALWORLD-1.0-REFERENCE.md`](docs/PALWORLD-1.0-REFERENCE.md). It records the project’s source-tier rules, verified 1.0 breeding and egg mechanics, current model boundaries, and remaining `UNKNOWN` items. Do not turn a documented unknown or community-tier observation into application data without stronger evidence.
