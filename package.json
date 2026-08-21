@@ -9,6 +9,7 @@
     "build:dev": "node scripts/check-paldb-coverage.mjs && vite build --mode development",
     "data:check": "python3 scripts/check-paldb-sections.py && python3 -m unittest scripts/tests/test_palworld_source_contracts.py",
     "data:knowledge:skills": "python3 scripts/emit-knowledge-skills.py && node scripts/check-knowledge-coverage.mjs src/data/palworld/knowledgeSkills.coverage.json scripts/coverage-baselines/knowledge-skills.json",
+    "data:knowledge:encounters": "python3 scripts/emit-knowledge-encounters.py && node scripts/check-knowledge-coverage.mjs src/data/palworld/knowledgeEncounters.coverage.json scripts/coverage-baselines/knowledge-encounters.json",
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest run",

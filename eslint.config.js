@@ -36,6 +36,7 @@ const GENERATED_DATA = [
   "src/data/palworld/uniqueCombos.ts",
   "src/data/palworld/dataGaps.ts",
   "src/data/palworld/knowledgeSkills.ts",
+  "src/data/palworld/knowledgeEncounters.ts",
 ];
 
 export default tseslint.config(
