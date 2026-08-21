@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "node scripts/check-paldb-coverage.mjs && vite build && node scripts/prerender-root.mjs && node scripts/check-sw.mjs",
+    "build": "node scripts/check-paldb-coverage.mjs && vite build && node scripts/prerender-root.mjs && node scripts/check-sw.mjs && node scripts/check-offline-budget.mjs",
     "build:dev": "node scripts/check-paldb-coverage.mjs && vite build --mode development",
-    "data:check": "python3 scripts/check-paldb-sections.py",
+    "data:check": "python3 scripts/check-paldb-sections.py && python3 -m unittest scripts/tests/test_palworld_source_contracts.py",
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest run",
