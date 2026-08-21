@@ -39,6 +39,7 @@ const GENERATED_DATA = [
   "src/data/palworld/knowledgeEncounters.ts",
   "src/data/palworld/knowledgeTechnologies.ts",
   "src/data/palworld/knowledgeMissions.ts",
+  "src/data/palworld/knowledgeItems.ts",
 ];
 
 export default tseslint.config(
