@@ -1,0 +1,17 @@
+{
+  "dataset": "knowledge-skills",
+  "generatedAt": "2026-08-21T14:03:37Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 300,
+  "counts": {
+    "withPartnerSkill": 300,
+    "partnerSkillCards": 299,
+    "partnerSkillCatalogueGaps": 1,
+    "withoutPartnerSkill": 0,
+    "activeSkillRecords": 299
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Partner_Skill",
+    "https://paldb.cc/"
+  ]
+}

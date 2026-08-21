@@ -31,3 +31,4 @@ src/data/palworld/dataGaps.ts
 src/data/palworld/dungeons.ts
 src/data/palworld/raid.ts
 src/data/palworld/towers.ts
+src/data/palworld/knowledgeSkills.ts
