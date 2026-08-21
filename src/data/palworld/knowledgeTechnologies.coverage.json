@@ -1,0 +1,14 @@
+{
+  "dataset": "knowledge-technologies",
+  "generatedAt": "2026-08-21T14:14:48Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 588,
+  "counts": {
+    "technologyLevels": 80,
+    "Structures": 217,
+    "Items": 371
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Technologies"
+  ]
+}
