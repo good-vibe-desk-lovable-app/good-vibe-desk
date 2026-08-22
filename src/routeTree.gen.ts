@@ -20,6 +20,7 @@ import { Route as CompendiumFieldAlphasRouteImport } from './routes/compendium/f
 import { Route as CompendiumItemsRouteImport } from './routes/compendium/items'
 import { Route as CompendiumMissionsRouteImport } from './routes/compendium/missions'
 import { Route as CompendiumTechnologiesRouteImport } from './routes/compendium/technologies'
+import { Route as PlannerCombatRouteImport } from './routes/planner/combat'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +77,11 @@ const CompendiumTechnologiesRoute = CompendiumTechnologiesRouteImport.update({
   path: '/compendium/technologies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlannerCombatRoute = PlannerCombatRouteImport.update({
+  id: '/planner/combat',
+  path: '/planner/combat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/planner/combat': typeof PlannerCombatRoute
   '/compendium/': typeof CompendiumIndexRoute
 }
 export interface FileRoutesByTo {
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/planner/combat': typeof PlannerCombatRoute
   '/compendium': typeof CompendiumIndexRoute
 }
 export interface FileRoutesById {
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/planner/combat': typeof PlannerCombatRoute
   '/compendium/': typeof CompendiumIndexRoute
 }
 export interface FileRouteTypes {
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
+    | '/planner/combat'
     | '/compendium/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
+    | '/planner/combat'
     | '/compendium'
   id:
     | '__root__'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
+    | '/planner/combat'
     | '/compendium/'
   fileRoutesById: FileRoutesById
 }
@@ -170,6 +182,7 @@ export interface RootRouteChildren {
   CompendiumItemsRoute: typeof CompendiumItemsRoute
   CompendiumMissionsRoute: typeof CompendiumMissionsRoute
   CompendiumTechnologiesRoute: typeof CompendiumTechnologiesRoute
+  PlannerCombatRoute: typeof PlannerCombatRoute
   CompendiumIndexRoute: typeof CompendiumIndexRoute
 }
 
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompendiumTechnologiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/planner/combat': {
+      id: '/planner/combat'
+      path: '/planner/combat'
+      fullPath: '/planner/combat'
+      preLoaderRoute: typeof PlannerCombatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -266,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompendiumItemsRoute: CompendiumItemsRoute,
   CompendiumMissionsRoute: CompendiumMissionsRoute,
   CompendiumTechnologiesRoute: CompendiumTechnologiesRoute,
+  PlannerCombatRoute: PlannerCombatRoute,
   CompendiumIndexRoute: CompendiumIndexRoute,
 }
 export const routeTree = rootRouteImport
