@@ -5,6 +5,7 @@ import {
   Crosshair,
   ChevronRight,
   Egg,
+  Factory,
   Link2,
   Loader2,
   Network,
@@ -329,6 +330,12 @@ function Index() {
               <Link to="/planner/combat">
                 <Crosshair className="size-4" />
                 Compare combat bases
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/planner/work">
+                <Factory className="size-4" />
+                Compare base work
               </Link>
             </Button>
           </div>

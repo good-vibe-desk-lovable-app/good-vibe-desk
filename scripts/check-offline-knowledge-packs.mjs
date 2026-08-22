@@ -10,6 +10,7 @@ const expectedRecords = {
   encounters: 207,
   missions: 117,
   technologies: 588,
+  "work-suitability": 297,
 };
 
 if (!existsSync(serviceWorker)) {
