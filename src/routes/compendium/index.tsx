@@ -8,6 +8,7 @@ import {
   Download,
   Lightbulb,
   MapPinned,
+  PackageOpen,
   ScrollText,
   ShieldCheck,
 } from "lucide-react";
@@ -71,8 +72,8 @@ function CompendiumIndexPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available packs" value="4" />
-              <Metric label="Reference records" value="977" />
+              <Metric label="Available directories" value="5" />
+              <Metric label="Core reference records" value="977" />
               <Metric label="Core dependency" value="None" />
               <Metric label="Item pack" value="Opt-in" />
             </div>
@@ -124,6 +125,14 @@ function CompendiumIndexPage() {
               description="Level, category, unlock name, and technology-point cost across 80 levels. Craft recipes are clearly outside this source contract."
               tone="sky"
             />
+            <PackCard
+              to="/compendium/items"
+              icon={<PackageOpen className="size-5" />}
+              title="Items & Recipes"
+              count="2,455 optional cards"
+              description="A separate download for item stats and 3,779 source-bounded production rows. Its page shows the exact transfer and removable device-storage cost before download."
+              tone="orange"
+            />
           </div>
         </section>
 
@@ -135,8 +144,8 @@ function CompendiumIndexPage() {
           />
           <PolicyCard
             icon={<Download className="size-4" />}
-            title="Items and recipes are deferred"
-            body="The item-and-recipe pack is 6.46 MB raw, above the 4.5 MB core budget. It will not be silently bundled: a later route must show its download size and require an explicit user action before caching it."
+            title="Items and recipes are opt-in"
+            body="The item-and-recipe pack is outside the core cache. Its dedicated route shows exact transfer and persistent-storage cost, downloads only after a user action, and lets the user remove the archive later."
           />
         </section>
 
@@ -181,12 +190,13 @@ function PackCard({
     | "/compendium/field-alphas"
     | "/compendium/encounters"
     | "/compendium/missions"
-    | "/compendium/technologies";
+    | "/compendium/technologies"
+    | "/compendium/items";
   icon: ReactNode;
   title: string;
   count: string;
   description: string;
-  tone: "amber" | "violet" | "emerald" | "sky";
+  tone: "amber" | "violet" | "emerald" | "sky" | "orange";
 }) {
   const toneClasses = {
     amber:
@@ -196,6 +206,8 @@ function PackCard({
     emerald:
       "border-emerald-400/25 hover:border-emerald-400/60 bg-emerald-400/10 text-emerald-700 dark:text-emerald-300",
     sky: "border-sky-400/25 hover:border-sky-400/60 bg-sky-400/10 text-sky-700 dark:text-sky-300",
+    orange:
+      "border-orange-400/25 hover:border-orange-400/60 bg-orange-400/10 text-orange-700 dark:text-orange-300",
   }[tone];
   const [borderClass, hoverClass, iconBackground, iconText, badgeText] = toneClasses.split(" ");
 

@@ -5,12 +5,21 @@ import { dirname, resolve } from "node:path";
 const root = resolve(import.meta.dirname, "..");
 const sourceDirectory = resolve(root, "src", "data", "palworld");
 const outputDirectory = resolve(root, ".output", "public", "knowledge-packs");
+const optionalOutputDirectory = resolve(root, ".output", "public", "optional-knowledge-packs");
 
 const packs = {
   "field-alphas": "knowledgeFieldAlphas.ts",
   encounters: "knowledgeEncounters.ts",
   missions: "knowledgeMissions.ts",
   technologies: "knowledgeTechnologies.ts",
+};
+
+const optionalPacks = {
+  "items-recipes-v1": {
+    filename: "knowledgeItems.ts",
+    recordCount: 2455,
+    description: "Palworld item catalogue cards, stats, and source-bounded production rows.",
+  },
 };
 
 function extractPayload(sourceFile) {
@@ -37,7 +46,9 @@ function extractPayload(sourceFile) {
 }
 
 rmSync(outputDirectory, { recursive: true, force: true });
+rmSync(optionalOutputDirectory, { recursive: true, force: true });
 mkdirSync(outputDirectory, { recursive: true });
+mkdirSync(optionalOutputDirectory, { recursive: true });
 
 const manifest = [];
 for (const [name, filename] of Object.entries(packs)) {
@@ -60,8 +71,38 @@ writeFileSync(
   resolve(outputDirectory, "manifest.json"),
   `${JSON.stringify({ packs: manifest }, null, 2)}\n`,
 );
+
+const optionalManifest = [];
+for (const [name, definition] of Object.entries(optionalPacks)) {
+  const payload = extractPayload(resolve(sourceDirectory, definition.filename));
+  if (payload.length !== definition.recordCount) {
+    throw new Error(
+      `${definition.filename}: expected ${definition.recordCount} records, received ${payload.length}.`,
+    );
+  }
+  const uncompressed = Buffer.from(JSON.stringify(payload));
+  const compressed = gzipSync(uncompressed, { level: 9, mtime: 0 });
+  const file = `${name}.json.gz`;
+  const pack = {
+    id: name,
+    file,
+    recordCount: payload.length,
+    description: definition.description,
+    compressedBytes: compressed.length,
+    uncompressedBytes: uncompressed.length,
+    storageBytes: compressed.length,
+  };
+
+  writeFileSync(resolve(optionalOutputDirectory, file), compressed);
+  writeFileSync(
+    resolve(optionalOutputDirectory, `${name}.manifest.json`),
+    `${JSON.stringify(pack, null, 2)}\n`,
+  );
+  optionalManifest.push(pack);
+}
+
 console.log(
-  `[knowledge-packs] emitted ${manifest.length} compressed packs (${manifest
-    .map((pack) => `${pack.name}: ${pack.recordCount} records, ${pack.compressedBytes} bytes`)
+  `[knowledge-packs] emitted ${manifest.length} precached packs and ${optionalManifest.length} optional pack (${optionalManifest
+    .map((pack) => `${pack.id}: ${pack.recordCount} records, ${pack.compressedBytes} bytes`)
     .join("; ")})`,
 );
