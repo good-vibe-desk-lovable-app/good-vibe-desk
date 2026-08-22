@@ -92,6 +92,19 @@ export const MODEL_GAPS: ModelGap[] = [
     status: "known-limitation",
   },
   {
+    area: "team planner — encounter-specific combat and PvP",
+    summary: "The planner cannot recommend counter-teams or model PvP outcomes.",
+    detail:
+      "The combat comparison can show source-backed Pal base-stat values, canonical element identities, " +
+      "and encounter-record membership, but it has no enemy combat profiles, active-skill damage or " +
+      "cooldowns, versioned damage formula, player loadout/build, PvP rule set, or sourced numeric " +
+      "element matrix. Encounter context is therefore a non-optimizing record filter only, and PvP is " +
+      "unsupported. Reopen encounter optimization only with versioned enemy stats and move data plus a " +
+      "documented damage formula and element table; reopen PvP only with those inputs and an explicit " +
+      "versioned PvP ruleset.",
+    status: "known-limitation",
+  },
+  {
     area: "data/palworld — mutation breeding (v1.0)",
     summary: "Mutations are a separate species-selection system and are NOT modelled at all.",
     detail:

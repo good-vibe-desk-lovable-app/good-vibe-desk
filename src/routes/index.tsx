@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   BookOpen,
+  Crosshair,
   ChevronRight,
   Egg,
   Link2,
@@ -317,12 +318,20 @@ function Index() {
             Tell it which Pals you own and which passives they carry, pick the species you're
             chasing, and it will work out how to get those traits onto it.
           </p>
-          <Button asChild variant="outline" size="sm" className="mt-4">
-            <Link to="/compendium">
-              <BookOpen className="size-4" />
-              Browse Palworld compendium
-            </Link>
-          </Button>
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/compendium">
+                <BookOpen className="size-4" />
+                Browse Palworld compendium
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/planner/combat">
+                <Crosshair className="size-4" />
+                Compare combat bases
+              </Link>
+            </Button>
+          </div>
         </header>
 
         <div className="grid gap-6 lg:grid-cols-3">
