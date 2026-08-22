@@ -9,7 +9,15 @@ export function createWorkboxOptions(outDir) {
     globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,webp,gz}"],
     // Pal artwork is fetched on demand rather than precached, so the service
     // worker install stays small on mobile data.
-    globIgnores: ["**/node_modules/**/*", "sw.js", "workbox-*.js", "pals/**"],
+    globIgnores: [
+      "**/node_modules/**/*",
+      "sw.js",
+      "workbox-*.js",
+      "pals/**",
+      // Optional knowledge archives are deployed for on-demand download but
+      // must never silently become part of the core offline cache.
+      "optional-knowledge-packs/**",
+    ],
     maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
     // Root-only prerendering emits this exact static document. Navigation
     // fallback must use its precache key, not the SSR root URL (`/`).

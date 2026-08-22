@@ -17,6 +17,7 @@ import { Route as TiersRouteImport } from './routes/tiers'
 import { Route as CompendiumIndexRouteImport } from './routes/compendium/index'
 import { Route as CompendiumEncountersRouteImport } from './routes/compendium/encounters'
 import { Route as CompendiumFieldAlphasRouteImport } from './routes/compendium/field-alphas'
+import { Route as CompendiumItemsRouteImport } from './routes/compendium/items'
 import { Route as CompendiumMissionsRouteImport } from './routes/compendium/missions'
 import { Route as CompendiumTechnologiesRouteImport } from './routes/compendium/technologies'
 
@@ -60,6 +61,11 @@ const CompendiumFieldAlphasRoute = CompendiumFieldAlphasRouteImport.update({
   path: '/compendium/field-alphas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompendiumItemsRoute = CompendiumItemsRouteImport.update({
+  id: '/compendium/items',
+  path: '/compendium/items',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompendiumMissionsRoute = CompendiumMissionsRouteImport.update({
   id: '/compendium/missions',
   path: '/compendium/missions',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/tiers': typeof TiersRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
+  '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
   '/compendium/': typeof CompendiumIndexRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/tiers': typeof TiersRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
+  '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
   '/compendium': typeof CompendiumIndexRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/tiers': typeof TiersRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
+  '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
   '/compendium/': typeof CompendiumIndexRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/tiers'
     | '/compendium/encounters'
     | '/compendium/field-alphas'
+    | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
     | '/compendium/'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/tiers'
     | '/compendium/encounters'
     | '/compendium/field-alphas'
+    | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
     | '/compendium'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/tiers'
     | '/compendium/encounters'
     | '/compendium/field-alphas'
+    | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
     | '/compendium/'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   TiersRoute: typeof TiersRoute
   CompendiumEncountersRoute: typeof CompendiumEncountersRoute
   CompendiumFieldAlphasRoute: typeof CompendiumFieldAlphasRoute
+  CompendiumItemsRoute: typeof CompendiumItemsRoute
   CompendiumMissionsRoute: typeof CompendiumMissionsRoute
   CompendiumTechnologiesRoute: typeof CompendiumTechnologiesRoute
   CompendiumIndexRoute: typeof CompendiumIndexRoute
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompendiumFieldAlphasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compendium/items': {
+      id: '/compendium/items'
+      path: '/compendium/items'
+      fullPath: '/compendium/items'
+      preLoaderRoute: typeof CompendiumItemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compendium/missions': {
       id: '/compendium/missions'
       path: '/compendium/missions'
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   TiersRoute: TiersRoute,
   CompendiumEncountersRoute: CompendiumEncountersRoute,
   CompendiumFieldAlphasRoute: CompendiumFieldAlphasRoute,
+  CompendiumItemsRoute: CompendiumItemsRoute,
   CompendiumMissionsRoute: CompendiumMissionsRoute,
   CompendiumTechnologiesRoute: CompendiumTechnologiesRoute,
   CompendiumIndexRoute: CompendiumIndexRoute,
