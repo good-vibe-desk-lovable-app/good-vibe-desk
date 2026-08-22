@@ -1,6 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ChevronRight, Egg, Link2, Loader2, Network, PawPrint, Sparkles } from "lucide-react";
+import {
+  BookOpen,
+  ChevronRight,
+  Egg,
+  Link2,
+  Loader2,
+  Network,
+  PawPrint,
+  Sparkles,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { DATA_VERSION, PALS } from "@/data/palworld";
@@ -308,6 +317,12 @@ function Index() {
             Tell it which Pals you own and which passives they carry, pick the species you're
             chasing, and it will work out how to get those traits onto it.
           </p>
+          <Button asChild variant="outline" size="sm" className="mt-4">
+            <Link to="/compendium/field-alphas">
+              <BookOpen className="size-4" />
+              Browse Field Alpha compendium
+            </Link>
+          </Button>
         </header>
 
         <div className="grid gap-6 lg:grid-cols-3">
