@@ -31,9 +31,6 @@ src/data/palworld/dataGaps.ts
 src/data/palworld/dungeons.ts
 src/data/palworld/raid.ts
 src/data/palworld/towers.ts
-src/data/palworld/knowledgeSkills.ts
-src/data/palworld/knowledgeEncounters.ts
-src/data/palworld/knowledgeTechnologies.ts
-src/data/palworld/knowledgeMissions.ts
-src/data/palworld/knowledgeItems.ts
-src/data/palworld/knowledgeFieldAlphas.ts
+# Every machine-emitted knowledge domain follows knowledge[A-Z]*.ts. Keep this
+# pattern rather than adding one path per domain; it prevents data PR conflicts.
+src/data/palworld/knowledge[A-Z]*.ts
