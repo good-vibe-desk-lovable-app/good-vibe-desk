@@ -80,6 +80,18 @@ export const MODEL_GAPS: ModelGap[] = [
     status: "known-limitation",
   },
   {
+    area: "combat/element effectiveness matrix",
+    summary: "Numeric elemental effectiveness is deliberately unmodelled.",
+    detail:
+      "PalCalc's Elements key contains only the nine canonical element identities and no matchup, " +
+      "resistance, or multiplier fields. Bounded community charts were reviewed but were either " +
+      "unsupported by a game-file source or internally inconsistent, so the app may describe element " +
+      "identity but must not claim numeric effectiveness. Reopen only for a versioned game-data " +
+      "extraction that contains the matrix or an official Pocketpair table that defines its values and " +
+      "semantics.",
+    status: "known-limitation",
+  },
+  {
     area: "data/palworld — mutation breeding (v1.0)",
     summary: "Mutations are a separate species-selection system and are NOT modelled at all.",
     detail:
