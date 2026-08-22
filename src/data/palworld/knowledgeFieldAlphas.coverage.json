@@ -1,0 +1,17 @@
+{
+  "dataset": "knowledge-field-alphas",
+  "generatedAt": "2026-08-21T22:11:04Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 65,
+  "counts": {
+    "fixedFieldAlpha": 65,
+    "excludedDungeonAlpha": 18,
+    "withTimeRestriction": 2,
+    "minLevel": 11,
+    "maxLevel": 70
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Palpagos_Islands",
+    "https://paldb.cc/js/map_data_en.js?_=1786669955"
+  ]
+}

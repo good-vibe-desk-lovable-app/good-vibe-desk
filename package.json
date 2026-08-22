@@ -13,6 +13,7 @@
     "data:knowledge:technologies": "python3 scripts/emit-knowledge-technologies.py && node scripts/check-knowledge-coverage.mjs src/data/palworld/knowledgeTechnologies.coverage.json scripts/coverage-baselines/knowledge-technologies.json",
     "data:knowledge:missions": "python3 scripts/emit-knowledge-missions.py && node scripts/check-knowledge-coverage.mjs src/data/palworld/knowledgeMissions.coverage.json scripts/coverage-baselines/knowledge-missions.json",
     "data:knowledge:items": "python3 scripts/emit-knowledge-items.py && node scripts/check-knowledge-coverage.mjs src/data/palworld/knowledgeItems.coverage.json scripts/coverage-baselines/knowledge-items.json",
+    "data:knowledge:field-alphas": "python3 scripts/emit-knowledge-field-alphas.py && node scripts/check-knowledge-coverage.mjs src/data/palworld/knowledgeFieldAlphas.coverage.json scripts/coverage-baselines/knowledge-field-alphas.json",
     "preview": "vite preview",
     "lint": "eslint .",
     "test": "vitest run",
