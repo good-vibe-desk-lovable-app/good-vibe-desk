@@ -35,12 +35,9 @@ const GENERATED_DATA = [
   "src/data/palworld/stats.ts",
   "src/data/palworld/uniqueCombos.ts",
   "src/data/palworld/dataGaps.ts",
-  "src/data/palworld/knowledgeSkills.ts",
-  "src/data/palworld/knowledgeEncounters.ts",
-  "src/data/palworld/knowledgeTechnologies.ts",
-  "src/data/palworld/knowledgeMissions.ts",
-  "src/data/palworld/knowledgeItems.ts",
-  "src/data/palworld/knowledgeFieldAlphas.ts",
+  // Machine-emitted knowledge domains must use knowledge[A-Z]*.ts. This pattern
+  // avoids a shared registration edit for every independently reviewable data PR.
+  "src/data/palworld/knowledge[A-Z]*.ts",
 ];
 
 export default tseslint.config(

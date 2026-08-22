@@ -26,15 +26,15 @@ No parser may use loose document-wide matching, handwritten alias maps, or a fal
 
 ## Generated-data registration
 
-For every new machine-emitted module:
+For every new machine-emitted knowledge module:
 
-1. Add the file to `.prettierignore`.
-2. Add the same file to `GENERATED_DATA` in `eslint.config.js`.
-3. Add a generated-file header containing source, observed version, fetched date, and emitter date.
-4. Emit a coverage sidecar conforming to `DatasetCoverage`.
+1. Name the emitted module `knowledge[A-Z]*.ts`. The existing `.prettierignore` and `GENERATED_DATA` patterns cover this convention automatically; **do not add an explicit path** to either shared registration file.
+2. Add a generated-file header containing source, observed version, fetched date, and emitter date.
+3. Emit a coverage sidecar conforming to `DatasetCoverage`, plus a matching `scripts/coverage-baselines/knowledge-<dataset>.json` baseline.
+4. Name its emitter `scripts/emit-knowledge-<dataset>.py` and run it locally with `npm run data:knowledge -- <dataset>`. The generic runner discovers the emitter, baseline, and matching coverage sidecar by convention.
 5. Check the coverage sidecar against the committed baseline using `scripts/check-knowledge-coverage.mjs`.
 
-The formatting registration is mandatory. Existing long-line generated data cannot be safely reformatted by Prettier because regeneration immediately reverts it, creating a permanent unfixable lint drift.
+The formatting registration is mandatory through the shared naming pattern. Existing long-line generated data cannot be safely reformatted by Prettier because regeneration immediately reverts it, creating a permanent unfixable lint drift.
 
 ## Coverage policy
 
