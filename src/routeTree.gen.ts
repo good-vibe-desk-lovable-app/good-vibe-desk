@@ -14,7 +14,11 @@ import { Route as DataCheckRouteImport } from './routes/data-check'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as OpinionsRouteImport } from './routes/opinions'
 import { Route as TiersRouteImport } from './routes/tiers'
+import { Route as CompendiumIndexRouteImport } from './routes/compendium/index'
+import { Route as CompendiumEncountersRouteImport } from './routes/compendium/encounters'
 import { Route as CompendiumFieldAlphasRouteImport } from './routes/compendium/field-alphas'
+import { Route as CompendiumMissionsRouteImport } from './routes/compendium/missions'
+import { Route as CompendiumTechnologiesRouteImport } from './routes/compendium/technologies'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,9 +45,29 @@ const TiersRoute = TiersRouteImport.update({
   path: '/tiers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompendiumIndexRoute = CompendiumIndexRouteImport.update({
+  id: '/compendium/',
+  path: '/compendium/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompendiumEncountersRoute = CompendiumEncountersRouteImport.update({
+  id: '/compendium/encounters',
+  path: '/compendium/encounters',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompendiumFieldAlphasRoute = CompendiumFieldAlphasRouteImport.update({
   id: '/compendium/field-alphas',
   path: '/compendium/field-alphas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompendiumMissionsRoute = CompendiumMissionsRouteImport.update({
+  id: '/compendium/missions',
+  path: '/compendium/missions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompendiumTechnologiesRoute = CompendiumTechnologiesRouteImport.update({
+  id: '/compendium/technologies',
+  path: '/compendium/technologies',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -53,7 +77,11 @@ export interface FileRoutesByFullPath {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
+  '/compendium/missions': typeof CompendiumMissionsRoute
+  '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/compendium/': typeof CompendiumIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +89,11 @@ export interface FileRoutesByTo {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
+  '/compendium/missions': typeof CompendiumMissionsRoute
+  '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/compendium': typeof CompendiumIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +102,11 @@ export interface FileRoutesById {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
+  '/compendium/missions': typeof CompendiumMissionsRoute
+  '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/compendium/': typeof CompendiumIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,7 +116,11 @@ export interface FileRouteTypes {
     | '/explore'
     | '/opinions'
     | '/tiers'
+    | '/compendium/encounters'
     | '/compendium/field-alphas'
+    | '/compendium/missions'
+    | '/compendium/technologies'
+    | '/compendium/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -88,7 +128,11 @@ export interface FileRouteTypes {
     | '/explore'
     | '/opinions'
     | '/tiers'
+    | '/compendium/encounters'
     | '/compendium/field-alphas'
+    | '/compendium/missions'
+    | '/compendium/technologies'
+    | '/compendium'
   id:
     | '__root__'
     | '/'
@@ -96,7 +140,11 @@ export interface FileRouteTypes {
     | '/explore'
     | '/opinions'
     | '/tiers'
+    | '/compendium/encounters'
     | '/compendium/field-alphas'
+    | '/compendium/missions'
+    | '/compendium/technologies'
+    | '/compendium/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,7 +153,11 @@ export interface RootRouteChildren {
   ExploreRoute: typeof ExploreRoute
   OpinionsRoute: typeof OpinionsRoute
   TiersRoute: typeof TiersRoute
+  CompendiumEncountersRoute: typeof CompendiumEncountersRoute
   CompendiumFieldAlphasRoute: typeof CompendiumFieldAlphasRoute
+  CompendiumMissionsRoute: typeof CompendiumMissionsRoute
+  CompendiumTechnologiesRoute: typeof CompendiumTechnologiesRoute
+  CompendiumIndexRoute: typeof CompendiumIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,11 +197,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TiersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compendium/': {
+      id: '/compendium/'
+      path: '/compendium'
+      fullPath: '/compendium/'
+      preLoaderRoute: typeof CompendiumIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compendium/encounters': {
+      id: '/compendium/encounters'
+      path: '/compendium/encounters'
+      fullPath: '/compendium/encounters'
+      preLoaderRoute: typeof CompendiumEncountersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compendium/field-alphas': {
       id: '/compendium/field-alphas'
       path: '/compendium/field-alphas'
       fullPath: '/compendium/field-alphas'
       preLoaderRoute: typeof CompendiumFieldAlphasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compendium/missions': {
+      id: '/compendium/missions'
+      path: '/compendium/missions'
+      fullPath: '/compendium/missions'
+      preLoaderRoute: typeof CompendiumMissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compendium/technologies': {
+      id: '/compendium/technologies'
+      path: '/compendium/technologies'
+      fullPath: '/compendium/technologies'
+      preLoaderRoute: typeof CompendiumTechnologiesRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -161,7 +241,11 @@ const rootRouteChildren: RootRouteChildren = {
   ExploreRoute: ExploreRoute,
   OpinionsRoute: OpinionsRoute,
   TiersRoute: TiersRoute,
+  CompendiumEncountersRoute: CompendiumEncountersRoute,
   CompendiumFieldAlphasRoute: CompendiumFieldAlphasRoute,
+  CompendiumMissionsRoute: CompendiumMissionsRoute,
+  CompendiumTechnologiesRoute: CompendiumTechnologiesRoute,
+  CompendiumIndexRoute: CompendiumIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -11,10 +11,9 @@ import {
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  PALWORLD_FIXED_FIELD_ALPHAS,
-  type FieldAlphaKnowledge,
-} from "@/data/palworld/knowledgeFieldAlphas";
+import type { EvidenceRecord } from "@/data/palworld/knowledge";
+import type { FieldAlphaKnowledge } from "@/data/palworld/knowledgeFieldAlphas";
+import { useOfflineKnowledgePack } from "@/lib/use-offline-knowledge-pack";
 
 const TITLE = "Field Alpha Compendium — Fixed World Bosses";
 const DESCRIPTION =
@@ -26,6 +25,7 @@ const number = new Intl.NumberFormat("en-US");
 
 type TimeFilter = "all" | "restricted";
 type SortOrder = "level-desc" | "level-asc" | "name";
+type FieldAlphaRecord = EvidenceRecord<FieldAlphaKnowledge>;
 
 export const Route = createFileRoute("/compendium/field-alphas")({
   head: () => ({
@@ -47,26 +47,40 @@ function FieldAlphaCompendiumPage() {
   const [query, setQuery] = useState("");
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("all");
   const [sortOrder, setSortOrder] = useState<SortOrder>("level-desc");
+  const {
+    records: fieldAlphas,
+    error,
+    loading,
+  } = useOfflineKnowledgePack<FieldAlphaKnowledge>("field-alphas");
 
   const records = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
 
-    return PALWORLD_FIXED_FIELD_ALPHAS.filter((record) => {
-      const matchesQuery =
-        normalizedQuery.length === 0 ||
-        record.data.palName.toLocaleLowerCase().includes(normalizedQuery) ||
-        record.data.sourceHref?.replaceAll("_", " ").toLocaleLowerCase().includes(normalizedQuery);
-      const matchesTime = timeFilter === "all" || record.data.onlyTime !== null;
+    return fieldAlphas
+      .filter((record) => {
+        const matchesQuery =
+          normalizedQuery.length === 0 ||
+          record.data.palName.toLocaleLowerCase().includes(normalizedQuery) ||
+          record.data.sourceHref
+            ?.replaceAll("_", " ")
+            .toLocaleLowerCase()
+            .includes(normalizedQuery);
+        const matchesTime = timeFilter === "all" || record.data.onlyTime !== null;
 
-      return matchesQuery && matchesTime;
-    }).toSorted((left, right) => compareRecords(left.data, right.data, sortOrder));
-  }, [query, sortOrder, timeFilter]);
+        return matchesQuery && matchesTime;
+      })
+      .toSorted((left, right) => compareRecords(left.data, right.data, sortOrder));
+  }, [fieldAlphas, query, sortOrder, timeFilter]);
 
-  const nighttimeCount = PALWORLD_FIXED_FIELD_ALPHAS.filter(
-    (record) => record.data.onlyTime !== null,
-  ).length;
-  const minLevel = Math.min(...PALWORLD_FIXED_FIELD_ALPHAS.map((record) => record.data.level));
-  const maxLevel = Math.max(...PALWORLD_FIXED_FIELD_ALPHAS.map((record) => record.data.level));
+  const nighttimeCount = fieldAlphas.filter((record) => record.data.onlyTime !== null).length;
+  const minLevel =
+    fieldAlphas.length > 0 ? Math.min(...fieldAlphas.map((record) => record.data.level)) : 0;
+  const maxLevel =
+    fieldAlphas.length > 0 ? Math.max(...fieldAlphas.map((record) => record.data.level)) : 0;
+
+  if (loading || error) {
+    return <PackFeedback loading={loading} error={error} />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,7 +117,7 @@ function FieldAlphaCompendiumPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-64">
-              <Metric label="Field Bosses" value={String(PALWORLD_FIXED_FIELD_ALPHAS.length)} />
+              <Metric label="Field Bosses" value={String(fieldAlphas.length)} />
               <Metric label="Level range" value={`${minLevel}–${maxLevel}`} />
               <Metric label="Time-restricted" value={String(nighttimeCount)} />
               <Metric label="Raw pack" value={`${Math.ceil(RAW_PACK_BYTES / 1024)} KiB`} />
@@ -174,7 +188,7 @@ function FieldAlphaCompendiumPage() {
           <div className="mt-4 flex items-center justify-between border-t pt-4 text-xs text-muted-foreground">
             <span>
               Showing <strong className="text-foreground">{records.length}</strong> of{" "}
-              {PALWORLD_FIXED_FIELD_ALPHAS.length} Field Boss records
+              {fieldAlphas.length} Field Boss records
             </span>
             <span>Source tier: wiki · confidence: corroborated</span>
           </div>
@@ -204,7 +218,7 @@ function compareRecords(left: FieldAlphaKnowledge, right: FieldAlphaKnowledge, o
   return left.palName.localeCompare(right.palName);
 }
 
-function EncounterCard({ record }: { record: (typeof PALWORLD_FIXED_FIELD_ALPHAS)[number] }) {
+function EncounterCard({ record }: { record: FieldAlphaRecord }) {
   const { data, gaps, sources } = record;
   const source = sources[0];
   const mapGap = gaps?.[0];
@@ -264,6 +278,27 @@ function EncounterCard({ record }: { record: (typeof PALWORLD_FIXED_FIELD_ALPHAS
         ) : null}
       </div>
     </article>
+  );
+}
+
+function PackFeedback({ loading, error }: { loading: boolean; error: Error | null }) {
+  return (
+    <div className="min-h-screen bg-background px-4 py-8">
+      <main className="mx-auto max-w-xl rounded-2xl border bg-card p-6 text-center shadow-sm">
+        <ShieldAlert className="mx-auto size-7 text-primary" />
+        <h1 className="mt-3 text-xl font-bold">
+          {loading ? "Loading Field Alphas" : "Field Alpha pack unavailable"}
+        </h1>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">
+          {loading
+            ? "Preparing the cached offline Field Alpha directory."
+            : (error?.message ?? "The offline knowledge pack could not be read.")}
+        </p>
+        <Button asChild variant="outline" className="mt-5">
+          <Link to="/compendium">Back to the compendium</Link>
+        </Button>
+      </main>
+    </div>
   );
 }
 
