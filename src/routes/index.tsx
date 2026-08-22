@@ -318,9 +318,9 @@ function Index() {
             chasing, and it will work out how to get those traits onto it.
           </p>
           <Button asChild variant="outline" size="sm" className="mt-4">
-            <Link to="/compendium/field-alphas">
+            <Link to="/compendium">
               <BookOpen className="size-4" />
-              Browse Field Alpha compendium
+              Browse Palworld compendium
             </Link>
           </Button>
         </header>

@@ -6,7 +6,7 @@
 export function createWorkboxOptions(outDir) {
   return {
     globDirectory: outDir,
-    globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,webp}"],
+    globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,webp,gz}"],
     // Pal artwork is fetched on demand rather than precached, so the service
     // worker install stays small on mobile data.
     globIgnores: ["**/node_modules/**/*", "sw.js", "workbox-*.js", "pals/**"],
