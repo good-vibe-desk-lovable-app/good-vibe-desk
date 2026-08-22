@@ -14,6 +14,7 @@ import { Route as DataCheckRouteImport } from './routes/data-check'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as OpinionsRouteImport } from './routes/opinions'
 import { Route as TiersRouteImport } from './routes/tiers'
+import { Route as CompendiumFieldAlphasRouteImport } from './routes/compendium/field-alphas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const TiersRoute = TiersRouteImport.update({
   path: '/tiers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompendiumFieldAlphasRoute = CompendiumFieldAlphasRouteImport.update({
+  id: '/compendium/field-alphas',
+  path: '/compendium/field-alphas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,33 @@ export interface FileRoutesById {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/data-check' | '/explore' | '/opinions' | '/tiers'
+  fullPaths:
+    | '/'
+    | '/data-check'
+    | '/explore'
+    | '/opinions'
+    | '/tiers'
+    | '/compendium/field-alphas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/data-check' | '/explore' | '/opinions' | '/tiers'
-  id: '__root__' | '/' | '/data-check' | '/explore' | '/opinions' | '/tiers'
+  to:
+    | '/'
+    | '/data-check'
+    | '/explore'
+    | '/opinions'
+    | '/tiers'
+    | '/compendium/field-alphas'
+  id:
+    | '__root__'
+    | '/'
+    | '/data-check'
+    | '/explore'
+    | '/opinions'
+    | '/tiers'
+    | '/compendium/field-alphas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +105,7 @@ export interface RootRouteChildren {
   ExploreRoute: typeof ExploreRoute
   OpinionsRoute: typeof OpinionsRoute
   TiersRoute: typeof TiersRoute
+  CompendiumFieldAlphasRoute: typeof CompendiumFieldAlphasRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TiersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compendium/field-alphas': {
+      id: '/compendium/field-alphas'
+      path: '/compendium/field-alphas'
+      fullPath: '/compendium/field-alphas'
+      preLoaderRoute: typeof CompendiumFieldAlphasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExploreRoute: ExploreRoute,
   OpinionsRoute: OpinionsRoute,
   TiersRoute: TiersRoute,
+  CompendiumFieldAlphasRoute: CompendiumFieldAlphasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
