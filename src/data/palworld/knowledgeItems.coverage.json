@@ -1,0 +1,17 @@
+{
+  "dataset": "knowledge-items",
+  "generatedAt": "2026-08-21T21:53:15Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 2455,
+  "counts": {
+    "catalogueCards": 2455,
+    "uniquePages": 1875,
+    "recordsWithStats": 2455,
+    "recordsWithProduction": 1467,
+    "productionRows": 3779,
+    "statGroups": 5946
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Items"
+  ]
+}
