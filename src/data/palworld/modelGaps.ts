@@ -92,6 +92,14 @@ export const MODEL_GAPS: ModelGap[] = [
     status: "known-limitation",
   },
   {
+    area: "team planner — base-work throughput",
+    summary:
+      "Work-suitability ranks are not converted into a production-time or output-per-minute score.",
+    detail:
+      "The base-work planner can display source-backed suitability ranks and Pal-specific condensation progression, but no versioned complete formula connects those ranks to task time. Work-speed passives, Applied Technique books, Pal Labor Research, facility/task rules, SAN, food, pathing, and animation time remain outside the model. The app therefore compares one selected suitability rank at a time and must not label a row as universally best or as items per minute. Reopen a throughput calculation only with a versioned game-data formula plus controlled task-time validation for each work category.",
+    status: "known-limitation",
+  },
+  {
     area: "team planner — encounter-specific combat and PvP",
     summary: "The planner cannot recommend counter-teams or model PvP outcomes.",
     detail:

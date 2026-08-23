@@ -12,6 +12,7 @@ const packs = {
   encounters: "knowledgeEncounters.ts",
   missions: "knowledgeMissions.ts",
   technologies: "knowledgeTechnologies.ts",
+  "work-suitability": "knowledgeWorkSuitability.ts",
 };
 
 const optionalPacks = {
