@@ -2,11 +2,7 @@ import { type ReactNode, useEffect, useMemo, useState } from "react";
 
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ChevronDown, Clipboard, Factory, Loader2, RefreshCw, Users } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -172,7 +168,8 @@ function WorkPlannerRoute() {
           </Badge>
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Base work comparison</h1>
           <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Find the best Pals for any base task and see how condensation levels increase work suitability.
+            Find the best Pals for any base task and see how condensation levels increase work
+            suitability.
           </p>
         </div>
       </section>
@@ -184,10 +181,13 @@ function WorkPlannerRoute() {
         </CollapsibleTrigger>
         <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
           <p>
-            <strong>Work levels show work suitability, not items produced per minute.</strong> Work speed scales in-game, but there is no simple formula for exact production speed.
+            <strong>Work levels show work suitability, not items produced per minute.</strong> Work
+            speed scales in-game, but there is no simple formula for exact production speed.
           </p>
           <p>
-            This tool compares base suitability levels at each condensation rank. It does not calculate task travel time, worker passive traits, technology bonuses, food, or SAN decay.
+            This tool compares base suitability levels at each condensation rank. It does not
+            calculate task travel time, worker passive traits, technology bonuses, food, or SAN
+            decay.
           </p>
         </CollapsibleContent>
       </Collapsible>
@@ -260,7 +260,8 @@ function WorkPlannerRoute() {
                   : `${selectedRank.cumulative} same-species Pals total are required from base rank.`}
               </div>
               <p className="text-xs leading-relaxed text-muted-foreground">
-                Ranks 1–3 boost suitability according to each Pal's in-game upgrade order. Rank 4 adds +1 to all work skills.
+                Ranks 1–3 boost suitability according to each Pal's in-game upgrade order. Rank 4
+                adds +1 to all work skills.
               </p>
               {unknownProgressions > 0 ? (
                 <p className="rounded-lg border border-amber-500/35 bg-amber-500/5 p-2 text-xs leading-relaxed text-muted-foreground">
@@ -424,7 +425,8 @@ function WorkPlannerRoute() {
                       </p>
                     )}
                     <p className="text-[11px] leading-relaxed text-muted-foreground">
-                      Base work level only. Passive traits, technology, and base structures are not included.
+                      Base work level only. Passive traits, technology, and base structures are not
+                      included.
                     </p>
                   </CardContent>
                 </Card>
@@ -433,7 +435,6 @@ function WorkPlannerRoute() {
           ) : null}
         </section>
       </div>
-
     </main>
   );
 }
