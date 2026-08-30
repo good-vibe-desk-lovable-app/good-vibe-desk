@@ -11,7 +11,11 @@ import {
   SlidersHorizontal,
   Users,
 } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -111,6 +115,7 @@ function NumberInput({
     </label>
   );
 }
+
 
 function sourceContextIds(
   context: EncounterContext,
@@ -277,8 +282,7 @@ function CombatPlannerRoute() {
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Combat comparison</h1>
             <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Compare any Pal's Attack, Health, and Defense. Set what you care about and the list
-              re-sorts.
+              Compare any Pal's Attack, Health, and Defense. Set what you care about and the list re-sorts.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-2 text-center text-xs sm:w-52">
@@ -301,18 +305,13 @@ function CombatPlannerRoute() {
         </CollapsibleTrigger>
         <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
           <p>
-            <strong>
-              This doesn't tell you who wins a fight — there's no public damage formula.
-            </strong>{" "}
-            This tool compares base stats (Attack, Health, Defense) across Pals.
+            <strong>This doesn't tell you who wins a fight — there's no public damage formula.</strong> This tool compares base stats (Attack, Health, Defense) across Pals.
           </p>
           <p>
-            It does not calculate move damage, attack cooldowns, level scaling, equipment bonuses,
-            or player stats.
+            It does not calculate move damage, attack cooldowns, level scaling, equipment bonuses, or player stats.
           </p>
           <p>
-            Element tags show each Pal's element type, not calculated elemental damage multipliers
-            or counter advantages.
+            Element tags show each Pal's element type, not calculated elemental damage multipliers or counter advantages.
           </p>
         </CollapsibleContent>
       </Collapsible>
@@ -361,9 +360,7 @@ function CombatPlannerRoute() {
               </div>
               {hasCombatWeights(state.weights) ? (
                 <p className="rounded-lg bg-muted/55 p-2 text-xs leading-relaxed text-muted-foreground">
-                  <strong className="text-foreground">Your custom ranking score:</strong> combines
-                  stat ranks using your weights above. It helps you compare Pals by what you care
-                  about, not an official game rating.
+                  <strong className="text-foreground">Your custom ranking score:</strong> combines stat ranks using your weights above. It helps you compare Pals by what you care about, not an official game rating.
                 </p>
               ) : (
                 <p className="rounded-lg bg-muted/55 p-2 text-xs text-muted-foreground">
@@ -448,8 +445,7 @@ function CombatPlannerRoute() {
                 </select>
               </label>
               <p className="text-xs leading-relaxed text-muted-foreground">
-                Filters for Pals that appear in this encounter type. This does not recommend
-                counter-teams.
+                Filters for Pals that appear in this encounter type. This does not recommend counter-teams.
               </p>
               {encounterPending ? (
                 <p className="text-xs text-muted-foreground">Loading offline encounter records…</p>
@@ -472,8 +468,7 @@ function CombatPlannerRoute() {
             <CardContent className="space-y-3">
               {selected.length === 0 ? (
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  Add up to five Pals from the list. Shows element types in your team, not damage
-                  bonuses.
+                  Add up to five Pals from the list. Shows element types in your team, not damage bonuses.
                 </p>
               ) : (
                 <>
@@ -570,7 +565,8 @@ function CombatPlannerRoute() {
                       </p>
                     ) : (
                       <p className="rounded-lg bg-primary/10 p-2 text-xs text-primary">
-                        Your custom rank score: <strong>{candidate.score.toFixed(1)}/100</strong>
+                        Your custom rank score:{" "}
+                        <strong>{candidate.score.toFixed(1)}/100</strong>
                       </p>
                     )}
 
@@ -591,8 +587,7 @@ function CombatPlannerRoute() {
                       ))}
                     </dl>
                     <p className="text-[11px] leading-relaxed text-muted-foreground">
-                      Base stats only. Ranks compare raw base values across Pals, not level 50
-                      stats, skills, or damage.
+                      Base stats only. Ranks compare raw base values across Pals, not level 50 stats, skills, or damage.
                     </p>
                   </CardContent>
                 </Card>
@@ -601,6 +596,7 @@ function CombatPlannerRoute() {
           </div>
         </section>
       </div>
+
     </main>
   );
 }
