@@ -11,7 +11,5 @@
     "productionRows": 3779,
     "statGroups": 5946
   },
-  "sourceUrls": [
-    "https://paldb.cc/en/Items"
-  ]
+  "sourceUrls": ["https://paldb.cc/en/Items"]
 }

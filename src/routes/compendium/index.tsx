@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   BookOpen,
+  ChevronDown,
   ChevronRight,
   Crosshair,
   Database,
@@ -15,6 +16,7 @@ import {
 import type { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const TITLE = "Palworld Compendium — Offline Knowledge Packs";
 const DESCRIPTION =
@@ -66,8 +68,8 @@ function CompendiumIndexPage() {
               </div>
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Palworld Compendium</h1>
               <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Browse source-backed reference data in purpose-built pages. The breeding pathfinder
-                stays lightweight: a knowledge pack is loaded only when you open its directory.
+                Explore offline reference guides for Pals, encounters, missions, technology, and
+                items.
               </p>
             </div>
 
@@ -84,13 +86,27 @@ function CompendiumIndexPage() {
           <div className="mb-3 flex items-end justify-between gap-4">
             <div>
               <h2 id="available-packs" className="text-xl font-bold">
-                Available now
+                Available guides
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Each directory retains its own source tier, coverage boundary, and unresolved gaps.
-              </p>
             </div>
           </div>
+
+          <Collapsible className="mb-4 rounded-xl border bg-card/60 p-4">
+            <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+              <span>What this can and can't tell you</span>
+              <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+              <p>
+                Every guide here is built directly from verified game records. Missing information
+                is left blank rather than filled with guesses.
+              </p>
+              <p>
+                Each guide loads separately so the breeding calculator stays fast and works without
+                downloading data you don't need.
+              </p>
+            </CollapsibleContent>
+          </Collapsible>
 
           <div className="grid gap-3 lg:grid-cols-2">
             <PackCard
@@ -98,7 +114,7 @@ function CompendiumIndexPage() {
               icon={<MapPinned className="size-5" />}
               title="Fixed Field Alphas"
               count="65 records"
-              description="Fixed overworld Field Boss Alpha encounters with level, time restriction, raw source position, direct provenance, and an explicit exclusion of Dungeon Boss Alpha rows."
+              description="Find fixed overworld Alpha bosses with their exact levels, spawn times, and map locations. Does not include dungeon bosses."
               tone="amber"
             />
             <PackCard
@@ -106,7 +122,7 @@ function CompendiumIndexPage() {
               icon={<Crosshair className="size-5" />}
               title="Encounters"
               count="207 records"
-              description="Dungeon bosses, raid bosses, and corroborated tower encounters. Each channel keeps only the factual fields and source trail it actually publishes."
+              description="Check verified stats and locations for dungeon bosses, raid bosses, and tower bosses."
               tone="violet"
             />
             <PackCard
@@ -114,7 +130,7 @@ function CompendiumIndexPage() {
               icon={<ScrollText className="size-5" />}
               title="Missions"
               count="117 records"
-              description="Main and sub mission cards with source-visible objectives, rewards, next steps, and 81 retained map targets; absent prose stays unknown."
+              description="View main and sub mission objectives, rewards, next steps, and map locations."
               tone="emerald"
             />
             <PackCard
@@ -122,7 +138,7 @@ function CompendiumIndexPage() {
               icon={<Lightbulb className="size-5" />}
               title="Technologies"
               count="588 unlocks"
-              description="Level, category, unlock name, and technology-point cost across 80 levels. Craft recipes are clearly outside this source contract."
+              description="Look up unlock levels, technology categories, and point costs from levels 1 to 80."
               tone="sky"
             />
             <PackCard
@@ -130,7 +146,7 @@ function CompendiumIndexPage() {
               icon={<PackageOpen className="size-5" />}
               title="Items & Recipes"
               count="2,455 optional cards"
-              description="A separate download for item stats and 3,779 source-bounded production rows. Its page shows the exact transfer and removable device-storage cost before download."
+              description="Optional download for item stats and crafting recipes. Shows exact download size and storage space before you start."
               tone="orange"
             />
           </div>

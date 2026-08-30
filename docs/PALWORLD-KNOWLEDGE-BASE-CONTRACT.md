@@ -7,13 +7,13 @@
 
 Every new factual dataset must emit records using `EvidenceRecord<T>` from `src/data/palworld/knowledge.ts`. A record must retain a game version, source citations, field-level provenance, confidence, and any unresolved gaps. It is not acceptable to assign one source tier to an entire complex record when individual fields came from different evidence.
 
-| Requirement | Rule |
-|---|---|
-| Source URL | Every emitted factual field must resolve to a retained direct source URL. |
-| Source tier | Use only `datamined`, `official`, `wiki`, or `community`; never invent a fifth “probably correct” tier. |
-| Confidence | Use `confirmed`, `corroborated`, `reported`, or `unknown`. |
-| Version | Record the observed source/game version where published; otherwise write `UNKNOWN`. |
-| Gaps | Missing mechanics are explicit `gaps`, not zeroes, false booleans, or unlabelled omissions. |
+| Requirement     | Rule                                                                                                                        |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Source URL      | Every emitted factual field must resolve to a retained direct source URL.                                                   |
+| Source tier     | Use only `datamined`, `official`, `wiki`, or `community`; never invent a fifth “probably correct” tier.                     |
+| Confidence      | Use `confirmed`, `corroborated`, `reported`, or `unknown`.                                                                  |
+| Version         | Record the observed source/game version where published; otherwise write `UNKNOWN`.                                         |
+| Gaps            | Missing mechanics are explicit `gaps`, not zeroes, false booleans, or unlabelled omissions.                                 |
 | Recommendations | A strategy, build, or team card is not a game fact. It must declare its version, assumptions, source tier, and uncertainty. |
 
 ## Source parser contract
@@ -50,14 +50,14 @@ New reference data must be route-level lazy chunks or explicit opt-in packs once
 
 ## Required verification for acquisition PRs
 
-| Check | Why it is required |
-|---|---|
-| Parser unit/negative tests | Proves renamed, duplicate, or empty source sections fail instead of silently emitting incomplete records. |
-| Coverage diff | Detects unexpected source or join-key loss before the data reaches users. |
-| TypeScript, lint, unit tests, and build | Protects existing breeding behavior and the client bundle. |
-| PWA service-worker and output-budget checks | Protects cold offline navigation and finite Android storage. |
-| Count report | Lets review compare record and category coverage even if no value changed. |
-| Scope review | One domain per PR; no UI, recommendation, or unrelated schema change in a pure acquisition PR. |
+| Check                                       | Why it is required                                                                                        |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Parser unit/negative tests                  | Proves renamed, duplicate, or empty source sections fail instead of silently emitting incomplete records. |
+| Coverage diff                               | Detects unexpected source or join-key loss before the data reaches users.                                 |
+| TypeScript, lint, unit tests, and build     | Protects existing breeding behavior and the client bundle.                                                |
+| PWA service-worker and output-budget checks | Protects cold offline navigation and finite Android storage.                                              |
+| Count report                                | Lets review compare record and category coverage even if no value changed.                                |
+| Scope review                                | One domain per PR; no UI, recommendation, or unrelated schema change in a pure acquisition PR.            |
 
 ## Import discipline
 

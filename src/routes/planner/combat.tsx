@@ -2,15 +2,16 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Check,
+  ChevronDown,
   ChevronLeft,
   Clipboard,
   Crosshair,
   Loader2,
   RefreshCw,
-  ShieldAlert,
   SlidersHorizontal,
   Users,
 } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -59,12 +60,12 @@ export const Route = createFileRoute("/planner/combat")({
 });
 
 const scopeOptions: readonly { value: RosterScope; label: string; note: string }[] = [
-  { value: "any", label: "Any Pal", note: "All source-backed roster rows." },
-  { value: "owned", label: "Pals I own", note: "Species present in your local collection." },
+  { value: "any", label: "Any Pal", note: "All Pals in the game." },
+  { value: "owned", label: "Pals I own", note: "Pals currently in your collection." },
   {
     value: "breedable",
     label: "Pals I can breed",
-    note: "Positive, fully resolved chains from your local collection only.",
+    note: "Pals you can breed using your collection.",
   },
 ];
 
@@ -108,15 +109,6 @@ function NumberInput({
         onChange={(event) => onChange(Number(event.target.value))}
       />
     </label>
-  );
-}
-
-function Notice({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex gap-2 rounded-xl border border-amber-500/35 bg-amber-500/5 p-3 text-xs leading-relaxed text-muted-foreground">
-      <ShieldAlert className="mt-0.5 size-4 shrink-0 text-amber-500" />
-      <div>{children}</div>
-    </div>
   );
 }
 
@@ -285,9 +277,8 @@ function CombatPlannerRoute() {
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Combat comparison</h1>
             <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Compare source-backed base roster values and choose your own priorities. This board is
-              not a universal “best Pal” list and it does not predict damage, counters, or battle
-              results.
+              Compare any Pal's Attack, Health, and Defense. Set what you care about and the list
+              re-sorts.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-2 text-center text-xs sm:w-52">
@@ -303,12 +294,28 @@ function CombatPlannerRoute() {
         </div>
       </section>
 
-      <Notice>
-        <strong className="text-foreground">Measured, not predictive.</strong> Attack, Health, and
-        Defense are raw base roster values shown with a roster-relative percentile. There are no
-        enemy combat profiles, move damage or cooldowns, damage formula, player build, PvP rules, or
-        sourced numeric element matrix here. Element labels are identity only.
-      </Notice>
+      <Collapsible className="rounded-xl border bg-card/60 p-4">
+        <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+          <span>What this can and can't tell you</span>
+          <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+          <p>
+            <strong>
+              This doesn't tell you who wins a fight — there's no public damage formula.
+            </strong>{" "}
+            This tool compares base stats (Attack, Health, Defense) across Pals.
+          </p>
+          <p>
+            It does not calculate move damage, attack cooldowns, level scaling, equipment bonuses,
+            or player stats.
+          </p>
+          <p>
+            Element tags show each Pal's element type, not calculated elemental damage multipliers
+            or counter advantages.
+          </p>
+        </CollapsibleContent>
+      </Collapsible>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(18rem,0.7fr)_minmax(0,1.7fr)]">
         <aside className="space-y-5">
@@ -320,9 +327,7 @@ function CombatPlannerRoute() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-xs leading-relaxed text-muted-foreground">
-                <strong className="text-foreground">Preset — my preference, not game data.</strong>{" "}
-                Presets are starting points only. Set every weight to zero to browse alphabetically
-                with no index.
+                Presets are starting points. Set all weights to zero to browse alphabetically.
               </p>
               <div className="grid gap-2">
                 {PERSONAL_COMBAT_PRESETS.map((preset) => (
@@ -356,13 +361,13 @@ function CombatPlannerRoute() {
               </div>
               {hasCombatWeights(state.weights) ? (
                 <p className="rounded-lg bg-muted/55 p-2 text-xs leading-relaxed text-muted-foreground">
-                  <strong className="text-foreground">Your weighted base-stat index:</strong> each
-                  base-stat percentile × your weight, divided by total weight. It is a comparison
-                  aid, not a game power rating.
+                  <strong className="text-foreground">Your custom ranking score:</strong> combines
+                  stat ranks using your weights above. It helps you compare Pals by what you care
+                  about, not an official game rating.
                 </p>
               ) : (
                 <p className="rounded-lg bg-muted/55 p-2 text-xs text-muted-foreground">
-                  No weights selected. Rows are alphabetical; no default combat ranking is applied.
+                  Set a weight above to rank these.
                 </p>
               )}
               <Button className="w-full" variant="secondary" onClick={copyShare}>
@@ -443,8 +448,8 @@ function CombatPlannerRoute() {
                 </select>
               </label>
               <p className="text-xs leading-relaxed text-muted-foreground">
-                This includes Pals with that source record. It does not assess suitability against
-                that encounter and does not create a counter-team recommendation.
+                Filters for Pals that appear in this encounter type. This does not recommend
+                counter-teams.
               </p>
               {encounterPending ? (
                 <p className="text-xs text-muted-foreground">Loading offline encounter records…</p>
@@ -467,8 +472,8 @@ function CombatPlannerRoute() {
             <CardContent className="space-y-3">
               {selected.length === 0 ? (
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  Add up to five Pals from the comparison rows. Team element coverage is descriptive
-                  identity only; it has no multiplier or counter-score.
+                  Add up to five Pals from the list. Shows element types in your team, not damage
+                  bonuses.
                 </p>
               ) : (
                 <>
@@ -561,13 +566,11 @@ function CombatPlannerRoute() {
 
                     {candidate.score === null ? (
                       <p className="rounded-lg bg-muted/55 p-2 text-xs text-muted-foreground">
-                        Alphabetical browse mode. Add one or more personal-preference weights to
-                        calculate a user-weighted base-stat index.
+                        Set a weight above to rank these.
                       </p>
                     ) : (
                       <p className="rounded-lg bg-primary/10 p-2 text-xs text-primary">
-                        Your weighted base-stat index:{" "}
-                        <strong>{candidate.score.toFixed(1)}/100</strong>
+                        Your custom rank score: <strong>{candidate.score.toFixed(1)}/100</strong>
                       </p>
                     )}
 
@@ -588,8 +591,8 @@ function CombatPlannerRoute() {
                       ))}
                     </dl>
                     <p className="text-[11px] leading-relaxed text-muted-foreground">
-                      Measured base roster values only. Percentiles compare the available roster;
-                      they are not level, IV, passive, equipment, move, or damage calculations.
+                      Base stats only. Ranks compare raw base values across Pals, not level 50
+                      stats, skills, or damage.
                     </p>
                   </CardContent>
                 </Card>
@@ -598,13 +601,6 @@ function CombatPlannerRoute() {
           </div>
         </section>
       </div>
-
-      <Notice>
-        <strong className="text-foreground">Unsupported contexts:</strong> PvP is not modelled.
-        Field Alpha, dungeon, raid, and tower filters are source-record membership only.
-        Encounter-specific counter-teams require versioned enemy profiles, move data, damage rules,
-        and a sourced element table.
-      </Notice>
     </main>
   );
 }

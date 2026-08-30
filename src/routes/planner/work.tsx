@@ -1,7 +1,8 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Clipboard, Factory, Loader2, RefreshCw, ShieldAlert, Users } from "lucide-react";
+import { ChevronDown, Clipboard, Factory, Loader2, RefreshCw, Users } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -48,23 +49,14 @@ const rankOptions = [
 ] as const;
 
 const scopeOptions: readonly { value: RosterScope; label: string; note: string }[] = [
-  { value: "any", label: "Any Pal", note: "All Pals with a known work-suitability record." },
-  { value: "owned", label: "Pals I own", note: "Species present in your local collection." },
+  { value: "any", label: "Any Pal", note: "All Pals with known work skills." },
+  { value: "owned", label: "Pals I own", note: "Pals currently in your collection." },
   {
     value: "breedable",
     label: "Pals I can breed",
-    note: "Positive, fully resolved chains from your local collection only.",
+    note: "Pals you can breed using your collection.",
   },
 ];
-
-function Notice({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex gap-2 rounded-xl border border-amber-500/35 bg-amber-500/5 p-3 text-xs leading-relaxed text-muted-foreground">
-      <ShieldAlert className="mt-0.5 size-4 shrink-0 text-amber-500" />
-      <div>{children}</div>
-    </div>
-  );
-}
 
 function WorkPlannerRoute() {
   const [state, setState] = useState<WorkComparisonState>(DEFAULT_WORK_COMPARISON_STATE);
@@ -176,20 +168,29 @@ function WorkPlannerRoute() {
           </Badge>
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Base work comparison</h1>
           <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-            Select one job and the condensation rank you are willing to farm. Rows show the sourced
-            work-suitability level for that exact Pal and rank; this is not a universal “best
-            worker” score or a production-time forecast.
+            Find the best Pals for any base task and see how condensation levels increase work
+            suitability.
           </p>
         </div>
       </section>
 
-      <Notice>
-        <strong className="text-foreground">Suitability is not throughput.</strong> Work levels
-        scale nonlinearly in-game, but the offline packs do not include a validated work-output
-        curve or a full task-time formula. Passives, research, facilities, SAN, food, pathing, and
-        animation time are deliberately excluded rather than converted into invented
-        output-per-minute numbers.
-      </Notice>
+      <Collapsible className="rounded-xl border bg-card/60 p-4">
+        <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+          <span>What this can and can't tell you</span>
+          <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+          <p>
+            <strong>Work levels show work suitability, not items produced per minute.</strong> Work
+            speed scales in-game, but there is no simple formula for exact production speed.
+          </p>
+          <p>
+            This tool compares base suitability levels at each condensation rank. It does not
+            calculate task travel time, worker passive traits, technology bonuses, food, or SAN
+            decay.
+          </p>
+        </CollapsibleContent>
+      </Collapsible>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(18rem,0.7fr)_minmax(0,1.7fr)]">
         <aside className="space-y-5">
@@ -211,7 +212,7 @@ function WorkPlannerRoute() {
                   }
                   className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground"
                 >
-                  <option value="">No task selected — browse alphabetically</option>
+                  <option value="">No task selected — select a task below</option>
                   {WORK_OPTIONS.map((option) => (
                     <option key={option.key} value={option.key}>
                       {option.label}
@@ -221,12 +222,12 @@ function WorkPlannerRoute() {
               </label>
               {state.work === null ? (
                 <p className="rounded-lg bg-muted/55 p-2 text-xs leading-relaxed text-muted-foreground">
-                  No task selected. Rows are alphabetical and no default worker ranking is applied.
+                  Select a work task above to rank Pals by suitability.
                 </p>
               ) : (
                 <p className="rounded-lg bg-primary/10 p-2 text-xs leading-relaxed text-primary">
-                  <strong>Your comparison:</strong> {workLabel(state.work)} suitability at{" "}
-                  {selectedRank.label}. Higher levels sort first; equal levels sort alphabetically.
+                  <strong>Your comparison:</strong> {workLabel(state.work)} level at{" "}
+                  {selectedRank.label}. Higher suitability levels sort first.
                 </p>
               )}
             </CardContent>
@@ -259,9 +260,8 @@ function WorkPlannerRoute() {
                   : `${selectedRank.cumulative} same-species Pals total are required from base rank.`}
               </div>
               <p className="text-xs leading-relaxed text-muted-foreground">
-                Ranks 1–3 use each Pal’s source-defined progression order, including tied base
-                levels; rank 4 raises every existing suitability. This board does not assume a
-                condensation rank.
+                Ranks 1–3 boost suitability according to each Pal's in-game upgrade order. Rank 4
+                adds +1 to all work skills.
               </p>
               {unknownProgressions > 0 ? (
                 <p className="rounded-lg border border-amber-500/35 bg-amber-500/5 p-2 text-xs leading-relaxed text-muted-foreground">
@@ -416,20 +416,17 @@ function WorkPlannerRoute() {
                     </div>
                     {candidate.level === null ? (
                       <p className="rounded-lg bg-muted/55 p-2 text-xs leading-relaxed text-muted-foreground">
-                        Choose one work task to compare work-suitability levels. This mode
-                        intentionally has no all-jobs total or default “best worker.”
+                        Select a work task above to compare work levels.
                       </p>
                     ) : (
                       <p className="rounded-lg bg-primary/10 p-2 text-xs leading-relaxed text-primary">
-                        <strong>{workLabel(state.work)} suitability:</strong> level{" "}
-                        {candidate.level} at {selectedRank.label}. This is a sourced suitability
-                        rank, not items per minute.
+                        <strong>{workLabel(state.work)} suitability:</strong> Level{" "}
+                        {candidate.level} at {selectedRank.label}.
                       </p>
                     )}
                     <p className="text-[11px] leading-relaxed text-muted-foreground">
-                      Individual passive traits, base-wide Partner Skills, Applied Technique books,
-                      research, and task environment are not merged into this species-level
-                      comparison.
+                      Base work level only. Passive traits, technology, and base structures are not
+                      included.
                     </p>
                   </CardContent>
                 </Card>
@@ -438,12 +435,6 @@ function WorkPlannerRoute() {
           ) : null}
         </section>
       </div>
-
-      <Notice>
-        <strong className="text-foreground">Scope boundary:</strong> this mode compares one existing
-        work suitability at a time. It does not simulate task scheduling, ranch drops, stackable
-        base buffs, individual passives, book allocation, or actual crafting/mining time.
-      </Notice>
     </main>
   );
 }

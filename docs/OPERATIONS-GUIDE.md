@@ -37,7 +37,7 @@ https://github.com/good-vibe-desk-lovable-app/good-vibe-desk/settings/rules
 7. Tick ☑ **Require status checks to pass**, then **Add checks**, and search for:
    - `test`
    - `good-vibe-desk` (the Cloudflare Workers Build check)
-   ⚠️ Do NOT add any Netlify checks.
+     ⚠️ Do NOT add any Netlify checks.
 8. **Create**
 
 **If the checks don't appear in search:** they need to have run at least once.
@@ -71,6 +71,7 @@ https://github.com/good-vibe-desk-lovable-app/good-vibe-desk/settings
 ```
 
 Scroll to **Pull Requests**:
+
 - ☑ Automatically delete head branches
 - ☑ Allow squash merging
 - ☐ Allow merge commits — **uncheck**
@@ -85,6 +86,7 @@ https://github.com/good-vibe-desk-lovable-app/good-vibe-desk/settings/actions
 ```
 
 Scroll to **Workflow permissions**:
+
 - ● Read repository contents and packages permissions
 - ☐ Allow GitHub Actions to create and approve pull requests — **uncheck**
 
@@ -100,6 +102,7 @@ https://dash.cloudflare.com
 ```
 
 Workers & Pages → **good-vibe-desk** → Settings → **Build**
+
 - Branch control → **uncheck** "Builds for non-production branches"
 - Production branch: `main`
 - Build caching: **on**
@@ -125,12 +128,12 @@ members who don't.
 
 The single most important thing to get right. Each tool has one job.
 
-| AI | Job | Never let it |
-|---|---|---|
-| **Jules** | Code, data pipelines, scraping, PRs | Merge its own work |
-| **Lovable** | UI only, on its own branch | Touch `main`, data, or parsers |
-| **Claude (me)** | Review, planning, writing briefs | — |
-| **Manus** | Was the main builder; now credit-limited | — |
+| AI              | Job                                      | Never let it                   |
+| --------------- | ---------------------------------------- | ------------------------------ |
+| **Jules**       | Code, data pipelines, scraping, PRs      | Merge its own work             |
+| **Lovable**     | UI only, on its own branch               | Touch `main`, data, or parsers |
+| **Claude (me)** | Review, planning, writing briefs         | —                              |
+| **Manus**       | Was the main builder; now credit-limited | —                              |
 
 ## 2.1 Jules — the main worker
 
@@ -177,9 +180,11 @@ https://jules.google
 ```
 
 **Environment tab** — setup script:
+
 ```
 npm install
 ```
+
 Then **Run and Snapshot**. This caches your 716 packages so every task doesn't
 reinstall them.
 
@@ -187,14 +192,14 @@ reinstall them.
 
 **Settings:**
 
-| Setting | Value | Why |
-|---|---|---|
-| Knowledge / memory | On | Remembers your corrections |
-| CI Fixer | **OFF** | Would auto-fix lint by weakening tests |
-| Suggested Tasks | Off | Unrequested PRs |
-| Scheduled Tasks | Off | No unsupervised edits |
-| MCP | None | Nothing relevant available |
-| Repo access | This repo only | Least privilege |
+| Setting            | Value          | Why                                    |
+| ------------------ | -------------- | -------------------------------------- |
+| Knowledge / memory | On             | Remembers your corrections             |
+| CI Fixer           | **OFF**        | Would auto-fix lint by weakening tests |
+| Suggested Tasks    | Off            | Unrequested PRs                        |
+| Scheduled Tasks    | Off            | No unsupervised edits                  |
+| MCP                | None           | Nothing relevant available             |
+| Repo access        | This repo only | Least privilege                        |
 
 ⚠️ **Never give Jules your Cloudflare API token or any deploy secret.**
 
@@ -210,6 +215,7 @@ versions, free tier included. Works on mobile.
 assets don't count toward requests. You're nowhere near any of it.
 
 **Never enable these — they break the app:**
+
 - Auto Minify — corrupts hashed assets, breaks the service worker
 - Rocket Loader — breaks React hydration
 - Bot Fight Mode — would block your item-pack downloads
@@ -222,6 +228,7 @@ https://github.com/good-vibe-desk-lovable-app/good-vibe-desk/settings/security_a
 ```
 
 Turn on:
+
 - ☑ Dependabot alerts
 - ☑ Dependabot security updates
 - ☑ Secret scanning
@@ -278,19 +285,21 @@ Open the PR and check, in order:
 
 ## 5.3 Something broke
 
-| Symptom | Do this |
-|---|---|
-| Live app broken | Cloudflare → Deployments → Rollback |
-| CI red on main | Open Actions, read the failing step, send it to me |
-| Lint failing | Run the Format workflow, then recheck |
-| AI edited generated files | Reject the PR. Cite rule 5 |
-| AI changed the `8` | Reject. Cite rule 1 |
-| Merge button greyed out | Check for conflicts. Ask the AI to rebase |
+| Symptom                   | Do this                                            |
+| ------------------------- | -------------------------------------------------- |
+| Live app broken           | Cloudflare → Deployments → Rollback                |
+| CI red on main            | Open Actions, read the failing step, send it to me |
+| Lint failing              | Run the Format workflow, then recheck              |
+| AI edited generated files | Reject the PR. Cite rule 5                         |
+| AI changed the `8`        | Reject. Cite rule 1                                |
+| Merge button greyed out   | Check for conflicts. Ask the AI to rebase          |
 
 **Format workflow:**
+
 ```
 https://github.com/good-vibe-desk-lovable-app/good-vibe-desk/actions/workflows/format.yml
 ```
+
 Run workflow → main → Run workflow
 
 ---
@@ -313,6 +322,7 @@ installed, running PalCalc's GenDB, would settle them.**
 ## 6.2 Two in-game experiments only you can run
 
 Protocols are written in `docs/PALWORLD-1.0-REFERENCE.md`:
+
 - Does the Ancient Hatchery change rare-skill inheritance rates?
 - Does Broncherry affect mutated eggs beyond Alpha conversion?
 
@@ -332,11 +342,11 @@ Protocols are written in `docs/PALWORLD-1.0-REFERENCE.md`:
 
 # PART 7 — SKIP THESE
 
-| Thing | Why |
-|---|---|
-| Netlify | Can't host this app |
-| Custom domain | workers.dev is fine |
+| Thing                             | Why                                   |
+| --------------------------------- | ------------------------------------- |
+| Netlify                           | Can't host this app                   |
+| Custom domain                     | workers.dev is fine                   |
 | Cloudflare WAF, Argo, Cache Rules | Need a custom domain, no benefit here |
-| CodeQL | Noisy for an app this size |
-| Jules MCP / Scheduled / Suggested | Unnecessary risk |
-| GitHub mobile app for settings | Use the browser in desktop mode |
+| CodeQL                            | Noisy for an app this size            |
+| Jules MCP / Scheduled / Suggested | Unnecessary risk                      |
+| GitHub mobile app for settings    | Use the browser in desktop mode       |
