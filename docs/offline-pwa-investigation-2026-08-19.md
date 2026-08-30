@@ -6,13 +6,13 @@ This investigation tested the production build through Nitro's Cloudflare-compat
 
 ## Build and runtime facts observed
 
-| Check | Observed result |
-| --- | --- |
-| Production build layout | `.output/public` contains static assets and service-worker files, but no `index.html` anywhere under `.output`. |
-| Service worker | `/sw.js` installed, activated, and controlled the document at `http://localhost:34617/`. |
-| Navigation configuration | Generated service worker contains `NavigationRoute(createHandlerBoundToURL("/"))` and a `NetworkFirst` navigation route. |
-| Precache cache | The active Workbox precache had 27 static assets: JavaScript, CSS, icons, and `manifest.webmanifest`. It did **not** contain `/`, any HTML document, or an SSR response. |
-| Online post-activation route navigation | `/explore` loaded successfully while the Cloudflare-compatible preview runtime was online. |
+| Check                                   | Observed result                                                                                                                                                          |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Production build layout                 | `.output/public` contains static assets and service-worker files, but no `index.html` anywhere under `.output`.                                                          |
+| Service worker                          | `/sw.js` installed, activated, and controlled the document at `http://localhost:34617/`.                                                                                 |
+| Navigation configuration                | Generated service worker contains `NavigationRoute(createHandlerBoundToURL("/"))` and a `NetworkFirst` navigation route.                                                 |
+| Precache cache                          | The active Workbox precache had 27 static assets: JavaScript, CSS, icons, and `manifest.webmanifest`. It did **not** contain `/`, any HTML document, or an SSR response. |
+| Online post-activation route navigation | `/explore` loaded successfully while the Cloudflare-compatible preview runtime was online.                                                                               |
 
 ## Executed offline test
 

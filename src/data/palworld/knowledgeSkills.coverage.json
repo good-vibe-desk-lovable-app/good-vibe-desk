@@ -10,8 +10,5 @@
     "withoutPartnerSkill": 0,
     "activeSkillRecords": 299
   },
-  "sourceUrls": [
-    "https://paldb.cc/en/Partner_Skill",
-    "https://paldb.cc/"
-  ]
+  "sourceUrls": ["https://paldb.cc/en/Partner_Skill", "https://paldb.cc/"]
 }
