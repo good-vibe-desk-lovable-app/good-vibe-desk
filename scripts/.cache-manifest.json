@@ -1,10 +1,10 @@
 {
   "palcalc": {
     "dbVersion": "v27",
-    "fetchedAt": "2026-08-31T17:25:06+00:00",
+    "fetchedAt": "2026-08-31T22:51:11+00:00",
     "palCount": 299,
-    "repositoryCommitAt": "2026-08-26T20:18:03Z",
-    "repositoryRevision": "4b0af605e877dc566a895f10326962404dcfbc84",
+    "repositoryCommitAt": "2026-08-31T18:00:43Z",
+    "repositoryRevision": "85f651aca4162df0919ca8c798c699a50693caed",
     "sha256": "e42052f24edad4fd4f4325456c76f2d9ddb5bff20d6b073c82c19782dc91a136",
     "url": "https://raw.githubusercontent.com/tylercamp/palcalc/main/PalCalc.Model/db.json"
   },
