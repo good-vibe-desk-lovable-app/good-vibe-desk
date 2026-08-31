@@ -153,10 +153,13 @@ function WorkPlannerRoute() {
   return (
     <main className="mx-auto max-w-7xl space-y-5 px-3 py-5 sm:px-6 sm:py-8">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-        <Link to="/compendium" className="hover:text-foreground">
-          ← Back to the compendium
+        <Link to="/" className="inline-flex min-h-[44px] items-center hover:text-foreground">
+          ← Back to the pathfinder
         </Link>
-        <Link to="/planner/combat" className="hover:text-foreground">
+        <Link
+          to="/planner/combat"
+          className="inline-flex min-h-[44px] items-center hover:text-foreground"
+        >
           Combat comparison →
         </Link>
       </div>
