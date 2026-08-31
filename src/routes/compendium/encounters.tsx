@@ -13,6 +13,7 @@ import {
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { EvidenceRecord } from "@/data/palworld/knowledge";
 import type { EncounterKnowledge } from "@/data/palworld/knowledgeEncounters";
 import { useOfflineKnowledgePack } from "@/lib/use-offline-knowledge-pack";
@@ -90,8 +91,8 @@ function EncounterCompendiumPage() {
               </Eyebrow>
               <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Encounters</h1>
               <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Dungeon bosses, raid bosses, and corroborated tower records in one searchable
-                directory. Fields are shown only where that encounter channel publishes them.
+                Browse verified stats and locations for dungeon bosses, raid bosses, and tower
+                bosses.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center sm:min-w-72">
@@ -101,6 +102,23 @@ function EncounterCompendiumPage() {
             </div>
           </div>
         </section>
+
+        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+          <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+            <span>What this can and can't tell you</span>
+            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+            <p>
+              Shows levels, regions, and coordinates for dungeon bosses, raid bosses, and tower
+              bosses based on verified game records.
+            </p>
+            <p>
+              Fields that are not published or recorded for a specific encounter type are left blank
+              rather than guessed.
+            </p>
+          </CollapsibleContent>
+        </Collapsible>
 
         <section
           className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
@@ -175,7 +193,7 @@ function EncounterCompendiumPage() {
               ))}
             </div>
           ) : (
-            <EmptyState text="No encounters match that filter. Try a different name or channel." />
+            <EmptyState text="No encounters match your search. Try searching for a different boss name, region, or encounter type." />
           )}
         </section>
       </main>
