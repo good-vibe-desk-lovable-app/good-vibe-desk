@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, ExternalLink, Lightbulb, Search, Tags } from "lucide-react";
+import { ArrowLeft, ChevronDown, ExternalLink, Lightbulb, Search, Tags } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { EvidenceRecord } from "@/data/palworld/knowledge";
 import type { TechnologyKnowledge } from "@/data/palworld/knowledgeTechnologies";
 import { useOfflineKnowledgePack } from "@/lib/use-offline-knowledge-pack";
@@ -97,9 +98,8 @@ function TechnologyCompendiumPage() {
               </span>
               <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Technologies</h1>
               <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Technology unlock metadata from level 1 through level {maxLevel}. This is an unlock
-                catalogue, not a recipe calculator: each card labels the missing recipe boundary
-                instead of guessing ingredients or stations.
+                Look up unlock levels, technology categories, and point costs from levels 1 to{" "}
+                {maxLevel}.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center sm:min-w-72">
@@ -109,6 +109,20 @@ function TechnologyCompendiumPage() {
             </div>
           </div>
         </section>
+
+        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+          <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+            <span>What this can and can't tell you</span>
+            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+            <p>Shows required levels, point costs, and categories for technology unlocks.</p>
+            <p>
+              This guide lists technology unlocks, not crafting recipes or ingredient costs. See the
+              Items & Recipes guide for crafting details.
+            </p>
+          </CollapsibleContent>
+        </Collapsible>
 
         <section
           className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
@@ -179,7 +193,7 @@ function TechnologyCompendiumPage() {
               ))}
             </div>
           ) : (
-            <EmptyState text="No technologies match that search. Try a different category or source key." />
+            <EmptyState text="No technologies match your search. Try searching for a different technology or selecting another category." />
           )}
         </section>
       </main>
