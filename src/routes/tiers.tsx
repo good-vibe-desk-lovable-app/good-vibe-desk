@@ -279,8 +279,11 @@ function TiersPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
       <header className="mb-6">
-        <Link to="/" className="text-xs text-muted-foreground underline underline-offset-4">
-          ← Breeding pathfinder
+        <Link
+          to="/"
+          className="inline-flex min-h-[44px] items-center text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+        >
+          ← Back to the pathfinder
         </Link>
         <h1 className="mt-3 flex items-center gap-2 text-3xl font-bold">
           <Trophy className="size-6 text-warning" /> Computed tier lists

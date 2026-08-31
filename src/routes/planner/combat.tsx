@@ -263,10 +263,10 @@ function CombatPlannerRoute() {
   return (
     <main className="mx-auto max-w-7xl space-y-5 px-3 py-5 sm:px-6 sm:py-8">
       <Link
-        to="/compendium"
-        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+        to="/"
+        className="inline-flex min-h-[44px] items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
-        <ChevronLeft className="size-4" /> Back to the compendium
+        <ChevronLeft className="size-4" /> Back to the pathfinder
       </Link>
 
       <section className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-card to-card p-5 shadow-sm sm:p-7">

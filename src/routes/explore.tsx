@@ -43,7 +43,7 @@ function ExplorePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="relative mx-auto max-w-4xl px-4 py-8">
-        <Button asChild variant="ghost" size="sm" className="mb-4 -ml-2">
+        <Button asChild variant="ghost" size="sm" className="mb-4 -ml-2 min-h-[44px]">
           <Link to="/">
             <ArrowLeft className="size-4" />
             Back to the pathfinder

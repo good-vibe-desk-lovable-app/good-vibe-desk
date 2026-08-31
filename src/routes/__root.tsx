@@ -148,8 +148,60 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen flex flex-col bg-background text-foreground">
+        <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 h-14 sm:px-6 lg:px-8">
+            <Link
+              to="/"
+              className="flex items-center gap-2 font-bold text-base tracking-tight shrink-0"
+            >
+              <span className="text-primary">Palworld</span> Pathfinder
+            </Link>
+            <nav className="flex items-center gap-1 overflow-x-auto py-1 scrollbar-none">
+              <Link
+                to="/"
+                activeOptions={{ exact: true }}
+                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
+                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
+              >
+                Pathfinder
+              </Link>
+              <Link
+                to="/compendium"
+                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
+                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
+              >
+                Compendium
+              </Link>
+              <Link
+                to="/planner/combat"
+                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
+                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
+              >
+                Combat Planner
+              </Link>
+              <Link
+                to="/planner/work"
+                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
+                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
+              >
+                Work Planner
+              </Link>
+              <Link
+                to="/explore"
+                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
+                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
+              >
+                Explorer
+              </Link>
+            </nav>
+          </div>
+        </header>
+        <main className="flex-1">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+      </div>
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
