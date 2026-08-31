@@ -13,6 +13,7 @@ import {
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { EvidenceRecord } from "@/data/palworld/knowledge";
 import type { ItemKnowledge } from "@/data/palworld/knowledgeItems";
 import { useOptionalItemsPack } from "@/lib/use-optional-items-pack";
@@ -100,8 +101,7 @@ function OptionalItemsCompendiumPage() {
                 Items & Recipes
               </h1>
               <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Item statistics and source-bounded production rows are a large, optional pack. The
-                breeding pathfinder and every other compendium directory work normally without it.
+                Download item stats and crafting recipes for offline use.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-64">
@@ -116,6 +116,21 @@ function OptionalItemsCompendiumPage() {
           </div>
         </section>
 
+        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+          <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+            <span>What this can and can't tell you</span>
+            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+            <p>Shows verified stats and crafting recipes for items in Palworld.</p>
+            <p>
+              This guide is a separate download that shows its size before you start and can be
+              deleted from your browser at any time. The breeding calculator and other guides work
+              fine without it.
+            </p>
+          </CollapsibleContent>
+        </Collapsible>
+
         <section
           className="mt-6 rounded-2xl border bg-card p-5 shadow-sm sm:p-6"
           aria-labelledby="optional-pack-title"
@@ -127,8 +142,8 @@ function OptionalItemsCompendiumPage() {
               </h2>
               <p className="mt-1 text-sm leading-6 text-muted-foreground">
                 {installed
-                  ? "This catalogue is stored in a dedicated browser cache and can be removed here at any time."
-                  : "Nothing is stored until you choose Download. The core app does not wait for, require, or silently cache this catalogue."}
+                  ? "This guide is stored on your device and can be deleted here at any time."
+                  : "Nothing is downloaded until you tap Download. The breeding calculator and other guides work normally without it."}
               </p>
             </div>
 
@@ -223,11 +238,17 @@ function OptionalItemsCompendiumPage() {
               <span>{records.length} installed locally · source tier: wiki</span>
             </div>
 
-            <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-              {visible.map((record) => (
-                <ItemCard key={record.id} record={record} />
-              ))}
-            </div>
+            {visible.length > 0 ? (
+              <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+                {visible.map((record) => (
+                  <ItemCard key={record.id} record={record} />
+                ))}
+              </div>
+            ) : (
+              <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
+                No items match your search. Try typing a different item name or recipe keyword.
+              </div>
+            )}
 
             {visible.length < filtered.length ? (
               <div className="mt-5 text-center">
@@ -240,11 +261,10 @@ function OptionalItemsCompendiumPage() {
         ) : (
           <section className="mt-7 rounded-2xl border border-dashed bg-card/50 p-8 text-center">
             <HardDriveDownload className="mx-auto size-7 text-muted-foreground" />
-            <h2 className="mt-3 font-bold">The optional catalogue is not installed</h2>
+            <h2 className="mt-3 font-bold">The optional items guide is not downloaded</h2>
             <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-              Download it above when you want source-backed item stats and production rows offline.
-              You can remove it later from this same page; leaving it absent does not limit the core
-              pathfinder.
+              Download it above when you want offline access to item stats and crafting recipes. You
+              can delete it anytime, and the rest of the app works fully without it.
             </p>
           </section>
         )}
