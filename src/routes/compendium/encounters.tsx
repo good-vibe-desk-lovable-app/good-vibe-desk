@@ -334,7 +334,7 @@ function PackFeedback({ loading, error }: { loading: boolean; error: Error | nul
 
 function BackLink() {
   return (
-    <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2">
+    <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2 min-h-[44px]">
       <Link to="/compendium">
         <ArrowLeft className="size-4" />
         Back to the compendium
