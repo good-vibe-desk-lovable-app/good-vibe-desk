@@ -1,16 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
+  ChevronDown,
   Clock3,
   Database,
   ExternalLink,
-  MapPin,
   Search,
   ShieldAlert,
 } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { EvidenceRecord } from "@/data/palworld/knowledge";
 import type { FieldAlphaKnowledge } from "@/data/palworld/knowledgeFieldAlphas";
 import { useOfflineKnowledgePack } from "@/lib/use-offline-knowledge-pack";
@@ -110,9 +111,8 @@ function FieldAlphaCompendiumPage() {
               </div>
               <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Fixed Field Alphas</h1>
               <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                A source-backed directory of fixed Alpha Pal encounters in the overworld. Each card
-                preserves the source’s level, time restriction, raw game-space position, and
-                evidence trail without inventing player-map coordinates.
+                Find fixed overworld Alpha Pal bosses with their levels, spawn times, and map
+                locations.
               </p>
             </div>
 
@@ -125,18 +125,19 @@ function FieldAlphaCompendiumPage() {
           </div>
         </section>
 
-        <section className="mt-5 grid gap-3 md:grid-cols-2">
-          <Notice
-            icon={<Database className="size-4" />}
-            title="Strictly scoped evidence"
-            body="This directory contains 65 records whose source metadata explicitly says Alpha Pal + Field Boss. It deliberately excludes 18 Dungeon Boss Alpha records rather than duplicating dungeon evidence."
-          />
-          <Notice
-            icon={<MapPin className="size-4" />}
-            title="Coordinates are intentionally raw"
-            body="The source exposes game-space X/Y positions, not a stable player-map coordinate contract. Use them as retained source data; no map-pin conversion is implied."
-          />
-        </section>
+        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+          <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+            <span>What this can and can't tell you</span>
+            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+            <p>
+              Includes 65 fixed overworld Alpha bosses with verified level and time requirements.
+              Dungeon Alpha bosses are listed separately in the Encounters guide.
+            </p>
+            <p>Position coordinates are raw game-space numbers directly from game data.</p>
+          </CollapsibleContent>
+        </Collapsible>
 
         <section
           className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
@@ -201,7 +202,7 @@ function FieldAlphaCompendiumPage() {
             </div>
           ) : (
             <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-              No fixed Field Alpha matches that filter. Try clearing the search or showing all
+              No Field Alpha bosses match your search. Try clearing the search or showing all
               records.
             </div>
           )}
@@ -309,18 +310,6 @@ function Metric({ label, value }: { label: string; value: string }) {
       <div className="mt-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
         {label}
       </div>
-    </div>
-  );
-}
-
-function Notice({ icon, title, body }: { icon: ReactNode; title: string; body: string }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-card/60 p-4">
-      <div className="flex items-center gap-2 text-sm font-semibold">
-        <span className="text-primary">{icon}</span>
-        {title}
-      </div>
-      <p className="mt-2 text-sm leading-5 text-muted-foreground">{body}</p>
     </div>
   );
 }
