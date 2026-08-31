@@ -20,6 +20,7 @@ import { Route as CompendiumFieldAlphasRouteImport } from './routes/compendium/f
 import { Route as CompendiumItemsRouteImport } from './routes/compendium/items'
 import { Route as CompendiumMissionsRouteImport } from './routes/compendium/missions'
 import { Route as CompendiumTechnologiesRouteImport } from './routes/compendium/technologies'
+import { Route as DataCheckSaveInspectorRouteImport } from './routes/data-check/save-inspector'
 import { Route as PlannerCombatRouteImport } from './routes/planner/combat'
 import { Route as PlannerWorkRouteImport } from './routes/planner/work'
 
@@ -78,6 +79,11 @@ const CompendiumTechnologiesRoute = CompendiumTechnologiesRouteImport.update({
   path: '/compendium/technologies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DataCheckSaveInspectorRoute = DataCheckSaveInspectorRouteImport.update({
+  id: '/save-inspector',
+  path: '/save-inspector',
+  getParentRoute: () => DataCheckRoute,
+} as any)
 const PlannerCombatRoute = PlannerCombatRouteImport.update({
   id: '/planner/combat',
   path: '/planner/combat',
@@ -91,7 +97,7 @@ const PlannerWorkRoute = PlannerWorkRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/data-check': typeof DataCheckRoute
+  '/data-check': typeof DataCheckRouteWithChildren
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
@@ -100,13 +106,14 @@ export interface FileRoutesByFullPath {
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/data-check/save-inspector': typeof DataCheckSaveInspectorRoute
   '/planner/combat': typeof PlannerCombatRoute
   '/planner/work': typeof PlannerWorkRoute
   '/compendium/': typeof CompendiumIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/data-check': typeof DataCheckRoute
+  '/data-check': typeof DataCheckRouteWithChildren
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/data-check/save-inspector': typeof DataCheckSaveInspectorRoute
   '/planner/combat': typeof PlannerCombatRoute
   '/planner/work': typeof PlannerWorkRoute
   '/compendium': typeof CompendiumIndexRoute
@@ -122,7 +130,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/data-check': typeof DataCheckRoute
+  '/data-check': typeof DataCheckRouteWithChildren
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
+  '/data-check/save-inspector': typeof DataCheckSaveInspectorRoute
   '/planner/combat': typeof PlannerCombatRoute
   '/planner/work': typeof PlannerWorkRoute
   '/compendium/': typeof CompendiumIndexRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
+    | '/data-check/save-inspector'
     | '/planner/combat'
     | '/planner/work'
     | '/compendium/'
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
+    | '/data-check/save-inspector'
     | '/planner/combat'
     | '/planner/work'
     | '/compendium'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
+    | '/data-check/save-inspector'
     | '/planner/combat'
     | '/planner/work'
     | '/compendium/'
@@ -185,7 +197,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DataCheckRoute: typeof DataCheckRoute
+  DataCheckRoute: typeof DataCheckRouteWithChildren
   ExploreRoute: typeof ExploreRoute
   OpinionsRoute: typeof OpinionsRoute
   TiersRoute: typeof TiersRoute
@@ -278,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompendiumTechnologiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/data-check/save-inspector': {
+      id: '/data-check/save-inspector'
+      path: '/save-inspector'
+      fullPath: '/data-check/save-inspector'
+      preLoaderRoute: typeof DataCheckSaveInspectorRouteImport
+      parentRoute: typeof DataCheckRoute
+    }
     '/planner/combat': {
       id: '/planner/combat'
       path: '/planner/combat'
@@ -295,9 +314,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DataCheckRouteChildren {
+  DataCheckSaveInspectorRoute: typeof DataCheckSaveInspectorRoute
+}
+
+const DataCheckRouteChildren: DataCheckRouteChildren = {
+  DataCheckSaveInspectorRoute: DataCheckSaveInspectorRoute,
+}
+
+const DataCheckRouteWithChildren = DataCheckRoute._addFileChildren(
+  DataCheckRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DataCheckRoute: DataCheckRoute,
+  DataCheckRoute: DataCheckRouteWithChildren,
   ExploreRoute: ExploreRoute,
   OpinionsRoute: OpinionsRoute,
   TiersRoute: TiersRoute,
