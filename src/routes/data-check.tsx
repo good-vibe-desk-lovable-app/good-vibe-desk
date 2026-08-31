@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft, FileCode } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   PALS,
@@ -307,6 +308,15 @@ function DataCheckPage() {
   return (
     <div className="min-h-screen bg-background p-6 md:p-10">
       <div className="mx-auto max-w-6xl space-y-8">
+        <div>
+          <Link
+            to="/"
+            className="inline-flex min-h-[44px] items-center text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+          >
+            <ArrowLeft className="mr-1 size-4" /> Back to the pathfinder
+          </Link>
+        </div>
+
         <header className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Palworld Breeding — Data Check</h1>
           <p className="text-sm text-muted-foreground">
@@ -314,6 +324,25 @@ function DataCheckPage() {
             evidence, and known model boundaries.
           </p>
         </header>
+
+        <section className="rounded-lg border border-primary/30 bg-card p-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold flex items-center gap-2">
+                <FileCode className="size-5 text-primary" /> Save File Inspector
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Diagnostic tool for inspecting local Palworld .sav headers (e.g. Level.sav).
+              </p>
+            </div>
+            <Link
+              to="/data-check/save-inspector"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 shrink-0"
+            >
+              Open Save Inspector
+            </Link>
+          </div>
+        </section>
 
         <section className="rounded-lg border p-4">
           <h2 className="text-lg font-semibold">Dataset version</h2>
