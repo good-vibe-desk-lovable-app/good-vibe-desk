@@ -5,7 +5,6 @@ import {
   ChevronDown,
   ChevronRight,
   Crosshair,
-  Database,
   Download,
   Lightbulb,
   MapPinned,
@@ -156,27 +155,13 @@ function CompendiumIndexPage() {
           <PolicyCard
             icon={<ShieldCheck className="size-4" />}
             title="Core stays independent"
-            body="The breeding calculator does not depend on any compendium pack. Closing or never opening these directories leaves the primary offline pathfinder fully functional."
+            body="The breeding calculator works whether or not you open these guides."
           />
           <PolicyCard
             icon={<Download className="size-4" />}
             title="Items and recipes are opt-in"
-            body="The item-and-recipe pack is outside the core cache. Its dedicated route shows exact transfer and persistent-storage cost, downloads only after a user action, and lets the user remove the archive later."
+            body="The items pack is a separate download that shows its size before you start and can be deleted afterwards."
           />
-        </section>
-
-        <section className="mt-7 rounded-2xl border border-dashed bg-card/45 p-5 sm:p-6">
-          <div className="flex gap-3">
-            <Database className="mt-0.5 size-5 shrink-0 text-primary" />
-            <div>
-              <h2 className="font-semibold">Pack growth is route-by-route</h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                Each available directory is isolated at the route level, so its source-backed data
-                can be reviewed, measured, and reverted independently rather than being folded into
-                the breeding bundle.
-              </p>
-            </div>
-          </div>
         </section>
       </main>
     </div>
@@ -252,7 +237,7 @@ function PackCard({
           </div>
         </div>
         <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">
-          Open directory{" "}
+          Open guide{" "}
           <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
         </span>
       </div>
