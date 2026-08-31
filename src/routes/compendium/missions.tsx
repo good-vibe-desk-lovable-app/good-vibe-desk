@@ -76,7 +76,7 @@ function MissionCompendiumPage() {
       />
 
       <main className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2">
+        <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2 min-h-[44px]">
           <Link to="/compendium">
             <ArrowLeft className="size-4" />
             Back to the compendium
