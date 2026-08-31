@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
+  ChevronDown,
   ExternalLink,
   MapPin,
   Route as RouteIcon,
@@ -10,6 +11,7 @@ import {
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { EvidenceRecord } from "@/data/palworld/knowledge";
 import type { MissionKnowledge } from "@/data/palworld/knowledgeMissions";
 import { useOfflineKnowledgePack } from "@/lib/use-offline-knowledge-pack";
@@ -90,9 +92,7 @@ function MissionCompendiumPage() {
               </span>
               <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Missions</h1>
               <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Main and sub mission cards exactly as their bounded source exposes them. Missing
-                title or narrative fields remain unknown; this directory does not fill them from
-                unsourced prose.
+                View main and sub mission objectives, rewards, next steps, and map locations.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center sm:min-w-72">
@@ -102,6 +102,20 @@ function MissionCompendiumPage() {
             </div>
           </div>
         </section>
+
+        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+          <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+            <span>What this can and can't tell you</span>
+            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+            <p>
+              Shows objectives, rewards, next steps, and map locations for main and sub missions
+              directly from verified game records.
+            </p>
+            <p>Missing titles or details are left blank rather than filled with guesses.</p>
+          </CollapsibleContent>
+        </Collapsible>
 
         <section
           className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
@@ -161,7 +175,7 @@ function MissionCompendiumPage() {
               ))}
             </div>
           ) : (
-            <EmptyState text="No missions match that filter. Try a different term or show all mission types." />
+            <EmptyState text="No missions match your search. Try searching for a different objective or showing all mission types." />
           )}
         </section>
       </main>
