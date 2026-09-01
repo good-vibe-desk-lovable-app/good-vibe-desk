@@ -38,6 +38,7 @@ const GENERATED_DATA = [
   "src/data/palworld/dungeons.ts",
   "src/data/palworld/raid.ts",
   "src/data/palworld/towers.ts",
+  "src/data/palworld/knowledgeEggs.ts",
   // Machine-emitted knowledge domains must use knowledge[A-Z]*.ts. This pattern
   // avoids a shared registration edit for every independently reviewable data PR.
   "src/data/palworld/knowledge[A-Z]*.ts",

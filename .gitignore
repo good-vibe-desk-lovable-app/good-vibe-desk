@@ -31,5 +31,10 @@ dist-ssr
 *.sln
 *.sw?
 
+# Python byte-code / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Generated source cache: retain only the reproducibility manifest, never fetched HTML or db exports.
 scripts/.cache/

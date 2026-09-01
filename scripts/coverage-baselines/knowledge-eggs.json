@@ -1,0 +1,17 @@
+{
+  "dataset": "knowledge-eggs",
+  "generatedAt": "2026-08-31T22:54:54Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 1,
+  "counts": {
+    "wildEggSpawns": 754,
+    "eggPools": 27,
+    "specialEggTypes": 3,
+    "incubators": 2,
+    "knownGaps": 4
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Eggs",
+    "https://palworld.wiki.gg/wiki/Egg_Incubator"
+  ]
+}
