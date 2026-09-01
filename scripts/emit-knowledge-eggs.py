@@ -244,24 +244,83 @@ def main() -> None:
         {"size": "Huge", "incubationMultiplier": 3.0, "baseHatchTimeHours": {"cold": 72.0, "comfortable": 48.0, "optimal": 36.0}},
     ]
 
-    incubator_structures = [
+    # Source incubators and breeding structure from knowledgeTechnologies.ts
+    tech_ts_content = (DATA / "knowledgeTechnologies.ts").read_text()
+    tech_match = re.search(r'export const PALWORLD_TECHNOLOGIES[^{]*(\[.*\]);', tech_ts_content, re.DOTALL)
+    if not tech_match:
+        raise SourceContractError("Could not parse PALWORLD_TECHNOLOGIES array from knowledgeTechnologies.ts")
+    tech_records = json.loads(tech_match.group(1))
+    tech_by_id = {row["id"]: row["data"] for row in tech_records}
+
+    # Define the 5 hatching structures plus Breeding Farm using tech unlock data as truth
+    # Structure metadata maps tech IDs to known/published properties or explicit gaps (null)
+    tech_structure_specs = [
         {
-            "name": "Egg Incubator",
-            "unlockLevel": 7,
-            "technologyPoints": 1,
+            "techId": "technology:Special_HatchingPalEgg",
+            "isIncubator": True,
             "capacity": 1,
             "incubationSpeedBonus": 0.0,
             "specialEffects": []
         },
         {
-            "name": "Ancient Hatchery",
-            "unlockLevel": 76,
-            "technologyPoints": 8,
+            "techId": "technology:BreedFarm",
+            "isIncubator": False,
+            "capacity": 2, # 2 parents for breeding
+            "incubationSpeedBonus": None,
+            "specialEffects": ["Facilitates Pal pair breeding to produce eggs"]
+        },
+        {
+            "techId": "technology:Special_ElectricHatchingPalEgg",
+            "isIncubator": True,
+            "capacity": None, # Unpublished / gap
+            "incubationSpeedBonus": None, # Unpublished / gap
+            "specialEffects": ["Electric powered incubation"]
+        },
+        {
+            "techId": "technology:MultiHatchingPalEgg",
+            "isIncubator": True,
+            "capacity": None, # Unpublished / gap
+            "incubationSpeedBonus": None, # Unpublished / gap
+            "specialEffects": ["Multi-egg incubation capacity"]
+        },
+        {
+            "techId": "technology:MultiElectricHatchingPalEgg",
+            "isIncubator": True,
+            "capacity": None, # Unpublished / gap
+            "incubationSpeedBonus": None, # Unpublished / gap
+            "specialEffects": ["Electric powered multi-egg incubation"]
+        },
+        {
+            "techId": "technology:MultiElectricHatchingPalEggWithBreed",
+            "isIncubator": True,
             "capacity": 10,
             "incubationSpeedBonus": 1.0,
             "specialEffects": ["Increases inheritance rate of rare skills", "Automated breeding and batch incubation"]
         }
     ]
+
+    incubator_structures = []
+    breeding_structures = []
+
+    for spec in tech_structure_specs:
+        tech_id = spec["techId"]
+        if tech_id not in tech_by_id:
+            raise SourceContractError(f"Technology ID {tech_id} missing from knowledgeTechnologies.ts")
+        t_data = tech_by_id[tech_id]
+
+        struct_record = {
+            "technologyId": tech_id,
+            "name": t_data["name"],
+            "unlockLevel": t_data["level"],
+            "technologyPoints": t_data["technologyPointCost"],
+            "capacity": spec["capacity"],
+            "incubationSpeedBonus": spec["incubationSpeedBonus"],
+            "specialEffects": spec["specialEffects"]
+        }
+        if spec["isIncubator"]:
+            incubator_structures.append(struct_record)
+        else:
+            breeding_structures.append(struct_record)
 
     special_egg_types = [
         {
@@ -301,6 +360,21 @@ def main() -> None:
             "field": "AncientHatcheryRareSkillMultiplier",
             "reason": "Ancient Hatchery states it increases rare skill inheritance rate, but exact numeric multiplier is unpublished.",
             "resolution": "Perform controlled breeding trial (Protocol A in reference doc) to quantify exact rate."
+        },
+        {
+            "field": "ElectricEggIncubator.capacityAndSpeed",
+            "reason": "Capacity, incubation speed bonus, and crafting materials for Electric Egg Incubator (Level 36) are unpublished in technology unlock tiles.",
+            "resolution": "Extract structure craft recipes and operational attributes from detailed structure data card or game datamine."
+        },
+        {
+            "field": "LargeIncubator.capacityAndSpeed",
+            "reason": "Capacity, incubation speed bonus, and crafting materials for Large Incubator (Level 48) are unpublished in technology unlock tiles.",
+            "resolution": "Extract structure craft recipes and operational attributes from detailed structure data card or game datamine."
+        },
+        {
+            "field": "LargeScaleElectricEggIncubator.capacityAndSpeed",
+            "reason": "Capacity, incubation speed bonus, and crafting materials for Large-Scale Electric Egg Incubator (Level 58) are unpublished in technology unlock tiles.",
+            "resolution": "Extract structure craft recipes and operational attributes from detailed structure data card or game datamine."
         }
     ]
 
@@ -308,6 +382,7 @@ def main() -> None:
         "namingConventions": egg_naming_conventions,
         "sizes": egg_sizes,
         "incubators": incubator_structures,
+        "breedingStructures": breeding_structures,
         "specialEggTypes": special_egg_types,
         "wildEggSpawns": wild_egg_records,
         "eggPools": egg_pool_records,
@@ -380,11 +455,22 @@ export interface EggSizeInfo {{
 }}
 
 export interface IncubatorStructure {{
+  technologyId: string;
   name: string;
   unlockLevel: number;
   technologyPoints: number;
-  capacity: number;
-  incubationSpeedBonus: number;
+  capacity: number | null;
+  incubationSpeedBonus: number | null;
+  specialEffects: readonly string[];
+}}
+
+export interface BreedingStructure {{
+  technologyId: string;
+  name: string;
+  unlockLevel: number;
+  technologyPoints: number;
+  capacity: number | null;
+  incubationSpeedBonus: number | null;
   specialEffects: readonly string[];
 }}
 
@@ -426,6 +512,7 @@ export interface EggKnowledge {{
   namingConventions: readonly EggNamingConvention[];
   sizes: readonly EggSizeInfo[];
   incubators: readonly IncubatorStructure[];
+  breedingStructures: readonly BreedingStructure[];
   specialEggTypes: readonly SpecialEggType[];
   wildEggSpawns: readonly WildEggSpawn[];
   eggPools: readonly EggPool[];

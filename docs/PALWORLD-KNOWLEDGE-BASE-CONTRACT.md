@@ -11,6 +11,7 @@ Every new factual dataset must emit records using `EvidenceRecord<T>` from `src/
 | --------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | Source URL      | Every emitted factual field must resolve to a retained direct source URL.                                                   |
 | Source tier     | Use only `datamined`, `official`, `wiki`, or `community`; never invent a fifth “probably correct” tier.                     |
+| Single-page precedence | Single-page source data is untrusted when a structured catalogue for the same domain already exists in the repo. (Example: prefer the 588 structured technology unlock records over a single wiki page that listed only two incubators). |
 | Confidence      | Use `confirmed`, `corroborated`, `reported`, or `unknown`.                                                                  |
 | Version         | Record the observed source/game version where published; otherwise write `UNKNOWN`.                                         |
 | Gaps            | Missing mechanics are explicit `gaps`, not zeroes, false booleans, or unlabelled omissions.                                 |
