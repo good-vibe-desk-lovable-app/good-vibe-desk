@@ -124,4 +124,46 @@ export const MODEL_GAPS: ModelGap[] = [
       "requires a separately sourced graph layer, not invented edges in the existing one.",
     status: "unresolved",
   },
+  {
+    area: "capture/formula — capture probability formula",
+    summary: "Capture probability formula is unobtainable from public sources.",
+    detail:
+      "Reason code GAP_CAPTURE_PROBABILITY_FORMULA: The exact mathematical formula mapping Pal Sphere type, target HP percentage, status condition, Pal grade/level, and Lifmunk Effigy bonus to capture success percentage is unverified across public datamines. " +
+      "Resolution: Reopen only when a versioned game-assembly extraction (e.g. UPalCaptureJudge / UPalSphereCaptureModule) or verified Pocketpair formula table is supplied.",
+    status: "unresolved",
+  },
+  {
+    area: "progression/experience — experience award and level curve",
+    summary:
+      "Experience award amounts and character/Pal level curve formulas are unobtainable from public sources.",
+    detail:
+      "Reason code GAP_EXPERIENCE_LEVEL_CURVE: Exact XP required per level rank (1-80) and exact XP awarded per activity (capture bonus scaling, kill XP, craft XP) are unpublished in public datasets. " +
+      "Resolution: Reopen when the internal PalExpTable / PlayerExpTable datamined asset arrays are extracted and checked.",
+    status: "unresolved",
+  },
+  {
+    area: "stats/iv — IV-to-stat potential formula",
+    summary: "Individual Value (IV) stat potential formulas are unobtainable from public sources.",
+    detail:
+      "Reason code GAP_IV_TO_STAT_FORMULA: Individual Values (0-100% or 0-30 talent ranks for HP, Attack, Defense) alter final stat scaling, but exact integer rounding, base stat multipliers, and talent pass-down formulas are unmodeled. " +
+      "Resolution: Reopen upon extraction of PalTalentFormula / UPalStatCalculator code or versioned datamined talent tables.",
+    status: "unresolved",
+  },
+  {
+    area: "breeding/incubation — breeding time and incubation temperature multiplier",
+    summary:
+      "Breeding production duration and incubation temperature scalar formulas are unobtainable from public sources.",
+    detail:
+      "Reason code GAP_BREEDING_INCUBATION_TIMERS: Exact egg production tick counts in Breeding Farm and precise thermal multipliers (+50%, +100%, -50% speed penalties for cold/hot ambient environments across egg elements) lack versioned game-code source values. " +
+      "Resolution: Reopen when PalEggIncubateParameter and PalBreedingFarmProcess tick constants are extracted from game binary or datamined configuration files.",
+    status: "unresolved",
+  },
+  {
+    area: "survival/depletion — hunger and SAN depletion rates",
+    summary: "Hunger decay and SAN depletion rate formulas are unobtainable from public sources.",
+    detail:
+      "Reason code GAP_HUNGER_SAN_DEPLETION_RATES: Base metabolic depletion rates, work-assignment SAN decay rates, food SAN/satiety recovery values, and nocturnal/sleep mechanics are unmodeled. " +
+      "Resolution: Reopen when PalIndividualCharacterParameter hunger/SAN decay ticks and task-consumption tables are extracted from game assets.",
+    status: "unresolved",
+  },
 ];

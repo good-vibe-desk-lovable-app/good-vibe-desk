@@ -1,14 +1,14 @@
 {
   "dataset": "knowledge-eggs",
-  "generatedAt": "2026-08-31T22:59:47Z",
+  "generatedAt": "2026-09-01T20:34:27Z",
   "gameVersion": "v1.0.3",
   "recordCount": 1,
   "counts": {
     "wildEggSpawns": 754,
     "eggPools": 27,
     "specialEggTypes": 3,
-    "incubators": 2,
-    "knownGaps": 4
+    "incubators": 5,
+    "knownGaps": 7
   },
   "sourceUrls": [
     "https://paldb.cc/en/Eggs",
