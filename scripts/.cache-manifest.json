@@ -84,136 +84,136 @@
           }
         ],
         "index": {
-          "bytes": 669012,
-          "fetchedAt": "2026-08-19T23:32:07+00:00",
+          "bytes": 682000,
+          "fetchedAt": "2026-09-02T13:22:06+00:00",
           "paldbVersion": {
             "date": "2026/8/12",
             "version": "v1.0.3"
           },
-          "sha256": "260d51c654920279bedb42c473165f5d926bb749fa541025561bd1c695f9d042",
+          "sha256": "73d5ac0c8c51533a6897e8935410361eb7e9236d63145f6f79a9234d5049d976",
           "url": "https://paldb.cc/en/Dungeons"
         },
         "pages": {
           "Astral_Mountains_Cavern": {
-            "bytes": 93260,
-            "fetchedAt": "2026-08-19T23:31:43+00:00",
+            "bytes": 91344,
+            "fetchedAt": "2026-09-02T13:21:58+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "f1d29b244c586691c0ec50b64fa5d542e4e87c22c7990512490c088b4b4891a8",
+            "sha256": "a28bea92b93b1aa89f82656e9070a7f8fd3dad99b6f8a240762753c45ca0d212",
             "url": "https://paldb.cc/en/Astral_Mountains_Cavern"
           },
           "Cavern_of_the_Dunes": {
-            "bytes": 86725,
-            "fetchedAt": "2026-08-19T23:31:35+00:00",
+            "bytes": 85634,
+            "fetchedAt": "2026-09-02T13:21:54+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "43ff46cd42192be49bcb2b59fc612c54405577eeab9982f6f0b9a0f60f65b500",
+            "sha256": "a06313bfe66bde1a0aeb424aa04659ff4e924901025b00a054dec0ea042a897e",
             "url": "https://paldb.cc/en/Cavern_of_the_Dunes"
           },
           "Cherry_Blossom_Cave": {
-            "bytes": 86082,
-            "fetchedAt": "2026-08-19T23:31:52+00:00",
+            "bytes": 84129,
+            "fetchedAt": "2026-09-02T13:22:01+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "179a31a4735267abe86b7e12ec528439b09034bf633b74b4f08be45eb6a928ea",
+            "sha256": "dc33b018f0ef2824704a239f2e7d0238802f6eb84c525d4fe28bced437280bdc",
             "url": "https://paldb.cc/en/Cherry_Blossom_Cave"
           },
           "Feybreak_Cavern": {
-            "bytes": 101378,
-            "fetchedAt": "2026-08-19T23:31:57+00:00",
+            "bytes": 100121,
+            "fetchedAt": "2026-09-02T13:22:03+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "e628c175dd253d5e2a823d525a929b91729a65a84f80f7a903ce5699a5b4c9a6",
+            "sha256": "994fa5aecb344de841fc20b15fa5c7fb8eaeda426aabfc5a3a5c56b75bd1004f",
             "url": "https://paldb.cc/en/Feybreak_Cavern"
           },
           "Hillside_Cavern": {
-            "bytes": 92594,
-            "fetchedAt": "2026-08-19T23:31:23+00:00",
+            "bytes": 88644,
+            "fetchedAt": "2026-09-02T13:21:49+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "368dc5a8c94b8941284e8dc4d364f98d0ddf7cf94caf4e070d43b8e0d973294a",
+            "sha256": "9b2f41afb904e832e6739c00036773d2b2c4cf19e9370237a3277a1c48c49cf0",
             "url": "https://paldb.cc/en/Hillside_Cavern"
           },
           "Isolated_Island_Cavern": {
-            "bytes": 211817,
-            "fetchedAt": "2026-08-19T23:31:48+00:00",
+            "bytes": 199837,
+            "fetchedAt": "2026-09-02T13:21:59+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "0b0bad6994626f891b88243f7bc109764bf523d5ec9613dc1ca3886a458318b6",
+            "sha256": "6afea0be94e9c0d63852b6a49e5f010d2c5cab1ded6876cc20aa83fd1a0c2ed4",
             "url": "https://paldb.cc/en/Isolated_Island_Cavern"
           },
           "Mountain_Stream_Grotto": {
-            "bytes": 155522,
-            "fetchedAt": "2026-08-19T23:31:30+00:00",
+            "bytes": 152188,
+            "fetchedAt": "2026-09-02T13:21:52+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "8b5f991a469ae172a8b0b699537800657b88e968c5f11493bd9e19e805f80f6d",
+            "sha256": "05b5f6ec57b24e38052853469b4d103d6a21293e093671b7357daff22d54bcbb",
             "url": "https://paldb.cc/en/Mountain_Stream_Grotto"
           },
           "Ravine_Grotto": {
-            "bytes": 77020,
-            "fetchedAt": "2026-08-19T23:31:26+00:00",
+            "bytes": 74786,
+            "fetchedAt": "2026-09-02T13:21:50+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "f8ea0f4e9f72e32e5c42245f7e06d5f181081246bed7bc6d2e959526929284ce",
+            "sha256": "bb4d3eb6898be1d156bac354c840c85d2e5d7ca831cb4a6fd465c1d0a031496d",
             "url": "https://paldb.cc/en/Ravine_Grotto"
           },
           "Sunreach_Skies": {
-            "bytes": 108046,
-            "fetchedAt": "2026-08-19T23:32:07+00:00",
+            "bytes": 107613,
+            "fetchedAt": "2026-09-02T13:22:06+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "2d7770b98eadec828d7ab5aca8b24a8568cbf8f4fa3599d248592498b9eb99d0",
+            "sha256": "79d73d615fee2a8408c575ebc1bec97d82afdd2e7c1436f7774fec1e09efb377",
             "url": "https://paldb.cc/en/Sunreach_Skies"
           },
           "Volcanic_Cavern": {
-            "bytes": 86243,
-            "fetchedAt": "2026-08-19T23:31:40+00:00",
+            "bytes": 85078,
+            "fetchedAt": "2026-09-02T13:21:56+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "8ba8107f2eb98a20567f60650a80fc5a538a4171c6d4d9fc32f284baef320398",
+            "sha256": "88ed5fb67c20759912015a86618467567c093d888076fa25eaeac01e2f741ab0",
             "url": "https://paldb.cc/en/Volcanic_Cavern"
           },
           "___": {
-            "bytes": 118680,
-            "fetchedAt": "2026-08-19T23:32:02+00:00",
+            "bytes": 118462,
+            "fetchedAt": "2026-09-02T13:22:04+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
             },
-            "sha256": "833657fcde4ed29e27690fd2571d19b4ae50eebd8e26c94d18e9f59732964b17",
+            "sha256": "599026c5c6dcd56fe3ad430a4fbabbff458e3db45229a0381658e1f9fcf2a235",
             "url": "https://paldb.cc/en/___"
           }
         }
       },
       "raid": {
-        "bytes": 343607,
-        "fetchedAt": "2026-08-19T23:20:11+00:00",
+        "bytes": 320677,
+        "fetchedAt": "2026-09-02T13:22:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "3021c3362be7da90894ae2f9dbf05b3236d8538620cddbf3b2d88b559473b519",
+        "sha256": "f4e65059d967a90d6d91180babe57a84554c2f92f8c94f497ea691fca63d0fe8",
         "url": "https://paldb.cc/en/Raid"
       }
     },

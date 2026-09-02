@@ -7,7 +7,7 @@ const packDirectory = resolve(outDir, "knowledge-packs");
 const serviceWorker = resolve(outDir, "sw.js");
 const expectedRecords = {
   "field-alphas": 65,
-  encounters: 207,
+  encounters: 633,
   missions: 117,
   technologies: 588,
   "work-suitability": 297,
