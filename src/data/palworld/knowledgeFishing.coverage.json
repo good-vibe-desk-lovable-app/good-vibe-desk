@@ -1,0 +1,18 @@
+{
+  "dataset": "knowledge-fishing",
+  "generatedAt": "2026-09-01T22:39:51Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 115,
+  "counts": {
+    "spots": 115,
+    "catchRelations": 837,
+    "lootTables": 18,
+    "lootRows": 1261,
+    "supportPals": 6,
+    "equipment": 13,
+    "shadowTypes": 4
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Fishing"
+  ]
+}
