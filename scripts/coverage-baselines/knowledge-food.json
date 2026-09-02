@@ -1,0 +1,17 @@
+{
+  "dataset": "knowledge-food",
+  "generatedAt": "2026-09-02T01:44:01Z",
+  "gameVersion": "v1.0.3",
+  "recordCount": 124,
+  "counts": {
+    "catalogueRecords": 124,
+    "recipeInputRows": 62,
+    "recipeInputRelationships": 149,
+    "cookingStations": 5,
+    "spoilagePublishedRecords": 120
+  },
+  "sourceUrls": [
+    "https://paldb.cc/en/Ingredient",
+    "https://paldb.cc/en/Food"
+  ]
+}
