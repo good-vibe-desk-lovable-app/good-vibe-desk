@@ -1,14 +1,20 @@
 {
   "dataset": "knowledge-skills",
-  "generatedAt": "2026-08-21T14:05:50Z",
+  "generatedAt": "2026-09-02T06:33:05Z",
   "gameVersion": "v1.0.3",
-  "recordCount": 300,
+  "recordCount": 3494,
   "counts": {
-    "withPartnerSkill": 300,
-    "partnerSkillCards": 299,
-    "partnerSkillCatalogueGaps": 1,
-    "withoutPartnerSkill": 0,
-    "activeSkillRecords": 299
+    "activeSkillCatalogue": 395,
+    "passiveSkillCatalogue": 412,
+    "speciesPartnerSkills": 299,
+    "palActiveLearnsets": 2388,
+    "guaranteedPassives": 53,
+    "activeSkillInheritanceRules": 320,
+    "passiveSkillInheritanceRules": 85
   },
-  "sourceUrls": ["https://paldb.cc/en/Partner_Skill", "https://paldb.cc/"]
+  "sourceUrls": [
+    "https://paldb.cc/en/Active_Skills",
+    "https://paldb.cc/en/Passive_Skills",
+    "https://paldb.cc/en/Partner_Skill"
+  ]
 }

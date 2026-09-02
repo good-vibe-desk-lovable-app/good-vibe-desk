@@ -1,7 +1,7 @@
 {
   "palcalc": {
     "dbVersion": "v27",
-    "fetchedAt": "2026-08-31T22:51:11+00:00",
+    "fetchedAt": "2026-09-02T06:16:08+00:00",
     "palCount": 299,
     "repositoryCommitAt": "2026-08-31T18:00:43Z",
     "repositoryRevision": "85f651aca4162df0919ca8c798c699a50693caed",
@@ -223,3003 +223,3003 @@
     },
     "pages": {
       "Alpaca": {
-        "bytes": 89121,
-        "fetchedAt": "2026-08-19T16:12:53+00:00",
+        "bytes": 92215,
+        "fetchedAt": "2026-09-02T06:19:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "76a75ae8c7c69f89c7549afc2a4b730a0767887de628ffec3b980f0b7e29dc5b",
+        "sha256": "86871109edabdc7fb14fe6529d4cfd0d7367702b107b42996b8ee93146a92895",
         "url": "https://paldb.cc/en/Melpaca"
       },
       "AmaterasuWolf": {
-        "bytes": 89905,
-        "fetchedAt": "2026-08-19T16:16:22+00:00",
+        "bytes": 91936,
+        "fetchedAt": "2026-09-02T06:20:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "dd5bbdc39676b5efddaf327b6273e1b70529417350a0a28faa1f6c8fb7c3e08b",
+        "sha256": "766d3784e706ac3f053fcfc5912277a5df3649c6d09e2f4f2f3eaf87aa31b453",
         "url": "https://paldb.cc/en/Kitsun"
       },
       "AmaterasuWolf_Dark": {
-        "bytes": 183796,
-        "fetchedAt": "2026-08-19T16:21:44+00:00",
+        "bytes": 185836,
+        "fetchedAt": "2026-09-02T06:22:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "476811798aadcd68b0826da04b430542045ea018ee34eb3131b320ac2082135d",
+        "sha256": "3a669e90c569280a8b4940bae7e74abf31ec97f8e248d2a45710e27ad39b1646",
         "url": "https://paldb.cc/en/Kitsun_Noct"
       },
       "Anubis": {
-        "bytes": 90642,
-        "fetchedAt": "2026-08-19T16:09:50+00:00",
+        "bytes": 92801,
+        "fetchedAt": "2026-09-02T06:16:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e9f7fa4b7401db0076557ba26df2193fd60e7cd5149a610a115651b5b7f087c1",
+        "sha256": "5ce10b4b59457a63193b674bb6fe1f1cd5eaff9c63eae157c91960d16c34b9a3",
         "url": "https://paldb.cc/en/Anubis"
       },
       "BadCatgirl": {
-        "bytes": 91193,
-        "fetchedAt": "2026-08-19T16:09:24+00:00",
+        "bytes": 93228,
+        "fetchedAt": "2026-09-02T06:16:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a5e008c38550eba77d94284d3c6d91786166d02e50360426f292420299b10794",
+        "sha256": "e1dc1e2dc2facf1acc5ef908f5e0be394bd1b43db964e7425c7006ae6ecd6d64",
         "url": "https://paldb.cc/en/Nyafia"
       },
       "Baphomet": {
-        "bytes": 96838,
-        "fetchedAt": "2026-08-19T16:09:54+00:00",
+        "bytes": 98814,
+        "fetchedAt": "2026-09-02T06:16:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d3fba9030416829d175de0d1d832dc472223222cef8a191e4efde90a6460740f",
+        "sha256": "e274b1d7709485f5603a7a42412766d808f844e04571ad61fffb9521fc97d030",
         "url": "https://paldb.cc/en/Incineram"
       },
       "Baphomet_Dark": {
-        "bytes": 135963,
-        "fetchedAt": "2026-08-19T16:09:58+00:00",
+        "bytes": 138169,
+        "fetchedAt": "2026-09-02T06:17:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ac67a242e6a3cd80fb4e56236e9399ad6b60e7b42ee5cbe9b56c16f0052fbd33",
+        "sha256": "e376120b64f4bd964cf48d17d7a36ece525e65a1e3f5d3e1e25037f567ef83f0",
         "url": "https://paldb.cc/en/Incineram_Noct"
       },
       "Bastet": {
-        "bytes": 84657,
-        "fetchedAt": "2026-08-19T16:10:03+00:00",
+        "bytes": 86990,
+        "fetchedAt": "2026-09-02T06:17:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1de52b3bdd91bd9ac4c828801385f0742fbdf909af3472f57ac50732b5e10629",
+        "sha256": "18f3974225cbeadfe607758da7870001aab3845f14b33f300cef76d39f0856c1",
         "url": "https://paldb.cc/en/Mau"
       },
       "Bastet_Ice": {
-        "bytes": 85603,
-        "fetchedAt": "2026-08-19T16:10:07+00:00",
+        "bytes": 87865,
+        "fetchedAt": "2026-09-02T06:18:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "57a2bd9f66b14cbdadace8073907004761bce41ac137fc4156984306d7050b8e",
+        "sha256": "e0cd4f3c0cc5ca2891240daee5ca7d94d4b8fdd694998fb48b57c9ce58396b32",
         "url": "https://paldb.cc/en/Mau_Cryst"
       },
       "BerryGoat": {
-        "bytes": 96718,
-        "fetchedAt": "2026-08-19T16:17:05+00:00",
+        "bytes": 98336,
+        "fetchedAt": "2026-09-02T06:20:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8d5dbc307ec1a17ddf4e5334844a48a2b2042c60046d51c3462eeedc5f5d7701",
+        "sha256": "e77abff9accc65982be74d847fb74ef2633e367d80ffcaece1d77589259c609f",
         "url": "https://paldb.cc/en/Caprity"
       },
       "BerryGoat_Dark": {
-        "bytes": 98434,
-        "fetchedAt": "2026-08-19T16:21:35+00:00",
+        "bytes": 100405,
+        "fetchedAt": "2026-09-02T06:22:53+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "36286aec95d928c4854e0f8fb11c8d13627d5af8c98c8f56b258f2bfb34bc013",
+        "sha256": "f76400cffb705ec324c4ad778fd63cfb3256e7b4a1239c87eaff84dec6639a45",
         "url": "https://paldb.cc/en/Caprity_Noct"
       },
       "BirdDragon": {
-        "bytes": 104674,
-        "fetchedAt": "2026-08-19T16:16:31+00:00",
+        "bytes": 106728,
+        "fetchedAt": "2026-09-02T06:20:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "80e3cfa06f02276cc32c4eb48df0eea73dd371dc8c7caf24f85f48f960dec51f",
+        "sha256": "44bcb849be338d68903d2f33e1182462f93e13791c65f08dfc985236b6b1db9b",
         "url": "https://paldb.cc/en/Vanwyrm"
       },
       "BirdDragon_Ice": {
-        "bytes": 98116,
-        "fetchedAt": "2026-08-19T16:16:34+00:00",
+        "bytes": 98524,
+        "fetchedAt": "2026-09-02T06:20:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a905709e434daa011f15910af7c57e6d968a953c71ca0ec7f7ee32c90f82178b",
+        "sha256": "7b21148ce58a9422fdb3c4402a4ec5d7de67021dee6e68f914799d8edf8e8969",
         "url": "https://paldb.cc/en/Vanwyrm_Cryst"
       },
       "BlackCentaur": {
-        "bytes": 90073,
-        "fetchedAt": "2026-08-19T16:19:34+00:00",
+        "bytes": 92509,
+        "fetchedAt": "2026-09-02T06:22:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "26b81bdc6333706ee6f7ace9652dde76575350c4fd8853bcffde1e6160b8c4cb",
+        "sha256": "d16b6c5f89b897640ad951a34c0cc089e3368723a55899e212979019a23add0d",
         "url": "https://paldb.cc/en/Necromus"
       },
       "BlackGriffon": {
-        "bytes": 89547,
-        "fetchedAt": "2026-08-19T16:17:09+00:00",
+        "bytes": 91602,
+        "fetchedAt": "2026-09-02T06:20:27+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5ef26880297cf3d1dad1d1387043b16d4739f79c0852e3f729f6edcd358c0f07",
+        "sha256": "80753152dd2c98e44f2227194bf704f57ca982e493c6196f2edaf142b4364e41",
         "url": "https://paldb.cc/en/Shadowbeak"
       },
       "BlackMetalDragon": {
-        "bytes": 89918,
-        "fetchedAt": "2026-08-19T16:18:13+00:00",
+        "bytes": 92548,
+        "fetchedAt": "2026-09-02T06:20:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "7192784bfef20d25288b3bbf04efd52ad1715ad658f7ddb72d4b53a9e3a41057",
+        "sha256": "fce196e98e2692260c394ee274d0e9d5782b868aca348521430d9c28a24450bb",
         "url": "https://paldb.cc/en/Astegon"
       },
       "BlackPuppy": {
-        "bytes": 109785,
-        "fetchedAt": "2026-08-19T16:20:57+00:00",
+        "bytes": 108825,
+        "fetchedAt": "2026-09-02T06:22:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9461df7d1451bc43001561566c702be3c5159564305ad0896f767d662f733406",
+        "sha256": "64abb7926fdf737e167d3a008a2c93ad270c5da721186c1febe30edc26d531ae",
         "url": "https://paldb.cc/en/Smokie"
       },
       "BlackPuppy_Ice": {
-        "bytes": 86077,
-        "fetchedAt": "2026-08-19T16:20:59+00:00",
+        "bytes": 92786,
+        "fetchedAt": "2026-09-02T06:22:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f4f359059e8dd0d996852759e5f88c0888f6d3bc60c24f760793d1fb04a82d28",
+        "sha256": "ec7498552a15b49b948965c9592ac3708ab16bea768857b668aa725dcc22b3de",
         "url": "https://paldb.cc/en/Smokie_Cryst"
       },
       "BlueDragon": {
-        "bytes": 97551,
-        "fetchedAt": "2026-08-19T16:13:10+00:00",
+        "bytes": 100224,
+        "fetchedAt": "2026-09-02T06:20:08+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fb215649b06e9d4a9dd69f58c0379ab1518f8152239bbd1854be7d50ff6a387e",
+        "sha256": "49e3a4a7029a66c3316f8a4e5f1fd4767503c756872bad86808891fb23d1643b",
         "url": "https://paldb.cc/en/Azurobe"
       },
       "BlueDragon_Ice": {
-        "bytes": 97727,
-        "fetchedAt": "2026-08-19T16:13:14+00:00",
+        "bytes": 99860,
+        "fetchedAt": "2026-09-02T06:19:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8d474df1dd8f5feb655fdb962e37a182f25c61bd28d4bddc6bb402c1ca89543f",
+        "sha256": "a8b28d77422fb96fed2467baf77d55f2f0d7f66dd36861b221420a0dc7848158",
         "url": "https://paldb.cc/en/Azurobe_Cryst"
       },
       "BluePlatypus": {
-        "bytes": 99686,
-        "fetchedAt": "2026-08-19T16:16:27+00:00",
+        "bytes": 101720,
+        "fetchedAt": "2026-09-02T06:20:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d4c8f12578c28f1943dcf1a2bf164266bf563d2d942d5064bf0651e02729f5d2",
+        "sha256": "c0ff5b3b1fce3c0b415ce1e3d1b0d20366ddb9d371593eaa1ed86628c718034a",
         "url": "https://paldb.cc/en/Fuack"
       },
       "BluePlatypus_Fire": {
-        "bytes": 90929,
-        "fetchedAt": "2026-08-19T16:16:30+00:00",
+        "bytes": 92888,
+        "fetchedAt": "2026-09-02T06:20:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8c94a28d63b5d0397e17ee270a2721b7354d70a61223889494be802bdff756ec",
+        "sha256": "8fbea519fa502c0de42a542d34a5c13bc9e3e8d54440da78be2bb9fb3588cafb",
         "url": "https://paldb.cc/en/Fuack_Ignis"
       },
       "BlueSkyDragon": {
-        "bytes": 87201,
-        "fetchedAt": "2026-08-19T16:24:04+00:00",
+        "bytes": 89409,
+        "fetchedAt": "2026-09-02T06:23:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "79945ff513822e796adc1f3a66d0cd26fa9d7865225b48d990aa7205af6af25b",
+        "sha256": "5a68946ce8e17a3c32e8ec1ce3f5be2c98e2b391a61c2149cc68898cbc5ea15c",
         "url": "https://paldb.cc/en/Shaolong"
       },
       "BlueThunderHorse": {
-        "bytes": 88041,
-        "fetchedAt": "2026-08-19T16:21:16+00:00",
+        "bytes": 90626,
+        "fetchedAt": "2026-09-02T06:22:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "bf9b8d0628329317d2ff7de1c2e58247a824cd119ad6165b6961077e2fa4eff1",
+        "sha256": "de7e2b3e41c727cbefd3343d6748176974bc3d8b635958a7561bc5d3c5899a7f",
         "url": "https://paldb.cc/en/Azurmane"
       },
       "BlueberryFairy": {
-        "bytes": 95515,
-        "fetchedAt": "2026-08-19T16:09:28+00:00",
+        "bytes": 96294,
+        "fetchedAt": "2026-09-02T06:16:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4c4dafc70cc46d428defd3efd880b159abba97c6fc39470d239e20ffd2135050",
+        "sha256": "bef4c76175138d893b59421aeebb4b41f24c52d6fc26109596d00f95a936f2d5",
         "url": "https://paldb.cc/en/Prunelia"
       },
       "Boar": {
-        "bytes": 84848,
-        "fetchedAt": "2026-08-19T16:10:12+00:00",
+        "bytes": 86817,
+        "fetchedAt": "2026-09-02T06:18:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6594a607cb7c0fb4adabdb92df8fd680dec77f085af955a90eee9094b20ee376",
+        "sha256": "4d3fd7d610ea9bdc6ec70d64d744577b3f7660ab5401ffde38c3b9a3130f4e8f",
         "url": "https://paldb.cc/en/Rushoar"
       },
       "BrownRabbit": {
-        "bytes": 80408,
-        "fetchedAt": "2026-08-19T16:09:31+00:00",
+        "bytes": 82255,
+        "fetchedAt": "2026-09-02T06:16:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8bd6b823e2b2dbc71638ebeaf9d73dfeb59de349db195f90df553ceb478b41c1",
+        "sha256": "264e68e51b779a6201a47be8881a97cf1213405c1b3f822a529a811112c6efed",
         "url": "https://paldb.cc/en/Lapiron"
       },
       "CactusDoll": {
-        "bytes": 80254,
-        "fetchedAt": "2026-08-19T16:22:13+00:00",
+        "bytes": 82287,
+        "fetchedAt": "2026-09-02T06:23:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ba2f41f9783d48b431fdc689b7228bd8172474b4d2f59fea34ac1d25f1bffa84",
+        "sha256": "364380aa61ed73ce0fe91fd5da9005cbff6717901db0091a7467895a3cf39fe5",
         "url": "https://paldb.cc/en/Needoll"
       },
       "CactusDoll_Dark": {
-        "bytes": 79599,
-        "fetchedAt": "2026-08-19T16:22:17+00:00",
+        "bytes": 81819,
+        "fetchedAt": "2026-09-02T06:23:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "906aa413828b6920dfa33dd5faab51c32b082dc738d4d73274d245e96549d310",
+        "sha256": "7b5ec5c4d9d812e0ab5e7db434e92478039bfafa8a1717e83d944167982baa75",
         "url": "https://paldb.cc/en/Needoll_Noct"
       },
       "CandleGhost": {
-        "bytes": 100830,
-        "fetchedAt": "2026-08-19T16:20:16+00:00",
+        "bytes": 102136,
+        "fetchedAt": "2026-09-02T06:22:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8fa261e90e361c6a68a6ec547a3353b1c6820495fcb3ae3432a5c1d0f5a8667b",
+        "sha256": "5e54bdd0c729de18ed77bd37cc1bba2efcaa2ac5e433303dab0a6fe10a1b0cf5",
         "url": "https://paldb.cc/en/Sootseer"
       },
       "CaptainPenguin": {
-        "bytes": 96738,
-        "fetchedAt": "2026-08-19T16:19:03+00:00",
+        "bytes": 99340,
+        "fetchedAt": "2026-09-02T06:21:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5a4875e4251a51d1105e5b4ef6f0286413f65755b84195a41cdb433d3d8db118",
+        "sha256": "b2805d0c0eee4acad08f3b9dae32a26cc01dca719dfecc510279a24549c465bf",
         "url": "https://paldb.cc/en/Penking"
       },
       "CaptainPenguin_Black": {
-        "bytes": 89517,
-        "fetchedAt": "2026-08-19T16:19:07+00:00",
+        "bytes": 91553,
+        "fetchedAt": "2026-09-02T06:21:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b2a7a63518122c8ead690e82e392fc087160ebeed192c2c9e60e4cb05407c0d6",
+        "sha256": "c36beac3895dc62a001d20a1a21f48134021af3f1f2cc4c62d8950c415b9e323",
         "url": "https://paldb.cc/en/Penking_Lux"
       },
       "Carbunclo": {
-        "bytes": 90269,
-        "fetchedAt": "2026-08-19T16:10:16+00:00",
+        "bytes": 92356,
+        "fetchedAt": "2026-09-02T06:18:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ce4a684671053164aabb748b5b7d1803db505b47aeee5e594c904403598415ce",
+        "sha256": "3b63b5855f4891323a531ed9dc4863830790203d5a92f613501c00cc297803da",
         "url": "https://paldb.cc/en/Lifmunk"
       },
       "CatBat": {
-        "bytes": 89561,
-        "fetchedAt": "2026-08-19T16:17:57+00:00",
+        "bytes": 91786,
+        "fetchedAt": "2026-09-02T06:20:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "904d7766af58f8f59f320f64359c96666affdc686fd658212e0c6e36f1d68ce9",
+        "sha256": "ac56481ab207cbe1e837defa436bcc7d0a78e17c882953497294d9a6e59ebe06",
         "url": "https://paldb.cc/en/Tombat"
       },
       "CatMage": {
-        "bytes": 95312,
-        "fetchedAt": "2026-08-19T16:18:45+00:00",
+        "bytes": 97697,
+        "fetchedAt": "2026-09-02T06:21:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e01b08b631b2f3b210c269ff1f730aab37047f70583cccc90252a817d189ebd9",
+        "sha256": "a80359e64e76eebd691e95fe909747ea2e6d3434cabc4b6f66b77831939fe3cb",
         "url": "https://paldb.cc/en/Katress"
       },
       "CatMage_Fire": {
-        "bytes": 87203,
-        "fetchedAt": "2026-08-19T16:18:48+00:00",
+        "bytes": 89278,
+        "fetchedAt": "2026-09-02T06:21:06+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "92ef5c536bd0f3727696df34d8df6b792c86653df1868d60c27e6afa3ff94222",
+        "sha256": "30c3049d3cdfdb8227214991cc5ea90ec6ae3617465bdf77028bb17a0a4f3d9f",
         "url": "https://paldb.cc/en/Katress_Ignis"
       },
       "CatVampire": {
-        "bytes": 85631,
-        "fetchedAt": "2026-08-19T16:16:53+00:00",
+        "bytes": 87800,
+        "fetchedAt": "2026-09-02T06:20:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a252cf629dff456f0012622e16ba2a59a5e4fc4afc706f20b451081cbe8d11a0",
+        "sha256": "f5d3325dd3899ff8aea828d4c895fdaacc022e03738279ac601f0eba0ca8bb57",
         "url": "https://paldb.cc/en/Felbat"
       },
       "ChickenPal": {
-        "bytes": 91481,
-        "fetchedAt": "2026-08-19T16:16:35+00:00",
+        "bytes": 91565,
+        "fetchedAt": "2026-09-02T06:20:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8f1b0fdb7a19043f475a8a3677b8b4187b55c6119652b3b67c9c53f0c85c0121",
+        "sha256": "a7bf5e7ee0d726f6a283b6d72e48219d84534534c7ef6f19a004d4acfdb353ec",
         "url": "https://paldb.cc/en/Chikipi"
       },
       "ClioneTwins": {
-        "bytes": 87255,
-        "fetchedAt": "2026-08-19T16:23:55+00:00",
+        "bytes": 87940,
+        "fetchedAt": "2026-09-02T06:23:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6966c8404ef21740835d18e1259a4844da821ed43568dfea2dc7d1f194301945",
+        "sha256": "d85f280de72fe2b18b7bbe798a1b3b85df272d3bd2754ccf30c374121d110949",
         "url": "https://paldb.cc/en/Amione"
       },
       "CloverFairy": {
-        "bytes": 85304,
-        "fetchedAt": "2026-08-19T16:22:29+00:00",
+        "bytes": 86360,
+        "fetchedAt": "2026-09-02T06:23:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "138eaa506978e596a85653eaf4574b9c505780b6c20cc8a67cd21f0d114bc622",
+        "sha256": "38d79294262660099d93a9a1c4766ca39aefe6cde5c544a16023da206bf85ceb",
         "url": "https://paldb.cc/en/Clovee"
       },
       "ClownRabbit": {
-        "bytes": 86432,
-        "fetchedAt": "2026-08-19T16:22:04+00:00",
+        "bytes": 93453,
+        "fetchedAt": "2026-09-02T06:23:04+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "96a0be6fd658edce990b03315972e72588b6f0a10eb094d8210a7639024bd191",
+        "sha256": "2896a418ccfcc522f6678a6b175f2d54b37dd576370056961d9f7be0254026e0",
         "url": "https://paldb.cc/en/Dupin"
       },
       "ColorfulBird": {
-        "bytes": 112333,
-        "fetchedAt": "2026-08-19T16:10:20+00:00",
+        "bytes": 110301,
+        "fetchedAt": "2026-09-02T06:18:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9df0b961286ddf89f4c2a1efe7214ed307f2417cc20641cfea52038cc1c07f01",
+        "sha256": "4522f18f5d15fa36ca7c4402ac024ba85d80dfb4774f4d81a4af02f149a36b3e",
         "url": "https://paldb.cc/en/Tocotoco"
       },
       "CowPal": {
-        "bytes": 88252,
-        "fetchedAt": "2026-08-19T16:17:35+00:00",
+        "bytes": 88276,
+        "fetchedAt": "2026-09-02T06:20:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "54199280159c3321b6a723945b26784e02ae2fea29de5d3ef73b4f4c24bc731e",
+        "sha256": "d0692773775cf0f6e394847c3a2cf71711b6c9e7f1b24486f8bb5c98a6d9ade6",
         "url": "https://paldb.cc/en/Mozzarina"
       },
       "CubeTurtle": {
-        "bytes": 87609,
-        "fetchedAt": "2026-08-19T16:22:50+00:00",
+        "bytes": 88968,
+        "fetchedAt": "2026-09-02T06:23:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4940a777c00ba4bd65ea84084ffbfc1b808dab2496f8202f70c3b8bd50324af1",
+        "sha256": "e3d6d17512a2978f1252ac8b385e7dfff0eef5d5e0f211e56602d809b3aa10a4",
         "url": "https://paldb.cc/en/Tetroise"
       },
       "CubeTurtle_Neutral": {
-        "bytes": 87210,
-        "fetchedAt": "2026-08-19T16:22:52+00:00",
+        "bytes": 89053,
+        "fetchedAt": "2026-09-02T06:23:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "624902cddcda82d3917c6a49967f2194e5582d6f6f6023d448b9c540c90a7847",
+        "sha256": "c3744b8a319099ccc1710aeb64299fefb3e46927af7f13f9e81fa12e1babf82a",
         "url": "https://paldb.cc/en/Tetroise_Primo"
       },
       "CuteButterfly": {
-        "bytes": 85029,
-        "fetchedAt": "2026-08-19T16:19:43+00:00",
+        "bytes": 86451,
+        "fetchedAt": "2026-09-02T06:22:06+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4b4cd4622eb896470739baa3f2567268cc8ba19c5801d898a06f0d6db7d14ee4",
+        "sha256": "0482f69fd6da8b32883933a931249250080e2f682608736ccbcaf84594c30654",
         "url": "https://paldb.cc/en/Cinnamoth"
       },
       "CuteFox": {
-        "bytes": 108976,
-        "fetchedAt": "2026-08-19T16:17:18+00:00",
+        "bytes": 108196,
+        "fetchedAt": "2026-09-02T06:20:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "cf88877b9541fb70e1d18323d1acc8097b75ac5d5e8f21777b2fcb3166299aa4",
+        "sha256": "f2ef9d7cd32dafadcc36006974bf5e6c0b02b23c1f3d9f4220ae474462c69fc9",
         "url": "https://paldb.cc/en/Vixy"
       },
       "CuteMole": {
-        "bytes": 97317,
-        "fetchedAt": "2026-08-19T16:18:09+00:00",
+        "bytes": 97497,
+        "fetchedAt": "2026-09-02T06:20:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "2eea53df3d16637f02569334724ba05d40b70574ebf6b37c09749070df3600de",
+        "sha256": "1206ad84b52f116524e8ed6d437b2b25d630e3ced0a27348732e55723161e919",
         "url": "https://paldb.cc/en/Fuddler"
       },
       "DandelionGirl": {
-        "bytes": 79473,
-        "fetchedAt": "2026-08-19T16:23:52+00:00",
+        "bytes": 81264,
+        "fetchedAt": "2026-09-02T06:23:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "466662af682b89d66b2a9d493b98b33ab8669eb7cdd11df0a5b00c0e23d7bc0c",
+        "sha256": "d707975cfd8b244da4ecabfc47c16106ec6975ea91e615d68c1a7da8355713ee",
         "url": "https://paldb.cc/en/Souffline"
       },
       "DarkAlien": {
-        "bytes": 214748,
-        "fetchedAt": "2026-08-19T16:20:36+00:00",
+        "bytes": 217368,
+        "fetchedAt": "2026-09-02T06:22:29+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "45b4e2478a784b20142c4f2c9dae6b6bc99f64a01de526b8c85d733f810aa524",
+        "sha256": "65568ac83f6e41de4d39ba8eaf65e8869265cdffa2b0679eacd520f61662f5b6",
         "url": "https://paldb.cc/en/Xenovader"
       },
       "DarkCrow": {
-        "bytes": 108909,
-        "fetchedAt": "2026-08-19T16:13:06+00:00",
+        "bytes": 110123,
+        "fetchedAt": "2026-09-02T06:19:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "07426225e69f48210f80b03d2875a2ae3a337b24ec6adcd6e7087ba52162d9ab",
+        "sha256": "8b09ef2e4db096e99125d168597d9e7e5396b1c16c4dae3e0d965095aa660052",
         "url": "https://paldb.cc/en/Cawgnito"
       },
       "DarkFlameFox": {
-        "bytes": 85933,
-        "fetchedAt": "2026-08-19T16:23:56+00:00",
+        "bytes": 92966,
+        "fetchedAt": "2026-09-02T06:23:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "757e697e6ed0272cb9992408eb27983e910ee661fe54515e3003e2999673600b",
+        "sha256": "3da885e4d0d89954e8f91081d5dc437ae2632db0fa7bc7acc1f453e31729f09c",
         "url": "https://paldb.cc/en/Majex"
       },
       "DarkMechaDragon": {
-        "bytes": 85880,
-        "fetchedAt": "2026-08-19T16:20:46+00:00",
+        "bytes": 88032,
+        "fetchedAt": "2026-09-02T06:22:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "21b4591c2c326d1c9e7063fb075e05dfce3cf930d336609759db6b9c72b8c790",
+        "sha256": "331d4f09ed8b4909b9b8afba9cf6cb755c4fe840c4d7ec75d9ea3f2a992422f4",
         "url": "https://paldb.cc/en/Xenolord"
       },
       "DarkScorpion": {
-        "bytes": 91003,
-        "fetchedAt": "2026-08-19T16:19:43+00:00",
+        "bytes": 93945,
+        "fetchedAt": "2026-09-02T06:22:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "97313325b91923e1e3b766f210e809f71606074215d5097832f6b3a03de2363a",
+        "sha256": "455a3667799127016a7293c3b08f803c6d79302432925e7c6184d060ba5f4dc7",
         "url": "https://paldb.cc/en/Menasting"
       },
       "DarkScorpion_Ground": {
-        "bytes": 84372,
-        "fetchedAt": "2026-08-19T16:19:47+00:00",
+        "bytes": 86705,
+        "fetchedAt": "2026-09-02T06:22:08+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "686cc67a64cbfb8b18f3b5e95514c71df92cffff8b2da71594de0188b041761c",
+        "sha256": "fa0286db878b080f3caf5f3e39678874065282c5d5f47a302001151bc1090d27",
         "url": "https://paldb.cc/en/Menasting_Terra"
       },
       "Deer": {
-        "bytes": 93785,
-        "fetchedAt": "2026-08-19T16:10:24+00:00",
+        "bytes": 95628,
+        "fetchedAt": "2026-09-02T06:18:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9b32ecacfbe3a7f4d8e62f3c3962b5869449a5262d56b7ac4f7e1a1cd4dd6eed",
+        "sha256": "9029804fc63bd0ccbcf2a75f70a8d41692060270a0906d20aad886086f9341dc",
         "url": "https://paldb.cc/en/Eikthyrdeer"
       },
       "Deer_Ground": {
-        "bytes": 87232,
-        "fetchedAt": "2026-08-19T16:10:28+00:00",
+        "bytes": 89064,
+        "fetchedAt": "2026-09-02T06:18:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6aae88b39f73491ad703c0b27a85c0d18d6ddee7dd56e84c4d1609e610f576fe",
+        "sha256": "71784b048b2580e7e590a63739838c84e1c672bcfecec3c7e548162b45676415",
         "url": "https://paldb.cc/en/Eikthyrdeer_Terra"
       },
       "DomeArmorDragon": {
-        "bytes": 105823,
-        "fetchedAt": "2026-08-19T16:24:21+00:00",
+        "bytes": 113389,
+        "fetchedAt": "2026-09-02T06:24:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "3b08c8e23104b5ea09f11da3991bc9f3ed1833e6142206480aa31513f62de7f4",
+        "sha256": "730235078eb8b504a59ec591e1ce29bbcf2d877c444e21d6132d578e7093ac9f",
         "url": "https://paldb.cc/en/Aegidron"
       },
       "DreamDemon": {
-        "bytes": 88095,
-        "fetchedAt": "2026-08-19T16:18:22+00:00",
+        "bytes": 90073,
+        "fetchedAt": "2026-09-02T06:20:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "12ecac8e318094d657673aaaf96e954072ee78af8cccda9918b24bff7b60e797",
+        "sha256": "f11c328a64b32bb08332cc00d1e14003c2dc06349f154294663f412694cc4dbd",
         "url": "https://paldb.cc/en/Daedream"
       },
       "DrillGame": {
-        "bytes": 96289,
-        "fetchedAt": "2026-08-19T16:10:33+00:00",
+        "bytes": 98259,
+        "fetchedAt": "2026-09-02T06:18:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9f1d1f9eede8fcc86d9f45a23ad179e3ae22be552b28bece8c47fcf401502d07",
+        "sha256": "6002531ef4be25dbdabb9094671a5bed51eeda23c29d22e65e597136996c7275",
         "url": "https://paldb.cc/en/Digtoise"
       },
       "Eagle": {
-        "bytes": 89630,
-        "fetchedAt": "2026-08-19T16:10:37+00:00",
+        "bytes": 91530,
+        "fetchedAt": "2026-09-02T06:18:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a36dd7855086a6c50d7204a422fc83ef5bca818b65ca468aad96324d1a616487",
+        "sha256": "5f2f9618896e2f01c550753ecb528277c069da90ba38b7b666cbb0f88d68ed71",
         "url": "https://paldb.cc/en/Galeclaw"
       },
       "ElecCat": {
-        "bytes": 82990,
-        "fetchedAt": "2026-08-19T16:16:43+00:00",
+        "bytes": 85679,
+        "fetchedAt": "2026-09-02T06:20:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "cd07cae40352bd67440b46109611ac1300491a1772df5870a418559ec17fd8e9",
+        "sha256": "344001261da5b07b85abde30409e17cdc020a52836b07598f1011665b4a80769",
         "url": "https://paldb.cc/en/Sparkit"
       },
       "ElecLizard": {
-        "bytes": 80955,
-        "fetchedAt": "2026-08-19T16:21:12+00:00",
+        "bytes": 82202,
+        "fetchedAt": "2026-09-02T06:22:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "acbe467a56f80e9b8bc6f33b417e67c844519d1ab2ec55e7fa804013b0e64404",
+        "sha256": "88a15be6444916d67c5bdce4c16edc4f7946268bdf262145101c8571a4b4d908",
         "url": "https://paldb.cc/en/Slowatt"
       },
       "ElecPanda": {
-        "bytes": 97432,
-        "fetchedAt": "2026-08-19T16:10:41+00:00",
+        "bytes": 99960,
+        "fetchedAt": "2026-09-02T06:18:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "7e4fc8f9254691254031e0aa6d45c9e2828088f46bfee9d3be8febd89920f236",
+        "sha256": "5d3a277335f9fa4391311fe9d087a8095da11f893fdeabad3c54e928222ec58f",
         "url": "https://paldb.cc/en/Grizzbolt"
       },
       "ElecPomeranian": {
-        "bytes": 87651,
-        "fetchedAt": "2026-08-19T16:22:32+00:00",
+        "bytes": 88461,
+        "fetchedAt": "2026-09-02T06:23:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6fd0c2e7887a844128e851a06433db47b10a2de2985770c01ce74673a22e65d0",
+        "sha256": "8b4b0eb08eef6a590c3267c9324599555b37f959d70e98540e270c9074b1329c",
         "url": "https://paldb.cc/en/Puffolt"
       },
       "ElecSnail": {
-        "bytes": 82218,
-        "fetchedAt": "2026-08-19T16:23:41+00:00",
+        "bytes": 83514,
+        "fetchedAt": "2026-09-02T06:23:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "addf03a037f83fd3cf66894605234d1c1b02782f624889ed4daf98962be53808",
+        "sha256": "b9fd6102684742f3c876e911265ad2e14aa691d5a4ba6384f7ed8218c9f29ec4",
         "url": "https://paldb.cc/en/Snock"
       },
       "ElecSnail_Ground": {
-        "bytes": 84280,
-        "fetchedAt": "2026-08-19T16:23:41+00:00",
+        "bytes": 91347,
+        "fetchedAt": "2026-09-02T06:23:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "dd6e727f442a2cdb5f642985c009f8281859fd0703e1b1cd5a105d3ba010dfbc",
+        "sha256": "9da830a32e7c52c95c7a5893055c2a7d586ccbcda970b384d9015ff3424fd12d",
         "url": "https://paldb.cc/en/Snock_Lux"
       },
       "FairyDragon": {
-        "bytes": 89566,
-        "fetchedAt": "2026-08-19T16:12:32+00:00",
+        "bytes": 91677,
+        "fetchedAt": "2026-09-02T06:19:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ddb585f5fbfc52534d2e85af2b6a482639b52504e0ec1a4ea3722b91664162e8",
+        "sha256": "5c3358728cbfcf7c26bf321a056fd5bfac3296310e33b70461de52295ee9bda1",
         "url": "https://paldb.cc/en/Elphidran"
       },
       "FairyDragon_Water": {
-        "bytes": 91805,
-        "fetchedAt": "2026-08-19T16:12:36+00:00",
+        "bytes": 92957,
+        "fetchedAt": "2026-09-02T06:19:44+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5d3798f87994a1b22628ea427ef8c89782234a71c2801985608cd83139ee570d",
+        "sha256": "5d2ebad7098f9a83e06d0dcdf4c69637556c8870e359d2e507ea044f16f879ae",
         "url": "https://paldb.cc/en/Elphidran_Aqua"
       },
       "FeatherOstrich": {
-        "bytes": 83423,
-        "fetchedAt": "2026-08-19T16:20:32+00:00",
+        "bytes": 85456,
+        "fetchedAt": "2026-09-02T06:22:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "bb4f85d714db6ce35d1115b93127eaa4a6faf884d59e96bad5547097dc09074f",
+        "sha256": "a26f2873d4c5f259eedfc189aca74a322e20ac3371c2fe316eb203b9573b15d3",
         "url": "https://paldb.cc/en/Dazemu"
       },
       "FengyunDeeper": {
-        "bytes": 84101,
-        "fetchedAt": "2026-08-19T16:13:28+00:00",
+        "bytes": 86697,
+        "fetchedAt": "2026-09-02T06:19:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f54b8b0bb9a8fecda46946972f966709d688d0ca591536d458132a93420f5745",
+        "sha256": "e5713496c5ea9565e2044e3b5c39724d56038ef6eec1445e26fcc703b3d3483e",
         "url": "https://paldb.cc/en/Fenglope"
       },
       "FengyunDeeper_Electric": {
-        "bytes": 94851,
-        "fetchedAt": "2026-08-19T16:21:50+00:00",
+        "bytes": 96877,
+        "fetchedAt": "2026-09-02T06:22:57+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4906da9f133aeef501629e55465179103abde158858dfc1736734e7a5b69e330",
+        "sha256": "e6a979555cb857b089e403b8fb1fce5da0f72b24bf10aeb149c064dd3532f373",
         "url": "https://paldb.cc/en/Fenglope_Lux"
       },
       "FireKirin": {
-        "bytes": 97938,
-        "fetchedAt": "2026-08-19T16:12:25+00:00",
+        "bytes": 99966,
+        "fetchedAt": "2026-09-02T06:18:57+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6ef8c74e9e3a00b0bb6250ff9be92e2d34250a5a2711013b0b46f0accc283fef",
+        "sha256": "ffbf1c89962ffad55d670a5f9d8247e6b85460bc9cc78d830c1f1f254e95c689",
         "url": "https://paldb.cc/en/Pyrin"
       },
       "FireKirin_Dark": {
-        "bytes": 99099,
-        "fetchedAt": "2026-08-19T16:12:28+00:00",
+        "bytes": 101192,
+        "fetchedAt": "2026-09-02T06:18:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "090cad7e1a59d72533df09e3e06509f1a4e6e38c060ad21e456ca1900592305d",
+        "sha256": "83842858e4504640cbf1a440e4b64d5c24fbbce0b7859232aebdd5c33e2f1a17",
         "url": "https://paldb.cc/en/Pyrin_Noct"
       },
       "FlameBambi": {
-        "bytes": 91965,
-        "fetchedAt": "2026-08-19T16:19:58+00:00",
+        "bytes": 93031,
+        "fetchedAt": "2026-09-02T06:22:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "39532347a1d684a8312e634d95cef033dfc1079a2e3ceb6b4b8a636fb14f8ff8",
+        "sha256": "97c5a03ac9bd9618c0f6dc46649da2bb6f307033d4e92fc28dba723393f6abeb",
         "url": "https://paldb.cc/en/Rooby"
       },
       "FlameBuffalo": {
-        "bytes": 95741,
-        "fetchedAt": "2026-08-19T16:18:04+00:00",
+        "bytes": 97317,
+        "fetchedAt": "2026-09-02T06:20:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fede23ac383cba7dc548a36286c6d5855aefe9dd4b9018d66708b223b9a7096a",
+        "sha256": "7817f336ca27fc5ae5ccc884556c5c831b0e0677dff0df8787fc5d035284db45",
         "url": "https://paldb.cc/en/Arsox"
       },
       "FlowerDinosaur": {
-        "bytes": 90316,
-        "fetchedAt": "2026-08-19T16:16:39+00:00",
+        "bytes": 92482,
+        "fetchedAt": "2026-09-02T06:20:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "2f8c068ed4df5eed003b87f30aa6d30aebbdcff7b64b1ab474caba95babe9117",
+        "sha256": "c18f504a2bdaf757c307913521d839449ecdb5bfb951b76f0527795136edc75a",
         "url": "https://paldb.cc/en/Dinossom"
       },
       "FlowerDinosaur_Electric": {
-        "bytes": 96627,
-        "fetchedAt": "2026-08-19T16:16:41+00:00",
+        "bytes": 98609,
+        "fetchedAt": "2026-09-02T06:20:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "bb3f074aa2421cc2c6cc395b3fe1faf99c4007cea616415bbf99f86ccad77db1",
+        "sha256": "5b1c1440393704960ba39d7b141a8faca372885de4e16eee33804d69cd205b6f",
         "url": "https://paldb.cc/en/Dinossom_Lux"
       },
       "FlowerDoll": {
-        "bytes": 87249,
-        "fetchedAt": "2026-08-19T16:19:35+00:00",
+        "bytes": 88845,
+        "fetchedAt": "2026-09-02T06:22:04+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1443626f0cb7699d0b4833ecc31ec484228115d9a5c1e25f080cd0ba269392b6",
+        "sha256": "ce329cc2b1549fa77c16f82a8e5e5a9e45566dabf4556b6ff28f25bb083d4719",
         "url": "https://paldb.cc/en/Petallia"
       },
       "FlowerDoll_Fire": {
-        "bytes": 88426,
-        "fetchedAt": "2026-08-19T16:19:38+00:00",
+        "bytes": 95651,
+        "fetchedAt": "2026-09-02T06:22:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "2cfd5417cc72a0c3cea0ef894c301904a5152f4ed3f94f83b523389d1f613572",
+        "sha256": "83d2488d5bc847b1ab45d3766c05cc9515a904e520b223cb29c68fe9b1bd1f5e",
         "url": "https://paldb.cc/en/Petallia_Ignis"
       },
       "FlowerPrince": {
-        "bytes": 87987,
-        "fetchedAt": "2026-08-19T16:24:17+00:00",
+        "bytes": 95978,
+        "fetchedAt": "2026-09-02T06:23:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1ad85151d3de32bccb0857b29e25df54ad08437310cee0263ff8fc1db14ee745",
+        "sha256": "bc21ac60ab9cc8bb841695d3ec9e57c4f2fe408cc2c678c1830e4ff4859a555f",
         "url": "https://paldb.cc/en/Dandilord"
       },
       "FlowerRabbit": {
-        "bytes": 86780,
-        "fetchedAt": "2026-08-19T16:17:49+00:00",
+        "bytes": 89054,
+        "fetchedAt": "2026-09-02T06:20:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4631ef0b28733f1d5b3e07e2db0519c3695e6e2f36e43332f2466818e38dacb7",
+        "sha256": "abf71c72246e39793dc7f70a51c3f7f18b36c80f782f67a0b76be2e03a2d8220",
         "url": "https://paldb.cc/en/Flopie"
       },
       "FluffyBird": {
-        "bytes": 85341,
-        "fetchedAt": "2026-08-19T16:23:51+00:00",
+        "bytes": 87396,
+        "fetchedAt": "2026-09-02T06:23:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "cdd2edc30d33d54bf09571acfe9beb7fb4dbc84e6f7f3dcb14b91f83623b3650",
+        "sha256": "503e15f6e1392cf91898ecec108cd5d178b498a8e6ee17f3ec8b0b3c46ae52b4",
         "url": "https://paldb.cc/en/Muffly"
       },
       "FlyingManta": {
-        "bytes": 103369,
-        "fetchedAt": "2026-08-19T16:19:29+00:00",
+        "bytes": 105343,
+        "fetchedAt": "2026-09-02T06:22:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1a829c0ea10068d90df448cfed63f266fac86810dd99c5c7cc1d3ea9ed9e2d08",
+        "sha256": "41ce875eac57ea9dd51b4df607c8a3b603de46087d3c07cdb044e87766651716",
         "url": "https://paldb.cc/en/Celaray"
       },
       "FlyingManta_Thunder": {
-        "bytes": 95267,
-        "fetchedAt": "2026-08-19T16:19:30+00:00",
+        "bytes": 97305,
+        "fetchedAt": "2026-09-02T06:22:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f80c0dcd7d2af7bc198bfa02466e5f16ecbfb3b8422f1a0a9a21526bfbddf5eb",
+        "sha256": "4124bc765d9bf9a6a1b2b2a42b9aedd6194d857ab1d6cacdf67ddd1363712e2f",
         "url": "https://paldb.cc/en/Celaray_Lux"
       },
       "FoxExorcist": {
-        "bytes": 89228,
-        "fetchedAt": "2026-08-19T16:22:24+00:00",
+        "bytes": 91187,
+        "fetchedAt": "2026-09-02T06:23:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "076051d7458e01e0985790e841b0202a80d2623d091ab0ee4cbc6f56752c5f3b",
+        "sha256": "370f7a04c1618e3b5f3ba1bae395f9a602bf0d89fa29da6daa056206323e244a",
         "url": "https://paldb.cc/en/Flaracle"
       },
       "FoxMage": {
-        "bytes": 92177,
-        "fetchedAt": "2026-08-19T16:17:18+00:00",
+        "bytes": 94704,
+        "fetchedAt": "2026-09-02T06:20:31+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c6fc66e593e8e1c6884993660305154a404aa9080b6b6a985a3b51577ae9e7a7",
+        "sha256": "3b5dde66185e89922096c270dd09abd45f4c334c70d8eb29bc381ed69f7f7d99",
         "url": "https://paldb.cc/en/Wixen"
       },
       "FoxMage_Dark": {
-        "bytes": 87369,
-        "fetchedAt": "2026-08-19T16:17:22+00:00",
+        "bytes": 90035,
+        "fetchedAt": "2026-09-02T06:20:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "91c00ef6752e8327bf515603bb65af1770038d19bc199bdd2eff3cb6d397d1ab",
+        "sha256": "fae5f739db0c0eea8680aa9c4a552eb0015729985964c70104c8c1e3d76a0f1c",
         "url": "https://paldb.cc/en/Wixen_Noct"
       },
       "Ganesha": {
-        "bytes": 86732,
-        "fetchedAt": "2026-08-19T16:10:45+00:00",
+        "bytes": 87259,
+        "fetchedAt": "2026-09-02T06:18:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "de651532563927ec496adf642caa972849c7eb466365281d32c050565c084d56",
+        "sha256": "e39c3dfeb8f951eeb6bb59fa7fe93031f60c978e8eea694e9630d70bd6e564e0",
         "url": "https://paldb.cc/en/Teafant"
       },
       "Garm": {
-        "bytes": 97459,
-        "fetchedAt": "2026-08-19T16:10:49+00:00",
+        "bytes": 97683,
+        "fetchedAt": "2026-09-02T06:18:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0501fb6f8cfc273029d8b1a001603e0213e5140307b8a0e6c8ef9eba792d279f",
+        "sha256": "d3c875a3ecc7ece4c9671ab9744e60e2736cebb084c48f24d44049229a87ae8f",
         "url": "https://paldb.cc/en/Direhowl"
       },
       "GhostAnglerfish": {
-        "bytes": 98770,
-        "fetchedAt": "2026-08-19T16:21:58+00:00",
+        "bytes": 100989,
+        "fetchedAt": "2026-09-02T06:23:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a8b08978831dd691ef5bfdb5dfce8463c62041d8fcde6ccd0b70f154479d267a",
+        "sha256": "1df7e8c39acfed1cc0312bbf60188aa781b7e51c6a16d1899609d85db05f717e",
         "url": "https://paldb.cc/en/Ghangler"
       },
       "GhostAnglerfish_Fire": {
-        "bytes": 91358,
-        "fetchedAt": "2026-08-19T16:22:00+00:00",
+        "bytes": 93378,
+        "fetchedAt": "2026-09-02T06:23:02+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "53b9fe22ccfb757528ec4752de9c36ff7445c3110b49551bc27502cddfe7c794",
+        "sha256": "3b07fedd1bccb94a5e8394badc7e8bbe8b25a24506960ab4fb2a93edb3b4c164",
         "url": "https://paldb.cc/en/Ghangler_Ignis"
       },
       "GhostBeast": {
-        "bytes": 96180,
-        "fetchedAt": "2026-08-19T16:16:10+00:00",
+        "bytes": 98429,
+        "fetchedAt": "2026-09-02T06:20:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "966a169a9b30cbce1bdab44695610bbf3fae3b89f56964bfb17be0040c1aa23a",
+        "sha256": "5343c0e59afe3a81513c6cdbc076f270993376159974e41eb27cba8bcb09f9b3",
         "url": "https://paldb.cc/en/Maraith"
       },
       "GhostBlackCat": {
-        "bytes": 93632,
-        "fetchedAt": "2026-08-19T16:22:33+00:00",
+        "bytes": 100948,
+        "fetchedAt": "2026-09-02T06:23:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "367a542a9cc0987d2c97d61ca2d830b5f7b36bb649fe8f2cebfff72d290bca2f",
+        "sha256": "d047e9f838cf598089a6ae3636582f0f47de85a90dd0d20e000f9022ffd7fc05",
         "url": "https://paldb.cc/en/Wispaw"
       },
       "GhostDragon": {
-        "bytes": 84428,
-        "fetchedAt": "2026-08-19T16:24:14+00:00",
+        "bytes": 91439,
+        "fetchedAt": "2026-09-02T06:23:57+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "68ef60d9f63bd00fdf958b8f9d826c40cd78d5fdba28535b9c76046186120298",
+        "sha256": "cb511a93aeda8227e228fef11605a22be13a379b2d9a0ee711d6a8923891da6d",
         "url": "https://paldb.cc/en/Eidrolon"
       },
       "GhostDragon_Fire": {
-        "bytes": 87351,
-        "fetchedAt": "2026-08-19T16:24:17+00:00",
+        "bytes": 94036,
+        "fetchedAt": "2026-09-02T06:23:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1a35a0fe6b0e39bc10b732f9ca362a0693d37279b8cf4fa4af46fa179ea3c238",
+        "sha256": "662d43dad3b6c87c0d7ee8070f84c58e491ce817fce8db4e8a4f086dde7514fa",
         "url": "https://paldb.cc/en/Eidrolon_Ignis"
       },
       "GhostRabbit": {
-        "bytes": 85971,
-        "fetchedAt": "2026-08-19T16:20:45+00:00",
+        "bytes": 87892,
+        "fetchedAt": "2026-09-02T06:22:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f0972667c69bd6eb8753e414db9e2c5e1b79b322309235864de09a6dff552506",
+        "sha256": "822b8e68b503ea081c32193c040fed8344afe9ac61eb275c86b622bb67ce3fd8",
         "url": "https://paldb.cc/en/Nitemary"
       },
       "GhostRabbit_Grass": {
-        "bytes": 83401,
-        "fetchedAt": "2026-08-19T16:20:49+00:00",
+        "bytes": 90420,
+        "fetchedAt": "2026-09-02T06:22:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d66ec3ef45e788f2c477629c629552ebe0848da8aa8f15f57369da83b781b08a",
+        "sha256": "d8fc46eaf2ea0e510e9ccbb90c9b0c99322a49c084283a7e8a6cbf939acaef74",
         "url": "https://paldb.cc/en/Nitemary_Botan"
       },
       "GoldenHorse": {
-        "bytes": 89732,
-        "fetchedAt": "2026-08-19T16:09:36+00:00",
+        "bytes": 91640,
+        "fetchedAt": "2026-09-02T06:16:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0d8bf2867c05216598e486cbfeac53cdb2b0e4c33f1fbf199a6d37694b898280",
+        "sha256": "31fa66e7924d0b2a0d876bddbf3329086fd22e1aa8133f4b836be69e54b00e7d",
         "url": "https://paldb.cc/en/Gildane"
       },
       "Gorilla": {
-        "bytes": 94870,
-        "fetchedAt": "2026-08-19T16:10:53+00:00",
+        "bytes": 97084,
+        "fetchedAt": "2026-09-02T06:18:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1b7eb6a28004990f48cc9a258f2f51ef9e5665361dcc6487d156fed8d32cb391",
+        "sha256": "8d9d8d883f2e59294cc308bebe51e6fff8ea577c292d84e489416b0be1de4013",
         "url": "https://paldb.cc/en/Gorirat"
       },
       "Gorilla_Ground": {
-        "bytes": 101237,
-        "fetchedAt": "2026-08-19T16:10:57+00:00",
+        "bytes": 103451,
+        "fetchedAt": "2026-09-02T06:18:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "873ad8ae9d5866f09038af5c8d145b0014fadfbd1fc48eb5ffc830a47261841a",
+        "sha256": "185759f511bb31b1563b59e84eeb58e29cc9b2e87e312f1100d08bb7937a13de",
         "url": "https://paldb.cc/en/Gorirat_Terra"
       },
       "GrassGolem": {
-        "bytes": 108758,
-        "fetchedAt": "2026-08-19T16:22:44+00:00",
+        "bytes": 115257,
+        "fetchedAt": "2026-09-02T06:23:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4e19362798110c0ebe56a0d08ab625e3090dc70a59402c1e34f614179bfed0e8",
+        "sha256": "ea3cf845712f8255427f6c7c3a621853b2d98318957b3ae6038bd2fa3a69dc29",
         "url": "https://paldb.cc/en/Dualith"
       },
       "GrassGolem_Dark": {
-        "bytes": 98472,
-        "fetchedAt": "2026-08-19T16:22:46+00:00",
+        "bytes": 99680,
+        "fetchedAt": "2026-09-02T06:23:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9b204372bd425c8dd5276619fe191a02b3318728ef3840aa29a61c48296ae8db",
+        "sha256": "42c9662a776134edb496e2a2d7aa9468afedecdad7fec81c8f275ad636855f60",
         "url": "https://paldb.cc/en/Dualith_Noct"
       },
       "GrassMammoth": {
-        "bytes": 115276,
-        "fetchedAt": "2026-08-19T16:16:49+00:00",
+        "bytes": 117285,
+        "fetchedAt": "2026-09-02T06:20:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "719153f5ce4c94b59d8b955c337d55fb7e696c717332a8b4364a6460cf53f506",
+        "sha256": "437cc65741872e1cecb75aa74423198d95c8e754a71b8a2031af11f6ef72493b",
         "url": "https://paldb.cc/en/Mammorest"
       },
       "GrassMammoth_Ice": {
-        "bytes": 105655,
-        "fetchedAt": "2026-08-19T16:16:52+00:00",
+        "bytes": 105962,
+        "fetchedAt": "2026-09-02T06:20:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "19dcd05bb360836c94b1357885ce1760608d883c11e0de990c393a71c415b09f",
+        "sha256": "5aca319ce5fa64b9ccf0939ec5fecf197ea9ac6d6c703c2a2e8719bfed78a961",
         "url": "https://paldb.cc/en/Mammorest_Cryst"
       },
       "GrassMinotaur": {
-        "bytes": 98489,
-        "fetchedAt": "2026-08-19T16:24:07+00:00",
+        "bytes": 105582,
+        "fetchedAt": "2026-09-02T06:23:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1abbe9eb851deb0550122e94b818af696384856ba79e0089d29c0996906475ab",
+        "sha256": "d55b15f90e337b72a04b03e3101b54deed980663653595ea4d3f37990c0ed842",
         "url": "https://paldb.cc/en/Elgrove"
       },
       "GrassMinotaur_Ice": {
-        "bytes": 89028,
-        "fetchedAt": "2026-08-19T16:24:10+00:00",
+        "bytes": 96118,
+        "fetchedAt": "2026-09-02T06:23:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "bc57b612e5934d9dfa141050ce3fc0f99fc231da447e886a7461875075fe867e",
+        "sha256": "825cbeb39ae3d64b8581c80cf92a466c9f893bf7774cffe6559db101b4b1de73",
         "url": "https://paldb.cc/en/Elgrove_Cryst"
       },
       "GrassPanda": {
-        "bytes": 96285,
-        "fetchedAt": "2026-08-19T16:18:01+00:00",
+        "bytes": 98643,
+        "fetchedAt": "2026-09-02T06:20:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "780aa84091dea00f3be986051548d1bfad917441c5d44c490192b29f601f250b",
+        "sha256": "fd2b7c116e1d1c0dbe9f93dcf57a6f8eeabc314dfee5196cfbcd186043730500",
         "url": "https://paldb.cc/en/Mossanda"
       },
       "GrassPanda_Electric": {
-        "bytes": 143597,
-        "fetchedAt": "2026-08-19T16:18:03+00:00",
+        "bytes": 146085,
+        "fetchedAt": "2026-09-02T06:20:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d7e3c6273bb02c12c6e414a2d8c1092d4440ef11a42c54cef4e3607640651a61",
+        "sha256": "ed5d737290f2054b8bd34eea51b14fd7b1e5d688acc8eeb79d9f1d668c12813e",
         "url": "https://paldb.cc/en/Mossanda_Lux"
       },
       "GrassRabbitMan": {
-        "bytes": 89167,
-        "fetchedAt": "2026-08-19T16:18:13+00:00",
+        "bytes": 92017,
+        "fetchedAt": "2026-09-02T06:20:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8e8c1ca614256f33eeac7fbff3aad75119c342c6b755265b8bae3e02034420c7",
+        "sha256": "a8c7e00d92ec467de206e3899a507e9809c228061540aed4dcb6199a513e7574",
         "url": "https://paldb.cc/en/Verdash"
       },
       "GrimGirl": {
-        "bytes": 98320,
-        "fetchedAt": "2026-08-19T16:21:12+00:00",
+        "bytes": 100223,
+        "fetchedAt": "2026-09-02T06:22:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b40206e5ec04613da7a34af44afa9b2738a3d000a22861aa946bad3ba9050626",
+        "sha256": "972923b41b8f88ca937ed7ed09c3230230d73d53f732e16191b3e6b0ce8c4fc5",
         "url": "https://paldb.cc/en/Splatterina"
       },
       "GuardianDog": {
-        "bytes": 200402,
-        "fetchedAt": "2026-08-19T16:20:29+00:00",
+        "bytes": 200298,
+        "fetchedAt": "2026-09-02T06:22:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f0d6353b87021610638eb87dd901e85acc620cd453e84d93dd3d6f6213c30770",
+        "sha256": "9e1ce81682f9650262db10d5fae7ac9e05a243a748438859fc1fd352c8e84935",
         "url": "https://paldb.cc/en/Yakumo"
       },
       "HadesBird": {
-        "bytes": 147150,
-        "fetchedAt": "2026-08-19T16:19:17+00:00",
+        "bytes": 149687,
+        "fetchedAt": "2026-09-02T06:21:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "04fde1e106a5ec8b58ef3222fd1244e36d6bd5c8092062d7b3115158f8a704ea",
+        "sha256": "de3ad55d8415c8cae08d5c697ee407a5f373106a8f6dc26ecb08803bb6885bb9",
         "url": "https://paldb.cc/en/Helzephyr"
       },
       "HadesBird_Electric": {
-        "bytes": 91811,
-        "fetchedAt": "2026-08-19T16:19:18+00:00",
+        "bytes": 93917,
+        "fetchedAt": "2026-09-02T06:21:18+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6ce0dc10ccab74a5261ee2e54e0b42b223bcd81cfd2aa6f0bc1676ac7c363934",
+        "sha256": "cc26bd062c3eeaa5b087f729cd675cff9937535fc4aa021de25fe66d04f8aa09",
         "url": "https://paldb.cc/en/Helzephyr_Lux"
       },
       "HawkBird": {
-        "bytes": 87631,
-        "fetchedAt": "2026-08-19T16:17:44+00:00",
+        "bytes": 89536,
+        "fetchedAt": "2026-09-02T06:20:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1e3ab83f22e333f6f0e1b24893909a12fefa52fc6efca3dcd84f2c2fc22c21b2",
+        "sha256": "617db5612d529c4321e459a7da4e3d80652b6fe0fad8451da2f0aa9abfa173dd",
         "url": "https://paldb.cc/en/Nitewing"
       },
       "Hedgehog": {
-        "bytes": 82924,
-        "fetchedAt": "2026-08-19T16:11:01+00:00",
+        "bytes": 84122,
+        "fetchedAt": "2026-09-02T06:18:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c6beec02fc1c5b0ffb0937e3c5ac679f7eb254797862ec63d21ff471015886dd",
+        "sha256": "fa74edd5f1cf8d424451b1603af4a7b95699b824ed43749d2859deca92753e90",
         "url": "https://paldb.cc/en/Jolthog"
       },
       "Hedgehog_Ice": {
-        "bytes": 87507,
-        "fetchedAt": "2026-08-19T16:11:05+00:00",
+        "bytes": 89417,
+        "fetchedAt": "2026-09-02T06:18:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4055e781563ba2e4073cf290255baf4d81ea1b629d46ce0310cdbd20ebf0c3dc",
+        "sha256": "45ed803f8baef2686527862401c73a6c2153c03b2806b94a835d721dfd385f0f",
         "url": "https://paldb.cc/en/Jolthog_Cryst"
       },
       "HerculesBeetle": {
-        "bytes": 93127,
-        "fetchedAt": "2026-08-19T16:18:56+00:00",
+        "bytes": 95955,
+        "fetchedAt": "2026-09-02T06:21:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "3276ccdfea823d11f4668d0ace5327ea04022d95bf2e8f4ee31999d763df1573",
+        "sha256": "d331dad6d63ab26277353aa783e95305cc6adea61ea6c7d9fec61cf319ae9e6a",
         "url": "https://paldb.cc/en/Warsect"
       },
       "HerculesBeetle_Ground": {
-        "bytes": 89165,
-        "fetchedAt": "2026-08-19T16:18:58+00:00",
+        "bytes": 90706,
+        "fetchedAt": "2026-09-02T06:21:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0f3c1a7ba35d4fa50a87516a18638686bc3f38c0bb1658a22d62ef7fa7d5b1bf",
+        "sha256": "b3be0dae1227b3c072db62d2bebd06dfefe1b755ef189a13e6830411d805dd95",
         "url": "https://paldb.cc/en/Warsect_Terra"
       },
       "HoodGhost": {
-        "bytes": 81168,
-        "fetchedAt": "2026-08-19T16:21:08+00:00",
+        "bytes": 83219,
+        "fetchedAt": "2026-09-02T06:22:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "deb7b062c0c60f1a8d1ff44397e14959158ed45ec1b3cae33c2b87f87a0244c6",
+        "sha256": "239ec95fd7c5114d308875c4de4a79bf231a896e394beccfd39edc2436df3e27",
         "url": "https://paldb.cc/en/Hoodle"
       },
       "Horus": {
-        "bytes": 138938,
-        "fetchedAt": "2026-08-19T16:17:00+00:00",
+        "bytes": 141676,
+        "fetchedAt": "2026-09-02T06:20:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "89c0b745d676a1598f9e37732d390b691047fc41c7faba9cb0a230e4fbc1a500",
+        "sha256": "03254f62061703dd6d33eda43e3497e44358fdd3e22a1bf8176da8e152689429",
         "url": "https://paldb.cc/en/Faleris"
       },
       "Horus_Water": {
-        "bytes": 96318,
-        "fetchedAt": "2026-08-19T16:21:52+00:00",
+        "bytes": 98207,
+        "fetchedAt": "2026-09-02T06:22:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c5bf681f08b4cac13ba16aa81c222ec8d5da5d8faaf2ae7aaafe8590590fac6f",
+        "sha256": "561817713830c5d07a8f552ae212f3b5610dc2be3f09a429631a4271ba35d86d",
         "url": "https://paldb.cc/en/Faleris_Aqua"
       },
       "IceCrocodile": {
-        "bytes": 97109,
-        "fetchedAt": "2026-08-19T16:22:13+00:00",
+        "bytes": 98917,
+        "fetchedAt": "2026-09-02T06:23:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f0d48b8d7505820a79d67b1f1789c56bfb69d72178175cf468dc8220965aca98",
+        "sha256": "b405f85b41d8077405abd28eff7f379a57794a643e7d34966db6b0efc5f01996",
         "url": "https://paldb.cc/en/Munchill"
       },
       "IceDeer": {
-        "bytes": 94292,
-        "fetchedAt": "2026-08-19T16:17:09+00:00",
+        "bytes": 95260,
+        "fetchedAt": "2026-09-02T06:20:27+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "966068008fa83deeb7bd10f3e133c66a9579aa1dbc44ef44d05aa61479e01ba7",
+        "sha256": "1870bfbb4f396a2cd306b13c4aa56dd8f35f5abd0530140359f40c30eeaed462",
         "url": "https://paldb.cc/en/Reindrix"
       },
       "IceFox": {
-        "bytes": 91179,
-        "fetchedAt": "2026-08-19T16:18:18+00:00",
+        "bytes": 93379,
+        "fetchedAt": "2026-09-02T06:20:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "02630da9178f6ebb2ade789865957cb5537b5eac58d551800b9b0c37728298a7",
+        "sha256": "08390660599623545f16811f4092c7075efdc6419b03868931fe81086993b8cd",
         "url": "https://paldb.cc/en/Foxcicle"
       },
       "IceHorse": {
-        "bytes": 88284,
-        "fetchedAt": "2026-08-19T16:16:45+00:00",
+        "bytes": 90742,
+        "fetchedAt": "2026-09-02T06:20:18+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c600b917a0d70d9a844428a597fe4e7f1b87bc29081731c400af4992a09df07f",
+        "sha256": "dc0c8d9ccb40ec809f0d2abf92778f8c8a8f5371b0d5ec6cb66e7a7f34b9ce6d",
         "url": "https://paldb.cc/en/Frostallion"
       },
       "IceHorse_Dark": {
-        "bytes": 90860,
-        "fetchedAt": "2026-08-19T16:16:47+00:00",
+        "bytes": 93361,
+        "fetchedAt": "2026-09-02T06:20:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "17acdb4470dd3f22ec97f2cf59b085f2d02da0630c53528249f1870ba698c913",
+        "sha256": "dfa45f76ad9eb4830388499ff1ba49076a299087b56b29d56de3802c478e0bc7",
         "url": "https://paldb.cc/en/Frostallion_Noct"
       },
       "IceNarwhal": {
-        "bytes": 96642,
-        "fetchedAt": "2026-08-19T16:21:27+00:00",
+        "bytes": 98958,
+        "fetchedAt": "2026-09-02T06:22:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "29999bbe88e7401c0d4aabfc0f10eb6246d629afa356332ed5f2b4aca5cd6460",
+        "sha256": "cd46ae318168b6b7fbec33b28f863f78a831edcb3ace2df654652d1fa279fb0f",
         "url": "https://paldb.cc/en/Whalaska"
       },
       "IceNarwhal_Fire": {
-        "bytes": 99887,
-        "fetchedAt": "2026-08-19T16:21:30+00:00",
+        "bytes": 101594,
+        "fetchedAt": "2026-09-02T06:22:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b58b7c59a640525c2ef265d8a6b16f0f0bdaa2ae2a114923f9968138cd9587d8",
+        "sha256": "545804f332ad0bb98c84dccb9ea4716da691167e0eff9c3f86325cd6ac8a6eb8",
         "url": "https://paldb.cc/en/Whalaska_Ignis"
       },
       "IceSeal": {
-        "bytes": 96294,
-        "fetchedAt": "2026-08-19T16:22:25+00:00",
+        "bytes": 96453,
+        "fetchedAt": "2026-09-02T06:23:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "03c3d10f64f962fc4914a3f20d32a58bfd3fa3fbb0f361a760e6b598d63d378d",
+        "sha256": "9a3fa1c6a5e4f3400d06cb41a402d86d8555cab12a5d10625e7774e8f54760fe",
         "url": "https://paldb.cc/en/Polapup"
       },
       "IceSeal_Ground": {
-        "bytes": 87562,
-        "fetchedAt": "2026-08-19T16:22:28+00:00",
+        "bytes": 94347,
+        "fetchedAt": "2026-09-02T06:23:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "270087667b8780db05d6615e0f0de3b3288e2dd3adb27f0de4f2f64f8e8d2af4",
+        "sha256": "121c500322a726c75fd999f5211bf60b26a2d631f0602e2a3291d4ab321fce34",
         "url": "https://paldb.cc/en/Polapup_Terra"
       },
       "IceWitch": {
-        "bytes": 82110,
-        "fetchedAt": "2026-08-19T16:22:02+00:00",
+        "bytes": 84102,
+        "fetchedAt": "2026-09-02T06:23:02+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ae85870defdd358c58c4e0440f21e64e4fa9eb6eee88ce1c2a015700c202f90f",
+        "sha256": "556bdbc6b677c1176c26bf2d3df5b929d6f7d9005a8da0d4ccbca72d43a66c62",
         "url": "https://paldb.cc/en/Icelyn"
       },
       "JellyfishFairy": {
-        "bytes": 109514,
-        "fetchedAt": "2026-08-19T16:21:31+00:00",
+        "bytes": 108720,
+        "fetchedAt": "2026-09-02T06:22:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fa9a895a037ae64788c3af585c1cd79143d5a2454095f741d2a667feeb389d4b",
+        "sha256": "c45762395f1055af6a5344403f447849f906e447deea360b90a63880d91ade3d",
         "url": "https://paldb.cc/en/Jelliette"
       },
       "JellyfishGhost": {
-        "bytes": 109906,
-        "fetchedAt": "2026-08-19T16:22:57+00:00",
+        "bytes": 109235,
+        "fetchedAt": "2026-09-02T06:23:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "687537f53718e9e282f890d983e5d260730600b347f29372a10602d7e5334bc3",
+        "sha256": "257c59978387b96661d29ca63f1fd6be829faceaab2af5c95a688788d0e599a0",
         "url": "https://paldb.cc/en/Jellroy"
       },
       "JetDragon": {
-        "bytes": 87920,
-        "fetchedAt": "2026-08-19T16:18:17+00:00",
+        "bytes": 90507,
+        "fetchedAt": "2026-09-02T06:20:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "09dc891bd97b70793cf14d737f6c84dfa2ac832e1920748ece4e2a8c67be8d9a",
+        "sha256": "7a4b5dd22bb1bfb610b99547c2d5a593b5fc312350da683ac652b7dcd74a3842",
         "url": "https://paldb.cc/en/Jetragon"
       },
       "KabukiMan": {
-        "bytes": 90745,
-        "fetchedAt": "2026-08-19T16:24:24+00:00",
+        "bytes": 97760,
+        "fetchedAt": "2026-09-02T06:24:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "16cd0e3d2dd7b445d2d9379aaef3821327633f4dded7240ca3974759db494901",
+        "sha256": "859b892d634a8e673483378865dd4f320eec7da695b0e01b6ddf206121b2ac30",
         "url": "https://paldb.cc/en/Renjishi"
       },
       "Kelpie": {
-        "bytes": 115722,
-        "fetchedAt": "2026-08-19T16:17:27+00:00",
+        "bytes": 117056,
+        "fetchedAt": "2026-09-02T06:20:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f555363abcabb722930ebf3c562100d57861ae82a25940b06b6627a7d4e58edd",
+        "sha256": "5bef673b58254917f9f6c99620ad42e549d0a92f937220ee5044917e30b0c3b9",
         "url": "https://paldb.cc/en/Kelpsea"
       },
       "Kelpie_Fire": {
-        "bytes": 99654,
-        "fetchedAt": "2026-08-19T16:17:31+00:00",
+        "bytes": 100798,
+        "fetchedAt": "2026-09-02T06:20:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e018c9688862e77ac35ebf934d2afe0d912b02efee53b4946448989eda909ff3",
+        "sha256": "dc76fc199db0636e5d2976c8a2d2c6bee7dffcf1b572806db13a2ad783dc7d40",
         "url": "https://paldb.cc/en/Kelpsea_Ignis"
       },
       "KendoFrog": {
-        "bytes": 108516,
-        "fetchedAt": "2026-08-19T16:20:05+00:00",
+        "bytes": 110564,
+        "fetchedAt": "2026-09-02T06:22:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "412c1d0626b015d1b9251903ea03239a5f68cdc06d847db489186104ca5da155",
+        "sha256": "ca6f6b99041a71acc4c163d73d90ec647b567e4fa6ff0196cf9ab68e6e43fdf9",
         "url": "https://paldb.cc/en/Croajiro"
       },
       "KendoFrog_Dark": {
-        "bytes": 93930,
-        "fetchedAt": "2026-08-19T16:20:08+00:00",
+        "bytes": 96041,
+        "fetchedAt": "2026-09-02T06:22:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0764c15db52130932acaca4d16e873f1698f1ec2a1e74b0459013e2005d02e21",
+        "sha256": "23e0e2681e620cca548dea927619033dee7eaa75ddf039d13db13caaefa5f1de",
         "url": "https://paldb.cc/en/Croajiro_Noct"
       },
       "KingAlpaca": {
-        "bytes": 90022,
-        "fetchedAt": "2026-08-19T16:18:31+00:00",
+        "bytes": 91729,
+        "fetchedAt": "2026-09-02T06:21:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c0d2872e4035a49327333e1407f7bbe20d64f3370cfe851762101a4a2151ea83",
+        "sha256": "481ec455ae5d8db7c2f3c1d226ee1deb8fb7e907595fb61d40de9bcd9e2cf232",
         "url": "https://paldb.cc/en/Kingpaca"
       },
       "KingAlpaca_Ice": {
-        "bytes": 94430,
-        "fetchedAt": "2026-08-19T16:18:35+00:00",
+        "bytes": 95053,
+        "fetchedAt": "2026-09-02T06:21:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d74d7442f3f1d11c4de94b6b6b6791d916cc34cceecacc388216cc96bc2c578d",
+        "sha256": "21471e458fba32f03addbe42a6e6f5514105da35d36a2e24cb6f49338ad8b341",
         "url": "https://paldb.cc/en/Kingpaca_Cryst"
       },
       "KingBahamut": {
-        "bytes": 93082,
-        "fetchedAt": "2026-08-19T16:17:00+00:00",
+        "bytes": 95425,
+        "fetchedAt": "2026-09-02T06:20:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d441a42bb9ff4924457de9aa9def982c388e676349879aea364f74bd0757eed0",
+        "sha256": "d886781743b59eb1a2f9922124f21eca5450ae067355f1d62eeaf107148552ec",
         "url": "https://paldb.cc/en/Blazamut"
       },
       "KingBahamut_Dragon": {
-        "bytes": 91084,
-        "fetchedAt": "2026-08-19T16:17:05+00:00",
+        "bytes": 93167,
+        "fetchedAt": "2026-09-02T06:20:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "54e8cdb5bf17cd151b309c398456cc3688b16d1fd90cced2843d0c531d02ad24",
+        "sha256": "d897f253c969c170bc83d95ef7ff4c8edf2503cc12ca967f3a4658377356f121",
         "url": "https://paldb.cc/en/Blazamut_Ryu"
       },
       "KingSunfish": {
-        "bytes": 80964,
-        "fetchedAt": "2026-08-19T16:23:32+00:00",
+        "bytes": 82962,
+        "fetchedAt": "2026-09-02T06:23:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c175a78b47fb7caedc3a230de143d0c20d26713a11b1fb72a23506bd36f7e0bb",
+        "sha256": "d40faca2d545425b495e60091506950ed3dcd0e10687d47835720971fb91d803",
         "url": "https://paldb.cc/en/Solmora"
       },
       "KingSunfish_Thunder": {
-        "bytes": 95005,
-        "fetchedAt": "2026-08-19T16:23:37+00:00",
+        "bytes": 97297,
+        "fetchedAt": "2026-09-02T06:23:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "46dee39762dabf99b68f967c11788026ce89f31c68a3fc304d827acb1da9f047",
+        "sha256": "48dc7fab9680879c92d8c9c2e52b0ef599ea410c6a34849131f2b1ddb07afe7e",
         "url": "https://paldb.cc/en/Solmora_Lux"
       },
       "KingWhale": {
-        "bytes": 116145,
-        "fetchedAt": "2026-08-19T16:21:05+00:00",
+        "bytes": 122576,
+        "fetchedAt": "2026-09-02T06:22:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f1da5c19f8f886ff079b8e6cc810d65e6e12b2b1d9c7f57ed77fca51df2e2fa5",
+        "sha256": "9df203d22a662a76680a308ef4b1915230001ad31884c4d5047482c07fb15211",
         "url": "https://paldb.cc/en/Panthalus"
       },
       "Kirin": {
-        "bytes": 95086,
-        "fetchedAt": "2026-08-19T16:11:09+00:00",
+        "bytes": 97181,
+        "fetchedAt": "2026-09-02T06:18:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "273278f2180d4cfdb181a82796d26fe7483e8e7e480db5d243ccf532328a64ee",
+        "sha256": "2a578109587e8e942de8d6e70c97b8eb03b4963cd4fbdad3b09b60ce5df656f4",
         "url": "https://paldb.cc/en/Univolt"
       },
       "Kirin_Ice": {
-        "bytes": 86675,
-        "fetchedAt": "2026-08-19T16:11:13+00:00",
+        "bytes": 93457,
+        "fetchedAt": "2026-09-02T06:18:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c94a8d389ef176b6beace974b7ec4e00d5594372ebd26c5001094b6eb7ad1738",
+        "sha256": "b7e99efb999e99b4f7da54903159604ba5165a2f70890bbb9cf6cbee124e32de",
         "url": "https://paldb.cc/en/Univolt_Cryst"
       },
       "Kitsunebi": {
-        "bytes": 86146,
-        "fetchedAt": "2026-08-19T16:11:17+00:00",
+        "bytes": 87983,
+        "fetchedAt": "2026-09-02T06:18:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "44cb9506cabc5f0be18f4ac6cc1c14c7a9237167b54e5322e873b22066055371",
+        "sha256": "a372b604a6f87f22b60ad7ae021e8b2ce80c8d8d81b5f4df87c93380393d7e65",
         "url": "https://paldb.cc/en/Foxparks"
       },
       "Kitsunebi_Ice": {
-        "bytes": 92669,
-        "fetchedAt": "2026-08-19T16:21:35+00:00",
+        "bytes": 94601,
+        "fetchedAt": "2026-09-02T06:22:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b166068a7c52fe09306bdeff0a6d09e99bb8a28198f476eec7b447cd77cf94a3",
+        "sha256": "79a90918c90854fd98203094dc579a475e3d7e00004c2ec333f039ff839f1d20",
         "url": "https://paldb.cc/en/Foxparks_Cryst"
       },
       "LanternButler": {
-        "bytes": 84711,
-        "fetchedAt": "2026-08-19T16:23:46+00:00",
+        "bytes": 91846,
+        "fetchedAt": "2026-09-02T06:23:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0ce38e83c26d901c47388b200047ad989638ce1800699037925e810b02b9139e",
+        "sha256": "b0ab0795fc3ef0fc5a473ca403bd6b1846c36c1096263cdbd6902cef9da6fa49",
         "url": "https://paldb.cc/en/Loomen"
       },
       "LavaGirl": {
-        "bytes": 102898,
-        "fetchedAt": "2026-08-19T16:19:55+00:00",
+        "bytes": 101839,
+        "fetchedAt": "2026-09-02T06:22:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "30f1d50226372eb295125f2b70f5711632b66055ce2869647523e24cafb5ab05",
+        "sha256": "71cd6e4de15e1dee78eecd6ce5466e4075c6baf58b6ba15e3b4968e384c855f1",
         "url": "https://paldb.cc/en/Flambelle"
       },
       "LazyCatfish": {
-        "bytes": 111148,
-        "fetchedAt": "2026-08-19T16:19:51+00:00",
+        "bytes": 114142,
+        "fetchedAt": "2026-09-02T06:22:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "434598671e135f43fcae727b69570677eb2320919297829d313e1e04f0dc7cb1",
+        "sha256": "dd320d5abee6a3b6a82abce0285d6748162eca18faa036c25f7f2aef7194709a",
         "url": "https://paldb.cc/en/Dumud"
       },
       "LazyCatfish_Gold": {
-        "bytes": 120862,
-        "fetchedAt": "2026-08-19T16:19:55+00:00",
+        "bytes": 121733,
+        "fetchedAt": "2026-09-02T06:22:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "670e220c8b42d9aa7e8c97e83c0dbedd5ade26dc8d328c49be0439113020ac3e",
+        "sha256": "27fab4d0e784daaa886ad558e8ecbea0ebbdc2a38f50d6814b477da401acb8e3",
         "url": "https://paldb.cc/en/Dumud_Gild"
       },
       "LazyDragon": {
-        "bytes": 110690,
-        "fetchedAt": "2026-08-19T16:16:18+00:00",
+        "bytes": 113138,
+        "fetchedAt": "2026-09-02T06:20:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8d5b50bd6f15ba3a85595954f4b17d561bb1026e2ea30b1f2b21a843f74a7199",
+        "sha256": "b90732214f75a433cfb7f4025d14802c85793fa762dfa1ca08ad991a674cd9a5",
         "url": "https://paldb.cc/en/Relaxaurus"
       },
       "LazyDragon_Electric": {
-        "bytes": 154248,
-        "fetchedAt": "2026-08-19T16:16:18+00:00",
+        "bytes": 156179,
+        "fetchedAt": "2026-09-02T06:20:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "bc1aa5ce1c30fdf7bc4e9104be3e9b9f22dc70ec6f27594f394f8bfbd2ebd323",
+        "sha256": "391bde6091e62d491985a2d56723b3a126c51c7e9c1ffd83101eecc1b21dcbfb",
         "url": "https://paldb.cc/en/Relaxaurus_Lux"
       },
       "LeafMomonga": {
-        "bytes": 90433,
-        "fetchedAt": "2026-08-19T16:22:09+00:00",
+        "bytes": 92337,
+        "fetchedAt": "2026-09-02T06:23:06+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "aa13070058e2831ed621a6354adaf19b297a272416eb18949ef17a0327b4bea3",
+        "sha256": "757cffa0bdcd6bbffb6744bd80561c236ebb41b6e0bd25b6607a07fc493ebd31",
         "url": "https://paldb.cc/en/Herbil"
       },
       "LeafPrincess": {
-        "bytes": 84181,
-        "fetchedAt": "2026-08-19T16:20:08+00:00",
+        "bytes": 85549,
+        "fetchedAt": "2026-09-02T06:22:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "3deec7325baa7f5d755f1e0b3b76793662ffe7b8197519daea48ce7fb340d6b9",
+        "sha256": "e0c3fb33e7ef194a171f133af807f7004cc1add774cb1ec1fca5e2ed656e1bdf",
         "url": "https://paldb.cc/en/Lullu"
       },
       "LegendDeer": {
-        "bytes": 82842,
-        "fetchedAt": "2026-08-19T16:22:05+00:00",
+        "bytes": 85094,
+        "fetchedAt": "2026-09-02T06:23:04+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ff0eb6d9b18070643ce67d4383f1bf577d42b4181e85d8fbb72cf31ae0056469",
+        "sha256": "186e15366001e6e95d0d4242b784980e1d8edecf3add7f7e0e661e96f2081315",
         "url": "https://paldb.cc/en/Hartalis"
       },
       "LilyQueen": {
-        "bytes": 99425,
-        "fetchedAt": "2026-08-19T16:17:49+00:00",
+        "bytes": 102052,
+        "fetchedAt": "2026-09-02T06:20:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fc1b9d38389a0d07417fc75189fffc0c73884f0286a74f84ef7e68d5ba23a462",
+        "sha256": "0856c1be49f123f89422e2e8c348729dc540ee82c8fbfc2f90321411c68dce06",
         "url": "https://paldb.cc/en/Lyleen"
       },
       "LilyQueen_Dark": {
-        "bytes": 101581,
-        "fetchedAt": "2026-08-19T16:17:53+00:00",
+        "bytes": 103642,
+        "fetchedAt": "2026-09-02T06:20:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "47b8f373c4b315f6f10d6ba20d80ec8c0ff31b68578af51937d030149cce1cea",
+        "sha256": "d789e01e5d24fc5bf9827905b3e9cb468ac5bdbad2fdd809bb1b68dbe7465e84",
         "url": "https://paldb.cc/en/Lyleen_Noct"
       },
       "LittleBriarRose": {
-        "bytes": 89676,
-        "fetchedAt": "2026-08-19T16:11:22+00:00",
+        "bytes": 91784,
+        "fetchedAt": "2026-09-02T06:18:44+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5b7a078426a6a1e992cad5f5e64cacaf0e509828e85cb8e8781336cdce55398b",
+        "sha256": "627d7b4c37d95d1888a717936393407d09446f173f58ad086c250db7ece7be4b",
         "url": "https://paldb.cc/en/Bristla"
       },
       "LizardMan": {
-        "bytes": 155189,
-        "fetchedAt": "2026-08-19T16:16:24+00:00",
+        "bytes": 157861,
+        "fetchedAt": "2026-09-02T06:20:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e6ae6dcdd1614d47f2ee46de07036a30609ff4d756242cf5ed35191ec89059a7",
+        "sha256": "a1bb96f6f15804e05338870c4a61609e9563c44db16f70d1ca32757e39427aa7",
         "url": "https://paldb.cc/en/Leezpunk"
       },
       "LizardMan_Fire": {
-        "bytes": 95763,
-        "fetchedAt": "2026-08-19T16:16:26+00:00",
+        "bytes": 98004,
+        "fetchedAt": "2026-09-02T06:20:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1ecbbfa36e3ab42536e3b6f9533d829ab25aaefbc38a60a3ec1e2744d10f65b2",
+        "sha256": "6707abaee0e60b5a0c96d7069f536973398b1e8a06b73ab7746c2eb4584afb5b",
         "url": "https://paldb.cc/en/Leezpunk_Ignis"
       },
       "LongCat": {
-        "bytes": 76838,
-        "fetchedAt": "2026-08-19T16:22:54+00:00",
+        "bytes": 78874,
+        "fetchedAt": "2026-09-02T06:23:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ac280a39b6ecd2923d9b9cdbbfa1c444b2e7f252d8a6921f290ca19e0769191c",
+        "sha256": "ea3b6a5b48919947e0e3400f56262c6d4ca805fbd729e5c3d2e871c678dbbb4d",
         "url": "https://paldb.cc/en/Valentail"
       },
       "LotusDragon": {
-        "bytes": 84342,
-        "fetchedAt": "2026-08-19T16:24:04+00:00",
+        "bytes": 86410,
+        "fetchedAt": "2026-09-02T06:23:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5d5801dc376fb7273763c53fe86bfb931d9073b3d1058083237f50b698ea1803",
+        "sha256": "aa105343a0fac3ffee56614e803c37f0d9931fe2e00385c79312c36ad36c2f46",
         "url": "https://paldb.cc/en/Ophydia"
       },
       "Manticore": {
-        "bytes": 95856,
-        "fetchedAt": "2026-08-19T16:18:27+00:00",
+        "bytes": 98356,
+        "fetchedAt": "2026-09-02T06:20:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "2927a49fd72416b7eff7ded4114221880a911bc3bfb04966ef5ab6a02e06e820",
+        "sha256": "b7f763dead0bdee24f17c501f4a1e86ff1408b6085bf71a18c7528557764398b",
         "url": "https://paldb.cc/en/Blazehowl"
       },
       "Manticore_Dark": {
-        "bytes": 104017,
-        "fetchedAt": "2026-08-19T16:18:30+00:00",
+        "bytes": 106364,
+        "fetchedAt": "2026-09-02T06:20:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0d72354a3237b27db54bffabc27a919dfe8e1bd70761a3798eb47ecbe71291a2",
+        "sha256": "656281fc5ddff8e0be080edc7dec51184a30f46b51b36e47ba947a6cdc62a61c",
         "url": "https://paldb.cc/en/Blazehowl_Noct"
       },
       "MimicDog": {
-        "bytes": 172581,
-        "fetchedAt": "2026-08-19T16:20:33+00:00",
+        "bytes": 180301,
+        "fetchedAt": "2026-09-02T06:22:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "2537ec2c25bc6374d409ce91606742d45ff232be0b635b1de55e6b54ad7f5798",
+        "sha256": "124604dd07644509d66167c8ed4cbe094831284a7a8aaa465a6e80f905736c39",
         "url": "https://paldb.cc/en/Mimog"
       },
       "Monkey": {
-        "bytes": 88490,
-        "fetchedAt": "2026-08-19T16:18:22+00:00",
+        "bytes": 90858,
+        "fetchedAt": "2026-09-02T06:20:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "775e46ce53b5fa94ca3a4a076655a34a8716837a48ccac58fd52a393ed5a81d4",
+        "sha256": "588ad0bdfea04f97b198308405368f61a75d7847be8b300c4a993e33de9a01e5",
         "url": "https://paldb.cc/en/Tanzee"
       },
       "Monkey_Fire": {
-        "bytes": 86630,
-        "fetchedAt": "2026-08-19T16:18:26+00:00",
+        "bytes": 88554,
+        "fetchedAt": "2026-09-02T06:20:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "be63fddb3801302311dac16f99410b4353607d1b1f1f8d08afc3b7e387c072dd",
+        "sha256": "3a8ba35109a2df7166b9acbbffadb565cc814ed0849c99b72a19b0b628553263",
         "url": "https://paldb.cc/en/Tanzee_Ignis"
       },
       "MonochromeQueen": {
-        "bytes": 83820,
-        "fetchedAt": "2026-08-19T16:23:37+00:00",
+        "bytes": 90952,
+        "fetchedAt": "2026-09-02T06:23:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "871b0e76449ca6381cc7554e4db72c2711ab0caaa67d33854a864d8ef2bcec8c",
+        "sha256": "9e1cf181c80dfece9484792d88ec7032b615a74b95a6bb697ebbda055a8db105",
         "url": "https://paldb.cc/en/Solenne"
       },
       "MoonChild": {
-        "bytes": 83529,
-        "fetchedAt": "2026-08-19T16:23:00+00:00",
+        "bytes": 90840,
+        "fetchedAt": "2026-09-02T06:23:27+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fa1ef1f525e41bf7dcca79dd541100f014755dde5bcd9cfe07a3b523f85778da",
+        "sha256": "a9642dc4c22a08e99b06ebc6708f8d03c3ba4cd4e959c75d0960a95b5af8b7ea",
         "url": "https://paldb.cc/en/Wistella"
       },
       "MoonQueen": {
-        "bytes": 138647,
-        "fetchedAt": "2026-08-19T16:20:03+00:00",
+        "bytes": 141084,
+        "fetchedAt": "2026-09-02T06:22:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "70124ad37378653249bf81c9e91938df5d9b181a57fc8830e8ac82af5184b186",
+        "sha256": "889f3a39470f2583c0bb11698dcb64044228fd5c80c55836f4f2f9950d96987c",
         "url": "https://paldb.cc/en/Selyne"
       },
       "MopBaby": {
-        "bytes": 87268,
-        "fetchedAt": "2026-08-19T16:18:40+00:00",
+        "bytes": 87866,
+        "fetchedAt": "2026-09-02T06:21:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0627bf92f00df2704632ea7b9156fb68778c5ac5575aa43952839d6745660994",
+        "sha256": "dd21bbba122917c4146407d06a524aa755417c4825701f9a9f5ac5ce2843f3a6",
         "url": "https://paldb.cc/en/Swee"
       },
       "MopKing": {
-        "bytes": 87456,
-        "fetchedAt": "2026-08-19T16:18:43+00:00",
+        "bytes": 89316,
+        "fetchedAt": "2026-09-02T06:21:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "7eae4d6e88d9fc3292cf18ea7a959fe68ba1f79a16d99b3d59eb77ac0780d0bc",
+        "sha256": "8c2a469cb5c88fc1b2c1c701c779064c3870fa02952fa2a2042c6047f65835c8",
         "url": "https://paldb.cc/en/Sweepa"
       },
       "Mothman": {
-        "bytes": 86203,
-        "fetchedAt": "2026-08-19T16:24:12+00:00",
+        "bytes": 93999,
+        "fetchedAt": "2026-09-02T06:23:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a05ee9327e91d87fa3e40cae8aa118c3edf1b31aa985d5af1af1220a83a9562d",
+        "sha256": "46a3ca792b5433a83d02b756f85d14ebb1ac1f84c69fc3c59944392fc50d6227",
         "url": "https://paldb.cc/en/Silvance"
       },
       "MummyPal": {
-        "bytes": 82941,
-        "fetchedAt": "2026-08-19T16:23:33+00:00",
+        "bytes": 84285,
+        "fetchedAt": "2026-09-02T06:23:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "af496e938cb9760185ee462caa63aa2bd8233f624d9878d76aad735310b19521",
+        "sha256": "4b6f1ffe0c0e9805ff38061e1da86d3194de8bb1de4b72c9cd25e512bf3b37be",
         "url": "https://paldb.cc/en/Gildra"
       },
       "MushroomDragon": {
-        "bytes": 106316,
-        "fetchedAt": "2026-08-19T16:20:12+00:00",
+        "bytes": 107132,
+        "fetchedAt": "2026-09-02T06:22:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "bedf0aaeeaf7ae9e5d8c9558c41424473faf778da81db49ba1f18db7e9c0f743",
+        "sha256": "a9265dc2b8c3a06b253bc67a468c77cfa66b11c20f12bdb298175041ba87154e",
         "url": "https://paldb.cc/en/Shroomer"
       },
       "MushroomDragon_Dark": {
-        "bytes": 91344,
-        "fetchedAt": "2026-08-19T16:20:12+00:00",
+        "bytes": 92475,
+        "fetchedAt": "2026-09-02T06:22:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "28ca189885beeba140f839ec056419dd2858726f82befbec4f7b8b6f1ade3b14",
+        "sha256": "68871fd346137bd7f207063d4f612f529fdc948b31fec9a77201423de6c7bf81",
         "url": "https://paldb.cc/en/Shroomer_Noct"
       },
       "MushroomLady": {
-        "bytes": 84897,
-        "fetchedAt": "2026-08-19T16:22:18+00:00",
+        "bytes": 91995,
+        "fetchedAt": "2026-09-02T06:23:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5c71e453122de9a108cbf5ce35d2cb4cc4622caa615399121b608ab093dac74a",
+        "sha256": "d0bc9fab7c7128dc044e1c53d9ab338430bf039482ff44d8b18ef6650af7d5bd",
         "url": "https://paldb.cc/en/Mycora"
       },
       "Mutant": {
-        "bytes": 88671,
-        "fetchedAt": "2026-08-19T16:11:26+00:00",
+        "bytes": 89393,
+        "fetchedAt": "2026-09-02T06:18:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "78975af3ad8e29e3c2bc2587ca23696513b085f9ce61b10632a4e86a693923a7",
+        "sha256": "f9f990ca0f30563296134f7138629720a323e1181b5d7acbaf9ab17ba1cde2ff",
         "url": "https://paldb.cc/en/Lunaris"
       },
       "MysteryMask": {
-        "bytes": 99876,
-        "fetchedAt": "2026-08-19T16:21:06+00:00",
+        "bytes": 99322,
+        "fetchedAt": "2026-09-02T06:22:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d42177190b40ed5cb44b0ea37303d72706ed45c611c7f9280fa29b5a2a6a3900",
+        "sha256": "50015de211d1f7c1f6b55c5ca00da9da109df34a3a15bfccc0639ebd8603ff93",
         "url": "https://paldb.cc/en/Omascul"
       },
       "NaughtyCat": {
-        "bytes": 89461,
-        "fetchedAt": "2026-08-19T16:19:39+00:00",
+        "bytes": 91511,
+        "fetchedAt": "2026-09-02T06:22:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "86c5bf92b84f11b237f5ccd4d8dbfee60cc3ccc578511529e55c5be33da1a2b6",
+        "sha256": "582ab3f1cc76e6b06c7e5d46ad3adcc03f026b43f7ab120fb39249f293726bab",
         "url": "https://paldb.cc/en/Grintale"
       },
       "NegativeKoala": {
-        "bytes": 98854,
-        "fetchedAt": "2026-08-19T16:13:23+00:00",
+        "bytes": 100889,
+        "fetchedAt": "2026-09-02T06:19:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d500caf8143e5139507b4a659136daee6c2edb58b1c13493264b03c24ccf9043",
+        "sha256": "347808171bccc0810ffaac17e14feca60873a2cb9220b929ff36a7223d1ade20",
         "url": "https://paldb.cc/en/Depresso"
       },
       "NegativeOctopus": {
-        "bytes": 92124,
-        "fetchedAt": "2026-08-19T16:17:31+00:00",
+        "bytes": 94213,
+        "fetchedAt": "2026-09-02T06:20:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "7d21452cce92d31bd58e6322eeaf63f4ac1689150a8cd1506810afc4ae139065",
+        "sha256": "816fd75b8e39d732504a5ffc1890dc2cca3d55a024c73324684b36072e445eba",
         "url": "https://paldb.cc/en/Killamari"
       },
       "NegativeOctopus_Neutral": {
-        "bytes": 89264,
-        "fetchedAt": "2026-08-19T16:17:34+00:00",
+        "bytes": 91212,
+        "fetchedAt": "2026-09-02T06:20:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fd15c539672e61894645b6a6365bf6681ef5888afdd6646c3c937acebbdc3dc3",
+        "sha256": "481d9b6de7200e66b8ff97ad51118023428fa842baaa383f8b3cccd09ab8a20c",
         "url": "https://paldb.cc/en/Killamari_Primo"
       },
       "NightBlueHorse": {
-        "bytes": 97114,
-        "fetchedAt": "2026-08-19T16:20:49+00:00",
+        "bytes": 99095,
+        "fetchedAt": "2026-09-02T06:22:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b0e34e940a197b9cb48c52afeff3c8b352e46d2c0cd25db0f067a284dc6b1ee1",
+        "sha256": "16f3015e06972df215ee9e8034ccb2f15d4b9cec5960995489c4f518e371f2e4",
         "url": "https://paldb.cc/en/Starryon"
       },
       "NightBlueHorse_Neutral": {
-        "bytes": 84087,
-        "fetchedAt": "2026-08-19T16:20:53+00:00",
+        "bytes": 91271,
+        "fetchedAt": "2026-09-02T06:22:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ab3f2973dedfab69574dff17d71b46c557109dbbf04e1efa4536f41d100561a5",
+        "sha256": "8793174798c89af999f14687ea4490484b1640fb18d344e1cf0b515b3b5b01d5",
         "url": "https://paldb.cc/en/Starryon_Primo"
       },
       "NightFox": {
-        "bytes": 97274,
-        "fetchedAt": "2026-08-19T16:19:02+00:00",
+        "bytes": 96781,
+        "fetchedAt": "2026-09-02T06:21:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "3799ea9a925eae029edd730c7b18d7f3119de0aa1244cc9647d94e98e79c81ab",
+        "sha256": "7c49d3d0ce209915a8d2e758af4654a25c5b8c651e1f4a04b6aa69d3bc8b1a1b",
         "url": "https://paldb.cc/en/Nox"
       },
       "NightLady": {
-        "bytes": 79142,
-        "fetchedAt": "2026-08-19T16:19:59+00:00",
+        "bytes": 81071,
+        "fetchedAt": "2026-09-02T06:22:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fed256aa25ef0f40813692247b6031f8288aeaea68b9b0e2f2593efd7dcef156",
+        "sha256": "26f7d81e9472d9a9a7588d825e9e57744e135ca30f160954916505f0ce50beb3",
         "url": "https://paldb.cc/en/Bellanoir"
       },
       "NightLady_Dark": {
-        "bytes": 84334,
-        "fetchedAt": "2026-08-19T16:20:01+00:00",
+        "bytes": 86506,
+        "fetchedAt": "2026-09-02T06:22:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9878039a967e7dd2f3b45507df9f4f910fafa269c475c8940d9c519d4363e0f8",
+        "sha256": "cf8b8bb1e1d256e129ec15063fb31a602914c024b952d463c0e7f4840f4e5a2d",
         "url": "https://paldb.cc/en/Bellanoir_Libero"
       },
       "OctopusGirl": {
-        "bytes": 98223,
-        "fetchedAt": "2026-08-19T16:21:22+00:00",
+        "bytes": 100087,
+        "fetchedAt": "2026-09-02T06:22:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d5cc1b969c3c7b180fefdd3d67b02a1cf0008d79304b8ba153452b204a76a545",
+        "sha256": "316792d62a3207a69e1c50b655dceeff8a51984527ec2b29fceb7b748689b210",
         "url": "https://paldb.cc/en/Gloopie"
       },
       "OctopusGirl_Neutral": {
-        "bytes": 90105,
-        "fetchedAt": "2026-08-19T16:21:26+00:00",
+        "bytes": 92081,
+        "fetchedAt": "2026-09-02T06:22:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0cb3e68a2bde19c92b519839df3baf87527ba5342b44e651a7de4ce7af267c87",
+        "sha256": "820e4a9e2a502778049023de47e34633f1dc3e3aea79f726c39a5fc0fb201121",
         "url": "https://paldb.cc/en/Gloopie_Primo"
       },
       "OniGhostGirl": {
-        "bytes": 83271,
-        "fetchedAt": "2026-08-19T16:22:37+00:00",
+        "bytes": 85319,
+        "fetchedAt": "2026-09-02T06:23:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d4179d323c4b1b1935392483638f59f224530738e1be10d4ea1d12b26cc44563",
+        "sha256": "0675453dab0129645685b8611a3840348c817ebd11121fafcbb678808c9d7b10",
         "url": "https://paldb.cc/en/Bakemi"
       },
       "PandaGirl": {
-        "bytes": 86619,
-        "fetchedAt": "2026-08-19T16:24:08+00:00",
+        "bytes": 88671,
+        "fetchedAt": "2026-09-02T06:23:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ae84dbc30a8245387ea8c160c3a4ce73492b3e7ab47875c668bd2f7f3e7446bc",
+        "sha256": "7ff0d256f6ac87443eddd92b8955e17e85412633cbadf79411d108e5d6b3b58d",
         "url": "https://paldb.cc/en/Leafan"
       },
       "Penguin": {
-        "bytes": 114537,
-        "fetchedAt": "2026-08-19T16:11:32+00:00",
+        "bytes": 116771,
+        "fetchedAt": "2026-09-02T06:18:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fa53fab22b7cc09d26f3763e2ad2fe56e3685c95f7f20b4dfc09099b3089dd3d",
+        "sha256": "75924ae42c4448c9ded9a50015482974c711d8e01b1f76127eca3db86c6eb7ee",
         "url": "https://paldb.cc/en/Pengullet"
       },
       "Penguin_Electric": {
-        "bytes": 92091,
-        "fetchedAt": "2026-08-19T16:11:36+00:00",
+        "bytes": 94053,
+        "fetchedAt": "2026-09-02T06:18:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "441c980d220170b187f64e3e9381392fd0ead81127dbb6deefeec8c9c25b6174",
+        "sha256": "97b628f390972345be60202898d1b4ba16ce2a940a6c3ce641026da5fd0c0dbf",
         "url": "https://paldb.cc/en/Pengullet_Lux"
       },
       "PinkCat": {
-        "bytes": 139648,
-        "fetchedAt": "2026-08-19T16:13:19+00:00",
+        "bytes": 142339,
+        "fetchedAt": "2026-09-02T06:19:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "3bf9bb0ed6d98de9eb1cf4d390079e58f031fd4d68c8f07424693110531c7aa0",
+        "sha256": "d5d39dd549762a12e0aea403ad5da1f0704cc32b7ad31cd48645a6e65dd18808",
         "url": "https://paldb.cc/en/Cattiva"
       },
       "PinkLizard": {
-        "bytes": 103457,
-        "fetchedAt": "2026-08-19T16:17:22+00:00",
+        "bytes": 105919,
+        "fetchedAt": "2026-09-02T06:20:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "25664fc3a27bf6ca78ed4fbe20aed63a768bb7dbc242504fbcec179dbc6114e9",
+        "sha256": "dd4e2cea9b8982ad9d9e27e7423096d7ddff151c268ec76de86bbf9470818cdb",
         "url": "https://paldb.cc/en/Lovander"
       },
       "PinkRabbit": {
-        "bytes": 95158,
-        "fetchedAt": "2026-08-19T16:18:50+00:00",
+        "bytes": 95517,
+        "fetchedAt": "2026-09-02T06:21:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0410affc3a45ebb2048575e7ff52a41184869295061a644f1a48f07ab63b57d3",
+        "sha256": "87b0374baa2d45685a1891e24809562a7f7637dc22529b2663c3f46d3269bc9f",
         "url": "https://paldb.cc/en/Ribbuny"
       },
       "PinkRabbit_Grass": {
-        "bytes": 93513,
-        "fetchedAt": "2026-08-19T16:21:40+00:00",
+        "bytes": 95412,
+        "fetchedAt": "2026-09-02T06:22:53+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e61315cfefcc37063a0e8a0ea72eb2ab4042201f3b487f067080a9488835fc84",
+        "sha256": "438d56bdfbc7fc324e443be6e7f1178d7126b957fe54fe13dab715353cca33c1",
         "url": "https://paldb.cc/en/Ribbuny_Botan"
       },
       "PlantSlime": {
-        "bytes": 130186,
-        "fetchedAt": "2026-08-19T16:18:35+00:00",
+        "bytes": 133616,
+        "fetchedAt": "2026-09-02T06:21:02+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "12e73db5ba41a669135bc4e9343c0e7802dbde1b744a16b9b747a2eb0353df97",
+        "sha256": "b14941972b80a54fcb7c8b9fd806e193dd9e0414e97c75db160a160801c7b585",
         "url": "https://paldb.cc/en/Gumoss"
       },
       "PlantSlime_Flower": {
-        "bytes": 130186,
-        "fetchedAt": "2026-08-19T16:18:39+00:00",
+        "bytes": 133616,
+        "fetchedAt": "2026-09-02T06:21:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "12e73db5ba41a669135bc4e9343c0e7802dbde1b744a16b9b747a2eb0353df97",
+        "sha256": "b14941972b80a54fcb7c8b9fd806e193dd9e0414e97c75db160a160801c7b585",
         "url": "https://paldb.cc/en/Gumoss"
       },
       "Plesiosaur": {
-        "bytes": 106668,
-        "fetchedAt": "2026-08-19T16:22:40+00:00",
+        "bytes": 107080,
+        "fetchedAt": "2026-09-02T06:23:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b2e1afe688acf2dc62dcac1a17e69207af950d99e352d1bc3c4d82a4943566c7",
+        "sha256": "291f3da5807d653ed4acbd837aea463d2a729ad4733f23a0ca5eb51381c3a779",
         "url": "https://paldb.cc/en/Braloha"
       },
       "PoseidonOrca": {
-        "bytes": 87918,
-        "fetchedAt": "2026-08-19T16:23:05+00:00",
+        "bytes": 90599,
+        "fetchedAt": "2026-09-02T06:23:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ca4e1036dcacd994550e97f8fec3585cdc611420c5d4591dfcf80bfc8cca1636",
+        "sha256": "cc4499d64aae2e4809e48c84a256733e4ee9de7c6e5fe7df04eb955d2af7cc07",
         "url": "https://paldb.cc/en/Neptilius"
       },
       "PurpleSpider": {
-        "bytes": 93694,
-        "fetchedAt": "2026-08-19T16:21:17+00:00",
+        "bytes": 95596,
+        "fetchedAt": "2026-09-02T06:22:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "84e04444b29d9d248744b2693b026e259ba3b68edf6f7a4cb59ca67d76b5063c",
+        "sha256": "2b98058d88141afed3ea2166438d0626b8be8427d9496bdd96160c01281c26f7",
         "url": "https://paldb.cc/en/Tarantriss"
       },
       "QueenBee": {
-        "bytes": 86732,
-        "fetchedAt": "2026-08-19T16:17:54+00:00",
+        "bytes": 88775,
+        "fetchedAt": "2026-09-02T06:20:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "04f35feb97581f52b449554bc46503460cc610340352ef4aa6c6118393949e1a",
+        "sha256": "6d04b331b500c2cc1860856f0a2fa9e3c1d0dcccb51896d9f8fc19d2ea3f5251",
         "url": "https://paldb.cc/en/Elizabee"
       },
       "RaijinDaughter": {
-        "bytes": 94508,
-        "fetchedAt": "2026-08-19T16:11:40+00:00",
+        "bytes": 94778,
+        "fetchedAt": "2026-09-02T06:18:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0b110d538cf6486bcd1345fb08d8a4cc4c7e1861e8ae22e42541a11c9b107018",
+        "sha256": "e3e96abd09cab5fa0b66f260436f1981a519a48c29738b8648187703e6b34c16",
         "url": "https://paldb.cc/en/Dazzi"
       },
       "RaijinDaughter_Water": {
-        "bytes": 102232,
-        "fetchedAt": "2026-08-19T16:21:45+00:00",
+        "bytes": 102396,
+        "fetchedAt": "2026-09-02T06:22:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b1668c9d46e00aa129e88cdaf279a76c909d9ae1ee3711fbd8abdd86c69b817a",
+        "sha256": "7ed79d3f68bfe38010fd8cd42bcdc95ffbf4889bd9fb136a7425b2f006e8dd5d",
         "url": "https://paldb.cc/en/Dazzi_Noct"
       },
       "RedArmorBird": {
-        "bytes": 101017,
-        "fetchedAt": "2026-08-19T16:19:21+00:00",
+        "bytes": 103041,
+        "fetchedAt": "2026-09-02T06:21:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "94bbdfa95babb608ad72e64277a762c1fc98b5d09125370078087509e3701ef2",
+        "sha256": "8894caa7a4324d65f96cc0b64729844c70cbc2a9af081d141cdeef756309de6b",
         "url": "https://paldb.cc/en/Ragnahawk"
       },
       "RedFlowerBird": {
-        "bytes": 82865,
-        "fetchedAt": "2026-08-19T16:23:59+00:00",
+        "bytes": 84908,
+        "fetchedAt": "2026-09-02T06:23:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "07b5671f50baba6038bcdd751f5623b3d243d4e8f4ea9761b29b24519c7bca79",
+        "sha256": "8d8df47ffde13c75012e8c6a06e686fcefea8c9470eef3660ce1c212948316e9",
         "url": "https://paldb.cc/en/Tropicaw"
       },
       "RobinHood": {
-        "bytes": 90162,
-        "fetchedAt": "2026-08-19T16:16:14+00:00",
+        "bytes": 92259,
+        "fetchedAt": "2026-09-02T06:20:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c6f0349f21d955dded1033ebc2f42a9ce22c4dc45e06fec9d09d04ccdeed36d0",
+        "sha256": "35fec703d421bcd5e9997ea1cc99d1dadad6f7605f6566593a2024afb01597e1",
         "url": "https://paldb.cc/en/Robinquill"
       },
       "RobinHood_Ground": {
-        "bytes": 97451,
-        "fetchedAt": "2026-08-19T16:16:14+00:00",
+        "bytes": 99484,
+        "fetchedAt": "2026-09-02T06:20:02+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "feb01c531eacfddd1837b39afff11702129b2a4bc2783d3f79a8c5d9a25deaa1",
+        "sha256": "b201d8dacca22ccf149f18c41ec7a447e634142254354796f7e798bc5e693ddf",
         "url": "https://paldb.cc/en/Robinquill_Terra"
       },
       "RockBeast": {
-        "bytes": 85488,
-        "fetchedAt": "2026-08-19T16:21:19+00:00",
+        "bytes": 86444,
+        "fetchedAt": "2026-09-02T06:22:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "faa8b8188457bb89330d79283ab9f7fce5ebab208ddb01be82bc75deba5de74f",
+        "sha256": "8ccb92ec50fdaec3eb9f9833fa3885800c09bb6508b5e515c2c29b54c4e802e4",
         "url": "https://paldb.cc/en/Pierdon"
       },
       "RockBeast_Ice": {
-        "bytes": 96397,
-        "fetchedAt": "2026-08-19T16:21:21+00:00",
+        "bytes": 102560,
+        "fetchedAt": "2026-09-02T06:22:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "63282512d0a6366eafff808a6ad95614c2b64f248c4c9f14e5a46bc37a252aa2",
+        "sha256": "5fe0fd9187b35caa387bc338be0f6278edbd634c9aa20ffcebb1ea3517182422",
         "url": "https://paldb.cc/en/Pierdon_Cryst"
       },
       "Ronin": {
-        "bytes": 120336,
-        "fetchedAt": "2026-08-19T16:19:24+00:00",
+        "bytes": 122801,
+        "fetchedAt": "2026-09-02T06:21:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6beeaa1766f0d4fd213c77bdb0d8550895825a7f74cc1da3cf1ccec1002413e1",
+        "sha256": "b139bdce71d51d737dcb0f8ef89574be7f48014f219afaafdee6859533b02355",
         "url": "https://paldb.cc/en/Bushi"
       },
       "Ronin_Dark": {
-        "bytes": 114060,
-        "fetchedAt": "2026-08-19T16:19:25+00:00",
+        "bytes": 116047,
+        "fetchedAt": "2026-09-02T06:22:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "09250ccd9c22f95640ceb64e4e288504a6ed7284a2780028b34a405a93420adf",
+        "sha256": "f26fb6c9ae5fe285f53b7d331de07fd5525ab30cce4a8f8d4bee308801fb8a2a",
         "url": "https://paldb.cc/en/Bushi_Noct"
       },
       "SaintCentaur": {
-        "bytes": 88451,
-        "fetchedAt": "2026-08-19T16:19:00+00:00",
+        "bytes": 90915,
+        "fetchedAt": "2026-09-02T06:21:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fa8d5d210a86c7c67911a6c0bfc2ebdd7cb153ef33e8885d39d5296f4dcf4a6d",
+        "sha256": "3755a4787ada152b3dfb541605ced4905b2c73efc5a9956904dec8415b09d901",
         "url": "https://paldb.cc/en/Paladius"
       },
       "SakuraSaurus": {
-        "bytes": 103333,
-        "fetchedAt": "2026-08-19T16:16:55+00:00",
+        "bytes": 104938,
+        "fetchedAt": "2026-09-02T06:20:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "acd0030d2cf2b8f66281b554d4d04b9d3b9cd28be3716b86a1e87275baf82f10",
+        "sha256": "fb3f1d7c7194332eab7e1ea02145e653fdb6ca8b02102543a2dfee55d76d72c9",
         "url": "https://paldb.cc/en/Broncherry"
       },
       "SakuraSaurus_Water": {
-        "bytes": 101310,
-        "fetchedAt": "2026-08-19T16:16:56+00:00",
+        "bytes": 102541,
+        "fetchedAt": "2026-09-02T06:20:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "7c01a6cedfdbb5a98f22930e4c48d87b4fdf5e7275f98f0f93dc9fc6ab25b047",
+        "sha256": "26dd3a539fe346d7e85abdfa6c2369fdf39aeb8f7343e450f34bea3de44c23e7",
         "url": "https://paldb.cc/en/Broncherry_Aqua"
       },
       "SamuraiDog": {
-        "bytes": 83151,
-        "fetchedAt": "2026-08-19T16:23:02+00:00",
+        "bytes": 85143,
+        "fetchedAt": "2026-09-02T06:23:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c0847e03073ae9f1831038eea6da37c8642bb71abaf0d4ec52fe0c0a42dcdf3a",
+        "sha256": "2d4ad98a1d51d31fb23c237d3da4e8bc30c105f524bf403a3b96e2e8a4a26dbc",
         "url": "https://paldb.cc/en/Pupperai"
       },
       "ScorpionMan": {
-        "bytes": 88781,
-        "fetchedAt": "2026-08-19T16:20:20+00:00",
+        "bytes": 91194,
+        "fetchedAt": "2026-09-02T06:22:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c17e975eb32717f155e3fa5e967d43c0e181d92e4aa3c9cd0e826ffeff7c9e0d",
+        "sha256": "7fa3fc47a42420cb145ab5d22aafc485d23919acf239bfb904d72c68f6ee90f0",
         "url": "https://paldb.cc/en/Prixter"
       },
       "ScorpionMan_Electric": {
-        "bytes": 81726,
-        "fetchedAt": "2026-08-19T16:20:20+00:00",
+        "bytes": 83836,
+        "fetchedAt": "2026-09-02T06:22:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b85181f3b2f46ff71d7650bf451150c71fd74757d55f72365b6cc6cf4564fb35",
+        "sha256": "0e4375ad52dac99ef855a52667ca7eb00f5412bf19d83acc3e6c049f1c5c6ab1",
         "url": "https://paldb.cc/en/Prixter_Lux"
       },
       "Sekhmet": {
-        "bytes": 88342,
-        "fetchedAt": "2026-08-19T16:21:09+00:00",
+        "bytes": 89658,
+        "fetchedAt": "2026-09-02T06:22:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "f6b7e31897b56da75c2203dc5a2dd43de27cf33ba930afdab2f802902955e122",
+        "sha256": "7ea6834cd0b71d729e4766ee3dcc82bbddf6850c2e680a7a98ac8feda8ed5019",
         "url": "https://paldb.cc/en/Sekhmet"
       },
       "Serpent": {
-        "bytes": 95328,
-        "fetchedAt": "2026-08-19T16:12:57+00:00",
+        "bytes": 96648,
+        "fetchedAt": "2026-09-02T06:19:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e86e36ed933be64eebdb288d6c13db74858f7dc991c7f54f07cda0ad3b16cb92",
+        "sha256": "c3c71a8be4d8136f2f80bafe5ea3216191af8279437817dff31e9002770cb8ed",
         "url": "https://paldb.cc/en/Surfent"
       },
       "Serpent_Ground": {
-        "bytes": 102287,
-        "fetchedAt": "2026-08-19T16:13:02+00:00",
+        "bytes": 104780,
+        "fetchedAt": "2026-09-02T06:19:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "01e28d11de03a2a476552469a8fc3abe74a01613738d583138db4c0316a12632",
+        "sha256": "95ef78839332d899c9a1a0fc1c558174544bb11bbe71d356e15ad26ef7393f8d",
         "url": "https://paldb.cc/en/Surfent_Terra"
       },
       "SharkKid": {
-        "bytes": 91247,
-        "fetchedAt": "2026-08-19T16:11:44+00:00",
+        "bytes": 93352,
+        "fetchedAt": "2026-09-02T06:18:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5ed4fc46e349d2ff16978f7893d3d9f569c5859d5dc381183f363fb1f49d5f70",
+        "sha256": "d3e5d728191054331a4599c8114d920fbe91ea1e58f5b754eb643b1c8c642e21",
         "url": "https://paldb.cc/en/Gobfin"
       },
       "SharkKid_Fire": {
-        "bytes": 91729,
-        "fetchedAt": "2026-08-19T16:11:49+00:00",
+        "bytes": 93372,
+        "fetchedAt": "2026-09-02T06:18:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ca1532d35a0af3dca535e7c92ea91e09e4751db384078663e32aa3d020437fe4",
+        "sha256": "be32f7b9731ec0b4e98002593e9d0b979f6d66c80584fec1b61ee5a25a8b72f6",
         "url": "https://paldb.cc/en/Gobfin_Ignis"
       },
       "SheepBall": {
-        "bytes": 140479,
-        "fetchedAt": "2026-08-19T16:11:53+00:00",
+        "bytes": 144380,
+        "fetchedAt": "2026-09-02T06:18:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "61fdb028e3c5b1a2304417a3e983e983470cf4fdc8e06c84cdac1fd4b2124d1a",
+        "sha256": "f2dac7e2fdb57562c8fab46b68ce4de2a9fe7dbbb77b08e2c20943634b2831ff",
         "url": "https://paldb.cc/en/Lamball"
       },
       "SifuDog": {
-        "bytes": 84477,
-        "fetchedAt": "2026-08-19T16:20:29+00:00",
+        "bytes": 85579,
+        "fetchedAt": "2026-09-02T06:22:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "bdaccc49648b9bf2de7762e59de6a9c72bfdbb91a50e0cd5bd223181c5eb4178",
+        "sha256": "88150fb9a1129c6b853afa064a75b421fff7346935dc1abebd2427ff833174bd",
         "url": "https://paldb.cc/en/Dogen"
       },
       "SkyDragon": {
-        "bytes": 100619,
-        "fetchedAt": "2026-08-19T16:19:12+00:00",
+        "bytes": 102872,
+        "fetchedAt": "2026-09-02T06:21:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "15b58945045c3fdc6e1d48fb8dbda56a505012df7576c8c68f5c2959fb3c177c",
+        "sha256": "703fa90dd823f1af2dcb81f17ea5997be5c3c224e386693ab103da958b78d203",
         "url": "https://paldb.cc/en/Quivern"
       },
       "SkyDragon_Grass": {
-        "bytes": 96865,
-        "fetchedAt": "2026-08-19T16:19:15+00:00",
+        "bytes": 98993,
+        "fetchedAt": "2026-09-02T06:21:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e67c4ffe07d2823bf473d5f7dd88d4f4d6d6b0fec21755b95f48f57b1757ef2c",
+        "sha256": "3f651e608e0f79fc3dd643b91759a7148a01690e85af3fc5128f443858ce2f86",
         "url": "https://paldb.cc/en/Quivern_Botan"
       },
       "SleeveRabbit": {
-        "bytes": 77417,
-        "fetchedAt": "2026-08-19T16:23:59+00:00",
+        "bytes": 79137,
+        "fetchedAt": "2026-09-02T06:23:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8e18725cd566c6e61855fc6840ce1a18a5d61edc35c9b70276c0e234dd5f6db1",
+        "sha256": "1148af3834aaf48f953f90c4e38dfc8c738cb2ec18dd0d044b590af1a7ba80c9",
         "url": "https://paldb.cc/en/Lapure"
       },
       "SmallArmadillo": {
-        "bytes": 80837,
-        "fetchedAt": "2026-08-19T16:20:16+00:00",
+        "bytes": 82878,
+        "fetchedAt": "2026-09-02T06:22:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9bf923ce206976ce792557b2aafcececbfb35e96d8a3f1099832794f9435dea8",
+        "sha256": "a01b151677f1af1c8470f15b7267a22f251b45950ee9d8c9bf3abeed51d721d4",
         "url": "https://paldb.cc/en/Kikit"
       },
       "SmallYeti": {
-        "bytes": 87758,
-        "fetchedAt": "2026-08-19T16:22:09+00:00",
+        "bytes": 94689,
+        "fetchedAt": "2026-09-02T06:23:06+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0f6a67cf98b34ee394ca38c1ca8f872071a676b66a1317f220dffe67f98ea9db",
+        "sha256": "cd1fc191a38386fbcc3d03a272609e9b685c9b0a003fc132117bc21e95f8451f",
         "url": "https://paldb.cc/en/Snugloo"
       },
       "SnakeGirl": {
-        "bytes": 84511,
-        "fetchedAt": "2026-08-19T16:21:56+00:00",
+        "bytes": 91983,
+        "fetchedAt": "2026-09-02T06:23:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "151abf9b933d3383bab63e2c4b0af8b576bb6f9b1104246b93be09b37ddedb43",
+        "sha256": "ed41e7a8c7fe9d424c97e738ebe3e27d68ed9a7a07bb2490811c0b956505bcf0",
         "url": "https://paldb.cc/en/Venusa"
       },
       "SnowPeafowl": {
-        "bytes": 82946,
-        "fetchedAt": "2026-08-19T16:22:48+00:00",
+        "bytes": 84804,
+        "fetchedAt": "2026-09-02T06:23:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "8df059b8ae76f1835a3ccbf4634ceeea4f4cadec84241ad04bb13b71ff894431",
+        "sha256": "933eeb846d6e976d5c031a54003e8e04a43595fde64666ad520dd8383ade8e4c",
         "url": "https://paldb.cc/en/Frostplume"
       },
       "SnowTigerBeastman": {
-        "bytes": 94886,
-        "fetchedAt": "2026-08-19T16:21:54+00:00",
+        "bytes": 102051,
+        "fetchedAt": "2026-09-02T06:22:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d6c960d9494760dec738373aeafc7903ade852c02979682133757b9834e87f25",
+        "sha256": "2fa9be7d36e609d002cfc6946b36e2b25f0a6d9fe828c3c5935a2e3caf5a1b94",
         "url": "https://paldb.cc/en/Bastigor"
       },
       "SoldierBee": {
-        "bytes": 97977,
-        "fetchedAt": "2026-08-19T16:17:56+00:00",
+        "bytes": 98046,
+        "fetchedAt": "2026-09-02T06:20:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0bca0c705fc9127f10701299054cc0c04b5a157b7cd07315049661fa289288aa",
+        "sha256": "5433e766b9f1117ab16de3005bc3b49946304138d01b5bfb4c32a41080e4443d",
         "url": "https://paldb.cc/en/Beegarde"
       },
       "StuffedShark": {
-        "bytes": 86167,
-        "fetchedAt": "2026-08-19T16:22:21+00:00",
+        "bytes": 88218,
+        "fetchedAt": "2026-09-02T06:23:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6d91aec65aaf167512bd4a97faf8c21561b8004011ad52e5c30faa793e44a6aa",
+        "sha256": "5fd61c1a7373ccf69d8cc50239aef61c769ea377b6a0d1738bd1f4cbd66eeed1",
         "url": "https://paldb.cc/en/Finsider"
       },
       "StuffedShark_Fire": {
-        "bytes": 91442,
-        "fetchedAt": "2026-08-19T16:22:22+00:00",
+        "bytes": 93488,
+        "fetchedAt": "2026-09-02T06:23:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "31e3eb8d953c0c80bba7d2aca1813fb9f2d71618b0a4eaa84d7c4d485f715f5a",
+        "sha256": "562022cbbb61e7dcb0b394c64192087c0c1fd84d5d315c072e467968fd534462",
         "url": "https://paldb.cc/en/Finsider_Ignis"
       },
       "SumoDog": {
-        "bytes": 80554,
-        "fetchedAt": "2026-08-19T16:23:44+00:00",
+        "bytes": 82477,
+        "fetchedAt": "2026-09-02T06:23:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a87594a5756d9fc987bbb18f5690742fe1e2bb4ff0e02e3acb970bfa64df78c9",
+        "sha256": "1d386008cec12ec775550f42edb4ae72b1dcc9b74623f7e15893a831c8321b8e",
         "url": "https://paldb.cc/en/Bulldosu"
       },
       "Suzaku": {
-        "bytes": 86774,
-        "fetchedAt": "2026-08-19T16:12:17+00:00",
+        "bytes": 89700,
+        "fetchedAt": "2026-09-02T06:18:55+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "91ae48ce02eb44b125d4d773b875b9ed597f4f2492dc3256ec28bc87d6b31771",
+        "sha256": "2eace828d98f6d457ee9fde5ebfa4428d4658b21e05acc7ad4a6c5a483d50716",
         "url": "https://paldb.cc/en/Suzaku"
       },
       "Suzaku_Water": {
-        "bytes": 84045,
-        "fetchedAt": "2026-08-19T16:12:21+00:00",
+        "bytes": 85831,
+        "fetchedAt": "2026-09-02T06:18:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "097aa461d94daa438197effd3c365d0e2fcc2c4f2e7c863bc89d340cb2adc647",
+        "sha256": "f3e7d4fea65a89cd6adba02324e4aec856a0ba174585d837e79ee637bde38b0e",
         "url": "https://paldb.cc/en/Suzaku_Aqua"
       },
       "SweetsSheep": {
-        "bytes": 85679,
-        "fetchedAt": "2026-08-19T16:12:41+00:00",
+        "bytes": 87026,
+        "fetchedAt": "2026-09-02T06:19:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "76debf4bde873041f01dd2a5a84600a92953766b07f47bcc40e581d8b21fb0f0",
+        "sha256": "9bab4f65a0e675ca288b4a2ddc3d478dc800bfb585ab02207a4ba73569b47086",
         "url": "https://paldb.cc/en/Woolipop"
       },
       "SweetsSheep_Ground": {
-        "bytes": 82481,
-        "fetchedAt": "2026-08-19T16:12:45+00:00",
+        "bytes": 83537,
+        "fetchedAt": "2026-09-02T06:19:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "90e9435235e0246ce66a79e1e0c9b2e6f217b15c4f5b5fe023eb42f2ea29bcc3",
+        "sha256": "85f632f5c96a15df80a4231a80c8cc009cfca5d26bc4a8cc8cd7bfab963e4606",
         "url": "https://paldb.cc/en/Woolipop_Terra"
       },
       "SwordCutlassfish": {
-        "bytes": 88289,
-        "fetchedAt": "2026-08-19T16:23:07+00:00",
+        "bytes": 89178,
+        "fetchedAt": "2026-09-02T06:23:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "04721c1bff35e4402845b658d4e76c519e739e4be7f27bf1210c8875d9e0413d",
+        "sha256": "b9ffcc2b4522756bb4747cdae155ee2c59e4bbb2d69368b983b990a9b289484c",
         "url": "https://paldb.cc/en/Skutlass"
       },
       "SwordCutlassfish_Fire": {
-        "bytes": 92364,
-        "fetchedAt": "2026-08-19T16:23:08+00:00",
+        "bytes": 99088,
+        "fetchedAt": "2026-09-02T06:23:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "573dd8d26142158ee48de0f88317a9dbd4a1342404d2cf14da8307644497ace8",
+        "sha256": "96ec8b6e6776cc1ea389c9849399fb0d78c8cdeeae8b4d0ed271a2658b258185",
         "url": "https://paldb.cc/en/Skutlass_Ignis"
       },
       "TentacleTurtle": {
-        "bytes": 120450,
-        "fetchedAt": "2026-08-19T16:09:41+00:00",
+        "bytes": 122430,
+        "fetchedAt": "2026-09-02T06:16:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d10425c80e48999e94ec149f47f6b831082228ef839abc1c45df2eae6f25a1a1",
+        "sha256": "0f18db7ff42d9ab5692c0a347651a27c0ca6576f4fb099d5c985da80e0f80d91",
         "url": "https://paldb.cc/en/Turtacle"
       },
       "TentacleTurtle_Ground": {
-        "bytes": 105640,
-        "fetchedAt": "2026-08-19T16:09:46+00:00",
+        "bytes": 107739,
+        "fetchedAt": "2026-09-02T06:16:57+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "06dec021ba37501484a2a330f749edfa9b89f9fd83c27646874ee617fc7ee401",
+        "sha256": "49b32b033c2fbb45aa7ca1906bc2289ed652b4e134a958347355c442fecbe8cc",
         "url": "https://paldb.cc/en/Turtacle_Terra"
       },
       "ThiefBird": {
-        "bytes": 83707,
-        "fetchedAt": "2026-08-19T16:22:36+00:00",
+        "bytes": 90877,
+        "fetchedAt": "2026-09-02T06:23:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c9c1f8648934f9aca4c7d365cb63db71cc04785bc55c84e76edf68d62076460a",
+        "sha256": "722b3e19e8a440bd687000fd75f4b2d5ad5eb6b936f104ed0914137b244efa67",
         "url": "https://paldb.cc/en/Roujay"
       },
       "ThunderBird": {
-        "bytes": 98219,
-        "fetchedAt": "2026-08-19T16:18:52+00:00",
+        "bytes": 100980,
+        "fetchedAt": "2026-09-02T06:21:08+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c543fe279d772d83125fa2b5c7653098b2b66fa6565c7c2f5b9fcf6a9f4a5dc6",
+        "sha256": "0bea72549a09773ded90a5aec61c7980f848f6ccea4379205a8d96bba1994f02",
         "url": "https://paldb.cc/en/Beakon"
       },
       "ThunderBird_Ice": {
-        "bytes": 87052,
-        "fetchedAt": "2026-08-19T16:18:54+00:00",
+        "bytes": 94041,
+        "fetchedAt": "2026-09-02T06:21:08+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d066b79f2024192b101d33f6610a569bc69f7436a0fff1d38106c3d047ba794b",
+        "sha256": "6daf9a9e14ad71af991bc8c74d891954491e310e9655111037e02c14ac55a640",
         "url": "https://paldb.cc/en/Beakon_Cryst"
       },
       "ThunderDog": {
-        "bytes": 97095,
-        "fetchedAt": "2026-08-19T16:18:06+00:00",
+        "bytes": 99206,
+        "fetchedAt": "2026-09-02T06:20:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c826baf73c1ece311b0d7bed369b5d404bed965c697da0a78dea89764535b2ee",
+        "sha256": "d4b831e79c9344e719f044441cff04ddee75d3aea46961578d1b829fb9ac9579",
         "url": "https://paldb.cc/en/Rayhound"
       },
       "ThunderDog_Ice": {
-        "bytes": 89316,
-        "fetchedAt": "2026-08-19T16:18:08+00:00",
+        "bytes": 96368,
+        "fetchedAt": "2026-09-02T06:20:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "da54a97a154404b6961a73b13998378466196051fde73cab9fd9dfb7519fd404",
+        "sha256": "85252e556534ca557d0093c2918545cef0fb6e80e491f7406ad1ce351d1dee77",
         "url": "https://paldb.cc/en/Rayhound_Cryst"
       },
       "ThunderDragonMan": {
-        "bytes": 95406,
-        "fetchedAt": "2026-08-19T16:19:47+00:00",
+        "bytes": 97419,
+        "fetchedAt": "2026-09-02T06:22:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5f80264f0340e0e1366e9ab943e6ea4644a4fa1d06f4d258180a8c8c54ac02e2",
+        "sha256": "47f1e2052ceda01542a8f0520e1d03904cffbfa0c5320d39cada1c07b4d5d50e",
         "url": "https://paldb.cc/en/Orserk"
       },
       "ThunderFluffyBird": {
-        "bytes": 83714,
-        "fetchedAt": "2026-08-19T16:22:58+00:00",
+        "bytes": 85631,
+        "fetchedAt": "2026-09-02T06:23:27+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "0e82811d4146f2fabd0343354a4afc3dbd8688d524b1af8f94950cb366012e26",
+        "sha256": "7b8a61c92a72012a0f41e855ad762d5b529b61299529185d47b0c952e8adad71",
         "url": "https://paldb.cc/en/Dynamoff"
       },
       "TropicalOstrich": {
-        "bytes": 86029,
-        "fetchedAt": "2026-08-19T16:22:41+00:00",
+        "bytes": 88136,
+        "fetchedAt": "2026-09-02T06:23:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4611adf33ae9f6b48ad0831f10f4352a966083dbe8ecd55d9cfd8a1442b85bd2",
+        "sha256": "d11f586efc72bb09d0469a558cf9a119914c490f5c38ea7f646c0514a04ceff2",
         "url": "https://paldb.cc/en/Palumba"
       },
       "Umihebi": {
-        "bytes": 91330,
-        "fetchedAt": "2026-08-19T16:11:57+00:00",
+        "bytes": 93428,
+        "fetchedAt": "2026-09-02T06:18:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "d710e4d1f1c2a31716d213ea2dfa6a4c2c309308cb914af58b64c4648ca8298a",
+        "sha256": "92aa3f25c9c539ab08b643104810509a24ca1e47be55bfc763c4ba448378b60e",
         "url": "https://paldb.cc/en/Jormuntide"
       },
       "Umihebi_Fire": {
-        "bytes": 92945,
-        "fetchedAt": "2026-08-19T16:12:01+00:00",
+        "bytes": 94318,
+        "fetchedAt": "2026-09-02T06:18:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "b5d8266331e1b6c21854c792861f69462eb758b069c59cfb2683c3fffadbaeaa",
+        "sha256": "94ee4583f8a00c4cf6a7970d4909aadb7b0446b32a4942a63e4b33a72aecb98e",
         "url": "https://paldb.cc/en/Jormuntide_Ignis"
       },
       "VenusFlytrap": {
-        "bytes": 85883,
-        "fetchedAt": "2026-08-19T16:23:48+00:00",
+        "bytes": 93041,
+        "fetchedAt": "2026-09-02T06:23:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "5026584eff3db845c7713ce045235e03dbe317b4e3d26b10affbe5c50e2a6c0a",
+        "sha256": "21743b045bd197045a34f0b8f8bc29e39c3cf76b9f734c593eb418ca198f9064",
         "url": "https://paldb.cc/en/Carnibora"
       },
       "VioletFairy": {
-        "bytes": 111602,
-        "fetchedAt": "2026-08-19T16:17:44+00:00",
+        "bytes": 115144,
+        "fetchedAt": "2026-09-02T06:20:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "1c83501dd38d9413909a9e828d4f28511c4a85dcd7e4d3055bd4617e2d4035ec",
+        "sha256": "29097fecd8ae68825014e0a0fdd51a5574fdb57a57d7f712da991f6c73d751a1",
         "url": "https://paldb.cc/en/Vaelet"
       },
       "VolcanicMonster": {
-        "bytes": 96058,
-        "fetchedAt": "2026-08-19T16:13:31+00:00",
+        "bytes": 96882,
+        "fetchedAt": "2026-09-02T06:19:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "eb37192062f094c1b1509559fc9dc81eeaafd79e29daaaccc92a1c9ad7646bee",
+        "sha256": "a6c599e796af59658bb91c9919dc3866a263455d50bb5c0397e85c730a7b63bf",
         "url": "https://paldb.cc/en/Reptyro"
       },
       "VolcanicMonster_Ice": {
-        "bytes": 96149,
-        "fetchedAt": "2026-08-19T16:16:10+00:00",
+        "bytes": 96349,
+        "fetchedAt": "2026-09-02T06:19:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "089e83d4d29390e3c67088c506e0f8d9bfc3ce68660b60a668ef8c5e1e42ce58",
+        "sha256": "91fb5f3be396f2c599d835c939ca29691ac00161bfc80d84b7918b8c784e8948",
         "url": "https://paldb.cc/en/Reptyro_Cryst"
       },
       "VolcanoDragon": {
-        "bytes": 93075,
-        "fetchedAt": "2026-08-19T16:20:40+00:00",
+        "bytes": 95171,
+        "fetchedAt": "2026-09-02T06:22:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "037df9bc35c533ec67b81c7dcc187d87cf07026f4bfe0f06735c98f2059a483d",
+        "sha256": "55130c3f6eabc6be69f61f3a289259f1b45a0e4d55456fe83aedd86965674074",
         "url": "https://paldb.cc/en/Moldron"
       },
       "VolcanoDragon_Ice": {
-        "bytes": 81389,
-        "fetchedAt": "2026-08-19T16:20:41+00:00",
+        "bytes": 88134,
+        "fetchedAt": "2026-09-02T06:22:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "22c5aeded0dfe504ae1c47738e25bacf9ffd5cffc3886a29bd3eaf9db1dbc2ff",
+        "sha256": "4fea75c0d2e2675c0ca2aa52bd64087a0b72aa544097db39b0d448af6571eca3",
         "url": "https://paldb.cc/en/Moldron_Cryst"
       },
       "WeaselDragon": {
-        "bytes": 97493,
-        "fetchedAt": "2026-08-19T16:19:08+00:00",
+        "bytes": 100680,
+        "fetchedAt": "2026-09-02T06:21:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "371aa07ad0dd456bcbbe02120168b36ffbc115be92da59dbfdb7e022aff0901b",
+        "sha256": "07d019b571ebb8fc7203870f7c984164bd0d45270cbf8658ea9a84484d19cf29",
         "url": "https://paldb.cc/en/Chillet"
       },
       "WeaselDragon_Fire": {
-        "bytes": 94339,
-        "fetchedAt": "2026-08-19T16:19:11+00:00",
+        "bytes": 96301,
+        "fetchedAt": "2026-09-02T06:21:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "7cb7aee2971fa210055754547ec4df2624d55370213f29959ff29fbd14dafa22",
+        "sha256": "9e2984a6ba04784f5fe86552da56c8da44986971d2b66e766a56c0b34771069a",
         "url": "https://paldb.cc/en/Chillet_Ignis"
       },
       "Werewolf": {
-        "bytes": 99018,
-        "fetchedAt": "2026-08-19T16:12:05+00:00",
+        "bytes": 101128,
+        "fetchedAt": "2026-09-02T06:18:53+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "43dde30f97558829db9a7191eaf63d370bd4d686c17dfbee9f01b4f737147a19",
+        "sha256": "ebb0dbd91fcb4a71b2ea861c1121b6e43a3b80792145a00bb1b2838e66c1d355",
         "url": "https://paldb.cc/en/Loupmoon"
       },
       "Werewolf_Ice": {
-        "bytes": 95337,
-        "fetchedAt": "2026-08-19T16:21:40+00:00",
+        "bytes": 97252,
+        "fetchedAt": "2026-09-02T06:22:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4ba7e71387f7c3d5ae3888721a5ba23de6370c92ff600335b207cb5dba001dd0",
+        "sha256": "ff5e202cd42b20aa94fb23c98ca01cd3bcc9bb7792da760408e04bcf184251ef",
         "url": "https://paldb.cc/en/Loupmoon_Cryst"
       },
       "WhiteAlienDragon": {
-        "bytes": 155015,
-        "fetchedAt": "2026-08-19T16:20:37+00:00",
+        "bytes": 157121,
+        "fetchedAt": "2026-09-02T06:22:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "61778c73ce2d5f2f18d8192c3a72d855cc341ef4a4efe241da7c24c7534cb9b8",
+        "sha256": "aa30244d3e3b008392ec1113fe311ec5a5010fe138e596d6a1061338287b0c56",
         "url": "https://paldb.cc/en/Xenogard"
       },
       "WhiteDeer": {
-        "bytes": 108114,
-        "fetchedAt": "2026-08-19T16:21:01+00:00",
+        "bytes": 114792,
+        "fetchedAt": "2026-09-02T06:22:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "40ade9523d832749220ed7ba291c9f0f3951b7c349daca8600205af9abeede26",
+        "sha256": "accc9af11c74f787972189d8d5caa17355b87e3946dc8d85b84844be189926ee",
         "url": "https://paldb.cc/en/Celesdir"
       },
       "WhiteDeer_Dark": {
-        "bytes": 86556,
-        "fetchedAt": "2026-08-19T16:21:02+00:00",
+        "bytes": 93612,
+        "fetchedAt": "2026-09-02T06:22:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "7b8ebbdab2f2b1740013a5156e71d0138efeb52771d750ad895578b77cbe8d79",
+        "sha256": "0528262facba84a0ab4b2bffea08de4479f4afd971ed0d27f5154546a9ed7c96",
         "url": "https://paldb.cc/en/Celesdir_Noct"
       },
       "WhiteMoth": {
-        "bytes": 92732,
-        "fetchedAt": "2026-08-19T16:17:13+00:00",
+        "bytes": 94585,
+        "fetchedAt": "2026-09-02T06:20:29+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9b9a3af4a22f0a1d82f628577981fb769299d664d4d4df14091ab575c852c426",
+        "sha256": "febf36fb6a5d62e62d209e2008f86528e5eff50182b4066e96e2a190a1fc6d66",
         "url": "https://paldb.cc/en/Sibelyx"
       },
       "WhiteMoth_Neutral": {
-        "bytes": 89640,
-        "fetchedAt": "2026-08-19T16:17:14+00:00",
+        "bytes": 96786,
+        "fetchedAt": "2026-09-02T06:20:29+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "6defba90766705befc34b7e56f70731afe299fd91c866a5c9e76703f39f4dce1",
+        "sha256": "2576683d3b526643f9604647645e0739f72e46d78f02d1647e952ac625538765",
         "url": "https://paldb.cc/en/Sibelyx_Primo"
       },
       "WhiteShieldDragon": {
-        "bytes": 94114,
-        "fetchedAt": "2026-08-19T16:20:54+00:00",
+        "bytes": 95049,
+        "fetchedAt": "2026-09-02T06:22:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c9a1c282d710a20a090bbab948e29b6540412c86d9da7aa84b2b2b3839bf6142",
+        "sha256": "4f109d28cc67c3d72cb1314f9af19278f4f54e6f4f1c41f48d0bfdb94c7f4e9e",
         "url": "https://paldb.cc/en/Silvegis"
       },
       "WhiteTiger": {
-        "bytes": 91021,
-        "fetchedAt": "2026-08-19T16:12:49+00:00",
+        "bytes": 93003,
+        "fetchedAt": "2026-09-02T06:19:44+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "cee11316732fff22936305ccb8611283193427732bd4f5bfdaaf14857a70791e",
+        "sha256": "37061ca68b253c0ffb9834f838037be2b2fb8764de88f2f78813fd7209f4f7e2",
         "url": "https://paldb.cc/en/Cryolinx"
       },
       "WhiteTiger_Ground": {
-        "bytes": 87267,
-        "fetchedAt": "2026-08-19T16:21:48+00:00",
+        "bytes": 89115,
+        "fetchedAt": "2026-09-02T06:22:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "cd3db6a12b2a055ea1f10cb1ec369507e20be814d979454ecf9759efed7c8708",
+        "sha256": "04029b466dcbcda8b990703b6d51503b86d12306da1d73a3b356b85f17599230",
         "url": "https://paldb.cc/en/Cryolinx_Terra"
       },
       "WindChimes": {
-        "bytes": 89700,
-        "fetchedAt": "2026-08-19T16:12:08+00:00",
+        "bytes": 91734,
+        "fetchedAt": "2026-09-02T06:18:53+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e9343b3e9b966db535121fe71c37202b103ddc4f67c58417022e10bba0b920c1",
+        "sha256": "16e52aa47c4dd6253c4a2bb87011e54ba529383555931e6e34d5c99727022890",
         "url": "https://paldb.cc/en/Hangyu"
       },
       "WindChimes_Ice": {
-        "bytes": 92911,
-        "fetchedAt": "2026-08-19T16:12:13+00:00",
+        "bytes": 94817,
+        "fetchedAt": "2026-09-02T06:18:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "74ad80a729ae357eb8b7e9679eb8c70e9ab1327214d6b7a2ea009aa43924219e",
+        "sha256": "4848695186c02374f137b6a64ed4366519644c1b906df710688b32e13bef2893",
         "url": "https://paldb.cc/en/Hangyu_Cryst"
       },
       "WingGolem": {
-        "bytes": 155539,
-        "fetchedAt": "2026-08-19T16:20:25+00:00",
+        "bytes": 155812,
+        "fetchedAt": "2026-09-02T06:22:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "06cc6a22be5f811ed3c5d7b401100076d231858ae5bbe34c813fa49d9c41a969",
+        "sha256": "d4786eca438922de1c0e347ea2c744155071d095e72f4eb80dcdfb5e231ec125",
         "url": "https://paldb.cc/en/Knocklem"
       },
       "WingGolem_Fire": {
-        "bytes": 95483,
-        "fetchedAt": "2026-08-19T16:20:25+00:00",
+        "bytes": 101200,
+        "fetchedAt": "2026-09-02T06:22:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "48b432e823227d2fd28ea1458da74ccc0a307d297c5e047776c8868b69f5e358",
+        "sha256": "105299d6d35fe687e1c62df2bcd5e487aaa6c187748bef84a58074071ba5d63d",
         "url": "https://paldb.cc/en/Knocklem_Ignis"
       },
       "WizardOwl": {
-        "bytes": 84849,
-        "fetchedAt": "2026-08-19T16:17:26+00:00",
+        "bytes": 87578,
+        "fetchedAt": "2026-09-02T06:20:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "269607098889fe0006cd07b17e789e1d3f25532b45fbb98499bdc9c5019e2312",
+        "sha256": "2d7710bc2a167729129e325ad73d16a8a1a6b955002f3239516bd864db3cca93",
         "url": "https://paldb.cc/en/Hoocrates"
       },
       "WoolFox": {
-        "bytes": 87645,
-        "fetchedAt": "2026-08-19T16:19:51+00:00",
+        "bytes": 90669,
+        "fetchedAt": "2026-09-02T06:22:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "cf679139183d9a30274c6274272b06d66cc179baffdaeaae5b989f38681ebdda",
+        "sha256": "1399c970f571275a8986946c13095bebe1867b641a3009f46648c8e3121e6894",
         "url": "https://paldb.cc/en/Cremis"
       },
       "WorldTreeDragon": {
-        "bytes": 57521,
-        "fetchedAt": "2026-08-19T16:24:26+00:00",
+        "bytes": 59691,
+        "fetchedAt": "2026-09-02T06:24:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c5b3bb1be7ab1dfa98e45e239c1f5bdcad828cd315b95884ece2df1986d2e0b1",
+        "sha256": "9f11adba053e20708e06ef4def20e75ef3ae9d091cea0e039a06765f653091fb",
         "url": "https://paldb.cc/en/Astralym"
       },
       "YakushimaBoss001": {
-        "bytes": 97668,
-        "fetchedAt": "2026-08-19T16:23:28+00:00",
+        "bytes": 97626,
+        "fetchedAt": "2026-09-02T06:23:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "2d84641b996abfde7c08f2f165e5b95d16ceb679ad6b4be636eefdbab0dee433",
+        "sha256": "308e06d37d840adbd1b0d6b499d72169c7b87227b6c57421c923ff73d536901c",
         "url": "https://paldb.cc/en/Eye_of_Cthulhu"
       },
       "YakushimaBoss001_Small": {
-        "bytes": 63733,
-        "fetchedAt": "2026-08-19T16:23:28+00:00",
+        "bytes": 63781,
+        "fetchedAt": "2026-09-02T06:23:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "77cd4ea0db1bf0b34d814ee62d6be3e4b63c1ddf12af1556c271f34947753a70",
+        "sha256": "b43d6c741d645edcfac266a4c043fc835ef3e30c5bfac125244a62f93409cb20",
         "url": "https://paldb.cc/en/Demon_Eye"
       },
       "YakushimaMonster001": {
-        "bytes": 62743,
-        "fetchedAt": "2026-08-19T16:23:10+00:00",
+        "bytes": 62794,
+        "fetchedAt": "2026-09-02T06:23:31+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "9b47f529ae5ed8987fc5ce53dbcac6d76ad4030ba0cc8ffb72fbe83bad15f49f",
+        "sha256": "2c1e0a17c7bc20ee43abfb0a2c7aca90531235e55fa0638413f203a2f74cc01b",
         "url": "https://paldb.cc/en/Green_Slime"
       },
       "YakushimaMonster001_Blue": {
-        "bytes": 62916,
-        "fetchedAt": "2026-08-19T16:23:13+00:00",
+        "bytes": 63083,
+        "fetchedAt": "2026-09-02T06:23:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "85ee58053c5fd09643b613f5ac88c209e4e3f03e612df45831470bb91fe7bc40",
+        "sha256": "179c21ffcf8b71f9191fb1851bfc3e9b64aeb417d1abd910020d95a1d0350e96",
         "url": "https://paldb.cc/en/Blue_Slime"
       },
       "YakushimaMonster001_Pink": {
-        "bytes": 62797,
-        "fetchedAt": "2026-08-19T16:23:18+00:00",
+        "bytes": 62843,
+        "fetchedAt": "2026-09-02T06:23:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "c97578fbb7b9d0fa1009b7916406c4e9f54f5338d49e9e0d3aa2d3d561372924",
+        "sha256": "531a8ec401e5f82520031f9465e0047f9cb802ca5574e2ed558ef5d0687ab29c",
         "url": "https://paldb.cc/en/Illuminant_Slime"
       },
       "YakushimaMonster001_Purple": {
-        "bytes": 63886,
-        "fetchedAt": "2026-08-19T16:23:16+00:00",
+        "bytes": 63930,
+        "fetchedAt": "2026-09-02T06:23:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "4e35809e956b3242f356856d4506b5dafd90760c2e92e537d44e45700b6a9d7a",
+        "sha256": "2f90696deec2296602c6eedf21ce5b9cfcfe4bf484b73c66187a4c87a014c5bd",
         "url": "https://paldb.cc/en/Purple_Slime"
       },
       "YakushimaMonster001_Rainbow": {
-        "bytes": 62904,
-        "fetchedAt": "2026-08-19T16:23:20+00:00",
+        "bytes": 63000,
+        "fetchedAt": "2026-09-02T06:23:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "daf008e629a3171f2c5f59138034fcb5a6aa8623badd399bdb7fa340ae564424",
+        "sha256": "fb4c1566d016797d3fff6a610b857579a02445125c8b41b5559119924a101fa3",
         "url": "https://paldb.cc/en/Rainbow_Slime"
       },
       "YakushimaMonster001_Red": {
-        "bytes": 63562,
-        "fetchedAt": "2026-08-19T16:23:14+00:00",
+        "bytes": 63609,
+        "fetchedAt": "2026-09-02T06:23:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "a1594755eaf3abc1537d36f3a727e8829a721ff5f2737859dcc7d7db9e99e134",
+        "sha256": "89227e30203904cc1b4bc2e442f10502bd583f486686aadd3575672a1a8d2266",
         "url": "https://paldb.cc/en/Red_Slime"
       },
       "YakushimaMonster002": {
-        "bytes": 63388,
-        "fetchedAt": "2026-08-19T16:23:21+00:00",
+        "bytes": 63439,
+        "fetchedAt": "2026-09-02T06:23:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "fca91e83e973acdaa5178953f2441d83f78e51b5c0e3e3f0d1cb1dc26488294a",
+        "sha256": "1d0484ab34d7e1b5a44ce73bc66abdd40b6102b4d717a526ef6ee8b4af5cb9e7",
         "url": "https://paldb.cc/en/Enchanted_Sword"
       },
       "YakushimaMonster003": {
-        "bytes": 63872,
-        "fetchedAt": "2026-08-19T16:23:25+00:00",
+        "bytes": 63923,
+        "fetchedAt": "2026-09-02T06:23:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "77b5831fc1fb2e9e03b8f5509e3e6a5881c88a4a22007a05256eda039b123d20",
+        "sha256": "9a808a0dd3f7e2a0302186de03974a931c9d2b2866bf61e566da7245a8fa970c",
         "url": "https://paldb.cc/en/Cave_Bat"
       },
       "YakushimaMonster003_Purple": {
-        "bytes": 63418,
-        "fetchedAt": "2026-08-19T16:23:25+00:00",
+        "bytes": 63185,
+        "fetchedAt": "2026-09-02T06:23:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "e45e38ced6915f748f132b18be16c4555900dbe89ea29c888e588039d25063ef",
+        "sha256": "1f0683a2b8e67754d1833416ab2d36d3cd4eaf41f9a97609fb9528ef2dd3481e",
         "url": "https://paldb.cc/en/Illuminant_Bat"
       },
       "Yeti": {
-        "bytes": 105798,
-        "fetchedAt": "2026-08-19T16:17:39+00:00",
+        "bytes": 105816,
+        "fetchedAt": "2026-09-02T06:20:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "ad5a6eeed58f8f5c072c42fd78e9f2e6b31c136766c61d8ad13012be8bd83a1a",
+        "sha256": "0b391b0fbbe068a9cd4965ccd2f3b69fa911b4ef51593434e05297d6b64d8663",
         "url": "https://paldb.cc/en/Wumpo"
       },
       "Yeti_Grass": {
-        "bytes": 103535,
-        "fetchedAt": "2026-08-19T16:17:40+00:00",
+        "bytes": 104981,
+        "fetchedAt": "2026-09-02T06:20:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
         },
-        "sha256": "2343b662fcb7b8d842a8699782ac22941fd46a0b603b745f2411adee5c333be4",
+        "sha256": "63e4478fbe6514b703de7a34c9f68a7aa14120f55078936595ee389e569eb27a",
         "url": "https://paldb.cc/en/Wumpo_Botan"
       }
     }
