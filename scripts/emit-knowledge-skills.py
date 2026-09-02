@@ -189,6 +189,8 @@ def main() -> None:
                 "cooldown": s.get("cooldown"),
             })
 
+    require_values(pal_learnsets, page="PalDB detail pages", field="pal_learnsets")
+
     # 5. Parse PalCalc Inheritance Data and Guaranteed Passives
     if not PALCALC_FILE.exists():
         raise SourceContractError("Missing scripts/.cache/palcalc-db.json; run scripts/fetch-palcalc.py first.")
