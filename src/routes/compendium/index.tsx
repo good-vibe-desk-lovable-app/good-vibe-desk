@@ -6,6 +6,7 @@ import {
   ChevronRight,
   Crosshair,
   Download,
+  Fish,
   Lightbulb,
   MapPinned,
   PackageOpen,
@@ -73,7 +74,7 @@ function CompendiumIndexPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available directories" value="5" />
+              <Metric label="Available directories" value="6" />
               <Metric label="Core reference records" value="977" />
               <Metric label="Core dependency" value="None" />
               <Metric label="Item pack" value="Opt-in" />
@@ -141,6 +142,14 @@ function CompendiumIndexPage() {
               tone="sky"
             />
             <PackCard
+              to="/compendium/fishing"
+              icon={<Fish className="size-5" />}
+              title="Fishing"
+              count="115 spots"
+              description="Explore fishing spots, catch distributions, drop tables, rods and bait, support Pals, and water shadow indicators."
+              tone="cyan"
+            />
+            <PackCard
               to="/compendium/items"
               icon={<PackageOpen className="size-5" />}
               title="Items & Recipes"
@@ -190,6 +199,7 @@ function PackCard({
   to:
     | "/compendium/field-alphas"
     | "/compendium/encounters"
+    | "/compendium/fishing"
     | "/compendium/missions"
     | "/compendium/technologies"
     | "/compendium/items";
@@ -197,13 +207,14 @@ function PackCard({
   title: string;
   count: string;
   description: string;
-  tone: "amber" | "violet" | "emerald" | "sky" | "orange";
+  tone: "amber" | "violet" | "cyan" | "emerald" | "sky" | "orange";
 }) {
   const toneClasses = {
     amber:
       "border-amber-400/25 hover:border-amber-400/60 bg-amber-400/10 text-amber-700 dark:text-amber-300",
     violet:
       "border-violet-400/25 hover:border-violet-400/60 bg-violet-400/10 text-violet-700 dark:text-violet-300",
+    cyan: "border-cyan-400/25 hover:border-cyan-400/60 bg-cyan-400/10 text-cyan-700 dark:text-cyan-300",
     emerald:
       "border-emerald-400/25 hover:border-emerald-400/60 bg-emerald-400/10 text-emerald-700 dark:text-emerald-300",
     sky: "border-sky-400/25 hover:border-sky-400/60 bg-sky-400/10 text-sky-700 dark:text-sky-300",

@@ -16,14 +16,17 @@ export function loadOfflineKnowledgePack<T>(name: string): Promise<readonly Evid
     .then(async (response) => {
       if (!response.ok)
         throw new Error(`Knowledge pack ${name} could not be loaded (${response.status}).`);
-      if (typeof DecompressionStream === "undefined") {
-        throw new Error("This browser cannot decompress offline knowledge packs.");
+      let text: string;
+      if (response.headers.get("content-encoding") === "gzip") {
+        text = await response.text();
+      } else {
+        if (typeof DecompressionStream === "undefined") {
+          throw new Error("This browser cannot decompress offline knowledge packs.");
+        }
+        const decompressed = response.body?.pipeThrough(new DecompressionStream("gzip"));
+        if (!decompressed) throw new Error(`Knowledge pack ${name} returned no readable body.`);
+        text = await new Response(decompressed).text();
       }
-
-      const decompressed = response.body?.pipeThrough(new DecompressionStream("gzip"));
-      if (!decompressed) throw new Error(`Knowledge pack ${name} returned no readable body.`);
-
-      const text = await new Response(decompressed).text();
       const payload: unknown = JSON.parse(text);
       if (!Array.isArray(payload))
         throw new Error(`Knowledge pack ${name} did not contain a record array.`);
