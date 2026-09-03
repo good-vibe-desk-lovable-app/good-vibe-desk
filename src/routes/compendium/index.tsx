@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Crosshair,
   Download,
+  Egg,
   Fish,
   Lightbulb,
   MapPinned,
@@ -77,7 +78,7 @@ function CompendiumIndexPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available directories" value="9" />
+              <Metric label="Available directories" value="10" />
               <Metric label="Core reference records" value="1,475" />
               <Metric label="Core dependency" value="None" />
               <Metric label="Item pack" value="Opt-in" />
@@ -177,6 +178,14 @@ function CompendiumIndexPage() {
               tone="violet"
             />
             <PackCard
+              to="/compendium/eggs"
+              icon={<Egg className="size-5" />}
+              title="Eggs & Incubators"
+              count="754 wild spawns"
+              description="Explore egg pools, wild egg spawn locations with exact weights, special egg types, incubator technology specs, and recorded gaps."
+              tone="amber"
+            />
+            <PackCard
               to="/compendium/items"
               icon={<PackageOpen className="size-5" />}
               title="Items & Recipes"
@@ -232,6 +241,7 @@ function PackCard({
     | "/compendium/skills"
     | "/compendium/structures"
     | "/compendium/technologies"
+    | "/compendium/eggs"
     | "/compendium/items";
   icon: ReactNode;
   title: string;

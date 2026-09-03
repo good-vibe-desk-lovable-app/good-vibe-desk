@@ -28,7 +28,7 @@ Where sources conflict, the conclusion and reason are stated in the discrepancy 
 
 > **Methodological Rule:** Information sourced from a single web/wiki page is untrusted whenever the same subject exists in a structured catalogue already present in the repository.
 >
-> *Case Study (Incubators):* Two independent data collection efforts previously recorded only two incubators by relying on a single wiki page summary. However, querying the 588-row structured technology dataset (`knowledgeTechnologies.ts`) already in the repo reveals five distinct hatching structures across levels 10, 36, 48, 58, and 76, plus the level 19 Breeding Farm structure. Datasets and pipeline emitters must always source claims from existing structured catalogue datasets in preference to isolated single-page summaries.
+> _Case Study (Incubators):_ Two independent data collection efforts previously recorded only two incubators by relying on a single wiki page summary. However, querying the 588-row structured technology dataset (`knowledgeTechnologies.ts`) already in the repo reveals five distinct hatching structures across levels 10, 36, 48, 58, and 76, plus the level 19 Breeding Farm structure. Datasets and pipeline emitters must always source claims from existing structured catalogue datasets in preference to isolated single-page summaries.
 
 ---
 

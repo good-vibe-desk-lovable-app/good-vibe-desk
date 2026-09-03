@@ -7,14 +7,14 @@ Neither can do the other's half.
 
 # PART 0 — WHY IT'S SPLIT
 
-| | Jules | Lovable |
-|---|---|---|
-| Linux VM with shell | ✅ | ❌ |
-| Internet access for scraping | ✅ | ❌ |
-| Runs Python / Node scripts | ✅ | ❌ |
-| Writes to GitHub | ✅ | ✅ |
-| Builds React UI fast | ~ | ✅ |
-| Free tier | 15 tasks/day | credit-based |
+|                              | Jules        | Lovable      |
+| ---------------------------- | ------------ | ------------ |
+| Linux VM with shell          | ✅           | ❌           |
+| Internet access for scraping | ✅           | ❌           |
+| Runs Python / Node scripts   | ✅           | ❌           |
+| Writes to GitHub             | ✅           | ✅           |
+| Builds React UI fast         | ~            | ✅           |
+| Free tier                    | 15 tasks/day | credit-based |
 
 **Jules does every collection pass.** Lovable never scrapes — it reads JSON
 files Jules committed and renders them.
@@ -25,12 +25,12 @@ files Jules committed and renders them.
 
 Tier 1 beats tier 2 beats tier 3. Never average across tiers.
 
-| Tier | Source | Use for |
-|---|---|---|
-| **1 — datamined** | PalCalc `db.json` (`github.com/tylercamp/palcalc`, generated from game `.pak` files) | Anything it covers: stats, work suitability, breeding, gender, elements |
-| **2 — structured wiki** | paldb.cc — bounded page sections only | Items, technology, missions, encounters, drops, learnsets |
-| **3 — open wiki** | palworld.wiki.gg, game8, fandom | Corroboration; never sole source for a number |
-| **4 — community** | Reddit, calculators, guides, spreadsheets | Labelled opinion only. Never a fact |
+| Tier                    | Source                                                                               | Use for                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| **1 — datamined**       | PalCalc `db.json` (`github.com/tylercamp/palcalc`, generated from game `.pak` files) | Anything it covers: stats, work suitability, breeding, gender, elements |
+| **2 — structured wiki** | paldb.cc — bounded page sections only                                                | Items, technology, missions, encounters, drops, learnsets               |
+| **3 — open wiki**       | palworld.wiki.gg, game8, fandom                                                      | Corroboration; never sole source for a number                           |
+| **4 — community**       | Reddit, calculators, guides, spreadsheets                                            | Labelled opinion only. Never a fact                                     |
 
 **The dump you were given is tier 4 and mostly pre-1.0.** It cites v0.1.5.0 and
 v0.2.0.6, says work suitability caps at 5 (it caps at 8), and gives variants
@@ -64,15 +64,15 @@ Carried from the existing app. Each exists because something broke.
 Do not re-collect these. They exist, verified, in
 `good-vibe-desk-lovable-app/good-vibe-desk`:
 
-| Data | Where | Source |
-|---|---|---|
-| 300 Pals: stats, elements, work suitability, partner skills, gender | `src/data/palworld/` | PalCalc db.json |
-| 44,851 breeding pairs, unique combos, same-species rules | `pairMaps.ts`, `uniqueCombos.ts` | PalCalc |
-| 115 passives, 307 active skills | `passives.ts`, `skills.ts` | paldb |
-| 588 technology unlocks | `knowledgeTechnologies.ts` | paldb |
-| 117 missions, 207 encounters, 65 field Alphas | `knowledge*.ts` | paldb |
-| 2,455 items, 3,779 production rows | `knowledgeItems.ts` | paldb |
-| Drops, habitat, spawns | `drops.ts`, `habitat.ts`, `spawns.ts` | paldb |
+| Data                                                                | Where                                 | Source          |
+| ------------------------------------------------------------------- | ------------------------------------- | --------------- |
+| 300 Pals: stats, elements, work suitability, partner skills, gender | `src/data/palworld/`                  | PalCalc db.json |
+| 44,851 breeding pairs, unique combos, same-species rules            | `pairMaps.ts`, `uniqueCombos.ts`      | PalCalc         |
+| 115 passives, 307 active skills                                     | `passives.ts`, `skills.ts`            | paldb           |
+| 588 technology unlocks                                              | `knowledgeTechnologies.ts`            | paldb           |
+| 117 missions, 207 encounters, 65 field Alphas                       | `knowledge*.ts`                       | paldb           |
+| 2,455 items, 3,779 production rows                                  | `knowledgeItems.ts`                   | paldb           |
+| Drops, habitat, spawns                                              | `drops.ts`, `habitat.ts`, `spawns.ts` | paldb           |
 
 **Already closed as unobtainable** — do not reopen without new evidence:
 element multipliers, level-scaling formula, boss stat profiles, move damage,
@@ -86,7 +86,9 @@ extraction, which needs a PC with Palworld installed.
 Each is one Jules task, one branch, one PR. Ordered by value.
 
 ## Pass A — Verify and version-stamp what exists
+
 Before adding anything, confirm the current data is current.
+
 - Re-fetch PalCalc `db.json`; compare against the committed dataset field by
   field; report every difference.
 - Record the paldb version stamp and the PalCalc commit SHA in
@@ -97,8 +99,10 @@ Before adding anything, confirm the current data is current.
 **Output:** a report plus a version stamp. No data changes unless something moved.
 
 ## Pass B — Eggs
+
 Not collected. Wanted: every egg type and size, the Pal pool per type × size,
 hatch mechanics, wild egg placement.
+
 - paldb `/en/Eggs` is a **wild egg pool** table (754 location/Pal/weight rows,
   27 egg types) — it does not establish breeding egg size per species. Record
   what it does publish; gap what it doesn't.
@@ -107,27 +111,36 @@ hatch mechanics, wild egg placement.
   rates.
 
 ## Pass C — Fishing
+
 Not collected. paldb `/en/Fishing` has 6 fishing partner skills, 115 spot
 headings, per-zone loot lists.
+
 - Preserve probabilities and ranges **as published** — never convert to expected
   values.
 - Bait tiers, shadow types (normal / purple sparkle / green sparkle / purple
   beam) as mechanics.
 
 ## Pass D — Gear
+
 Not collected. Weapons, tools, armour, accessories, spheres.
+
 - Stats, recipes, tech tier, ammo type, durability, resistances.
 - Spheres: capture rate contribution, recipe, tech level.
 
 ## Pass E — Food and recipes
+
 Not collected. Ingredients, nutrition, SAN, HP, buffs, workstation, duration.
 
 ## Pass F — Structures
+
 Partly covered by technology unlocks, but buildable-object detail is not.
+
 - Materials, footprint, function, power draw, tech tier.
 
 ## Pass G — World and map
+
 Not collected, and the hardest.
+
 - Fast travel points, dungeon entrances, merchant locations, resource zones.
 - **Known blocker:** paldb's map markers have no stable IDs and use transformed
   display coordinates. If identity can't be preserved, gap it — a map without
@@ -135,17 +148,22 @@ Not collected, and the hardest.
 - Dungeon types, level ranges, boss pools per type are obtainable.
 
 ## Pass H — Raids and bosses
+
 Partly covered (9 raid, 8 tower, 190 dungeon).
+
 - Wave compositions, respawn timers, phase structure, guaranteed drops.
 - Expect `no-source` on wave tables.
 
 ## Pass I — Status effects, weather, time
+
 Not collected. Duration, tick damage, application, cures. Day/night length,
 weather spawn modifiers.
 
 ## Pass J — Systems and formulas
+
 **Expect this pass to mostly produce gaps.** Capture rate, XP, work speed, SAN,
 condensation scaling, IVs.
+
 - The capture formula and stat formulas circulate widely — find whether any has
   a datamined source or is community reverse-engineering. Label accordingly.
 - Condensation: 4/8/12/24 = 48 total is confirmed post-1.0. The dump's
@@ -154,9 +172,11 @@ condensation scaling, IVs.
   levels are pre-1.0.
 
 ## Pass K — Meta
+
 Achievements, patch history, version timeline.
 
 ## Pass L — Anything discovered
+
 Expeditions, oil rig, Pal Arena, server config, guild systems. Gets its own pass
 rather than being dropped.
 
@@ -217,6 +237,7 @@ continuously to whatever branch it syncs, and has no path scoping — it can edi
 any file including generated data.
 
 Pages:
+
 - `/` — coverage dashboard, counts computed from the data, not asserted
 - `/pals`, `/pals/$id` — every field with its source badge
 - `/breeding`, `/eggs`, `/skills`, `/items`, `/gear`, `/food`, `/world`,
@@ -226,6 +247,7 @@ Pages:
 - `/export` — the whole thing as one markdown document
 
 Rendering rules:
+
 - Every value shows its source tier
 - Unknowns render as "unknown — <reason>", never blank, never zero
 - Community-tier values render visually distinct from datamined ones

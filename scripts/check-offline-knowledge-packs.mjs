@@ -6,6 +6,7 @@ const outDir = resolve(process.env.PWA_OUT_DIR ?? ".output/public");
 const packDirectory = resolve(outDir, "knowledge-packs");
 const serviceWorker = resolve(outDir, "sw.js");
 const expectedRecords = {
+  eggs: 1,
   "field-alphas": 65,
   encounters: 633,
   fishing: 1,
