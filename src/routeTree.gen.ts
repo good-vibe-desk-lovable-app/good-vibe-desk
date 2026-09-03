@@ -24,6 +24,7 @@ import { Route as CompendiumItemsRouteImport } from './routes/compendium/items'
 import { Route as CompendiumMissionsRouteImport } from './routes/compendium/missions'
 import { Route as CompendiumSkillsRouteImport } from './routes/compendium/skills'
 import { Route as CompendiumStructuresRouteImport } from './routes/compendium/structures'
+import { Route as CompendiumSystemsRouteImport } from './routes/compendium/systems'
 import { Route as CompendiumTechnologiesRouteImport } from './routes/compendium/technologies'
 import { Route as DataCheckSaveInspectorRouteImport } from './routes/data-check/save-inspector'
 import { Route as PlannerCombatRouteImport } from './routes/planner/combat'
@@ -104,6 +105,11 @@ const CompendiumStructuresRoute = CompendiumStructuresRouteImport.update({
   path: '/compendium/structures',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompendiumSystemsRoute = CompendiumSystemsRouteImport.update({
+  id: '/compendium/systems',
+  path: '/compendium/systems',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompendiumTechnologiesRoute = CompendiumTechnologiesRouteImport.update({
   id: '/compendium/technologies',
   path: '/compendium/technologies',
@@ -140,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/skills': typeof CompendiumSkillsRoute
   '/compendium/structures': typeof CompendiumStructuresRoute
+  '/compendium/systems': typeof CompendiumSystemsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
   '/data-check/save-inspector': typeof DataCheckSaveInspectorRoute
   '/planner/combat': typeof PlannerCombatRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/skills': typeof CompendiumSkillsRoute
   '/compendium/structures': typeof CompendiumStructuresRoute
+  '/compendium/systems': typeof CompendiumSystemsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
   '/data-check/save-inspector': typeof DataCheckSaveInspectorRoute
   '/planner/combat': typeof PlannerCombatRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/skills': typeof CompendiumSkillsRoute
   '/compendium/structures': typeof CompendiumStructuresRoute
+  '/compendium/systems': typeof CompendiumSystemsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
   '/data-check/save-inspector': typeof DataCheckSaveInspectorRoute
   '/planner/combat': typeof PlannerCombatRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/compendium/missions'
     | '/compendium/skills'
     | '/compendium/structures'
+    | '/compendium/systems'
     | '/compendium/technologies'
     | '/data-check/save-inspector'
     | '/planner/combat'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/compendium/missions'
     | '/compendium/skills'
     | '/compendium/structures'
+    | '/compendium/systems'
     | '/compendium/technologies'
     | '/data-check/save-inspector'
     | '/planner/combat'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/compendium/missions'
     | '/compendium/skills'
     | '/compendium/structures'
+    | '/compendium/systems'
     | '/compendium/technologies'
     | '/data-check/save-inspector'
     | '/planner/combat'
@@ -270,6 +282,7 @@ export interface RootRouteChildren {
   CompendiumMissionsRoute: typeof CompendiumMissionsRoute
   CompendiumSkillsRoute: typeof CompendiumSkillsRoute
   CompendiumStructuresRoute: typeof CompendiumStructuresRoute
+  CompendiumSystemsRoute: typeof CompendiumSystemsRoute
   CompendiumTechnologiesRoute: typeof CompendiumTechnologiesRoute
   PlannerCombatRoute: typeof PlannerCombatRoute
   PlannerWorkRoute: typeof PlannerWorkRoute
@@ -383,6 +396,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompendiumStructuresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compendium/systems': {
+      id: '/compendium/systems'
+      path: '/compendium/systems'
+      fullPath: '/compendium/systems'
+      preLoaderRoute: typeof CompendiumSystemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compendium/technologies': {
       id: '/compendium/technologies'
       path: '/compendium/technologies'
@@ -441,6 +461,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompendiumMissionsRoute: CompendiumMissionsRoute,
   CompendiumSkillsRoute: CompendiumSkillsRoute,
   CompendiumStructuresRoute: CompendiumStructuresRoute,
+  CompendiumSystemsRoute: CompendiumSystemsRoute,
   CompendiumTechnologiesRoute: CompendiumTechnologiesRoute,
   PlannerCombatRoute: PlannerCombatRoute,
   PlannerWorkRoute: PlannerWorkRoute,
