@@ -10,6 +10,7 @@ const optionalOutputDirectory = resolve(root, ".output", "public", "optional-kno
 const packs = {
   "field-alphas": "knowledgeFieldAlphas.ts",
   encounters: "knowledgeEncounters.ts",
+  fishing: "knowledgeFishing.ts",
   missions: "knowledgeMissions.ts",
   technologies: "knowledgeTechnologies.ts",
   "work-suitability": "knowledgeWorkSuitability.ts",
@@ -39,9 +40,15 @@ function extractPayload(sourceFile) {
     );
   }
 
-  const payload = JSON.parse(source.slice(assignment + 3, finalSemicolon));
+  const raw = source.slice(assignment + 3, finalSemicolon);
+  let payload;
+  try {
+    payload = JSON.parse(raw);
+  } catch {
+    payload = Function(`return ${raw}`)();
+  }
   if (!Array.isArray(payload)) {
-    throw new Error(`${sourceFile}: generated payload must be an array.`);
+    return [payload];
   }
   return payload;
 }
