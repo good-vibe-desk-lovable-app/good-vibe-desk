@@ -11,6 +11,7 @@ const packs = {
   "field-alphas": "knowledgeFieldAlphas.ts",
   encounters: "knowledgeEncounters.ts",
   fishing: "knowledgeFishing.ts",
+  food: "knowledgeFood.ts",
   missions: "knowledgeMissions.ts",
   technologies: "knowledgeTechnologies.ts",
   "work-suitability": "knowledgeWorkSuitability.ts",

@@ -12,6 +12,7 @@ import {
   PackageOpen,
   ScrollText,
   ShieldCheck,
+  Utensils,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -74,7 +75,7 @@ function CompendiumIndexPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available directories" value="6" />
+              <Metric label="Available directories" value="7" />
               <Metric label="Core reference records" value="977" />
               <Metric label="Core dependency" value="None" />
               <Metric label="Item pack" value="Opt-in" />
@@ -150,6 +151,14 @@ function CompendiumIndexPage() {
               tone="cyan"
             />
             <PackCard
+              to="/compendium/food"
+              icon={<Utensils className="size-5" />}
+              title="Food & Recipes"
+              count="124 items"
+              description="Explore ingredients, recipes, nutrition, SAN changes, spoilage times, food buffs, and cooking station tech levels."
+              tone="orange"
+            />
+            <PackCard
               to="/compendium/items"
               icon={<PackageOpen className="size-5" />}
               title="Items & Recipes"
@@ -200,6 +209,7 @@ function PackCard({
     | "/compendium/field-alphas"
     | "/compendium/encounters"
     | "/compendium/fishing"
+    | "/compendium/food"
     | "/compendium/missions"
     | "/compendium/technologies"
     | "/compendium/items";

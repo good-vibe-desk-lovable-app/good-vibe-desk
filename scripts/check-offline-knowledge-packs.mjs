@@ -9,6 +9,7 @@ const expectedRecords = {
   "field-alphas": 65,
   encounters: 633,
   fishing: 1,
+  food: 1,
   missions: 117,
   technologies: 588,
   "work-suitability": 297,
