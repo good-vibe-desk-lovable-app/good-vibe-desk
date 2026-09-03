@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   BookOpen,
+  Building2,
   ChevronDown,
   ChevronRight,
   Crosshair,
@@ -75,8 +76,8 @@ function CompendiumIndexPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available directories" value="7" />
-              <Metric label="Core reference records" value="977" />
+              <Metric label="Available directories" value="8" />
+              <Metric label="Core reference records" value="1,475" />
               <Metric label="Core dependency" value="None" />
               <Metric label="Item pack" value="Opt-in" />
             </div>
@@ -159,6 +160,14 @@ function CompendiumIndexPage() {
               tone="orange"
             />
             <PackCard
+              to="/compendium/structures"
+              icon={<Building2 className="size-5" />}
+              title="Structures"
+              count="498 structures"
+              description="Browse base structures, production facilities, construction material costs, work suitabilities, and technology requirements."
+              tone="sky"
+            />
+            <PackCard
               to="/compendium/items"
               icon={<PackageOpen className="size-5" />}
               title="Items & Recipes"
@@ -211,6 +220,7 @@ function PackCard({
     | "/compendium/fishing"
     | "/compendium/food"
     | "/compendium/missions"
+    | "/compendium/structures"
     | "/compendium/technologies"
     | "/compendium/items";
   icon: ReactNode;

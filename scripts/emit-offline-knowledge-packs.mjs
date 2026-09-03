@@ -13,6 +13,7 @@ const packs = {
   fishing: "knowledgeFishing.ts",
   food: "knowledgeFood.ts",
   missions: "knowledgeMissions.ts",
+  structures: "knowledgeStructures.ts",
   technologies: "knowledgeTechnologies.ts",
   "work-suitability": "knowledgeWorkSuitability.ts",
 };
