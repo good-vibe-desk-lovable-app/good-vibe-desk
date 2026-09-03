@@ -10,8 +10,5 @@
     "incubators": 5,
     "knownGaps": 7
   },
-  "sourceUrls": [
-    "https://paldb.cc/en/Eggs",
-    "https://palworld.wiki.gg/wiki/Egg_Incubator"
-  ]
+  "sourceUrls": ["https://paldb.cc/en/Eggs", "https://palworld.wiki.gg/wiki/Egg_Incubator"]
 }

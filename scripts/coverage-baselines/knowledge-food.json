@@ -10,8 +10,5 @@
     "cookingStations": 5,
     "spoilagePublishedRecords": 120
   },
-  "sourceUrls": [
-    "https://paldb.cc/en/Ingredient",
-    "https://paldb.cc/en/Food"
-  ]
+  "sourceUrls": ["https://paldb.cc/en/Ingredient", "https://paldb.cc/en/Food"]
 }

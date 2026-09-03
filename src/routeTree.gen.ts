@@ -15,6 +15,7 @@ import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as OpinionsRouteImport } from './routes/opinions'
 import { Route as TiersRouteImport } from './routes/tiers'
 import { Route as CompendiumIndexRouteImport } from './routes/compendium/index'
+import { Route as CompendiumEggsRouteImport } from './routes/compendium/eggs'
 import { Route as CompendiumEncountersRouteImport } from './routes/compendium/encounters'
 import { Route as CompendiumFieldAlphasRouteImport } from './routes/compendium/field-alphas'
 import { Route as CompendiumFishingRouteImport } from './routes/compendium/fishing'
@@ -56,6 +57,11 @@ const TiersRoute = TiersRouteImport.update({
 const CompendiumIndexRoute = CompendiumIndexRouteImport.update({
   id: '/compendium/',
   path: '/compendium/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompendiumEggsRoute = CompendiumEggsRouteImport.update({
+  id: '/compendium/eggs',
+  path: '/compendium/eggs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompendiumEncountersRoute = CompendiumEncountersRouteImport.update({
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/eggs': typeof CompendiumEggsRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
   '/compendium/fishing': typeof CompendiumFishingRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/eggs': typeof CompendiumEggsRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
   '/compendium/fishing': typeof CompendiumFishingRoute
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
   '/tiers': typeof TiersRoute
+  '/compendium/eggs': typeof CompendiumEggsRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
   '/compendium/fishing': typeof CompendiumFishingRoute
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/opinions'
     | '/tiers'
+    | '/compendium/eggs'
     | '/compendium/encounters'
     | '/compendium/field-alphas'
     | '/compendium/fishing'
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/opinions'
     | '/tiers'
+    | '/compendium/eggs'
     | '/compendium/encounters'
     | '/compendium/field-alphas'
     | '/compendium/fishing'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/opinions'
     | '/tiers'
+    | '/compendium/eggs'
     | '/compendium/encounters'
     | '/compendium/field-alphas'
     | '/compendium/fishing'
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   ExploreRoute: typeof ExploreRoute
   OpinionsRoute: typeof OpinionsRoute
   TiersRoute: typeof TiersRoute
+  CompendiumEggsRoute: typeof CompendiumEggsRoute
   CompendiumEncountersRoute: typeof CompendiumEncountersRoute
   CompendiumFieldAlphasRoute: typeof CompendiumFieldAlphasRoute
   CompendiumFishingRoute: typeof CompendiumFishingRoute
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       path: '/compendium'
       fullPath: '/compendium/'
       preLoaderRoute: typeof CompendiumIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compendium/eggs': {
+      id: '/compendium/eggs'
+      path: '/compendium/eggs'
+      fullPath: '/compendium/eggs'
+      preLoaderRoute: typeof CompendiumEggsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compendium/encounters': {
@@ -412,6 +432,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExploreRoute: ExploreRoute,
   OpinionsRoute: OpinionsRoute,
   TiersRoute: TiersRoute,
+  CompendiumEggsRoute: CompendiumEggsRoute,
   CompendiumEncountersRoute: CompendiumEncountersRoute,
   CompendiumFieldAlphasRoute: CompendiumFieldAlphasRoute,
   CompendiumFishingRoute: CompendiumFishingRoute,

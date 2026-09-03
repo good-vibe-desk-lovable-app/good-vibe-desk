@@ -12,7 +12,5 @@
     "equipment": 13,
     "shadowTypes": 4
   },
-  "sourceUrls": [
-    "https://paldb.cc/en/Fishing"
-  ]
+  "sourceUrls": ["https://paldb.cc/en/Fishing"]
 }

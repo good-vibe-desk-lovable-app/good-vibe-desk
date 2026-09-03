@@ -8,6 +8,7 @@ const outputDirectory = resolve(root, ".output", "public", "knowledge-packs");
 const optionalOutputDirectory = resolve(root, ".output", "public", "optional-knowledge-packs");
 
 const packs = {
+  eggs: "knowledgeEggs.ts",
   "field-alphas": "knowledgeFieldAlphas.ts",
   encounters: "knowledgeEncounters.ts",
   fishing: "knowledgeFishing.ts",

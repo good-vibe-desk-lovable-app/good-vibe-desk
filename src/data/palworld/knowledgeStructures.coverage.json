@@ -10,7 +10,5 @@
     "requiredWorkSuitabilityRelations": 67,
     "unlinkedStructureGaps": 2
   },
-  "sourceUrls": [
-    "https://paldb.cc/en/Structures"
-  ]
+  "sourceUrls": ["https://paldb.cc/en/Structures"]
 }
