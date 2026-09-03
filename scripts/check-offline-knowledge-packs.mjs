@@ -11,6 +11,7 @@ const expectedRecords = {
   fishing: 1,
   food: 1,
   missions: 117,
+  structures: 498,
   technologies: 588,
   "work-suitability": 297,
 };
