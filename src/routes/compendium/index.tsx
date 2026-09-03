@@ -13,6 +13,7 @@ import {
   PackageOpen,
   ScrollText,
   ShieldCheck,
+  Sparkles,
   Utensils,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -76,7 +77,7 @@ function CompendiumIndexPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available directories" value="8" />
+              <Metric label="Available directories" value="9" />
               <Metric label="Core reference records" value="1,475" />
               <Metric label="Core dependency" value="None" />
               <Metric label="Item pack" value="Opt-in" />
@@ -168,6 +169,14 @@ function CompendiumIndexPage() {
               tone="sky"
             />
             <PackCard
+              to="/compendium/skills"
+              icon={<Sparkles className="size-5" />}
+              title="Skills & Passives"
+              count="807 moves & passives"
+              description="Browse active skill moves, passive skills, Pal level learnsets, species partner skills, and verified inheritance rules."
+              tone="violet"
+            />
+            <PackCard
               to="/compendium/items"
               icon={<PackageOpen className="size-5" />}
               title="Items & Recipes"
@@ -220,6 +229,7 @@ function PackCard({
     | "/compendium/fishing"
     | "/compendium/food"
     | "/compendium/missions"
+    | "/compendium/skills"
     | "/compendium/structures"
     | "/compendium/technologies"
     | "/compendium/items";
