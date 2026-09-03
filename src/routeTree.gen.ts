@@ -18,6 +18,7 @@ import { Route as CompendiumIndexRouteImport } from './routes/compendium/index'
 import { Route as CompendiumEncountersRouteImport } from './routes/compendium/encounters'
 import { Route as CompendiumFieldAlphasRouteImport } from './routes/compendium/field-alphas'
 import { Route as CompendiumFishingRouteImport } from './routes/compendium/fishing'
+import { Route as CompendiumFoodRouteImport } from './routes/compendium/food'
 import { Route as CompendiumItemsRouteImport } from './routes/compendium/items'
 import { Route as CompendiumMissionsRouteImport } from './routes/compendium/missions'
 import { Route as CompendiumTechnologiesRouteImport } from './routes/compendium/technologies'
@@ -70,6 +71,11 @@ const CompendiumFishingRoute = CompendiumFishingRouteImport.update({
   path: '/compendium/fishing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompendiumFoodRoute = CompendiumFoodRouteImport.update({
+  id: '/compendium/food',
+  path: '/compendium/food',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompendiumItemsRoute = CompendiumItemsRouteImport.update({
   id: '/compendium/items',
   path: '/compendium/items',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
   '/compendium/fishing': typeof CompendiumFishingRoute
+  '/compendium/food': typeof CompendiumFoodRoute
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
@@ -127,6 +134,7 @@ export interface FileRoutesByTo {
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
   '/compendium/fishing': typeof CompendiumFishingRoute
+  '/compendium/food': typeof CompendiumFoodRoute
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
@@ -145,6 +153,7 @@ export interface FileRoutesById {
   '/compendium/encounters': typeof CompendiumEncountersRoute
   '/compendium/field-alphas': typeof CompendiumFieldAlphasRoute
   '/compendium/fishing': typeof CompendiumFishingRoute
+  '/compendium/food': typeof CompendiumFoodRoute
   '/compendium/items': typeof CompendiumItemsRoute
   '/compendium/missions': typeof CompendiumMissionsRoute
   '/compendium/technologies': typeof CompendiumTechnologiesRoute
@@ -164,6 +173,7 @@ export interface FileRouteTypes {
     | '/compendium/encounters'
     | '/compendium/field-alphas'
     | '/compendium/fishing'
+    | '/compendium/food'
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/compendium/encounters'
     | '/compendium/field-alphas'
     | '/compendium/fishing'
+    | '/compendium/food'
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/compendium/encounters'
     | '/compendium/field-alphas'
     | '/compendium/fishing'
+    | '/compendium/food'
     | '/compendium/items'
     | '/compendium/missions'
     | '/compendium/technologies'
@@ -216,6 +228,7 @@ export interface RootRouteChildren {
   CompendiumEncountersRoute: typeof CompendiumEncountersRoute
   CompendiumFieldAlphasRoute: typeof CompendiumFieldAlphasRoute
   CompendiumFishingRoute: typeof CompendiumFishingRoute
+  CompendiumFoodRoute: typeof CompendiumFoodRoute
   CompendiumItemsRoute: typeof CompendiumItemsRoute
   CompendiumMissionsRoute: typeof CompendiumMissionsRoute
   CompendiumTechnologiesRoute: typeof CompendiumTechnologiesRoute
@@ -289,6 +302,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompendiumFishingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compendium/food': {
+      id: '/compendium/food'
+      path: '/compendium/food'
+      fullPath: '/compendium/food'
+      preLoaderRoute: typeof CompendiumFoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compendium/items': {
       id: '/compendium/items'
       path: '/compendium/items'
@@ -355,6 +375,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompendiumEncountersRoute: CompendiumEncountersRoute,
   CompendiumFieldAlphasRoute: CompendiumFieldAlphasRoute,
   CompendiumFishingRoute: CompendiumFishingRoute,
+  CompendiumFoodRoute: CompendiumFoodRoute,
   CompendiumItemsRoute: CompendiumItemsRoute,
   CompendiumMissionsRoute: CompendiumMissionsRoute,
   CompendiumTechnologiesRoute: CompendiumTechnologiesRoute,
