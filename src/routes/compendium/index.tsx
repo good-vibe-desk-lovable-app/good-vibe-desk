@@ -5,6 +5,7 @@ import {
   Building2,
   ChevronDown,
   ChevronRight,
+  Cpu,
   Crosshair,
   Download,
   Egg,
@@ -78,7 +79,7 @@ function CompendiumIndexPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available directories" value="10" />
+              <Metric label="Available directories" value="11" />
               <Metric label="Core reference records" value="1,475" />
               <Metric label="Core dependency" value="None" />
               <Metric label="Item pack" value="Opt-in" />
@@ -186,6 +187,14 @@ function CompendiumIndexPage() {
               tone="amber"
             />
             <PackCard
+              to="/compendium/systems"
+              icon={<Cpu className="size-5" />}
+              title="Systems & Formulas"
+              count="29 records & gaps"
+              description="Explore published mechanics, breeding formulas, work speed levels, world settings, and explicit source evidence gaps."
+              tone="violet"
+            />
+            <PackCard
               to="/compendium/items"
               icon={<PackageOpen className="size-5" />}
               title="Items & Recipes"
@@ -240,6 +249,7 @@ function PackCard({
     | "/compendium/missions"
     | "/compendium/skills"
     | "/compendium/structures"
+    | "/compendium/systems"
     | "/compendium/technologies"
     | "/compendium/eggs"
     | "/compendium/items";

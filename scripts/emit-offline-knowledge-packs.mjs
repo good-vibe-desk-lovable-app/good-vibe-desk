@@ -16,6 +16,7 @@ const packs = {
   missions: "knowledgeMissions.ts",
   skills: "knowledgeSkills.ts",
   structures: "knowledgeStructures.ts",
+  systems: "knowledgeSystems.ts",
   technologies: "knowledgeTechnologies.ts",
   "work-suitability": "knowledgeWorkSuitability.ts",
 };
