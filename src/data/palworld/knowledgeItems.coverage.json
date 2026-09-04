@@ -1,6 +1,6 @@
 {
   "dataset": "knowledge-items",
-  "generatedAt": "2026-08-21T21:53:15Z",
+  "generatedAt": "2026-09-04T08:36:13Z",
   "gameVersion": "v1.0.3",
   "recordCount": 2455,
   "counts": {
@@ -11,5 +11,8 @@
     "productionRows": 3779,
     "statGroups": 5946
   },
-  "sourceUrls": ["https://paldb.cc/en/Items"]
+  "sourceUrls": [
+    "https://paldb.cc/en/Items",
+    "https://palworld.gg/_nuxt/CAAXy-Yd.js"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "dataset": "knowledge-structures",
-  "generatedAt": "2026-09-04T01:39:59Z",
+  "generatedAt": "2026-09-04T08:24:21Z",
   "gameVersion": "v1.0.3",
   "recordCount": 498,
   "counts": {
@@ -11,6 +11,8 @@
     "unlinkedStructureGaps": 2
   },
   "sourceUrls": [
-    "https://paldb.cc/en/Structures"
+    "https://paldb.cc/en/Structures",
+    "https://www.palworld.tools/buildings",
+    "https://palworld.gg/_nuxt/DY3xSopJ.js"
   ]
 }

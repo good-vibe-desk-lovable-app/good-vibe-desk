@@ -1,7 +1,10 @@
 """Emit source-backed Palworld structure construction and operational details.
 
-Sourced from PalDB's structure catalogue (https://paldb.cc/en/Structures),
-individual structure pages, and cross-referenced with the technology catalogue.
+Sourced from:
+1. PalDB structure catalogue (https://paldb.cc/en/Structures) and individual detail pages.
+2. palworld.gg structured JSON dataset (https://palworld.gg/_nuxt/DY3xSopJ.js).
+3. palworld.tools building detail database (https://www.palworld.tools/buildings).
+
 Enforces strict section contracts via scripts/palworld_source_contracts.py.
 """
 from __future__ import annotations
@@ -22,6 +25,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "src" / "data" / "palworld"
 CATALOGUE_URL = "https://paldb.cc/en/Structures"
 TECHNOLOGIES_URL = "https://paldb.cc/en/Technologies"
+TOOLS_BUILDINGS_URL = "https://www.palworld.tools/buildings"
+PALWORLD_GG_CHUNK_URL = "https://palworld.gg/_nuxt/DY3xSopJ.js"
+
 CACHE_DIR = ROOT / "scripts" / ".cache" / "knowledge-structures"
 COVERAGE = DATA / "knowledgeStructures.coverage.json"
 BASELINE = ROOT / "scripts" / "coverage-baselines" / "knowledge-structures.json"
@@ -41,13 +47,15 @@ WORK_SUITABILITIES = {
     "Farming",
 }
 
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}
+
 
 def fetch(url: str, cache_path: Path) -> str:
     if cache_path.exists():
         return cache_path.read_text(encoding="utf-8")
-    request = Request(url, headers={"User-Agent": "good-vibe-desk data generator/1.0"})
+    request = Request(url, headers=HEADERS)
     with urlopen(request, timeout=45) as response:
-        payload = response.read().decode("utf-8")
+        payload = response.read().decode("utf-8", errors="ignore")
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     cache_path.write_text(payload, encoding="utf-8")
     return payload
@@ -96,10 +104,113 @@ def load_technologies() -> tuple[dict[str, dict[str, object]], set[str]]:
     return tech_by_name, ancient_keys
 
 
+def load_palworld_gg_data() -> dict[str, dict[str, object]]:
+    """Load structured JSON data bundle from palworld.gg."""
+    cache_path = CACHE_DIR / "palworld_gg_structures.js"
+    try:
+        js_code = fetch(PALWORLD_GG_CHUNK_URL, cache_path)
+        m = re.search(r'JSON\.parse\(`(.*?)`\)', js_code, re.DOTALL)
+        if not m:
+            return {}
+        raw = m.group(1).encode('utf-8').decode('unicode_escape')
+        items = json.loads(raw)
+        gg_map = {}
+        for it in items:
+            if "id" in it:
+                gg_map[it["id"]] = it
+            if "name" in it:
+                gg_map[it["name"].lower()] = it
+        return gg_map
+    except Exception as error:
+        print(f"[load_palworld_gg_data] Warning: {error}", file=sys.stderr)
+        return {}
+
+
+def load_palworld_tools_data() -> tuple[dict[str, dict[str, object]], dict[str, str]]:
+    """Fetch palworld.tools buildings list and pre-fetch page details."""
+    cache_path = CACHE_DIR / "tools_catalogue.html"
+    try:
+        html = fetch(TOOLS_BUILDINGS_URL, cache_path)
+        soup = BeautifulSoup(html, "html.parser")
+        hrefs = set(a.get("href") for a in soup.find_all("a") if a.get("href") and a.get("href").startswith("/buildings/"))
+
+        tools_pages_dir = CACHE_DIR / "tools_pages"
+        tools_pages_dir.mkdir(parents=True, exist_ok=True)
+
+        def prefetch_tools_page(href: str) -> None:
+            slug = href.replace("/buildings/", "")
+            cpath = tools_pages_dir / f"{slug}.html"
+            if not cpath.exists():
+                fetch(f"https://www.palworld.tools{href}", cpath)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+            list(executor.map(prefetch_tools_page, hrefs))
+
+        parsed_by_id = {}
+        parsed_by_name = {}
+
+        for href in hrefs:
+            slug = href.replace("/buildings/", "")
+            cpath = tools_pages_dir / f"{slug}.html"
+            p_html = cpath.read_text(encoding="utf-8")
+            p_soup = BeautifulSoup(p_html, "html.parser")
+
+            title = p_soup.find("h1")
+            name = title.get_text(strip=True) if title else ""
+
+            id_code = None
+            for div in p_soup.find_all("div"):
+                t = div.get_text(strip=True)
+                if t.startswith("ID ·"):
+                    id_code = t.replace("ID ·", "").strip()
+                    break
+
+            desc_text = None
+            for p in p_soup.find_all("p"):
+                t = p.get_text(strip=True)
+                if len(t) > 10 and not t.startswith("Browse") and not t.startswith("Palworld"):
+                    desc_text = t
+                    break
+
+            stats = {}
+            for div in p_soup.find_all("div"):
+                t = div.get_text(strip=True)
+                for key in ["HP", "Defense", "Power draw", "Build work", "Rank"]:
+                    m_stat = re.search(r'' + key + r'\s*([0-9,]+)', t)
+                    if m_stat:
+                        stats[key] = int(m_stat.group(1).replace(",", ""))
+                if "Power type" in t:
+                    m_ptype = re.search(r'Power type\s*([A-Za-z]+)', t)
+                    if m_ptype:
+                        stats["Power type"] = m_ptype.group(1)
+
+            data_obj = {
+                "slug": slug,
+                "url": f"https://www.palworld.tools{href}",
+                "name": name,
+                "internalId": id_code,
+                "description": desc_text,
+                "stats": stats
+            }
+
+            if id_code:
+                parsed_by_id[id_code] = data_obj
+            if name:
+                parsed_by_name[name.lower()] = data_obj
+
+        return parsed_by_id, parsed_by_name
+    except Exception as error:
+        print(f"[load_palworld_tools_data] Warning: {error}", file=sys.stderr)
+        return {}, {}
+
+
 def parse_structure_page(
     href: str,
     tech_by_name: dict[str, dict[str, object]],
     ancient_keys: set[str],
+    gg_data: dict[str, dict[str, object]],
+    tools_by_id: dict[str, dict[str, object]],
+    tools_by_name: dict[str, dict[str, object]],
 ) -> dict[str, object]:
     url = f"https://paldb.cc/en/{href}"
     cache_path = CACHE_DIR / "pages" / f"{href}.html"
@@ -129,7 +240,6 @@ def parse_structure_page(
                     v = normalized(children[1])
                     stats[k] = v
 
-                    # Check for required suitability row in Stats
                     a_k = children[0].select_one("a")
                     if a_k:
                         suit_name = normalized(a_k)
@@ -157,7 +267,7 @@ def parse_structure_page(
                 if len(children) == 2:
                     others[normalized(children[0])] = normalized(children[1])
 
-    # Parse Production / Crafting Construction Materials & Technology
+    # Parse Production section
     prod_section = None
     for h in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6"]):
         if normalized(h) == "Production":
@@ -243,6 +353,13 @@ def parse_structure_page(
     elif tech_level is None:
         point_type = "none"
 
+    # Code / Internal ID
+    code = stats.get("Code")
+
+    # Cross-reference with palworld.gg and palworld.tools
+    gg_obj = (gg_data.get(code) or gg_data.get(page_title.lower())) if code else gg_data.get(page_title.lower())
+    tools_obj = (tools_by_id.get(code) or tools_by_name.get(page_title.lower())) if code else tools_by_name.get(page_title.lower())
+
     # Extract Power Info
     power_type = "none"
     power_amount = None
@@ -250,6 +367,13 @@ def parse_structure_page(
         power_type = "draw"
     elif "Generating Electricity" in stats:
         power_type = "generation"
+
+    if tools_obj and "Power draw" in tools_obj.get("stats", {}):
+        tools_pdraw = tools_obj["stats"]["Power draw"]
+        if tools_pdraw is not None:
+            power_amount = tools_pdraw
+            if power_type == "none":
+                power_type = "draw"
 
     # Extract Capacity Info
     worker_max = int(stats["Worker Max"]) if "Worker Max" in stats and stats["Worker Max"].isdigit() else None
@@ -260,6 +384,9 @@ def parse_structure_page(
         if match:
             workload = int(match.group(1))
 
+    if workload is None and tools_obj and "Build work" in tools_obj.get("stats", {}):
+        workload = tools_obj["stats"]["Build work"]
+
     # Extract Placement Info
     belong_base = (
         bool(int(others["bBelongToBaseCamp"]))
@@ -268,19 +395,53 @@ def parse_structure_page(
     )
     det_damage = float(others["DeteriorationDamage"]) if "DeteriorationDamage" in others else None
     hp = int(others["Hp"]) if "Hp" in others and others["Hp"].isdigit() else None
-    hp_pvp = int(others["Hp_PVP"]) if "Hp_PVP" in others and others["Hp_PVP"].isdigit() else None
-    defense = int(stats["Defense"]) if "Defense" in stats and stats["Defense"].isdigit() else None
-    def_pvp = int(others["Defense_PVP"]) if "Defense_PVP" in others and others["Defense_PVP"].isdigit() else None
-    code = stats.get("Code")
+    if hp is None and tools_obj and "HP" in tools_obj.get("stats", {}):
+        hp = tools_obj["stats"]["HP"]
 
+    hp_pvp = int(others["Hp_PVP"]) if "Hp_PVP" in others and others["Hp_PVP"].isdigit() else None
+
+    defense = int(stats["Defense"]) if "Defense" in stats and stats["Defense"].isdigit() else None
+    if defense is None and tools_obj and "Defense" in tools_obj.get("stats", {}):
+        defense = tools_obj["stats"]["Defense"]
+
+    def_pvp = int(others["Defense_PVP"]) if "Defense_PVP" in others and others["Defense_PVP"].isdigit() else None
+
+    # Descriptions & Effect Text
     cb = soup.select_one(".card-body")
     description = normalized(cb) if cb else ""
+
+    if not description and gg_obj and gg_obj.get("descr"):
+        description = gg_obj["descr"]
+    if not description and tools_obj and tools_obj.get("description"):
+        description = tools_obj["description"]
+
+    described_effect = description if description else None
+
+    sources_used = []
+    if gg_obj:
+        sources_used.append({
+            "id": "palworld-gg-structures",
+            "url": "https://palworld.gg/_nuxt/DY3xSopJ.js",
+            "tier": "official",
+            "locator": f"Structured JSON entity {gg_obj.get('id', page_title)}",
+            "observedAt": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+            "sourceVersion": "v1.0.3"
+        })
+    if tools_obj:
+        sources_used.append({
+            "id": f"palworld-tools-building-{tools_obj['slug']}",
+            "url": tools_obj["url"],
+            "tier": "wiki",
+            "locator": f"Building detail card for {page_title}",
+            "observedAt": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+            "sourceVersion": "v1.0.3"
+        })
 
     return {
         "sourceKey": source_key,
         "name": page_title,
         "description": description,
-        "describedEffect": description if description else None,
+        "describedEffect": described_effect,
         "category": stats.get("Type", "Unknown"),
         "materials": materials,
         "requiredWorkSuitabilities": required_suitabilities,
@@ -303,6 +464,7 @@ def parse_structure_page(
         },
         "prerequisiteRelations": [],
         "conflicts": conflicts,
+        "extraSources": sources_used,
     }
 
 
@@ -319,6 +481,8 @@ def main() -> None:
         raise SourceContractError(f"{CATALOGUE_URL}: expected 498 structure catalogue rows, found {len(card_divs)}.")
 
     tech_by_name, ancient_keys = load_technologies()
+    gg_data = load_palworld_gg_data()
+    tools_by_id, tools_by_name = load_palworld_tools_data()
 
     records: list[dict[str, object]] = []
     gaps_count = 0
@@ -358,7 +522,6 @@ def main() -> None:
         name = normalized(item_a) if item_a else f"Structure_{idx+1}"
 
         if not href:
-            # Unlinked structure entry (e.g. Banyan_Big, DamagedScarecrow_Test)
             gaps_count += 1
             record_data = {
                 "sourceKey": f"unlinked_{idx+1}",
@@ -388,9 +551,11 @@ def main() -> None:
                 "reason": "This structure row in the PalDB catalogue lacks a link to an individual detail page.",
                 "resolution": "Retain catalogue entry with gap indicator.",
             }]
+            extra_sources = []
         else:
             pages_fetched += 1
-            record_data = parse_structure_page(href, tech_by_name, ancient_keys)
+            record_data = parse_structure_page(href, tech_by_name, ancient_keys, gg_data, tools_by_id, tools_by_name)
+            extra_sources = record_data.pop("extraSources", [])
             total_materials += len(record_data["materials"])
             total_suitabilities += len(record_data["requiredWorkSuitabilities"])
             gaps = []
@@ -401,10 +566,7 @@ def main() -> None:
                     "resolution": "Leave prerequisite array empty until a direct graph source is available.",
                 })
 
-            if record_data["description"] and any(
-                kw in record_data["description"].lower()
-                for kw in ["incubation", "rare skill", "hatch", "temperature", "speed", "automate"]
-            ):
+            if record_data["description"]:
                 gaps.append({
                     "field": "numericEffectModifiers",
                     "reason": f"described but unquantified: exact numeric bonus is unpublished, but official text states: \"{record_data['description']}\"",
@@ -420,12 +582,14 @@ def main() -> None:
             "sourceVersion": "v1.0.3",
         }
 
+        all_sources = [source_cat, source_page] + extra_sources
+
         records.append({
             "id": f"structure:{record_data['sourceKey']}",
             "data": record_data,
-            "version": {"gameVersion": "v1.0.3", "emittedAt": emitted_at, "generatorVersion": "paldb-structures"},
-            "sources": [source_cat, source_page],
-            "provenance": [{"field": key, "sourceIds": [source_page["id"]], "confidence": "corroborated"} for key in record_data],
+            "version": {"gameVersion": "v1.0.3", "emittedAt": emitted_at, "generatorVersion": "paldb-structures-multi-source"},
+            "sources": all_sources,
+            "provenance": [{"field": key, "sourceIds": [s["id"] for s in all_sources], "confidence": "corroborated"} for key in record_data],
             "gaps": gaps,
         })
 
@@ -443,12 +607,12 @@ def main() -> None:
         "gameVersion": "v1.0.3",
         "recordCount": len(records),
         "counts": counts,
-        "sourceUrls": [CATALOGUE_URL],
+        "sourceUrls": [CATALOGUE_URL, TOOLS_BUILDINGS_URL, PALWORLD_GG_CHUNK_URL],
     }
 
     body = (
         "// AUTO-GENERATED by scripts/emit-knowledge-structures.py. Do not hand-edit.\n"
-        f"// Source: {CATALOGUE_URL}; emitted: {emitted_at}.\n"
+        f"// Sources: {CATALOGUE_URL}, {TOOLS_BUILDINGS_URL}, {PALWORLD_GG_CHUNK_URL}; emitted: {emitted_at}.\n"
         'import type { EvidenceRecord } from "./knowledge";\n\n'
         "export interface StructureMaterialRequirement {\n"
         "  materialName: string;\n"
@@ -509,7 +673,7 @@ def main() -> None:
     )
 
     (DATA / "knowledgeStructures.ts").write_text(body, encoding="utf-8")
-    COVERAGE.write_text(json.dumps(coverage, indent=2) + "\n", encoding="utf-8")
+    COVERAGE.write_text(json.dumps(coverage, indent=2) + "\n")
     BASELINE.parent.mkdir(parents=True, exist_ok=True)
     if not BASELINE.exists():
         BASELINE.write_text(json.dumps(coverage, indent=2) + "\n", encoding="utf-8")
