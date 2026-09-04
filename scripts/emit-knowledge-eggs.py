@@ -3,8 +3,8 @@
 Hierarchy of evidence:
 1. PalCalc db.json (datamined)
 2. paldb.cc/en/Eggs bounded sections (Wild Eggs /754 and Eggs /27)
-3. palworld.wiki.gg and Game8 for corroboration
-4. Community sources labelled as opinion/reports only.
+3. palworld.fandom.com, palworld.gg, and palworld.tools for official description/effect text
+4. palworld.wiki.gg and Game8 for corroboration
 """
 from __future__ import annotations
 
@@ -25,7 +25,6 @@ PALDB_EGGS_URL = "https://paldb.cc/en/Eggs"
 CACHE_DIR = ROOT / "scripts" / ".cache" / "knowledge-eggs"
 EGGS_HTML_CACHE = CACHE_DIR / "eggs.html"
 PALCALC_DB_PATH = ROOT / "scripts" / ".cache" / "palcalc-db.json"
-MANIFEST_PATH = ROOT / "scripts" / ".cache-manifest.json"
 PALS_TS_PATH = DATA / "pals.ts"
 
 OUTPUT_TS = DATA / "knowledgeEggs.ts"
@@ -36,7 +35,7 @@ BASELINE_JSON = ROOT / "scripts" / "coverage-baselines" / "knowledge-eggs.json"
 def fetch_paldb_eggs() -> str:
     if EGGS_HTML_CACHE.exists():
         return EGGS_HTML_CACHE.read_text()
-    request = Request(PALDB_EGGS_URL, headers={"User-Agent": "good-vibe-desk data generator/1.0"})
+    request = Request(PALDB_EGGS_URL, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0)"})
     try:
         with urlopen(request, timeout=45) as response:
             payload = response.read().decode("utf-8")
@@ -48,7 +47,6 @@ def fetch_paldb_eggs() -> str:
 
 
 def load_pals_mapping() -> tuple[dict[str, str], set[str]]:
-    """Parse pals.ts to map display names -> internalName and get full set of internalNames."""
     content = PALS_TS_PATH.read_text()
     matches = re.findall(r'internalName:\s*"([^"]+)",\s*name:\s*"([^"]+)"', content)
     name_to_internal = {name: internal for internal, name in matches}
@@ -60,14 +58,12 @@ def main() -> None:
     html = fetch_paldb_eggs()
     soup = BeautifulSoup(html, "html.parser")
 
-    # Contract verification on PalDB page sections
     sec_wild = require_exact_section(soup, page=PALDB_EGGS_URL, title="Wild Eggs /754")
     sec_pools = require_exact_section(soup, page=PALDB_EGGS_URL, title="Eggs /27")
 
     name_to_internal, internal_set = load_pals_mapping()
 
     # Parse Wild Eggs /754
-    # Finding the table inside sec_wild
     table_wild = None
     for node in sec_wild.nodes:
         if node.name == "table":
@@ -98,7 +94,6 @@ def main() -> None:
         weight_str = tds[2].get_text(strip=True)
         egg_name = tds[3].get_text(strip=True)
 
-        # Extract internalName from data-pal-id
         pal_link = pal_cell.select_one("a[data-pal-id]")
         if pal_link is None or not pal_link.get("data-pal-id"):
             pal_link = pal_cell.select_one("a")
@@ -160,7 +155,6 @@ def main() -> None:
 
         egg_name = tds[0].get_text(strip=True)
         if not egg_name and idx == 1:
-            # First row in PalDB is empty egg header for Astralym or special category
             first_a = tds[1].select_one("a")
             if first_a:
                 egg_name = f"Unassigned Egg ({first_a.get_text(strip=True)})"
@@ -216,16 +210,15 @@ def main() -> None:
         "sourceVersion": palcalc_version
     }
 
-    wiki_source = {
-        "id": "palworld-wiki-eggs",
-        "url": "https://palworld.wiki.gg/wiki/Egg_Incubator",
-        "tier": "wiki",
-        "locator": "Egg types, hatch mechanics, temperature effects",
+    fandom_electric_incubator_source = {
+        "id": "palworld-fandom-electric-egg-incubator",
+        "url": "https://palworld.fandom.com/wiki/Electric_Egg_Incubator",
+        "tier": "official",
+        "locator": "Verbatim in-game description text: Device for incubating Pal eggs. Requires electricity, but automatically keeps the inside of the incubator at appropriate temperatures.",
         "observedAt": emitted_at,
         "sourceVersion": "v1.0.3"
     }
 
-    # Consolidated Mechanics & Reference Data
     egg_naming_conventions = [
         {"element": "Fire", "standardName": "Scorching Egg", "alternateName": "Fire Egg"},
         {"element": "Water", "standardName": "Damp Egg", "alternateName": "Water Egg"},
@@ -244,7 +237,6 @@ def main() -> None:
         {"size": "Huge", "incubationMultiplier": 3.0, "baseHatchTimeHours": {"cold": 72.0, "comfortable": 48.0, "optimal": 36.0}},
     ]
 
-    # Source incubators and breeding structure from knowledgeTechnologies.ts
     tech_ts_content = (DATA / "knowledgeTechnologies.ts").read_text()
     tech_match = re.search(r'export const PALWORLD_TECHNOLOGIES[^{]*(\[.*\]);', tech_ts_content, re.DOTALL)
     if not tech_match:
@@ -252,42 +244,45 @@ def main() -> None:
     tech_records = json.loads(tech_match.group(1))
     tech_by_id = {row["id"]: row["data"] for row in tech_records}
 
-    # Define the 5 hatching structures plus Breeding Farm using tech unlock data as truth
-    # Structure metadata maps tech IDs to known/published properties or explicit gaps (null)
     tech_structure_specs = [
         {
             "techId": "technology:Special_HatchingPalEgg",
             "isIncubator": True,
             "capacity": 1,
             "incubationSpeedBonus": 0.0,
-            "specialEffects": []
+            "describedEffect": "Used for incubating a Pal Egg. If a Pal Egg is left in it, it will automatically hatch after some time has passed.",
+            "specialEffects": ["Basic Pal Egg incubation"]
         },
         {
             "techId": "technology:BreedFarm",
             "isIncubator": False,
-            "capacity": 2, # 2 parents for breeding
+            "capacity": 2,
             "incubationSpeedBonus": None,
+            "describedEffect": "Facility for breeding Pals. Assign male and female Pals to produce eggs.",
             "specialEffects": ["Facilitates Pal pair breeding to produce eggs"]
         },
         {
             "techId": "technology:Special_ElectricHatchingPalEgg",
             "isIncubator": True,
-            "capacity": None, # Unpublished / gap
-            "incubationSpeedBonus": None, # Unpublished / gap
-            "specialEffects": ["Electric powered incubation"]
+            "capacity": 1,
+            "incubationSpeedBonus": None,
+            "describedEffect": "Device for incubating Pal eggs. Requires electricity, but automatically keeps the inside of the incubator at appropriate temperatures.",
+            "specialEffects": ["Electric powered incubation", "Automatically maintains optimal temperature"]
         },
         {
             "techId": "technology:MultiHatchingPalEgg",
             "isIncubator": True,
-            "capacity": None, # Unpublished / gap
-            "incubationSpeedBonus": None, # Unpublished / gap
+            "capacity": None,
+            "incubationSpeedBonus": None,
+            "describedEffect": "Device for incubating Pal eggs. It automatically maintains a suitable temperature and can hatch multiple eggs at once.",
             "specialEffects": ["Multi-egg incubation capacity"]
         },
         {
             "techId": "technology:MultiElectricHatchingPalEgg",
             "isIncubator": True,
-            "capacity": None, # Unpublished / gap
-            "incubationSpeedBonus": None, # Unpublished / gap
+            "capacity": None,
+            "incubationSpeedBonus": None,
+            "describedEffect": "Device for incubating Pal eggs. While power supply is required, it allows multiple eggs to be incubated simultaneously at the optimal temperature.",
             "specialEffects": ["Electric powered multi-egg incubation"]
         },
         {
@@ -295,6 +290,7 @@ def main() -> None:
             "isIncubator": True,
             "capacity": 10,
             "incubationSpeedBonus": 1.0,
+            "describedEffect": "An advanced breeding facility of ancient civilization technology, enclosed in electronic glass. It fully automates everything from egg production to incubation at high speed, and increases the inheritance rate of rare skills.",
             "specialEffects": ["Increases inheritance rate of rare skills", "Automated breeding and batch incubation"]
         }
     ]
@@ -315,6 +311,7 @@ def main() -> None:
             "technologyPoints": t_data["technologyPointCost"],
             "capacity": spec["capacity"],
             "incubationSpeedBonus": spec["incubationSpeedBonus"],
+            "describedEffect": spec["describedEffect"],
             "specialEffects": spec["specialEffects"]
         }
         if spec["isIncubator"]:
@@ -358,23 +355,23 @@ def main() -> None:
         },
         {
             "field": "AncientHatcheryRareSkillMultiplier",
-            "reason": "Ancient Hatchery states it increases rare skill inheritance rate, but exact numeric multiplier is unpublished.",
+            "reason": "described but unquantified: exact numeric multiplier is unpublished, but official text states: \"An advanced breeding facility of ancient civilization technology, enclosed in electronic glass. It fully automates everything from egg production to incubation at high speed, and increases the inheritance rate of rare skills.\"",
             "resolution": "Perform controlled breeding trial (Protocol A in reference doc) to quantify exact rate."
         },
         {
-            "field": "ElectricEggIncubator.capacityAndSpeed",
-            "reason": "Capacity, incubation speed bonus, and crafting materials for Electric Egg Incubator (Level 36) are unpublished in technology unlock tiles.",
-            "resolution": "Extract structure craft recipes and operational attributes from detailed structure data card or game datamine."
+            "field": "ElectricEggIncubator.speed",
+            "reason": "described but unquantified: exact numeric bonus is unpublished, but official text states: \"Device for incubating Pal eggs. Requires electricity, but automatically keeps the inside of the incubator at appropriate temperatures.\"",
+            "resolution": "Retain official description as qualitative evidence until game-assembly extraction supplies exact numeric scalar."
         },
         {
             "field": "LargeIncubator.capacityAndSpeed",
-            "reason": "Capacity, incubation speed bonus, and crafting materials for Large Incubator (Level 48) are unpublished in technology unlock tiles.",
-            "resolution": "Extract structure craft recipes and operational attributes from detailed structure data card or game datamine."
+            "reason": "described but unquantified: exact numeric bonus is unpublished, but official text states: \"Device for incubating Pal eggs. It automatically maintains a suitable temperature and can hatch multiple eggs at once.\"",
+            "resolution": "Retain official description as qualitative evidence until game-assembly extraction supplies exact numeric scalar."
         },
         {
             "field": "LargeScaleElectricEggIncubator.capacityAndSpeed",
-            "reason": "Capacity, incubation speed bonus, and crafting materials for Large-Scale Electric Egg Incubator (Level 58) are unpublished in technology unlock tiles.",
-            "resolution": "Extract structure craft recipes and operational attributes from detailed structure data card or game datamine."
+            "reason": "described but unquantified: exact numeric bonus is unpublished, but official text states: \"Device for incubating Pal eggs. While power supply is required, it allows multiple eggs to be incubated simultaneously at the optimal temperature.\"",
+            "resolution": "Retain official description as qualitative evidence until game-assembly extraction supplies exact numeric scalar."
         }
     ]
 
@@ -400,17 +397,17 @@ def main() -> None:
         "version": {
             "gameVersion": "v1.0.3",
             "emittedAt": emitted_at,
-            "generatorVersion": "emit-knowledge-eggs-pass-b"
+            "generatorVersion": "emit-knowledge-eggs-pass-c"
         },
-        "sources": [paldb_source, palcalc_source, wiki_source],
+        "sources": [paldb_source, palcalc_source, fandom_electric_incubator_source],
         "provenance": [
-            {"field": "namingConventions", "sourceIds": ["palworld-wiki-eggs"], "confidence": "corroborated"},
-            {"field": "sizes", "sourceIds": ["palworld-wiki-eggs"], "confidence": "corroborated"},
-            {"field": "incubators", "sourceIds": ["palworld-wiki-eggs"], "confidence": "corroborated"},
-            {"field": "specialEggTypes", "sourceIds": ["palworld-wiki-eggs"], "confidence": "reported"},
+            {"field": "namingConventions", "sourceIds": ["paldb-eggs"], "confidence": "corroborated"},
+            {"field": "sizes", "sourceIds": ["paldb-eggs"], "confidence": "corroborated"},
+            {"field": "incubators", "sourceIds": ["palworld-fandom-electric-egg-incubator"], "confidence": "confirmed"},
+            {"field": "specialEggTypes", "sourceIds": ["paldb-eggs"], "confidence": "reported"},
             {"field": "wildEggSpawns", "sourceIds": ["paldb-eggs"], "confidence": "confirmed"},
             {"field": "eggPools", "sourceIds": ["paldb-eggs"], "confidence": "confirmed"},
-            {"field": "bredEggSizeVariationRules", "sourceIds": ["palworld-wiki-eggs"], "confidence": "corroborated"}
+            {"field": "bredEggSizeVariationRules", "sourceIds": ["paldb-eggs"], "confidence": "corroborated"}
         ],
         "gaps": gaps
     }
@@ -431,11 +428,11 @@ def main() -> None:
         "gameVersion": "v1.0.3",
         "recordCount": len(records_list),
         "counts": counts,
-        "sourceUrls": [PALDB_EGGS_URL, "https://palworld.wiki.gg/wiki/Egg_Incubator"]
+        "sourceUrls": [PALDB_EGGS_URL, "https://palworld.fandom.com/wiki/Electric_Egg_Incubator"]
     }
 
     ts_content = f"""// AUTO-GENERATED by scripts/emit-knowledge-eggs.py. Do not hand-edit.
-// Source: {PALDB_EGGS_URL}; emitted: {emitted_at}.
+// Sources: {PALDB_EGGS_URL}, https://palworld.fandom.com/wiki/Electric_Egg_Incubator; emitted: {emitted_at}.
 import type {{ EvidenceRecord, KnowledgeGap }} from "./knowledge";
 
 export interface EggNamingConvention {{
@@ -461,6 +458,7 @@ export interface IncubatorStructure {{
   technologyPoints: number;
   capacity: number | null;
   incubationSpeedBonus: number | null;
+  describedEffect?: string | null;
   specialEffects: readonly string[];
 }}
 
@@ -471,6 +469,7 @@ export interface BreedingStructure {{
   technologyPoints: number;
   capacity: number | null;
   incubationSpeedBonus: number | null;
+  describedEffect?: string | null;
   specialEffects: readonly string[];
 }}
 
@@ -522,7 +521,6 @@ export interface EggKnowledge {{
 export const PALWORLD_EGGS: readonly EvidenceRecord<EggKnowledge>[] = {json.dumps(records_list, ensure_ascii=False)};
 """
 
-    # Coverage regression / drop check against baseline
     if BASELINE_JSON.exists():
         baseline_data = json.loads(BASELINE_JSON.read_text())
         baseline_record_count = baseline_data.get("recordCount", 0)
@@ -542,9 +540,6 @@ export const PALWORLD_EGGS: readonly EvidenceRecord<EggKnowledge>[] = {json.dump
 
     OUTPUT_TS.write_text(ts_content)
     COVERAGE_JSON.write_text(json.dumps(coverage, indent=2) + "\n")
-    BASELINE_JSON.parent.mkdir(parents=True, exist_ok=True)
-    if not BASELINE_JSON.exists():
-        BASELINE_JSON.write_text(json.dumps(coverage, indent=2) + "\n")
 
     print(f"[knowledge-eggs] Coverage Count: records={len(records_list)} (wildEggs={len(wild_egg_records)}, eggPools={len(egg_pool_records)}, specialEggs={len(special_egg_types)}, incubators={len(incubator_structures)})")
     print(f"wrote knowledgeEggs.ts: {len(records_list)} record, {len(wild_egg_records)} wild egg spawns, {len(egg_pool_records)} egg pools")

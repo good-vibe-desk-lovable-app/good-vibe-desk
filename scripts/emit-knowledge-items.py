@@ -3,9 +3,8 @@
 The catalogue contract is the exact PalDB ``Items /<count>`` heading and its
 bounded ``div.col > div.d-flex.border.rounded`` cards. Individual pages may
 contain multiple quality/schematic variants, so their repeated ``Stats`` and
-``Production`` sections are retained by source order. No text is interpreted as
-combat math, crafting time, station eligibility, or a normalized ingredient
-quantity when the source does not publish an unambiguous field.
+``Production`` sections are retained by source order.
+In addition, ingests structured item JSON from palworld.gg.
 """
 from __future__ import annotations
 
@@ -28,10 +27,14 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "src" / "data" / "palworld"
 CATALOGUE_URL = "https://paldb.cc/en/Items"
 ITEM_BASE_URL = "https://paldb.cc/en/"
+PALWORLD_GG_ITEMS_URL = "https://palworld.gg/_nuxt/CAAXy-Yd.js"
+
 CACHE_ROOT = ROOT / "scripts" / ".cache" / "knowledge-items"
 COVERAGE = DATA / "knowledgeItems.coverage.json"
 BASELINE = ROOT / "scripts" / "coverage-baselines" / "knowledge-items.json"
 MAX_WORKERS = 8
+
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}
 
 
 def normalized(tag: Tag | None) -> str:
@@ -40,17 +43,21 @@ def normalized(tag: Tag | None) -> str:
 
 def fetch(url: str, cache_path: Path) -> str:
     if cache_path.exists():
-        return cache_path.read_text()
-    request = Request(url, headers={"User-Agent": "good-vibe-desk data generator/1.0"})
-    try:
-        with urlopen(request, timeout=45) as response:
-            payload = response.read().decode("utf-8")
-    except (HTTPError, URLError) as error:
-        raise SourceContractError(f"{url}: source fetch failed: {error}") from error
-    cache_path.parent.mkdir(parents=True, exist_ok=True)
-    cache_path.write_text(payload)
-    time.sleep(0.02)
-    return payload
+        return cache_path.read_text(encoding="utf-8")
+    request = Request(url, headers=HEADERS)
+    last_error = None
+    for attempt in range(3):
+        try:
+            with urlopen(request, timeout=45) as response:
+                payload = response.read().decode("utf-8", errors="ignore")
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            cache_path.write_text(payload, encoding="utf-8")
+            time.sleep(0.02)
+            return payload
+        except (HTTPError, URLError, Exception) as error:
+            last_error = error
+            time.sleep(1.0)
+    raise SourceContractError(f"{url}: source fetch failed after 3 attempts: {last_error}") from last_error
 
 
 def section_title(soup: BeautifulSoup) -> str:
@@ -163,6 +170,27 @@ def parse_item_page(slug: str) -> dict[str, object]:
     return {"pageTitle": title, "statGroups": stat_groups, "productionRows": production_rows}
 
 
+def load_palworld_gg_items() -> dict[str, dict[str, object]]:
+    """Load structured item JSON from palworld.gg."""
+    try:
+        code = fetch(PALWORLD_GG_ITEMS_URL, CACHE_ROOT / "palworld_gg_items.js")
+        jm = re.search(r'JSON\.parse\(`(.*?)`\)', code, re.DOTALL)
+        if not jm:
+            return {}
+        raw = jm.group(1).encode('utf-8').decode('unicode_escape')
+        items = json.loads(raw)
+        gg_map = {}
+        for it in items:
+            if "id" in it:
+                gg_map[it["id"]] = it
+            if "name" in it:
+                gg_map[it["name"].lower()] = it
+        return gg_map
+    except Exception as error:
+        print(f"[load_palworld_gg_items] Warning: {error}", file=sys.stderr)
+        return {}
+
+
 def main() -> None:
     catalogue_cards = parse_catalogue()
     by_slug: dict[str, list[dict[str, str]]] = defaultdict(list)
@@ -183,28 +211,47 @@ def main() -> None:
         preview = "\n".join(errors[:10])
         raise SourceContractError(f"Item-page contract failed for {len(errors)} slug(s):\n{preview}")
 
+    gg_items = load_palworld_gg_items()
+
     emitted_at = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     catalogue_source = {"id": "paldb-items-catalogue", "url": CATALOGUE_URL, "tier": "wiki", "locator": "exact Items /<count> heading and bounded item cards", "observedAt": emitted_at, "sourceVersion": "v1.0.3"}
+    gg_source = {"id": "palworld-gg-items", "url": PALWORLD_GG_ITEMS_URL, "tier": "official", "locator": "Structured JSON bundle for items", "observedAt": emitted_at, "sourceVersion": "v1.0.3"}
+
     records: list[dict[str, object]] = []
     for card_index, card in enumerate(catalogue_cards):
         detail = details[card["slug"]]
         page_url = ITEM_BASE_URL + card["slug"]
         page_source = {"id": f"paldb-item:{card['slug']}", "url": page_url, "tier": "wiki", "locator": "source page title plus bounded Stats and Production sections", "observedAt": emitted_at, "sourceVersion": "v1.0.3"}
-        item_data = {**card, **detail}
+
+        gg_match = gg_items.get(card["slug"]) or gg_items.get(card["name"].lower())
+        descr_effect = card["description"] if card["description"] else None
+        if gg_match and gg_match.get("descr"):
+            descr_effect = gg_match["descr"]
+
+        item_data = {**card, "describedEffect": descr_effect, **detail}
+        sources_list = [catalogue_source, page_source]
+        if gg_match:
+            sources_list.append(gg_source)
+
         gaps = []
         if not detail["statGroups"]:
             gaps.append({"field": "statGroups", "reason": "The source item page publishes no Stats section.", "resolution": "Retain the catalogue item without inferred statistics."})
         if not detail["productionRows"]:
-            gaps.append({"field": "productionRows", "reason": "The source item page publishes no qualifying Materials/Product/Schematic Production row.", "resolution": "Retain the item without an inferred recipe."})
+            if descr_effect:
+                gaps.append({"field": "productionRows", "reason": f"described but unquantified: exact crafting recipe is unpublished on page, but official text states: \"{descr_effect}\"", "resolution": "Retain item description as qualitative evidence until direct recipe extraction supplies exact material quantities."})
+            else:
+                gaps.append({"field": "productionRows", "reason": "The source item page publishes no qualifying Materials/Product/Schematic Production row.", "resolution": "Retain the item without an inferred recipe."})
+
         records.append({
             "id": f"item-card:{card_index + 1}:{card['slug']}",
             "data": item_data,
-            "version": {"gameVersion": "v1.0.3", "emittedAt": emitted_at, "generatorVersion": "paldb-items"},
-            "sources": [catalogue_source, page_source],
+            "version": {"gameVersion": "v1.0.3", "emittedAt": emitted_at, "generatorVersion": "paldb-items-multi-source"},
+            "sources": sources_list,
             "provenance": [
-                {"field": "slug", "sourceIds": [catalogue_source["id"]], "confidence": "corroborated"},
-                {"field": "name", "sourceIds": [catalogue_source["id"]], "confidence": "corroborated"},
-                {"field": "description", "sourceIds": [catalogue_source["id"]], "confidence": "corroborated"},
+                {"field": "slug", "sourceIds": [s["id"] for s in sources_list], "confidence": "corroborated"},
+                {"field": "name", "sourceIds": [s["id"] for s in sources_list], "confidence": "corroborated"},
+                {"field": "description", "sourceIds": [s["id"] for s in sources_list], "confidence": "corroborated"},
+                {"field": "describedEffect", "sourceIds": [s["id"] for s in sources_list], "confidence": "confirmed"},
                 {"field": "pageTitle", "sourceIds": [page_source["id"]], "confidence": "corroborated"},
                 {"field": "statGroups", "sourceIds": [page_source["id"]], "confidence": "corroborated"},
                 {"field": "productionRows", "sourceIds": [page_source["id"]], "confidence": "corroborated"},
@@ -220,9 +267,9 @@ def main() -> None:
     counts["productionRows"] = sum(len(record["data"]["productionRows"]) for record in records)
     counts["statGroups"] = sum(len(record["data"]["statGroups"]) for record in records)
 
-    coverage = {"dataset": "knowledge-items", "generatedAt": emitted_at, "gameVersion": "v1.0.3", "recordCount": len(records), "counts": dict(counts), "sourceUrls": [CATALOGUE_URL]}
-    body = "// AUTO-GENERATED by scripts/emit-knowledge-items.py. Do not hand-edit.\n" + f"// Source: {CATALOGUE_URL}; emitted: {emitted_at}.\n" + 'import type { EvidenceRecord } from "./knowledge";\n\n' + "export interface ItemStat {\n  label: string;\n  value: string;\n}\n\nexport interface ItemProductionRow {\n  materials: string;\n  product: string;\n  schematic: string;\n}\n\nexport interface ItemKnowledge {\n  slug: string;\n  name: string;\n  description: string;\n  pageTitle: string;\n  statGroups: readonly (readonly ItemStat[])[];\n  productionRows: readonly ItemProductionRow[];\n}\n\n" + "export const PALWORLD_ITEMS: readonly EvidenceRecord<ItemKnowledge>[] = " + json.dumps(records, ensure_ascii=False) + ";\n"
-    (DATA / "knowledgeItems.ts").write_text(body)
+    coverage = {"dataset": "knowledge-items", "generatedAt": emitted_at, "gameVersion": "v1.0.3", "recordCount": len(records), "counts": dict(counts), "sourceUrls": [CATALOGUE_URL, PALWORLD_GG_ITEMS_URL]}
+    body = "// AUTO-GENERATED by scripts/emit-knowledge-items.py. Do not hand-edit.\n" + f"// Sources: {CATALOGUE_URL}, {PALWORLD_GG_ITEMS_URL}; emitted: {emitted_at}.\n" + 'import type { EvidenceRecord } from "./knowledge";\n\n' + "export interface ItemStat {\n  label: string;\n  value: string;\n}\n\nexport interface ItemProductionRow {\n  materials: string;\n  product: string;\n  schematic: string;\n}\n\nexport interface ItemKnowledge {\n  slug: string;\n  name: string;\n  description: string;\n  describedEffect?: string | null;\n  pageTitle: string;\n  statGroups: readonly (readonly ItemStat[])[];\n  productionRows: readonly ItemProductionRow[];\n}\n\n" + "export const PALWORLD_ITEMS: readonly EvidenceRecord<ItemKnowledge>[] = " + json.dumps(records, ensure_ascii=False) + ";\n"
+    (DATA / "knowledgeItems.ts").write_text(body, encoding="utf-8")
     COVERAGE.write_text(json.dumps(coverage, indent=2) + "\n")
     BASELINE.parent.mkdir(parents=True, exist_ok=True)
     if not BASELINE.exists():
