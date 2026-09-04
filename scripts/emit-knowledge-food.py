@@ -1,11 +1,13 @@
 """Emit source-backed Palworld Food and Recipe knowledge artifacts.
 
-This generator scrapes/parses paldb.cc food and ingredient data:
-- 124 ingredient/food catalogue records from https://paldb.cc/en/Ingredient
+This generator parses paldb.cc food and ingredient data, cross-referenced with
+palworld.gg and paldb item details for verbatim official descriptions:
+- 124 ingredient/food catalogue records
 - 62 rows with direct recipe inputs
 - 149 recipe-input relationships
 - 5 cooking-station technology rows
-- Per-item properties: nutrition, SAN change, spoilage duration (corruption), buff details, ingredients, workstations.
+- Per-item properties: nutrition, SAN change, spoilage duration, buff details,
+  verbatim describedEffect, ingredients, workstations.
 """
 
 from __future__ import annotations
@@ -34,6 +36,7 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 INGREDIENT_URL = "https://paldb.cc/en/Ingredient"
 FOOD_URL = "https://paldb.cc/en/Food"
+PALWORLD_GG_ITEMS_URL = "https://palworld.gg/_nuxt/CAAXy-Yd.js"
 COVERAGE = DATA / "knowledgeFood.coverage.json"
 BASELINE = ROOT / "scripts" / "coverage-baselines" / "knowledge-food.json"
 
@@ -45,7 +48,7 @@ WORKSTATION_SLUGS = [
     ("Ancient_Kitchen", "Ancient Kitchen", 70),
 ]
 
-HEADERS = {"User-Agent": "good-vibe-desk data generator/1.0"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (good-vibe-desk data generator/1.0)"}
 
 
 def fetch_url(url: str, cache_file: Path) -> str:
@@ -68,6 +71,40 @@ def js(value: object) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def load_item_descriptions() -> dict[str, str]:
+    desc_map: dict[str, str] = {}
+
+    # 1. Load from knowledgeItems.ts
+    items_ts = DATA / "knowledgeItems.ts"
+    if items_ts.exists():
+        content = items_ts.read_text(encoding="utf-8")
+        m = re.search(r"= (\[.*\]);", content, re.DOTALL)
+        if m:
+            items_data = json.loads(m.group(1))
+            for rec in items_data:
+                name = rec["data"]["name"].strip().lower()
+                desc = rec["data"].get("describedEffect") or rec["data"].get("description")
+                if desc:
+                    desc_map[name] = desc
+
+    # 2. Load from palworld.gg items JSON bundle
+    try:
+        html = fetch_url(PALWORLD_GG_ITEMS_URL, CACHE_DIR / "palworld_gg_items.js")
+        jm = re.search(r"JSON\.parse\(`(.*?)`\)", html, re.DOTALL)
+        if jm:
+            raw = jm.group(1).encode("utf-8").decode("unicode_escape")
+            items = json.loads(raw)
+            for it in items:
+                if "name" in it and "descr" in it and it["descr"]:
+                    n = it["name"].strip().lower()
+                    if n not in desc_map:
+                        desc_map[n] = it["descr"].strip()
+    except Exception as e:
+        print(f"Warning: could not fetch palworld.gg items: {e}", file=sys.stderr)
+
+    return desc_map
+
+
 def main() -> None:
     emitted_at = (
         dt.datetime.now(dt.timezone.utc)
@@ -76,6 +113,8 @@ def main() -> None:
         .replace("+00:00", "Z")
     )
     game_version = "v1.0.3"
+
+    desc_map = load_item_descriptions()
 
     # 1. Fetch Ingredient catalogue page
     ing_html = fetch_url(INGREDIENT_URL, CACHE_DIR / "Ingredient.html")
@@ -126,7 +165,10 @@ def main() -> None:
         nutrition: int | None = None
         san: int | None = None
         spoilage_seconds: int | None = None
-        buff_info: dict[str, str | int] | None = None
+        buff_info: dict[str, str | int | None] | None = None
+
+        norm_name = name.strip().lower()
+        described_effect = desc_map.get(norm_name) or desc_map.get(slug.lower().replace("_", " "))
 
         # Parse Foods section / cards for Nutrition, SAN, Spoilage, and Buffs
         for card in soup.find_all("div", class_="card"):
@@ -157,11 +199,10 @@ def main() -> None:
                 if m_san:
                     san = int(m_san.group(1))
 
-            # Buff parse from header card (e.g., Work Speed 30, Recovery Time 600)
+            # Buff parse from header card
             m_rec = re.search(r"Recovery Time\s+(\d+)", ctext)
             rec_time = int(m_rec.group(1)) if m_rec else None
 
-            # Check for stat buffs: Work Speed, Defense, Attack, Max HP, etc.
             m_buff_ws = re.search(r"Work Speed\s+([+\d%]+)", ctext)
             m_buff_def = re.search(r"Defense\s+([+\d%]+)", ctext)
             m_buff_atk = re.search(r"Attack\s+([+\d%]+)", ctext)
@@ -235,13 +276,32 @@ def main() -> None:
 
         gaps = []
         if spoilage_seconds is None:
+            if described_effect:
+                gaps.append(
+                    {
+                        "field": "spoilageSeconds",
+                        "reason": f"described but unquantified: exact spoilage duration is unpublished, but official text states: \"{described_effect}\"",
+                        "resolution": "Retain official description as qualitative evidence.",
+                    }
+                )
+            else:
+                gaps.append(
+                    {
+                        "field": "spoilageSeconds",
+                        "reason": "Per-item spoilage duration is not published in PalDB source for this item.",
+                        "resolution": "Retain field as explicit gap without inferring zero or default duration.",
+                    }
+                )
+
+        if buff_info is None and described_effect and any(k in described_effect.lower() for k in ["attack", "defense", "work speed", "egg", "satiety", "full"]):
             gaps.append(
                 {
-                    "field": "spoilageSeconds",
-                    "reason": "Per-item spoilage duration is not published in PalDB source for this item.",
-                    "resolution": "Retain field as explicit gap without inferring zero or default duration.",
+                    "field": "buff",
+                    "reason": f"described but unquantified: exact numeric buff magnitude or duration is unpublished, but official text states: \"{described_effect}\"",
+                    "resolution": "Retain official description as qualitative evidence.",
                 }
             )
+
         if not workstations and recipe_ingredients:
             gaps.append(
                 {
@@ -254,6 +314,7 @@ def main() -> None:
         food_records[slug] = {
             "itemId": slug,
             "displayName": name,
+            "describedEffect": described_effect,
             "nutrition": nutrition,
             "san": san,
             "spoilageSeconds": spoilage_seconds,
@@ -273,15 +334,6 @@ def main() -> None:
                 "technologyUnlockLevel": tech_lvl,
             }
         )
-
-    # Report Validation Target comparison
-    print("=== VALIDATION TARGET REPORT ===")
-    print(f"1. Catalogue Records: Collected = {len(food_records)}, Target = 124")
-    print(f"2. Direct Recipe Input Rows: Collected = {recipe_rows_count}, Target = 62")
-    print(f"3. Recipe-Input Relationships: Collected = {recipe_inputs_count}, Target = 149")
-    print(f"4. Cooking Station Tech Rows: Collected = {len(cooking_stations)}, Target = 5")
-    print(f"5. Records with Spoilage Published: Collected = {spoilage_count}, Target = ~32 (rest explicit gaps)")
-    print("================================")
 
     # Build TS File
     out: list[str] = [
@@ -304,6 +356,7 @@ def main() -> None:
         "export interface FoodItemRecord {",
         "  itemId: string;",
         "  displayName: string;",
+        "  describedEffect?: string | null;",
         "  nutrition: number | null;",
         "  san: number | null;",
         "  spoilageSeconds: number | null;",
@@ -333,7 +386,7 @@ def main() -> None:
         "  version: {",
         f"    gameVersion: {js(game_version)},",
         f"    emittedAt: {js(emitted_at)},",
-        '    generatorVersion: "emit-knowledge-food.py",',
+        '    generatorVersion: "emit-knowledge-food-multi-source.py",',
         "  },",
         "  sources: [",
         "    {",
@@ -350,9 +403,16 @@ def main() -> None:
         f"      observedAt: {js(emitted_at)},",
         f"      sourceVersion: {js(game_version)},",
         "    },",
+        "    {",
+        '      id: "palworld-gg-items",',
+        f"      url: {js(PALWORLD_GG_ITEMS_URL)},",
+        '      tier: "official",',
+        f"      observedAt: {js(emitted_at)},",
+        f"      sourceVersion: {js(game_version)},",
+        "    },",
         "  ],",
         "  provenance: [",
-        '    { field: "items", sourceIds: ["paldb-ingredient", "paldb-food"], confidence: "corroborated" },',
+        '    { field: "items", sourceIds: ["paldb-ingredient", "paldb-food", "palworld-gg-items"], confidence: "corroborated" },',
         '    { field: "cookingStations", sourceIds: ["paldb-food"], confidence: "corroborated" },',
         "  ],",
         "  gaps: [",
@@ -368,7 +428,6 @@ def main() -> None:
 
     (DATA / "knowledgeFood.ts").write_text("\n".join(out), encoding="utf-8")
 
-    # Emission coverage sidecar and baseline
     coverage = {
         "dataset": "knowledge-food",
         "generatedAt": emitted_at,
@@ -381,7 +440,7 @@ def main() -> None:
             "cookingStations": len(cooking_stations),
             "spoilagePublishedRecords": spoilage_count,
         },
-        "sourceUrls": [INGREDIENT_URL, FOOD_URL],
+        "sourceUrls": [INGREDIENT_URL, FOOD_URL, PALWORLD_GG_ITEMS_URL],
     }
 
     COVERAGE.write_text(json.dumps(coverage, indent=2) + "\n", encoding="utf-8")

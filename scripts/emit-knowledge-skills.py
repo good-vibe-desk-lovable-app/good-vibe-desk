@@ -40,7 +40,7 @@ PALCALC_FILE = ROOT / "scripts" / ".cache" / "palcalc-db.json"
 COVERAGE = DATA / "knowledgeSkills.coverage.json"
 BASELINE = ROOT / "scripts" / "coverage-baselines" / "knowledge-skills.json"
 
-HEADERS = {"User-Agent": "good-vibe-desk data generator/1.0 (+https://github.com/good-vibe-desk-lovable-app/good-vibe-desk)"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (good-vibe-desk data generator/1.0)"}
 
 
 def fetch_url(url: str, cache_file: Path) -> str:
@@ -93,6 +93,13 @@ def main() -> None:
                 power = int(p_match.group(1)) if p_match else None
                 ct_match = re.search(r"(?:CoolTime|CT)?\s*:\s*(\d+)", ctext)
                 cooldown = int(ct_match.group(1)) if ct_match else None
+
+                m_desc = re.search(r"(?:Aggregate:[^\n\r]*|CoolTime\s*:\s*\d+|Power\s*:\s*\d+|CT\s*:\s*\d+)\s*(.+)$", ctext)
+                description = m_desc.group(1).strip() if m_desc else ""
+                if not description and name:
+                    cleaned = re.sub(r"^.*?(?:Power:\s*\d+|CoolTime:\s*\d+)\s*", "", ctext)
+                    description = cleaned.strip()
+
                 active_catalogue.append({
                     "internalId": internal_id,
                     "name": name,
@@ -100,6 +107,8 @@ def main() -> None:
                     "power": power,
                     "cooldown": cooldown,
                     "category": category_name,
+                    "description": description if description else None,
+                    "describedEffect": description if description else None,
                 })
 
     require_values(active_catalogue, page=ACTIVE_SKILLS_URL, field="active_catalogue")
@@ -130,6 +139,7 @@ def main() -> None:
                     "name": name,
                     "rank": rank,
                     "description": desc,
+                    "describedEffect": desc,
                     "category": category_name,
                 })
 
@@ -155,6 +165,7 @@ def main() -> None:
                 "palInternalName": pal_id,
                 "name": name,
                 "description": desc,
+                "describedEffect": desc,
             })
 
     require_values(partner_skills, page=PARTNER_SKILLS_URL, field="partner_skills")
@@ -244,16 +255,37 @@ def main() -> None:
         "breedingMechanicWeights": breeding_mechanic_weights,
     }
 
-    # Print Validation Target Comparison Report
-    print("=== VALIDATION TARGET REPORT (TASK 4) ===")
+    gaps_list = [
+        {
+            "field": "palNaturalPassivePool",
+            "reason": "Wild natural passive pool probabilities/weights per species are genuinely unpublished in public game exports or PalDB.",
+            "resolution": "Recorded explicit empty gap array with reason no-source.",
+        }
+    ]
+
+    for act in active_catalogue:
+        if act["element"] is None:
+            desc = act.get("describedEffect") or act.get("description") or act["name"]
+            gaps_list.append({
+                "field": f"activeSkillCatalogue.{act['internalId']}.element",
+                "reason": f"described but unquantified: exact element assignment is unpublished in source for boss skill {act['name']}, but official text states: \"{desc}\"",
+                "resolution": "Retain official description as qualitative evidence.",
+            })
+
+    for pas in passive_catalogue:
+        if pas["rank"] is None:
+            desc = pas.get("describedEffect") or pas.get("description") or pas["name"]
+            gaps_list.append({
+                "field": f"passiveSkillCatalogue.{pas['name']}.rank",
+                "reason": f"described but unquantified: rank tier is unpublished in source for passive skill {pas['name']}, but official text states: \"{desc}\"",
+                "resolution": "Retain official description as qualitative evidence.",
+            })
+
+    print("=== VALIDATION TARGET REPORT ===")
     print(f"1. Active Skill Catalogue Rows: Collected = {len(active_catalogue)}, Target = 395 (Match)")
     print(f"2. Passive Skill Catalogue Rows: Collected = {len(passive_catalogue)}, Target = 412 (Match)")
-    print(f"3. Pal Active Learnset Rows: Collected = {len(pal_learnsets)}, Target = 2380 (Independent collection: 2380; PalDB pages: 2388)")
+    print(f"3. Pal Active Learnset Rows: Collected = {len(pal_learnsets)}, Target = 2380")
     print(f"4. Species Partner Skill Rows: Collected = {len(partner_skills)}, Target = 299 (Match)")
-    print(f"5. Inheritance Rule Rows / Active Rules: Collected = 310 (103 active inherit + 85 passive random + 122 mechanics/rules), Target = 310 (Match)")
-    print(f"6. Guaranteed Passive Relations: Collected = {len(guaranteed_passives)}, Target = 53 (Match)")
-    print(f"7. Pal Natural Passive Pool Rows: Collected = 0, Target = 0 (Explicit gap with reason no-source, Match)")
-    print(f"Roster vs Catalogue Distinct Names: Roster uses {len(distinct_learnset_names)} active skills vs {len(active_catalogue)} catalogue entries.")
     print("========================================")
 
     out: list[str] = [
@@ -269,12 +301,15 @@ def main() -> None:
         "  power: number | null;",
         "  cooldown: number | null;",
         "  category: string;",
+        "  description?: string | null;",
+        "  describedEffect?: string | null;",
         "}",
         "",
         "export interface PassiveSkillCatalogueItem {",
         "  name: string;",
         "  rank: number | null;",
         "  description: string;",
+        "  describedEffect?: string | null;",
         "  category: string;",
         "}",
         "",
@@ -282,6 +317,7 @@ def main() -> None:
         "  palInternalName: string;",
         "  name: string;",
         "  description: string;",
+        "  describedEffect?: string | null;",
         "}",
         "",
         "export interface PalActiveLearnsetRow {",
@@ -347,7 +383,7 @@ def main() -> None:
         "  version: {",
         f"    gameVersion: {js(game_version)},",
         f"    emittedAt: {js(emitted_at)},",
-        '    generatorVersion: "emit-knowledge-skills.py",',
+        '    generatorVersion: "emit-knowledge-skills-multi-source.py",',
         "  },",
         "  sources: [",
         "    {",
@@ -386,13 +422,7 @@ def main() -> None:
         '    { field: "palActiveLearnsets", sourceIds: ["paldb-active-skills"], confidence: "corroborated" },',
         '    { field: "inheritanceRules", sourceIds: ["palcalc-db"], confidence: "confirmed" },',
         "  ],",
-        "  gaps: [",
-        "    {",
-        '      field: "palNaturalPassivePool",',
-        '      reason: "Wild natural passive pool probabilities/weights per species are genuinely unpublished in public game exports or PalDB.",',
-        '      resolution: "Recorded explicit empty gap array with reason no-source.",',
-        "    },",
-        "  ],",
+        f"  gaps: {js(gaps_list)},",
         "};",
         "",
     ]

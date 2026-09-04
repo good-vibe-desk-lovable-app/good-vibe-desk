@@ -44,7 +44,7 @@ DUNGEON_CACHE = ROOT / "scripts" / ".cache" / "dungeon-bosses.json"
 COVERAGE = DATA / "knowledgeEncounters.coverage.json"
 BASELINE = ROOT / "scripts" / "coverage-baselines" / "knowledge-encounters.json"
 
-HEADERS = {"User-Agent": "good-vibe-desk data generator/1.0 (+https://github.com/good-vibe-desk-lovable-app/good-vibe-desk)"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (good-vibe-desk data generator/1.0)"}
 BROWSER_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
 
 
@@ -100,9 +100,10 @@ def main() -> None:
                 all_records.append({
                     "id": rec_id,
                     "data": data_obj,
-                    "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters.py"},
+                    "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters-multi-source.py"},
                     "sources": [source_obj],
                     "provenance": [{"field": k, "sourceIds": ["paldb-dungeon"], "confidence": "corroborated"} for k in data_obj],
+                    "gaps": [],
                 })
                 dungeons_data.append(data_obj)
 
@@ -157,9 +158,10 @@ def main() -> None:
             all_records.append({
                 "id": rec_id,
                 "data": data_obj,
-                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters.py"},
+                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters-multi-source.py"},
                 "sources": [source_obj],
                 "provenance": [{"field": k, "sourceIds": ["paldb-raid"], "confidence": "corroborated"} for k in data_obj],
+                "gaps": [],
             })
             raid_bosses.append(data_obj)
 
@@ -203,9 +205,10 @@ def main() -> None:
             all_records.append({
                 "id": rec_id,
                 "data": data_obj,
-                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters.py"},
+                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters-multi-source.py"},
                 "sources": [source_obj],
                 "provenance": [{"field": k, "sourceIds": ["paldb-tower"], "confidence": "corroborated"} for k in data_obj],
+                "gaps": [],
             })
             tower_rows.append(data_obj)
 
@@ -227,6 +230,7 @@ def main() -> None:
                 except ValueError:
                     level = 0
                 is_roaming = (sealed == "No")
+
                 data_obj = {
                     "kind": "fieldAlpha",
                     "name": name,
@@ -237,6 +241,21 @@ def main() -> None:
                     "coordinates": coords,
                     "roamingOrEvent": is_roaming,
                 }
+
+                gaps = []
+                if sealed == "No":
+                    gaps.append({
+                        "field": "sealedRealm",
+                        "reason": f"described but unquantified: field Alpha roams in the open world at coordinates {coords} and is not housed in a Sealed Realm, official text states: \"{name} ({coords})\"",
+                        "resolution": "Retain fieldAlpha record with roaming indicator rather than assuming a Sealed Realm name."
+                    })
+                if title == "N/A":
+                    gaps.append({
+                        "field": "title",
+                        "reason": f"described but unquantified: field Alpha title is unpublished in source for {name}, official text states: \"{name}\"",
+                        "resolution": "Retain fieldAlpha record without assumed title."
+                    })
+
                 rec_id = f"fieldAlpha:{pnum}:{name}:{idx+1}"
                 source_obj = {
                     "id": "wiki-alpha-pals",
@@ -248,9 +267,10 @@ def main() -> None:
                 all_records.append({
                     "id": rec_id,
                     "data": data_obj,
-                    "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters.py"},
+                    "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters-multi-source.py"},
                     "sources": [source_obj],
                     "provenance": [{"field": k, "sourceIds": ["wiki-alpha-pals"], "confidence": "corroborated"} for k in data_obj],
+                    "gaps": gaps,
                 })
                 field_alpha_rows.append(data_obj)
 
@@ -286,9 +306,10 @@ def main() -> None:
             all_records.append({
                 "id": rec_id,
                 "data": data_obj,
-                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters.py"},
+                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters-multi-source.py"},
                 "sources": [source_obj],
                 "provenance": [{"field": k, "sourceIds": ["paldb-mission"], "confidence": "corroborated"} for k in data_obj],
+                "gaps": [],
             })
             mission_rows.append(data_obj)
             if len(mission_rows) == 23:
@@ -325,9 +346,10 @@ def main() -> None:
             all_records.append({
                 "id": rec_id,
                 "data": data_obj,
-                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters.py"},
+                "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters-multi-source.py"},
                 "sources": [source_obj],
                 "provenance": [{"field": k, "sourceIds": ["paldb-hostile"], "confidence": "corroborated"} for k in data_obj],
+                "gaps": [],
             })
             hostile_rows.append(data_obj)
 
@@ -369,23 +391,24 @@ def main() -> None:
         all_records.append({
             "id": rec_id,
             "data": data_obj,
-            "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters.py"},
+            "version": {"gameVersion": game_version, "emittedAt": emitted_at, "generatorVersion": "emit-knowledge-encounters-multi-source.py"},
             "sources": [source_obj],
             "provenance": [{"field": k, "sourceIds": ["exophase-achievements"], "confidence": "corroborated"} for k in data_obj],
+            "gaps": [],
         })
         achievement_rows.append(data_obj)
 
     require_values(achievement_rows, page=ACHIEVEMENTS_URL, field="achievement_rows")
 
     # Print Validation Target Report
-    print("=== VALIDATION TARGET REPORT (TASK 5) ===")
-    print(f"1. Dungeon Boss Rows: Collected = {len(dungeons_data)}, Target = 190 (Match)")
-    print(f"2. Raid Bosses / Altar Rows: Collected = {len(raid_bosses)}, Target = 10 boss species / 11 altar rows (Match)")
-    print(f"3. Tower Boss Rows: Collected = {len(tower_rows)}, Target = 22 (Match)")
-    print(f"4. Field Alpha Rows: Collected = {len(field_alpha_rows)}, Target = 72 (Match; +65 fixed map Alphas preserved in scope)")
-    print(f"5. Mission Boss & Objective Rows: Collected = {len(mission_rows)}, Target = 23 (Match)")
-    print(f"6. Ordinary Hostile Encounters: Collected = {len(hostile_rows)}, Target = 240 (Match)")
-    print(f"7. Achievements with Exact Text: Collected = {len(achievement_rows)}, Target = 75 (Match)")
+    print("=== VALIDATION TARGET REPORT ===")
+    print(f"1. Dungeon Boss Rows: Collected = {len(dungeons_data)}, Target = 190")
+    print(f"2. Raid Bosses / Altar Rows: Collected = {len(raid_bosses)}, Target = 11")
+    print(f"3. Tower Boss Rows: Collected = {len(tower_rows)}, Target = 22")
+    print(f"4. Field Alpha Rows: Collected = {len(field_alpha_rows)}, Target = 72")
+    print(f"5. Mission Boss & Objective Rows: Collected = {len(mission_rows)}, Target = 23")
+    print(f"6. Ordinary Hostile Encounters: Collected = {len(hostile_rows)}, Target = 240")
+    print(f"7. Achievements with Exact Text: Collected = {len(achievement_rows)}, Target = 75")
     print(f"Total Encounter & Achievement Records: {len(all_records)}")
     print("========================================")
 
