@@ -273,9 +273,14 @@ def parse_structure_page(
     def_pvp = int(others["Defense_PVP"]) if "Defense_PVP" in others and others["Defense_PVP"].isdigit() else None
     code = stats.get("Code")
 
+    cb = soup.select_one(".card-body")
+    description = normalized(cb) if cb else ""
+
     return {
         "sourceKey": source_key,
         "name": page_title,
+        "description": description,
+        "describedEffect": description if description else None,
         "category": stats.get("Type", "Unknown"),
         "materials": materials,
         "requiredWorkSuitabilities": required_suitabilities,
@@ -358,6 +363,8 @@ def main() -> None:
             record_data = {
                 "sourceKey": f"unlinked_{idx+1}",
                 "name": name,
+                "description": "",
+                "describedEffect": None,
                 "category": "Unknown",
                 "materials": [],
                 "requiredWorkSuitabilities": [],
@@ -392,6 +399,16 @@ def main() -> None:
                     "field": "prerequisiteRelations",
                     "reason": "Prerequisite structure relations are not explicitly published on PalDB structure pages.",
                     "resolution": "Leave prerequisite array empty until a direct graph source is available.",
+                })
+
+            if record_data["description"] and any(
+                kw in record_data["description"].lower()
+                for kw in ["incubation", "rare skill", "hatch", "temperature", "speed", "automate"]
+            ):
+                gaps.append({
+                    "field": "numericEffectModifiers",
+                    "reason": f"described but unquantified: exact numeric bonus is unpublished, but official text states: \"{record_data['description']}\"",
+                    "resolution": "Retain official description as qualitative evidence until game-assembly extraction supplies exact numeric scalar.",
                 })
 
         source_page = {
@@ -474,6 +491,8 @@ def main() -> None:
         "export interface StructureKnowledge {\n"
         "  sourceKey: string;\n"
         "  name: string;\n"
+        "  description: string;\n"
+        "  describedEffect?: string | null;\n"
         "  category: string;\n"
         "  materials: StructureMaterialRequirement[];\n"
         "  requiredWorkSuitabilities: StructureWorkSuitabilityRequirement[];\n"

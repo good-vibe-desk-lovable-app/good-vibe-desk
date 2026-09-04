@@ -1,6 +1,6 @@
 {
   "dataset": "knowledge-structures",
-  "generatedAt": "2026-09-02T19:48:02Z",
+  "generatedAt": "2026-09-04T01:39:59Z",
   "gameVersion": "v1.0.3",
   "recordCount": 498,
   "counts": {
@@ -10,5 +10,7 @@
     "requiredWorkSuitabilityRelations": 67,
     "unlinkedStructureGaps": 2
   },
-  "sourceUrls": ["https://paldb.cc/en/Structures"]
+  "sourceUrls": [
+    "https://paldb.cc/en/Structures"
+  ]
 }
