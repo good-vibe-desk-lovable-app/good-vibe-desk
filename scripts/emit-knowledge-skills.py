@@ -100,6 +100,11 @@ def main() -> None:
                     cleaned = re.sub(r"^.*?(?:Power:\s*\d+|CoolTime:\s*\d+)\s*", "", ctext)
                     description = cleaned.strip()
 
+                # Clean description extracted from card text
+                cleaned_desc = re.sub(r"^.*?(?:Power:\s*\d+)(?:\s*Aggregate:\s*[\w-]+\s*\d+)?\s*", "", ctext).strip()
+                # If cleaned_desc matches name or is empty, no description was published in PalDB card
+                final_desc = cleaned_desc if (cleaned_desc and cleaned_desc != name) else None
+
                 active_catalogue.append({
                     "internalId": internal_id,
                     "name": name,
@@ -107,8 +112,8 @@ def main() -> None:
                     "power": power,
                     "cooldown": cooldown,
                     "category": category_name,
-                    "description": description if description else None,
-                    "describedEffect": description if description else None,
+                    "description": final_desc,
+                    "describedEffect": final_desc,
                 })
 
     require_values(active_catalogue, page=ACTIVE_SKILLS_URL, field="active_catalogue")
@@ -131,7 +136,7 @@ def main() -> None:
             for item in node.select("div.col > div.border"):
                 rank_div = item.select_one('div[class*="passive-rank"]') or item.select_one('div[class*="passive_banner"]')
                 name = rank_div.get_text(strip=True) if rank_div else ""
-                rank_match = re.search(r"passive_banner_rank(\d+)|passive-rank(\d+)", str(item))
+                rank_match = re.search(r"passive_banner_rank(-?\d+)|passive-rank(-?\d+)", str(item))
                 rank = int(next(m for m in rank_match.groups() if m is not None)) if rank_match else None
                 desc_div = item.select_one("div.passive-desc") or item.select_one("div.p-2") or item
                 desc = desc_div.get_text(" ", strip=True)
@@ -270,6 +275,12 @@ def main() -> None:
                 "field": f"activeSkillCatalogue.{act['internalId']}.element",
                 "reason": f"described but unquantified: exact element assignment is unpublished in source for boss skill {act['name']}, but official text states: \"{desc}\"",
                 "resolution": "Retain official description as qualitative evidence.",
+            })
+        if act["description"] is None:
+            gaps_list.append({
+                "field": f"activeSkillCatalogue.{act['internalId']}.description",
+                "reason": f"described but unquantified: exact in-game description text is unpublished in source for internal/boss skill {act['name']}",
+                "resolution": "Retain record with null description and record explicit gap.",
             })
 
     for pas in passive_catalogue:

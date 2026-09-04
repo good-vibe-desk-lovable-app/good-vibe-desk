@@ -231,13 +231,16 @@ def main() -> None:
                     level = 0
                 is_roaming = (sealed == "No")
 
+                sealed_val = sealed if sealed != "No" else None
+                title_val = title if title != "N/A" else None
+
                 data_obj = {
                     "kind": "fieldAlpha",
                     "name": name,
                     "paldeckNumber": pnum,
                     "level": level,
-                    "title": title if title != "N/A" else None,
-                    "sealedRealm": sealed if sealed != "No" else None,
+                    "title": title_val,
+                    "sealedRealm": sealed_val,
                     "coordinates": coords,
                     "roamingOrEvent": is_roaming,
                 }
