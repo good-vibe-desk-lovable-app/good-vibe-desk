@@ -1,7 +1,7 @@
 {
   "palcalc": {
     "dbVersion": "v27",
-    "fetchedAt": "2026-09-04T18:10:27+00:00",
+    "fetchedAt": "2026-09-04T19:09:01+00:00",
     "palCount": 299,
     "repositoryCommitAt": "2026-08-31T18:00:43Z",
     "repositoryRevision": "85f651aca4162df0919ca8c798c699a50693caed",
@@ -85,7 +85,7 @@
         ],
         "index": {
           "bytes": 682015,
-          "fetchedAt": "2026-09-04T18:15:05+00:00",
+          "fetchedAt": "2026-09-04T19:14:26+00:00",
           "paldbVersion": {
             "date": "2026/8/12",
             "version": "v1.0.3"
@@ -96,7 +96,7 @@
         "pages": {
           "Astral_Mountains_Cavern": {
             "bytes": 91359,
-            "fetchedAt": "2026-09-04T18:14:57+00:00",
+            "fetchedAt": "2026-09-04T19:14:17+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -106,7 +106,7 @@
           },
           "Cavern_of_the_Dunes": {
             "bytes": 85649,
-            "fetchedAt": "2026-09-04T18:14:54+00:00",
+            "fetchedAt": "2026-09-04T19:14:14+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -116,7 +116,7 @@
           },
           "Cherry_Blossom_Cave": {
             "bytes": 84144,
-            "fetchedAt": "2026-09-04T18:15:00+00:00",
+            "fetchedAt": "2026-09-04T19:14:21+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -126,7 +126,7 @@
           },
           "Feybreak_Cavern": {
             "bytes": 100136,
-            "fetchedAt": "2026-09-04T18:15:02+00:00",
+            "fetchedAt": "2026-09-04T19:14:22+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -136,7 +136,7 @@
           },
           "Hillside_Cavern": {
             "bytes": 88659,
-            "fetchedAt": "2026-09-04T18:14:48+00:00",
+            "fetchedAt": "2026-09-04T19:14:09+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -146,7 +146,7 @@
           },
           "Isolated_Island_Cavern": {
             "bytes": 199852,
-            "fetchedAt": "2026-09-04T18:14:59+00:00",
+            "fetchedAt": "2026-09-04T19:14:19+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -156,7 +156,7 @@
           },
           "Mountain_Stream_Grotto": {
             "bytes": 152203,
-            "fetchedAt": "2026-09-04T18:14:52+00:00",
+            "fetchedAt": "2026-09-04T19:14:12+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -166,7 +166,7 @@
           },
           "Ravine_Grotto": {
             "bytes": 74801,
-            "fetchedAt": "2026-09-04T18:14:50+00:00",
+            "fetchedAt": "2026-09-04T19:14:10+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -176,7 +176,7 @@
           },
           "Sunreach_Skies": {
             "bytes": 107628,
-            "fetchedAt": "2026-09-04T18:15:05+00:00",
+            "fetchedAt": "2026-09-04T19:14:26+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -186,7 +186,7 @@
           },
           "Volcanic_Cavern": {
             "bytes": 85093,
-            "fetchedAt": "2026-09-04T18:14:55+00:00",
+            "fetchedAt": "2026-09-04T19:14:16+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -196,7 +196,7 @@
           },
           "___": {
             "bytes": 118477,
-            "fetchedAt": "2026-09-04T18:15:04+00:00",
+            "fetchedAt": "2026-09-04T19:14:24+00:00",
             "paldbVersion": {
               "date": "2026/8/12",
               "version": "v1.0.3"
@@ -224,7 +224,7 @@
     "pages": {
       "Alpaca": {
         "bytes": 92230,
-        "fetchedAt": "2026-09-04T18:06:42+00:00",
+        "fetchedAt": "2026-09-04T19:02:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -234,7 +234,7 @@
       },
       "AmaterasuWolf": {
         "bytes": 91951,
-        "fetchedAt": "2026-09-04T18:06:55+00:00",
+        "fetchedAt": "2026-09-04T19:03:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -244,7 +244,7 @@
       },
       "AmaterasuWolf_Dark": {
         "bytes": 185851,
-        "fetchedAt": "2026-09-04T18:08:57+00:00",
+        "fetchedAt": "2026-09-04T19:06:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -254,7 +254,7 @@
       },
       "Anubis": {
         "bytes": 92816,
-        "fetchedAt": "2026-09-04T18:05:51+00:00",
+        "fetchedAt": "2026-09-04T19:02:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -264,7 +264,7 @@
       },
       "BadCatgirl": {
         "bytes": 93243,
-        "fetchedAt": "2026-09-04T18:05:43+00:00",
+        "fetchedAt": "2026-09-04T19:02:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -274,7 +274,7 @@
       },
       "Baphomet": {
         "bytes": 98829,
-        "fetchedAt": "2026-09-04T18:05:53+00:00",
+        "fetchedAt": "2026-09-04T19:02:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -284,7 +284,7 @@
       },
       "Baphomet_Dark": {
         "bytes": 138184,
-        "fetchedAt": "2026-09-04T18:05:54+00:00",
+        "fetchedAt": "2026-09-04T19:02:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -294,7 +294,7 @@
       },
       "Bastet": {
         "bytes": 87005,
-        "fetchedAt": "2026-09-04T18:05:56+00:00",
+        "fetchedAt": "2026-09-04T19:02:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -304,7 +304,7 @@
       },
       "Bastet_Ice": {
         "bytes": 87880,
-        "fetchedAt": "2026-09-04T18:05:58+00:00",
+        "fetchedAt": "2026-09-04T19:02:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -314,7 +314,7 @@
       },
       "BerryGoat": {
         "bytes": 98351,
-        "fetchedAt": "2026-09-04T18:07:10+00:00",
+        "fetchedAt": "2026-09-04T19:04:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -324,7 +324,7 @@
       },
       "BerryGoat_Dark": {
         "bytes": 100420,
-        "fetchedAt": "2026-09-04T18:08:56+00:00",
+        "fetchedAt": "2026-09-04T19:06:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -334,7 +334,7 @@
       },
       "BirdDragon": {
         "bytes": 106743,
-        "fetchedAt": "2026-09-04T18:06:58+00:00",
+        "fetchedAt": "2026-09-04T19:03:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -344,7 +344,7 @@
       },
       "BirdDragon_Ice": {
         "bytes": 98539,
-        "fetchedAt": "2026-09-04T18:06:59+00:00",
+        "fetchedAt": "2026-09-04T19:03:55+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -354,7 +354,7 @@
       },
       "BlackCentaur": {
         "bytes": 92524,
-        "fetchedAt": "2026-09-04T18:08:04+00:00",
+        "fetchedAt": "2026-09-04T19:05:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -364,7 +364,7 @@
       },
       "BlackGriffon": {
         "bytes": 91617,
-        "fetchedAt": "2026-09-04T18:07:11+00:00",
+        "fetchedAt": "2026-09-04T19:04:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -374,7 +374,7 @@
       },
       "BlackMetalDragon": {
         "bytes": 92563,
-        "fetchedAt": "2026-09-04T18:07:34+00:00",
+        "fetchedAt": "2026-09-04T19:04:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -384,7 +384,7 @@
       },
       "BlackPuppy": {
         "bytes": 108840,
-        "fetchedAt": "2026-09-04T18:08:39+00:00",
+        "fetchedAt": "2026-09-04T19:06:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -394,7 +394,7 @@
       },
       "BlackPuppy_Ice": {
         "bytes": 92801,
-        "fetchedAt": "2026-09-04T18:08:40+00:00",
+        "fetchedAt": "2026-09-04T19:06:31+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -404,7 +404,7 @@
       },
       "BlueDragon": {
         "bytes": 100239,
-        "fetchedAt": "2026-09-04T18:06:45+00:00",
+        "fetchedAt": "2026-09-04T19:02:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -414,7 +414,7 @@
       },
       "BlueDragon_Ice": {
         "bytes": 99875,
-        "fetchedAt": "2026-09-04T18:06:46+00:00",
+        "fetchedAt": "2026-09-04T19:02:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -424,7 +424,7 @@
       },
       "BluePlatypus": {
         "bytes": 101735,
-        "fetchedAt": "2026-09-04T18:06:57+00:00",
+        "fetchedAt": "2026-09-04T19:03:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -434,7 +434,7 @@
       },
       "BluePlatypus_Fire": {
         "bytes": 92903,
-        "fetchedAt": "2026-09-04T18:06:58+00:00",
+        "fetchedAt": "2026-09-04T19:03:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -444,7 +444,7 @@
       },
       "BlueSkyDragon": {
         "bytes": 89424,
-        "fetchedAt": "2026-09-04T18:09:54+00:00",
+        "fetchedAt": "2026-09-04T19:07:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -454,7 +454,7 @@
       },
       "BlueThunderHorse": {
         "bytes": 90641,
-        "fetchedAt": "2026-09-04T18:08:48+00:00",
+        "fetchedAt": "2026-09-04T19:06:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -464,7 +464,7 @@
       },
       "BlueberryFairy": {
         "bytes": 96309,
-        "fetchedAt": "2026-09-04T18:06:19+00:00",
+        "fetchedAt": "2026-09-04T19:02:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -474,7 +474,7 @@
       },
       "Boar": {
         "bytes": 86832,
-        "fetchedAt": "2026-09-04T18:06:00+00:00",
+        "fetchedAt": "2026-09-04T19:02:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -484,7 +484,7 @@
       },
       "BrownRabbit": {
         "bytes": 82270,
-        "fetchedAt": "2026-09-04T18:05:44+00:00",
+        "fetchedAt": "2026-09-04T19:02:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -494,7 +494,7 @@
       },
       "CactusDoll": {
         "bytes": 82302,
-        "fetchedAt": "2026-09-04T18:09:10+00:00",
+        "fetchedAt": "2026-09-04T19:07:04+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -504,7 +504,7 @@
       },
       "CactusDoll_Dark": {
         "bytes": 81834,
-        "fetchedAt": "2026-09-04T18:09:10+00:00",
+        "fetchedAt": "2026-09-04T19:07:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -514,7 +514,7 @@
       },
       "CandleGhost": {
         "bytes": 102151,
-        "fetchedAt": "2026-09-04T18:08:23+00:00",
+        "fetchedAt": "2026-09-04T19:06:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -524,7 +524,7 @@
       },
       "CaptainPenguin": {
         "bytes": 99355,
-        "fetchedAt": "2026-09-04T18:07:54+00:00",
+        "fetchedAt": "2026-09-04T19:05:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -534,7 +534,7 @@
       },
       "CaptainPenguin_Black": {
         "bytes": 91568,
-        "fetchedAt": "2026-09-04T18:07:54+00:00",
+        "fetchedAt": "2026-09-04T19:05:08+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -544,7 +544,7 @@
       },
       "Carbunclo": {
         "bytes": 92371,
-        "fetchedAt": "2026-09-04T18:06:02+00:00",
+        "fetchedAt": "2026-09-04T19:02:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -554,7 +554,7 @@
       },
       "CatBat": {
         "bytes": 91801,
-        "fetchedAt": "2026-09-04T18:07:28+00:00",
+        "fetchedAt": "2026-09-04T19:04:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -564,7 +564,7 @@
       },
       "CatMage": {
         "bytes": 97712,
-        "fetchedAt": "2026-09-04T18:07:46+00:00",
+        "fetchedAt": "2026-09-04T19:05:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -574,7 +574,7 @@
       },
       "CatMage_Fire": {
         "bytes": 89293,
-        "fetchedAt": "2026-09-04T18:07:47+00:00",
+        "fetchedAt": "2026-09-04T19:05:00+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -584,7 +584,7 @@
       },
       "CatVampire": {
         "bytes": 87815,
-        "fetchedAt": "2026-09-04T18:07:05+00:00",
+        "fetchedAt": "2026-09-04T19:04:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -594,7 +594,7 @@
       },
       "ChickenPal": {
         "bytes": 91580,
-        "fetchedAt": "2026-09-04T18:06:59+00:00",
+        "fetchedAt": "2026-09-04T19:03:57+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -604,7 +604,7 @@
       },
       "ClioneTwins": {
         "bytes": 87955,
-        "fetchedAt": "2026-09-04T18:09:50+00:00",
+        "fetchedAt": "2026-09-04T19:07:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -614,7 +614,7 @@
       },
       "CloverFairy": {
         "bytes": 86375,
-        "fetchedAt": "2026-09-04T18:09:16+00:00",
+        "fetchedAt": "2026-09-04T19:07:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -624,7 +624,7 @@
       },
       "ClownRabbit": {
         "bytes": 93468,
-        "fetchedAt": "2026-09-04T18:09:05+00:00",
+        "fetchedAt": "2026-09-04T19:06:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -634,7 +634,7 @@
       },
       "ColorfulBird": {
         "bytes": 110316,
-        "fetchedAt": "2026-09-04T18:06:04+00:00",
+        "fetchedAt": "2026-09-04T19:02:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -644,7 +644,7 @@
       },
       "CowPal": {
         "bytes": 88291,
-        "fetchedAt": "2026-09-04T18:07:20+00:00",
+        "fetchedAt": "2026-09-04T19:04:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -654,7 +654,7 @@
       },
       "CubeTurtle": {
         "bytes": 88983,
-        "fetchedAt": "2026-09-04T18:09:25+00:00",
+        "fetchedAt": "2026-09-04T19:07:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -664,7 +664,7 @@
       },
       "CubeTurtle_Neutral": {
         "bytes": 89068,
-        "fetchedAt": "2026-09-04T18:09:26+00:00",
+        "fetchedAt": "2026-09-04T19:07:18+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -674,7 +674,7 @@
       },
       "CuteButterfly": {
         "bytes": 86466,
-        "fetchedAt": "2026-09-04T18:08:08+00:00",
+        "fetchedAt": "2026-09-04T19:05:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -684,7 +684,7 @@
       },
       "CuteFox": {
         "bytes": 108211,
-        "fetchedAt": "2026-09-04T18:07:14+00:00",
+        "fetchedAt": "2026-09-04T19:04:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -694,7 +694,7 @@
       },
       "CuteMole": {
         "bytes": 97512,
-        "fetchedAt": "2026-09-04T18:07:33+00:00",
+        "fetchedAt": "2026-09-04T19:04:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -704,7 +704,7 @@
       },
       "DandelionGirl": {
         "bytes": 81279,
-        "fetchedAt": "2026-09-04T18:09:49+00:00",
+        "fetchedAt": "2026-09-04T19:07:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -714,7 +714,7 @@
       },
       "DarkAlien": {
         "bytes": 217383,
-        "fetchedAt": "2026-09-04T18:08:30+00:00",
+        "fetchedAt": "2026-09-04T19:06:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -724,7 +724,7 @@
       },
       "DarkCrow": {
         "bytes": 110138,
-        "fetchedAt": "2026-09-04T18:06:45+00:00",
+        "fetchedAt": "2026-09-04T19:02:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -734,7 +734,7 @@
       },
       "DarkFlameFox": {
         "bytes": 92981,
-        "fetchedAt": "2026-09-04T18:09:51+00:00",
+        "fetchedAt": "2026-09-04T19:07:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -744,7 +744,7 @@
       },
       "DarkMechaDragon": {
         "bytes": 88047,
-        "fetchedAt": "2026-09-04T18:08:34+00:00",
+        "fetchedAt": "2026-09-04T19:06:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -754,7 +754,7 @@
       },
       "DarkScorpion": {
         "bytes": 93960,
-        "fetchedAt": "2026-09-04T18:08:09+00:00",
+        "fetchedAt": "2026-09-04T19:05:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -764,7 +764,7 @@
       },
       "DarkScorpion_Ground": {
         "bytes": 86720,
-        "fetchedAt": "2026-09-04T18:08:10+00:00",
+        "fetchedAt": "2026-09-04T19:05:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -774,7 +774,7 @@
       },
       "Deer": {
         "bytes": 95643,
-        "fetchedAt": "2026-09-04T18:06:05+00:00",
+        "fetchedAt": "2026-09-04T19:02:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -784,7 +784,7 @@
       },
       "Deer_Ground": {
         "bytes": 89079,
-        "fetchedAt": "2026-09-04T18:06:07+00:00",
+        "fetchedAt": "2026-09-04T19:02:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -794,7 +794,7 @@
       },
       "DomeArmorDragon": {
         "bytes": 113404,
-        "fetchedAt": "2026-09-04T18:10:01+00:00",
+        "fetchedAt": "2026-09-04T19:07:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -804,7 +804,7 @@
       },
       "DreamDemon": {
         "bytes": 90088,
-        "fetchedAt": "2026-09-04T18:07:37+00:00",
+        "fetchedAt": "2026-09-04T19:04:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -814,7 +814,7 @@
       },
       "DrillGame": {
         "bytes": 98274,
-        "fetchedAt": "2026-09-04T18:06:09+00:00",
+        "fetchedAt": "2026-09-04T19:02:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -824,7 +824,7 @@
       },
       "Eagle": {
         "bytes": 91545,
-        "fetchedAt": "2026-09-04T18:06:11+00:00",
+        "fetchedAt": "2026-09-04T19:02:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -834,7 +834,7 @@
       },
       "ElecCat": {
         "bytes": 85694,
-        "fetchedAt": "2026-09-04T18:07:02+00:00",
+        "fetchedAt": "2026-09-04T19:04:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -844,7 +844,7 @@
       },
       "ElecLizard": {
         "bytes": 82217,
-        "fetchedAt": "2026-09-04T18:08:45+00:00",
+        "fetchedAt": "2026-09-04T19:06:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -854,7 +854,7 @@
       },
       "ElecPanda": {
         "bytes": 99975,
-        "fetchedAt": "2026-09-04T18:06:12+00:00",
+        "fetchedAt": "2026-09-04T19:02:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -864,7 +864,7 @@
       },
       "ElecPomeranian": {
         "bytes": 88476,
-        "fetchedAt": "2026-09-04T18:09:17+00:00",
+        "fetchedAt": "2026-09-04T19:07:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -874,7 +874,7 @@
       },
       "ElecSnail": {
         "bytes": 83529,
-        "fetchedAt": "2026-09-04T18:09:45+00:00",
+        "fetchedAt": "2026-09-04T19:07:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -884,7 +884,7 @@
       },
       "ElecSnail_Ground": {
         "bytes": 91362,
-        "fetchedAt": "2026-09-04T18:09:45+00:00",
+        "fetchedAt": "2026-09-04T19:07:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -894,7 +894,7 @@
       },
       "FairyDragon": {
         "bytes": 91692,
-        "fetchedAt": "2026-09-04T18:06:38+00:00",
+        "fetchedAt": "2026-09-04T19:02:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -904,7 +904,7 @@
       },
       "FairyDragon_Water": {
         "bytes": 92972,
-        "fetchedAt": "2026-09-04T18:06:38+00:00",
+        "fetchedAt": "2026-09-04T19:02:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -914,7 +914,7 @@
       },
       "FeatherOstrich": {
         "bytes": 85471,
-        "fetchedAt": "2026-09-04T18:08:29+00:00",
+        "fetchedAt": "2026-09-04T19:06:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -924,7 +924,7 @@
       },
       "FengyunDeeper": {
         "bytes": 86712,
-        "fetchedAt": "2026-09-04T18:06:48+00:00",
+        "fetchedAt": "2026-09-04T19:02:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -934,7 +934,7 @@
       },
       "FengyunDeeper_Electric": {
         "bytes": 96892,
-        "fetchedAt": "2026-09-04T18:08:59+00:00",
+        "fetchedAt": "2026-09-04T19:06:55+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -944,7 +944,7 @@
       },
       "FireKirin": {
         "bytes": 99981,
-        "fetchedAt": "2026-09-04T18:06:36+00:00",
+        "fetchedAt": "2026-09-04T19:02:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -954,7 +954,7 @@
       },
       "FireKirin_Dark": {
         "bytes": 101207,
-        "fetchedAt": "2026-09-04T18:06:36+00:00",
+        "fetchedAt": "2026-09-04T19:02:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -964,7 +964,7 @@
       },
       "FlameBambi": {
         "bytes": 93046,
-        "fetchedAt": "2026-09-04T18:08:15+00:00",
+        "fetchedAt": "2026-09-04T19:06:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -974,7 +974,7 @@
       },
       "FlameBuffalo": {
         "bytes": 97332,
-        "fetchedAt": "2026-09-04T18:07:31+00:00",
+        "fetchedAt": "2026-09-04T19:04:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -984,7 +984,7 @@
       },
       "FlowerDinosaur": {
         "bytes": 92497,
-        "fetchedAt": "2026-09-04T18:07:00+00:00",
+        "fetchedAt": "2026-09-04T19:03:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -994,7 +994,7 @@
       },
       "FlowerDinosaur_Electric": {
         "bytes": 98624,
-        "fetchedAt": "2026-09-04T18:07:01+00:00",
+        "fetchedAt": "2026-09-04T19:04:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1004,7 +1004,7 @@
       },
       "FlowerDoll": {
         "bytes": 88860,
-        "fetchedAt": "2026-09-04T18:08:05+00:00",
+        "fetchedAt": "2026-09-04T19:05:18+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1014,7 +1014,7 @@
       },
       "FlowerDoll_Fire": {
         "bytes": 95666,
-        "fetchedAt": "2026-09-04T18:08:06+00:00",
+        "fetchedAt": "2026-09-04T19:05:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1024,7 +1024,7 @@
       },
       "FlowerPrince": {
         "bytes": 95993,
-        "fetchedAt": "2026-09-04T18:09:59+00:00",
+        "fetchedAt": "2026-09-04T19:07:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1034,7 +1034,7 @@
       },
       "FlowerRabbit": {
         "bytes": 89069,
-        "fetchedAt": "2026-09-04T18:07:25+00:00",
+        "fetchedAt": "2026-09-04T19:04:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1044,7 +1044,7 @@
       },
       "FluffyBird": {
         "bytes": 87411,
-        "fetchedAt": "2026-09-04T18:09:48+00:00",
+        "fetchedAt": "2026-09-04T19:07:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1054,7 +1054,7 @@
       },
       "FlyingManta": {
         "bytes": 105358,
-        "fetchedAt": "2026-09-04T18:08:03+00:00",
+        "fetchedAt": "2026-09-04T19:05:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1064,7 +1064,7 @@
       },
       "FlyingManta_Thunder": {
         "bytes": 97320,
-        "fetchedAt": "2026-09-04T18:08:04+00:00",
+        "fetchedAt": "2026-09-04T19:05:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1074,7 +1074,7 @@
       },
       "FoxExorcist": {
         "bytes": 91202,
-        "fetchedAt": "2026-09-04T18:09:14+00:00",
+        "fetchedAt": "2026-09-04T19:07:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1084,7 +1084,7 @@
       },
       "FoxMage": {
         "bytes": 94719,
-        "fetchedAt": "2026-09-04T18:07:14+00:00",
+        "fetchedAt": "2026-09-04T19:04:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1094,7 +1094,7 @@
       },
       "FoxMage_Dark": {
         "bytes": 90050,
-        "fetchedAt": "2026-09-04T18:07:15+00:00",
+        "fetchedAt": "2026-09-04T19:04:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1104,7 +1104,7 @@
       },
       "Ganesha": {
         "bytes": 87274,
-        "fetchedAt": "2026-09-04T18:06:13+00:00",
+        "fetchedAt": "2026-09-04T19:02:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1114,7 +1114,7 @@
       },
       "Garm": {
         "bytes": 97698,
-        "fetchedAt": "2026-09-04T18:06:15+00:00",
+        "fetchedAt": "2026-09-04T19:02:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1124,7 +1124,7 @@
       },
       "GhostAnglerfish": {
         "bytes": 101004,
-        "fetchedAt": "2026-09-04T18:09:03+00:00",
+        "fetchedAt": "2026-09-04T19:06:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1134,7 +1134,7 @@
       },
       "GhostAnglerfish_Fire": {
         "bytes": 93393,
-        "fetchedAt": "2026-09-04T18:09:03+00:00",
+        "fetchedAt": "2026-09-04T19:06:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1144,7 +1144,7 @@
       },
       "GhostBeast": {
         "bytes": 98444,
-        "fetchedAt": "2026-09-04T18:06:51+00:00",
+        "fetchedAt": "2026-09-04T19:03:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1154,7 +1154,7 @@
       },
       "GhostBlackCat": {
         "bytes": 100963,
-        "fetchedAt": "2026-09-04T18:09:18+00:00",
+        "fetchedAt": "2026-09-04T19:07:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1164,7 +1164,7 @@
       },
       "GhostDragon": {
         "bytes": 91454,
-        "fetchedAt": "2026-09-04T18:09:58+00:00",
+        "fetchedAt": "2026-09-04T19:07:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1174,7 +1174,7 @@
       },
       "GhostDragon_Fire": {
         "bytes": 94051,
-        "fetchedAt": "2026-09-04T18:09:59+00:00",
+        "fetchedAt": "2026-09-04T19:07:53+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1184,7 +1184,7 @@
       },
       "GhostRabbit": {
         "bytes": 87907,
-        "fetchedAt": "2026-09-04T18:08:35+00:00",
+        "fetchedAt": "2026-09-04T19:06:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1194,7 +1194,7 @@
       },
       "GhostRabbit_Grass": {
         "bytes": 90435,
-        "fetchedAt": "2026-09-04T18:08:36+00:00",
+        "fetchedAt": "2026-09-04T19:06:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1204,7 +1204,7 @@
       },
       "GoldenHorse": {
         "bytes": 91655,
-        "fetchedAt": "2026-09-04T18:05:46+00:00",
+        "fetchedAt": "2026-09-04T19:02:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1214,7 +1214,7 @@
       },
       "Gorilla": {
         "bytes": 97099,
-        "fetchedAt": "2026-09-04T18:06:17+00:00",
+        "fetchedAt": "2026-09-04T19:02:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1224,7 +1224,7 @@
       },
       "Gorilla_Ground": {
         "bytes": 103466,
-        "fetchedAt": "2026-09-04T18:06:18+00:00",
+        "fetchedAt": "2026-09-04T19:02:27+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1234,7 +1234,7 @@
       },
       "GrassGolem": {
         "bytes": 115272,
-        "fetchedAt": "2026-09-04T18:09:23+00:00",
+        "fetchedAt": "2026-09-04T19:07:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1244,7 +1244,7 @@
       },
       "GrassGolem_Dark": {
         "bytes": 99695,
-        "fetchedAt": "2026-09-04T18:09:23+00:00",
+        "fetchedAt": "2026-09-04T19:07:16+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1254,7 +1254,7 @@
       },
       "GrassMammoth": {
         "bytes": 117300,
-        "fetchedAt": "2026-09-04T18:07:04+00:00",
+        "fetchedAt": "2026-09-04T19:04:08+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1264,7 +1264,7 @@
       },
       "GrassMammoth_Ice": {
         "bytes": 105977,
-        "fetchedAt": "2026-09-04T18:07:05+00:00",
+        "fetchedAt": "2026-09-04T19:04:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1274,7 +1274,7 @@
       },
       "GrassMinotaur": {
         "bytes": 105597,
-        "fetchedAt": "2026-09-04T18:09:56+00:00",
+        "fetchedAt": "2026-09-04T19:07:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1284,7 +1284,7 @@
       },
       "GrassMinotaur_Ice": {
         "bytes": 96133,
-        "fetchedAt": "2026-09-04T18:09:55+00:00",
+        "fetchedAt": "2026-09-04T19:07:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1294,7 +1294,7 @@
       },
       "GrassPanda": {
         "bytes": 98658,
-        "fetchedAt": "2026-09-04T18:07:29+00:00",
+        "fetchedAt": "2026-09-04T19:04:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1304,7 +1304,7 @@
       },
       "GrassPanda_Electric": {
         "bytes": 146100,
-        "fetchedAt": "2026-09-04T18:07:30+00:00",
+        "fetchedAt": "2026-09-04T19:04:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1314,7 +1314,7 @@
       },
       "GrassRabbitMan": {
         "bytes": 92032,
-        "fetchedAt": "2026-09-04T18:07:35+00:00",
+        "fetchedAt": "2026-09-04T19:04:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1324,7 +1324,7 @@
       },
       "GrimGirl": {
         "bytes": 100238,
-        "fetchedAt": "2026-09-04T18:08:47+00:00",
+        "fetchedAt": "2026-09-04T19:06:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1334,7 +1334,7 @@
       },
       "GuardianDog": {
         "bytes": 200313,
-        "fetchedAt": "2026-09-04T18:08:28+00:00",
+        "fetchedAt": "2026-09-04T19:06:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1344,7 +1344,7 @@
       },
       "HadesBird": {
         "bytes": 149702,
-        "fetchedAt": "2026-09-04T18:07:59+00:00",
+        "fetchedAt": "2026-09-04T19:05:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1354,7 +1354,7 @@
       },
       "HadesBird_Electric": {
         "bytes": 93932,
-        "fetchedAt": "2026-09-04T18:08:00+00:00",
+        "fetchedAt": "2026-09-04T19:05:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1364,7 +1364,7 @@
       },
       "HawkBird": {
         "bytes": 89551,
-        "fetchedAt": "2026-09-04T18:07:23+00:00",
+        "fetchedAt": "2026-09-04T19:04:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1374,7 +1374,7 @@
       },
       "Hedgehog": {
         "bytes": 84137,
-        "fetchedAt": "2026-09-04T18:06:20+00:00",
+        "fetchedAt": "2026-09-04T19:02:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1384,7 +1384,7 @@
       },
       "Hedgehog_Ice": {
         "bytes": 89432,
-        "fetchedAt": "2026-09-04T18:06:21+00:00",
+        "fetchedAt": "2026-09-04T19:02:29+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1394,7 +1394,7 @@
       },
       "HerculesBeetle": {
         "bytes": 95970,
-        "fetchedAt": "2026-09-04T18:07:51+00:00",
+        "fetchedAt": "2026-09-04T19:05:04+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1404,7 +1404,7 @@
       },
       "HerculesBeetle_Ground": {
         "bytes": 90721,
-        "fetchedAt": "2026-09-04T18:07:51+00:00",
+        "fetchedAt": "2026-09-04T19:05:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1414,7 +1414,7 @@
       },
       "HoodGhost": {
         "bytes": 83234,
-        "fetchedAt": "2026-09-04T18:08:44+00:00",
+        "fetchedAt": "2026-09-04T19:06:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1424,7 +1424,7 @@
       },
       "Horus": {
         "bytes": 141691,
-        "fetchedAt": "2026-09-04T18:07:07+00:00",
+        "fetchedAt": "2026-09-04T19:04:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1434,7 +1434,7 @@
       },
       "Horus_Water": {
         "bytes": 98222,
-        "fetchedAt": "2026-09-04T18:09:01+00:00",
+        "fetchedAt": "2026-09-04T19:06:55+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1444,7 +1444,7 @@
       },
       "IceCrocodile": {
         "bytes": 98932,
-        "fetchedAt": "2026-09-04T18:09:09+00:00",
+        "fetchedAt": "2026-09-04T19:07:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1454,7 +1454,7 @@
       },
       "IceDeer": {
         "bytes": 95275,
-        "fetchedAt": "2026-09-04T18:07:11+00:00",
+        "fetchedAt": "2026-09-04T19:04:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1464,7 +1464,7 @@
       },
       "IceFox": {
         "bytes": 93394,
-        "fetchedAt": "2026-09-04T18:07:36+00:00",
+        "fetchedAt": "2026-09-04T19:04:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1474,7 +1474,7 @@
       },
       "IceHorse": {
         "bytes": 90757,
-        "fetchedAt": "2026-09-04T18:07:02+00:00",
+        "fetchedAt": "2026-09-04T19:04:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1484,7 +1484,7 @@
       },
       "IceHorse_Dark": {
         "bytes": 93376,
-        "fetchedAt": "2026-09-04T18:07:03+00:00",
+        "fetchedAt": "2026-09-04T19:04:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1494,7 +1494,7 @@
       },
       "IceNarwhal": {
         "bytes": 98973,
-        "fetchedAt": "2026-09-04T18:08:52+00:00",
+        "fetchedAt": "2026-09-04T19:06:44+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1504,7 +1504,7 @@
       },
       "IceNarwhal_Fire": {
         "bytes": 101609,
-        "fetchedAt": "2026-09-04T18:08:53+00:00",
+        "fetchedAt": "2026-09-04T19:06:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1514,7 +1514,7 @@
       },
       "IceSeal": {
         "bytes": 96468,
-        "fetchedAt": "2026-09-04T18:09:15+00:00",
+        "fetchedAt": "2026-09-04T19:07:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1524,7 +1524,7 @@
       },
       "IceSeal_Ground": {
         "bytes": 94362,
-        "fetchedAt": "2026-09-04T18:09:15+00:00",
+        "fetchedAt": "2026-09-04T19:07:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1534,7 +1534,7 @@
       },
       "IceWitch": {
         "bytes": 84117,
-        "fetchedAt": "2026-09-04T18:09:05+00:00",
+        "fetchedAt": "2026-09-04T19:06:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1544,7 +1544,7 @@
       },
       "JellyfishFairy": {
         "bytes": 108735,
-        "fetchedAt": "2026-09-04T18:08:54+00:00",
+        "fetchedAt": "2026-09-04T19:06:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1554,7 +1554,7 @@
       },
       "JellyfishGhost": {
         "bytes": 109250,
-        "fetchedAt": "2026-09-04T18:09:28+00:00",
+        "fetchedAt": "2026-09-04T19:07:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1564,7 +1564,7 @@
       },
       "JetDragon": {
         "bytes": 90522,
-        "fetchedAt": "2026-09-04T18:07:36+00:00",
+        "fetchedAt": "2026-09-04T19:04:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1574,7 +1574,7 @@
       },
       "KabukiMan": {
         "bytes": 97775,
-        "fetchedAt": "2026-09-04T18:10:00+00:00",
+        "fetchedAt": "2026-09-04T19:07:55+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1584,7 +1584,7 @@
       },
       "Kelpie": {
         "bytes": 117071,
-        "fetchedAt": "2026-09-04T18:07:18+00:00",
+        "fetchedAt": "2026-09-04T19:04:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1594,7 +1594,7 @@
       },
       "Kelpie_Fire": {
         "bytes": 100813,
-        "fetchedAt": "2026-09-04T18:07:18+00:00",
+        "fetchedAt": "2026-09-04T19:04:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1604,7 +1604,7 @@
       },
       "KendoFrog": {
         "bytes": 110579,
-        "fetchedAt": "2026-09-04T18:08:19+00:00",
+        "fetchedAt": "2026-09-04T19:06:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1614,7 +1614,7 @@
       },
       "KendoFrog_Dark": {
         "bytes": 96056,
-        "fetchedAt": "2026-09-04T18:08:19+00:00",
+        "fetchedAt": "2026-09-04T19:06:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1624,7 +1624,7 @@
       },
       "KingAlpaca": {
         "bytes": 91744,
-        "fetchedAt": "2026-09-04T18:07:41+00:00",
+        "fetchedAt": "2026-09-04T19:04:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1634,7 +1634,7 @@
       },
       "KingAlpaca_Ice": {
         "bytes": 95068,
-        "fetchedAt": "2026-09-04T18:07:42+00:00",
+        "fetchedAt": "2026-09-04T19:04:54+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1644,7 +1644,7 @@
       },
       "KingBahamut": {
         "bytes": 95440,
-        "fetchedAt": "2026-09-04T18:07:08+00:00",
+        "fetchedAt": "2026-09-04T19:04:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1654,7 +1654,7 @@
       },
       "KingBahamut_Dragon": {
         "bytes": 93182,
-        "fetchedAt": "2026-09-04T18:07:09+00:00",
+        "fetchedAt": "2026-09-04T19:04:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1664,7 +1664,7 @@
       },
       "KingSunfish": {
         "bytes": 82977,
-        "fetchedAt": "2026-09-04T18:09:42+00:00",
+        "fetchedAt": "2026-09-04T19:07:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1674,7 +1674,7 @@
       },
       "KingSunfish_Thunder": {
         "bytes": 97312,
-        "fetchedAt": "2026-09-04T18:09:43+00:00",
+        "fetchedAt": "2026-09-04T19:07:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1684,7 +1684,7 @@
       },
       "KingWhale": {
         "bytes": 122591,
-        "fetchedAt": "2026-09-04T18:08:42+00:00",
+        "fetchedAt": "2026-09-04T19:06:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1694,7 +1694,7 @@
       },
       "Kirin": {
         "bytes": 97196,
-        "fetchedAt": "2026-09-04T18:06:21+00:00",
+        "fetchedAt": "2026-09-04T19:02:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1704,7 +1704,7 @@
       },
       "Kirin_Ice": {
         "bytes": 93472,
-        "fetchedAt": "2026-09-04T18:06:22+00:00",
+        "fetchedAt": "2026-09-04T19:02:31+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1714,7 +1714,7 @@
       },
       "Kitsunebi": {
         "bytes": 87998,
-        "fetchedAt": "2026-09-04T18:06:23+00:00",
+        "fetchedAt": "2026-09-04T19:02:31+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1724,7 +1724,7 @@
       },
       "Kitsunebi_Ice": {
         "bytes": 94616,
-        "fetchedAt": "2026-09-04T18:08:55+00:00",
+        "fetchedAt": "2026-09-04T19:06:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1734,7 +1734,7 @@
       },
       "LanternButler": {
         "bytes": 91861,
-        "fetchedAt": "2026-09-04T18:09:46+00:00",
+        "fetchedAt": "2026-09-04T19:07:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1744,7 +1744,7 @@
       },
       "LavaGirl": {
         "bytes": 101854,
-        "fetchedAt": "2026-09-04T18:08:14+00:00",
+        "fetchedAt": "2026-09-04T19:06:08+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1754,7 +1754,7 @@
       },
       "LazyCatfish": {
         "bytes": 114157,
-        "fetchedAt": "2026-09-04T18:08:13+00:00",
+        "fetchedAt": "2026-09-04T19:05:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1764,7 +1764,7 @@
       },
       "LazyCatfish_Gold": {
         "bytes": 121748,
-        "fetchedAt": "2026-09-04T18:08:13+00:00",
+        "fetchedAt": "2026-09-04T19:06:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1774,7 +1774,7 @@
       },
       "LazyDragon": {
         "bytes": 113153,
-        "fetchedAt": "2026-09-04T18:06:53+00:00",
+        "fetchedAt": "2026-09-04T19:03:44+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1784,7 +1784,7 @@
       },
       "LazyDragon_Electric": {
         "bytes": 156194,
-        "fetchedAt": "2026-09-04T18:06:54+00:00",
+        "fetchedAt": "2026-09-04T19:04:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1794,7 +1794,7 @@
       },
       "LeafMomonga": {
         "bytes": 92352,
-        "fetchedAt": "2026-09-04T18:09:07+00:00",
+        "fetchedAt": "2026-09-04T19:07:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1804,7 +1804,7 @@
       },
       "LeafPrincess": {
         "bytes": 85564,
-        "fetchedAt": "2026-09-04T18:08:20+00:00",
+        "fetchedAt": "2026-09-04T19:06:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1814,7 +1814,7 @@
       },
       "LegendDeer": {
         "bytes": 85109,
-        "fetchedAt": "2026-09-04T18:09:06+00:00",
+        "fetchedAt": "2026-09-04T19:07:01+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1824,7 +1824,7 @@
       },
       "LilyQueen": {
         "bytes": 102067,
-        "fetchedAt": "2026-09-04T18:07:26+00:00",
+        "fetchedAt": "2026-09-04T19:04:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1834,7 +1834,7 @@
       },
       "LilyQueen_Dark": {
         "bytes": 103657,
-        "fetchedAt": "2026-09-04T18:07:27+00:00",
+        "fetchedAt": "2026-09-04T19:04:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1844,7 +1844,7 @@
       },
       "LittleBriarRose": {
         "bytes": 91799,
-        "fetchedAt": "2026-09-04T18:06:24+00:00",
+        "fetchedAt": "2026-09-04T19:02:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1854,7 +1854,7 @@
       },
       "LizardMan": {
         "bytes": 157876,
-        "fetchedAt": "2026-09-04T18:06:55+00:00",
+        "fetchedAt": "2026-09-04T19:03:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1864,7 +1864,7 @@
       },
       "LizardMan_Fire": {
         "bytes": 98019,
-        "fetchedAt": "2026-09-04T18:06:56+00:00",
+        "fetchedAt": "2026-09-04T19:03:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1874,7 +1874,7 @@
       },
       "LongCat": {
         "bytes": 78889,
-        "fetchedAt": "2026-09-04T18:09:26+00:00",
+        "fetchedAt": "2026-09-04T19:07:18+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1884,7 +1884,7 @@
       },
       "LotusDragon": {
         "bytes": 86425,
-        "fetchedAt": "2026-09-04T18:09:52+00:00",
+        "fetchedAt": "2026-09-04T19:07:46+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1894,7 +1894,7 @@
       },
       "Manticore": {
         "bytes": 98371,
-        "fetchedAt": "2026-09-04T18:07:39+00:00",
+        "fetchedAt": "2026-09-04T19:04:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1904,7 +1904,7 @@
       },
       "Manticore_Dark": {
         "bytes": 106379,
-        "fetchedAt": "2026-09-04T18:07:40+00:00",
+        "fetchedAt": "2026-09-04T19:04:53+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1914,7 +1914,7 @@
       },
       "MimicDog": {
         "bytes": 180316,
-        "fetchedAt": "2026-09-04T18:08:31+00:00",
+        "fetchedAt": "2026-09-04T19:06:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1924,7 +1924,7 @@
       },
       "Monkey": {
         "bytes": 90873,
-        "fetchedAt": "2026-09-04T18:07:37+00:00",
+        "fetchedAt": "2026-09-04T19:04:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1934,7 +1934,7 @@
       },
       "Monkey_Fire": {
         "bytes": 88569,
-        "fetchedAt": "2026-09-04T18:07:38+00:00",
+        "fetchedAt": "2026-09-04T19:04:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1944,7 +1944,7 @@
       },
       "MonochromeQueen": {
         "bytes": 90967,
-        "fetchedAt": "2026-09-04T18:09:44+00:00",
+        "fetchedAt": "2026-09-04T19:07:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1954,7 +1954,7 @@
       },
       "MoonChild": {
         "bytes": 90855,
-        "fetchedAt": "2026-09-04T18:09:30+00:00",
+        "fetchedAt": "2026-09-04T19:07:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1964,7 +1964,7 @@
       },
       "MoonQueen": {
         "bytes": 141099,
-        "fetchedAt": "2026-09-04T18:08:17+00:00",
+        "fetchedAt": "2026-09-04T19:06:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1974,7 +1974,7 @@
       },
       "MopBaby": {
         "bytes": 87881,
-        "fetchedAt": "2026-09-04T18:07:44+00:00",
+        "fetchedAt": "2026-09-04T19:04:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1984,7 +1984,7 @@
       },
       "MopKing": {
         "bytes": 89331,
-        "fetchedAt": "2026-09-04T18:07:45+00:00",
+        "fetchedAt": "2026-09-04T19:04:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -1994,7 +1994,7 @@
       },
       "Mothman": {
         "bytes": 94014,
-        "fetchedAt": "2026-09-04T18:09:57+00:00",
+        "fetchedAt": "2026-09-04T19:07:51+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2004,7 +2004,7 @@
       },
       "MummyPal": {
         "bytes": 84300,
-        "fetchedAt": "2026-09-04T18:09:41+00:00",
+        "fetchedAt": "2026-09-04T19:07:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2014,7 +2014,7 @@
       },
       "MushroomDragon": {
         "bytes": 107147,
-        "fetchedAt": "2026-09-04T18:08:20+00:00",
+        "fetchedAt": "2026-09-04T19:06:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2024,7 +2024,7 @@
       },
       "MushroomDragon_Dark": {
         "bytes": 92490,
-        "fetchedAt": "2026-09-04T18:08:21+00:00",
+        "fetchedAt": "2026-09-04T19:06:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2034,7 +2034,7 @@
       },
       "MushroomLady": {
         "bytes": 92010,
-        "fetchedAt": "2026-09-04T18:09:12+00:00",
+        "fetchedAt": "2026-09-04T19:07:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2044,7 +2044,7 @@
       },
       "Mutant": {
         "bytes": 89408,
-        "fetchedAt": "2026-09-04T18:06:24+00:00",
+        "fetchedAt": "2026-09-04T19:02:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2054,7 +2054,7 @@
       },
       "MysteryMask": {
         "bytes": 99337,
-        "fetchedAt": "2026-09-04T18:08:43+00:00",
+        "fetchedAt": "2026-09-04T19:06:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2064,7 +2064,7 @@
       },
       "NaughtyCat": {
         "bytes": 91526,
-        "fetchedAt": "2026-09-04T18:08:07+00:00",
+        "fetchedAt": "2026-09-04T19:05:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2074,7 +2074,7 @@
       },
       "NegativeKoala": {
         "bytes": 100904,
-        "fetchedAt": "2026-09-04T18:06:48+00:00",
+        "fetchedAt": "2026-09-04T19:02:58+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2084,7 +2084,7 @@
       },
       "NegativeOctopus": {
         "bytes": 94228,
-        "fetchedAt": "2026-09-04T18:07:19+00:00",
+        "fetchedAt": "2026-09-04T19:04:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2094,7 +2094,7 @@
       },
       "NegativeOctopus_Neutral": {
         "bytes": 91227,
-        "fetchedAt": "2026-09-04T18:07:20+00:00",
+        "fetchedAt": "2026-09-04T19:04:31+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2104,7 +2104,7 @@
       },
       "NightBlueHorse": {
         "bytes": 99110,
-        "fetchedAt": "2026-09-04T18:08:37+00:00",
+        "fetchedAt": "2026-09-04T19:06:29+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2114,7 +2114,7 @@
       },
       "NightBlueHorse_Neutral": {
         "bytes": 91286,
-        "fetchedAt": "2026-09-04T18:08:38+00:00",
+        "fetchedAt": "2026-09-04T19:06:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2124,7 +2124,7 @@
       },
       "NightFox": {
         "bytes": 96796,
-        "fetchedAt": "2026-09-04T18:07:53+00:00",
+        "fetchedAt": "2026-09-04T19:05:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2134,7 +2134,7 @@
       },
       "NightLady": {
         "bytes": 81086,
-        "fetchedAt": "2026-09-04T18:08:15+00:00",
+        "fetchedAt": "2026-09-04T19:06:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2144,7 +2144,7 @@
       },
       "NightLady_Dark": {
         "bytes": 86521,
-        "fetchedAt": "2026-09-04T18:08:17+00:00",
+        "fetchedAt": "2026-09-04T19:06:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2154,7 +2154,7 @@
       },
       "OctopusGirl": {
         "bytes": 100102,
-        "fetchedAt": "2026-09-04T18:08:50+00:00",
+        "fetchedAt": "2026-09-04T19:06:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2164,7 +2164,7 @@
       },
       "OctopusGirl_Neutral": {
         "bytes": 92096,
-        "fetchedAt": "2026-09-04T18:08:52+00:00",
+        "fetchedAt": "2026-09-04T19:06:44+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2174,7 +2174,7 @@
       },
       "OniGhostGirl": {
         "bytes": 85334,
-        "fetchedAt": "2026-09-04T18:09:20+00:00",
+        "fetchedAt": "2026-09-04T19:07:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2184,7 +2184,7 @@
       },
       "PandaGirl": {
         "bytes": 88686,
-        "fetchedAt": "2026-09-04T18:09:54+00:00",
+        "fetchedAt": "2026-09-04T19:07:49+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2194,7 +2194,7 @@
       },
       "Penguin": {
         "bytes": 116786,
-        "fetchedAt": "2026-09-04T18:06:25+00:00",
+        "fetchedAt": "2026-09-04T19:02:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2204,7 +2204,7 @@
       },
       "Penguin_Electric": {
         "bytes": 94068,
-        "fetchedAt": "2026-09-04T18:06:26+00:00",
+        "fetchedAt": "2026-09-04T19:02:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2214,7 +2214,7 @@
       },
       "PinkCat": {
         "bytes": 142354,
-        "fetchedAt": "2026-09-04T18:06:47+00:00",
+        "fetchedAt": "2026-09-04T19:02:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2224,7 +2224,7 @@
       },
       "PinkLizard": {
         "bytes": 105934,
-        "fetchedAt": "2026-09-04T18:07:16+00:00",
+        "fetchedAt": "2026-09-04T19:04:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2234,7 +2234,7 @@
       },
       "PinkRabbit": {
         "bytes": 95532,
-        "fetchedAt": "2026-09-04T18:07:47+00:00",
+        "fetchedAt": "2026-09-04T19:05:02+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2244,7 +2244,7 @@
       },
       "PinkRabbit_Grass": {
         "bytes": 95427,
-        "fetchedAt": "2026-09-04T18:08:56+00:00",
+        "fetchedAt": "2026-09-04T19:06:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2254,7 +2254,7 @@
       },
       "PlantSlime": {
         "bytes": 133631,
-        "fetchedAt": "2026-09-04T18:07:43+00:00",
+        "fetchedAt": "2026-09-04T19:04:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2264,7 +2264,7 @@
       },
       "PlantSlime_Flower": {
         "bytes": 133631,
-        "fetchedAt": "2026-09-04T18:07:44+00:00",
+        "fetchedAt": "2026-09-04T19:04:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2274,7 +2274,7 @@
       },
       "Plesiosaur": {
         "bytes": 107095,
-        "fetchedAt": "2026-09-04T18:09:21+00:00",
+        "fetchedAt": "2026-09-04T19:07:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2284,7 +2284,7 @@
       },
       "PoseidonOrca": {
         "bytes": 90614,
-        "fetchedAt": "2026-09-04T18:09:30+00:00",
+        "fetchedAt": "2026-09-04T19:07:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2294,7 +2294,7 @@
       },
       "PurpleSpider": {
         "bytes": 95611,
-        "fetchedAt": "2026-09-04T18:08:47+00:00",
+        "fetchedAt": "2026-09-04T19:06:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2304,7 +2304,7 @@
       },
       "QueenBee": {
         "bytes": 88790,
-        "fetchedAt": "2026-09-04T18:07:27+00:00",
+        "fetchedAt": "2026-09-04T19:04:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2314,7 +2314,7 @@
       },
       "RaijinDaughter": {
         "bytes": 94793,
-        "fetchedAt": "2026-09-04T18:06:27+00:00",
+        "fetchedAt": "2026-09-04T19:02:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2324,7 +2324,7 @@
       },
       "RaijinDaughter_Water": {
         "bytes": 102411,
-        "fetchedAt": "2026-09-04T18:08:58+00:00",
+        "fetchedAt": "2026-09-04T19:06:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2334,7 +2334,7 @@
       },
       "RedArmorBird": {
         "bytes": 103056,
-        "fetchedAt": "2026-09-04T18:08:01+00:00",
+        "fetchedAt": "2026-09-04T19:05:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2344,7 +2344,7 @@
       },
       "RedFlowerBird": {
         "bytes": 84923,
-        "fetchedAt": "2026-09-04T18:09:51+00:00",
+        "fetchedAt": "2026-09-04T19:07:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2354,7 +2354,7 @@
       },
       "RobinHood": {
         "bytes": 92274,
-        "fetchedAt": "2026-09-04T18:06:51+00:00",
+        "fetchedAt": "2026-09-04T19:03:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2364,7 +2364,7 @@
       },
       "RobinHood_Ground": {
         "bytes": 99499,
-        "fetchedAt": "2026-09-04T18:06:53+00:00",
+        "fetchedAt": "2026-09-04T19:03:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2374,7 +2374,7 @@
       },
       "RockBeast": {
         "bytes": 86459,
-        "fetchedAt": "2026-09-04T18:08:48+00:00",
+        "fetchedAt": "2026-09-04T19:06:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2384,7 +2384,7 @@
       },
       "RockBeast_Ice": {
         "bytes": 102575,
-        "fetchedAt": "2026-09-04T18:08:50+00:00",
+        "fetchedAt": "2026-09-04T19:06:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2394,7 +2394,7 @@
       },
       "Ronin": {
         "bytes": 122816,
-        "fetchedAt": "2026-09-04T18:08:01+00:00",
+        "fetchedAt": "2026-09-04T19:05:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2404,7 +2404,7 @@
       },
       "Ronin_Dark": {
         "bytes": 116062,
-        "fetchedAt": "2026-09-04T18:08:02+00:00",
+        "fetchedAt": "2026-09-04T19:05:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2414,7 +2414,7 @@
       },
       "SaintCentaur": {
         "bytes": 90930,
-        "fetchedAt": "2026-09-04T18:07:53+00:00",
+        "fetchedAt": "2026-09-04T19:05:05+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2424,7 +2424,7 @@
       },
       "SakuraSaurus": {
         "bytes": 104953,
-        "fetchedAt": "2026-09-04T18:07:06+00:00",
+        "fetchedAt": "2026-09-04T19:04:13+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2434,7 +2434,7 @@
       },
       "SakuraSaurus_Water": {
         "bytes": 102556,
-        "fetchedAt": "2026-09-04T18:07:06+00:00",
+        "fetchedAt": "2026-09-04T19:04:14+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2444,7 +2444,7 @@
       },
       "SamuraiDog": {
         "bytes": 85158,
-        "fetchedAt": "2026-09-04T18:09:29+00:00",
+        "fetchedAt": "2026-09-04T19:07:22+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2454,7 +2454,7 @@
       },
       "ScorpionMan": {
         "bytes": 91209,
-        "fetchedAt": "2026-09-04T18:08:24+00:00",
+        "fetchedAt": "2026-09-04T19:06:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2464,7 +2464,7 @@
       },
       "ScorpionMan_Electric": {
         "bytes": 83851,
-        "fetchedAt": "2026-09-04T18:08:25+00:00",
+        "fetchedAt": "2026-09-04T19:06:18+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2474,7 +2474,7 @@
       },
       "Sekhmet": {
         "bytes": 89673,
-        "fetchedAt": "2026-09-04T18:08:45+00:00",
+        "fetchedAt": "2026-09-04T19:06:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2484,7 +2484,7 @@
       },
       "Serpent": {
         "bytes": 96663,
-        "fetchedAt": "2026-09-04T18:06:43+00:00",
+        "fetchedAt": "2026-09-04T19:02:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2494,7 +2494,7 @@
       },
       "Serpent_Ground": {
         "bytes": 104795,
-        "fetchedAt": "2026-09-04T18:06:43+00:00",
+        "fetchedAt": "2026-09-04T19:02:52+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2504,7 +2504,7 @@
       },
       "SharkKid": {
         "bytes": 93367,
-        "fetchedAt": "2026-09-04T18:06:28+00:00",
+        "fetchedAt": "2026-09-04T19:02:36+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2514,7 +2514,7 @@
       },
       "SharkKid_Fire": {
         "bytes": 93387,
-        "fetchedAt": "2026-09-04T18:06:29+00:00",
+        "fetchedAt": "2026-09-04T19:02:37+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2524,7 +2524,7 @@
       },
       "SheepBall": {
         "bytes": 144395,
-        "fetchedAt": "2026-09-04T18:06:30+00:00",
+        "fetchedAt": "2026-09-04T19:02:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2534,7 +2534,7 @@
       },
       "SifuDog": {
         "bytes": 85594,
-        "fetchedAt": "2026-09-04T18:08:29+00:00",
+        "fetchedAt": "2026-09-04T19:06:21+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2544,7 +2544,7 @@
       },
       "SkyDragon": {
         "bytes": 102887,
-        "fetchedAt": "2026-09-04T18:07:58+00:00",
+        "fetchedAt": "2026-09-04T19:05:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2554,7 +2554,7 @@
       },
       "SkyDragon_Grass": {
         "bytes": 99008,
-        "fetchedAt": "2026-09-04T18:07:58+00:00",
+        "fetchedAt": "2026-09-04T19:05:11+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2564,7 +2564,7 @@
       },
       "SleeveRabbit": {
         "bytes": 79152,
-        "fetchedAt": "2026-09-04T18:09:52+00:00",
+        "fetchedAt": "2026-09-04T19:07:47+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2574,7 +2574,7 @@
       },
       "SmallArmadillo": {
         "bytes": 82893,
-        "fetchedAt": "2026-09-04T18:08:22+00:00",
+        "fetchedAt": "2026-09-04T19:06:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2584,7 +2584,7 @@
       },
       "SmallYeti": {
         "bytes": 94704,
-        "fetchedAt": "2026-09-04T18:09:08+00:00",
+        "fetchedAt": "2026-09-04T19:07:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2594,7 +2594,7 @@
       },
       "SnakeGirl": {
         "bytes": 91998,
-        "fetchedAt": "2026-09-04T18:09:02+00:00",
+        "fetchedAt": "2026-09-04T19:06:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2604,7 +2604,7 @@
       },
       "SnowPeafowl": {
         "bytes": 84819,
-        "fetchedAt": "2026-09-04T18:09:25+00:00",
+        "fetchedAt": "2026-09-04T19:07:17+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2614,7 +2614,7 @@
       },
       "SnowTigerBeastman": {
         "bytes": 102066,
-        "fetchedAt": "2026-09-04T18:09:01+00:00",
+        "fetchedAt": "2026-09-04T19:06:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2624,7 +2624,7 @@
       },
       "SoldierBee": {
         "bytes": 98061,
-        "fetchedAt": "2026-09-04T18:07:28+00:00",
+        "fetchedAt": "2026-09-04T19:04:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2634,7 +2634,7 @@
       },
       "StuffedShark": {
         "bytes": 88233,
-        "fetchedAt": "2026-09-04T18:09:12+00:00",
+        "fetchedAt": "2026-09-04T19:07:06+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2644,7 +2644,7 @@
       },
       "StuffedShark_Fire": {
         "bytes": 93503,
-        "fetchedAt": "2026-09-04T18:09:13+00:00",
+        "fetchedAt": "2026-09-04T19:07:07+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2654,7 +2654,7 @@
       },
       "SumoDog": {
         "bytes": 82492,
-        "fetchedAt": "2026-09-04T18:09:46+00:00",
+        "fetchedAt": "2026-09-04T19:07:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2664,7 +2664,7 @@
       },
       "Suzaku": {
         "bytes": 89715,
-        "fetchedAt": "2026-09-04T18:06:35+00:00",
+        "fetchedAt": "2026-09-04T19:02:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2674,7 +2674,7 @@
       },
       "Suzaku_Water": {
         "bytes": 85846,
-        "fetchedAt": "2026-09-04T18:06:35+00:00",
+        "fetchedAt": "2026-09-04T19:02:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2684,7 +2684,7 @@
       },
       "SweetsSheep": {
         "bytes": 87041,
-        "fetchedAt": "2026-09-04T18:06:40+00:00",
+        "fetchedAt": "2026-09-04T19:02:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2694,7 +2694,7 @@
       },
       "SweetsSheep_Ground": {
         "bytes": 83552,
-        "fetchedAt": "2026-09-04T18:06:40+00:00",
+        "fetchedAt": "2026-09-04T19:02:48+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2704,7 +2704,7 @@
       },
       "SwordCutlassfish": {
         "bytes": 89193,
-        "fetchedAt": "2026-09-04T18:09:31+00:00",
+        "fetchedAt": "2026-09-04T19:07:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2714,7 +2714,7 @@
       },
       "SwordCutlassfish_Fire": {
         "bytes": 99103,
-        "fetchedAt": "2026-09-04T18:09:32+00:00",
+        "fetchedAt": "2026-09-04T19:07:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2724,7 +2724,7 @@
       },
       "TentacleTurtle": {
         "bytes": 122445,
-        "fetchedAt": "2026-09-04T18:05:48+00:00",
+        "fetchedAt": "2026-09-04T19:02:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2734,7 +2734,7 @@
       },
       "TentacleTurtle_Ground": {
         "bytes": 107754,
-        "fetchedAt": "2026-09-04T18:05:49+00:00",
+        "fetchedAt": "2026-09-04T19:02:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2744,7 +2744,7 @@
       },
       "ThiefBird": {
         "bytes": 90892,
-        "fetchedAt": "2026-09-04T18:09:19+00:00",
+        "fetchedAt": "2026-09-04T19:07:12+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2754,7 +2754,7 @@
       },
       "ThunderBird": {
         "bytes": 100995,
-        "fetchedAt": "2026-09-04T18:07:49+00:00",
+        "fetchedAt": "2026-09-04T19:05:02+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2764,7 +2764,7 @@
       },
       "ThunderBird_Ice": {
         "bytes": 94056,
-        "fetchedAt": "2026-09-04T18:07:49+00:00",
+        "fetchedAt": "2026-09-04T19:05:03+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2774,7 +2774,7 @@
       },
       "ThunderDog": {
         "bytes": 99221,
-        "fetchedAt": "2026-09-04T18:07:32+00:00",
+        "fetchedAt": "2026-09-04T19:04:43+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2784,7 +2784,7 @@
       },
       "ThunderDog_Ice": {
         "bytes": 96383,
-        "fetchedAt": "2026-09-04T18:07:33+00:00",
+        "fetchedAt": "2026-09-04T19:04:45+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2794,7 +2794,7 @@
       },
       "ThunderDragonMan": {
         "bytes": 97434,
-        "fetchedAt": "2026-09-04T18:08:11+00:00",
+        "fetchedAt": "2026-09-04T19:05:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2804,7 +2804,7 @@
       },
       "ThunderFluffyBird": {
         "bytes": 85646,
-        "fetchedAt": "2026-09-04T18:09:28+00:00",
+        "fetchedAt": "2026-09-04T19:07:20+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2814,7 +2814,7 @@
       },
       "TropicalOstrich": {
         "bytes": 88151,
-        "fetchedAt": "2026-09-04T18:09:21+00:00",
+        "fetchedAt": "2026-09-04T19:07:15+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2824,7 +2824,7 @@
       },
       "Umihebi": {
         "bytes": 93443,
-        "fetchedAt": "2026-09-04T18:06:31+00:00",
+        "fetchedAt": "2026-09-04T19:02:38+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2834,7 +2834,7 @@
       },
       "Umihebi_Fire": {
         "bytes": 94333,
-        "fetchedAt": "2026-09-04T18:06:31+00:00",
+        "fetchedAt": "2026-09-04T19:02:39+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2844,7 +2844,7 @@
       },
       "VenusFlytrap": {
         "bytes": 93056,
-        "fetchedAt": "2026-09-04T18:09:48+00:00",
+        "fetchedAt": "2026-09-04T19:07:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2854,7 +2854,7 @@
       },
       "VioletFairy": {
         "bytes": 115159,
-        "fetchedAt": "2026-09-04T18:07:24+00:00",
+        "fetchedAt": "2026-09-04T19:04:35+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2864,7 +2864,7 @@
       },
       "VolcanicMonster": {
         "bytes": 96897,
-        "fetchedAt": "2026-09-04T18:06:50+00:00",
+        "fetchedAt": "2026-09-04T19:02:59+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2874,7 +2874,7 @@
       },
       "VolcanicMonster_Ice": {
         "bytes": 96364,
-        "fetchedAt": "2026-09-04T18:06:50+00:00",
+        "fetchedAt": "2026-09-04T19:03:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2884,7 +2884,7 @@
       },
       "VolcanoDragon": {
         "bytes": 95186,
-        "fetchedAt": "2026-09-04T18:08:33+00:00",
+        "fetchedAt": "2026-09-04T19:06:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2894,7 +2894,7 @@
       },
       "VolcanoDragon_Ice": {
         "bytes": 88149,
-        "fetchedAt": "2026-09-04T18:08:34+00:00",
+        "fetchedAt": "2026-09-04T19:06:26+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2904,7 +2904,7 @@
       },
       "WeaselDragon": {
         "bytes": 100695,
-        "fetchedAt": "2026-09-04T18:07:56+00:00",
+        "fetchedAt": "2026-09-04T19:05:09+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2914,7 +2914,7 @@
       },
       "WeaselDragon_Fire": {
         "bytes": 96316,
-        "fetchedAt": "2026-09-04T18:07:56+00:00",
+        "fetchedAt": "2026-09-04T19:05:10+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2924,7 +2924,7 @@
       },
       "Werewolf": {
         "bytes": 101143,
-        "fetchedAt": "2026-09-04T18:06:32+00:00",
+        "fetchedAt": "2026-09-04T19:02:40+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2934,7 +2934,7 @@
       },
       "Werewolf_Ice": {
         "bytes": 97267,
-        "fetchedAt": "2026-09-04T18:08:57+00:00",
+        "fetchedAt": "2026-09-04T19:06:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2944,7 +2944,7 @@
       },
       "WhiteAlienDragon": {
         "bytes": 157136,
-        "fetchedAt": "2026-09-04T18:08:32+00:00",
+        "fetchedAt": "2026-09-04T19:06:24+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2954,7 +2954,7 @@
       },
       "WhiteDeer": {
         "bytes": 114807,
-        "fetchedAt": "2026-09-04T18:08:41+00:00",
+        "fetchedAt": "2026-09-04T19:06:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2964,7 +2964,7 @@
       },
       "WhiteDeer_Dark": {
         "bytes": 93627,
-        "fetchedAt": "2026-09-04T18:08:42+00:00",
+        "fetchedAt": "2026-09-04T19:06:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2974,7 +2974,7 @@
       },
       "WhiteMoth": {
         "bytes": 94600,
-        "fetchedAt": "2026-09-04T18:07:12+00:00",
+        "fetchedAt": "2026-09-04T19:04:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2984,7 +2984,7 @@
       },
       "WhiteMoth_Neutral": {
         "bytes": 96801,
-        "fetchedAt": "2026-09-04T18:07:13+00:00",
+        "fetchedAt": "2026-09-04T19:04:23+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -2994,7 +2994,7 @@
       },
       "WhiteShieldDragon": {
         "bytes": 95064,
-        "fetchedAt": "2026-09-04T18:08:38+00:00",
+        "fetchedAt": "2026-09-04T19:06:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3004,7 +3004,7 @@
       },
       "WhiteTiger": {
         "bytes": 93018,
-        "fetchedAt": "2026-09-04T18:06:41+00:00",
+        "fetchedAt": "2026-09-04T19:02:50+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3014,7 +3014,7 @@
       },
       "WhiteTiger_Ground": {
         "bytes": 89130,
-        "fetchedAt": "2026-09-04T18:08:59+00:00",
+        "fetchedAt": "2026-09-04T19:06:53+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3024,7 +3024,7 @@
       },
       "WindChimes": {
         "bytes": 91749,
-        "fetchedAt": "2026-09-04T18:06:33+00:00",
+        "fetchedAt": "2026-09-04T19:02:41+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3034,7 +3034,7 @@
       },
       "WindChimes_Ice": {
         "bytes": 94832,
-        "fetchedAt": "2026-09-04T18:06:33+00:00",
+        "fetchedAt": "2026-09-04T19:02:42+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3044,7 +3044,7 @@
       },
       "WingGolem": {
         "bytes": 155827,
-        "fetchedAt": "2026-09-04T18:08:26+00:00",
+        "fetchedAt": "2026-09-04T19:06:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3054,7 +3054,7 @@
       },
       "WingGolem_Fire": {
         "bytes": 101215,
-        "fetchedAt": "2026-09-04T18:08:27+00:00",
+        "fetchedAt": "2026-09-04T19:06:19+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3064,7 +3064,7 @@
       },
       "WizardOwl": {
         "bytes": 87593,
-        "fetchedAt": "2026-09-04T18:07:16+00:00",
+        "fetchedAt": "2026-09-04T19:04:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3074,7 +3074,7 @@
       },
       "WoolFox": {
         "bytes": 90684,
-        "fetchedAt": "2026-09-04T18:08:11+00:00",
+        "fetchedAt": "2026-09-04T19:05:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3084,7 +3084,7 @@
       },
       "WorldTreeDragon": {
         "bytes": 59706,
-        "fetchedAt": "2026-09-04T18:10:02+00:00",
+        "fetchedAt": "2026-09-04T19:07:56+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3094,7 +3094,7 @@
       },
       "YakushimaBoss001": {
         "bytes": 97641,
-        "fetchedAt": "2026-09-04T18:09:40+00:00",
+        "fetchedAt": "2026-09-04T19:07:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3104,7 +3104,7 @@
       },
       "YakushimaBoss001_Small": {
         "bytes": 63796,
-        "fetchedAt": "2026-09-04T18:09:39+00:00",
+        "fetchedAt": "2026-09-04T19:07:34+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3114,7 +3114,7 @@
       },
       "YakushimaMonster001": {
         "bytes": 62809,
-        "fetchedAt": "2026-09-04T18:09:33+00:00",
+        "fetchedAt": "2026-09-04T19:07:25+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3124,7 +3124,7 @@
       },
       "YakushimaMonster001_Blue": {
         "bytes": 63098,
-        "fetchedAt": "2026-09-04T18:09:34+00:00",
+        "fetchedAt": "2026-09-04T19:07:27+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3134,7 +3134,7 @@
       },
       "YakushimaMonster001_Pink": {
         "bytes": 62858,
-        "fetchedAt": "2026-09-04T18:09:35+00:00",
+        "fetchedAt": "2026-09-04T19:07:29+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3144,7 +3144,7 @@
       },
       "YakushimaMonster001_Purple": {
         "bytes": 63945,
-        "fetchedAt": "2026-09-04T18:09:35+00:00",
+        "fetchedAt": "2026-09-04T19:07:28+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3154,7 +3154,7 @@
       },
       "YakushimaMonster001_Rainbow": {
         "bytes": 63015,
-        "fetchedAt": "2026-09-04T18:09:36+00:00",
+        "fetchedAt": "2026-09-04T19:07:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3164,7 +3164,7 @@
       },
       "YakushimaMonster001_Red": {
         "bytes": 63624,
-        "fetchedAt": "2026-09-04T18:09:34+00:00",
+        "fetchedAt": "2026-09-04T19:07:27+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3174,7 +3174,7 @@
       },
       "YakushimaMonster002": {
         "bytes": 63454,
-        "fetchedAt": "2026-09-04T18:09:37+00:00",
+        "fetchedAt": "2026-09-04T19:07:30+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3184,7 +3184,7 @@
       },
       "YakushimaMonster003": {
         "bytes": 63938,
-        "fetchedAt": "2026-09-04T18:09:38+00:00",
+        "fetchedAt": "2026-09-04T19:07:31+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3194,7 +3194,7 @@
       },
       "YakushimaMonster003_Purple": {
         "bytes": 63200,
-        "fetchedAt": "2026-09-04T18:09:38+00:00",
+        "fetchedAt": "2026-09-04T19:07:32+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3204,7 +3204,7 @@
       },
       "Yeti": {
         "bytes": 105831,
-        "fetchedAt": "2026-09-04T18:07:22+00:00",
+        "fetchedAt": "2026-09-04T19:04:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
@@ -3214,7 +3214,7 @@
       },
       "Yeti_Grass": {
         "bytes": 104996,
-        "fetchedAt": "2026-09-04T18:07:22+00:00",
+        "fetchedAt": "2026-09-04T19:04:33+00:00",
         "paldbVersion": {
           "date": "2026/8/12",
           "version": "v1.0.3"
