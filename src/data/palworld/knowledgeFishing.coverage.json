@@ -1,6 +1,6 @@
 {
   "dataset": "knowledge-fishing",
-  "generatedAt": "2026-09-02T19:47:39Z",
+  "generatedAt": "2026-09-04T18:17:01Z",
   "gameVersion": "v1.0.3",
   "recordCount": 115,
   "counts": {
@@ -12,5 +12,7 @@
     "equipment": 13,
     "shadowTypes": 4
   },
-  "sourceUrls": ["https://paldb.cc/en/Fishing"]
+  "sourceUrls": [
+    "https://paldb.cc/en/Fishing"
+  ]
 }

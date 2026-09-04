@@ -233,13 +233,14 @@ def main() -> None:
         },
     ]
 
-    # Explicit Gap Records (10 target)
+    # Explicit Gap Records (10 target with qualitative described mechanics)
     system_gaps: list[dict[str, object]] = [
         {
             "id": "gap-capture-probability-formula",
             "system": "Capture Mechanics",
             "reasonCode": "GAP_CAPTURE_PROBABILITY_FORMULA",
             "summary": "Exact mathematical capture probability formula mapping Pal Sphere type, target HP %, status effect, Pal grade/level, and Lifmunk Effigy bonus",
+            "describedEffect": "described but unquantified: capture probability increases with Pal Sphere grade, target HP reduction, status conditions, Pal level rank, and Lifmunk Effigy power bonuses, but exact coefficient formula is unpublished.",
             "resolution": "Reopen when a versioned UPalCaptureJudge / UPalSphereCaptureModule game-assembly extraction or verified Pocketpair formula table is supplied.",
         },
         {
@@ -247,6 +248,7 @@ def main() -> None:
             "system": "Combat Mechanics",
             "reasonCode": "GAP_DAMAGE_FORMULA",
             "summary": "Complete damage formula including move power scaling, attack vs defense ratio, level difference modifier, STAB, and elemental matchups",
+            "describedEffect": "described but unquantified: damage scales with Move Power, Attack/Defense ratio, level difference, STAB (+20% same-element move), and elemental advantage multipliers (+100% super effective), but complete exact damage calculation formula is unpublished.",
             "resolution": "Reopen upon extraction of UPalDamageCalculator / UPalBattleModule code or versioned datamined combat formulas.",
         },
         {
@@ -254,6 +256,7 @@ def main() -> None:
             "system": "Progression",
             "reasonCode": "GAP_EXPERIENCE_LEVEL_CURVE",
             "summary": "Exact XP required per level rank (1-80) and exact XP awarded per activity (capture bonus scaling, kill XP, craft XP)",
+            "describedEffect": "described but unquantified: required XP per level scales exponentially from level 1 to 80, with XP awarded for first-10 species captures, kills, and crafting.",
             "resolution": "Reopen when the internal PalExpTable / PlayerExpTable datamined asset arrays are extracted and checked.",
         },
         {
@@ -261,6 +264,7 @@ def main() -> None:
             "system": "Stats",
             "reasonCode": "GAP_LEVEL_STAT_SCALING",
             "summary": "Exact formula mapping level rank to actual stat values at level N (base stat to level 80 curve)",
+            "describedEffect": "described but unquantified: Pal HP, Attack, and Defense increase with character level scaling curves.",
             "resolution": "Reopen when PalCharacterParameter level stat scaling formulas are extracted from game binary.",
         },
         {
@@ -268,6 +272,7 @@ def main() -> None:
             "system": "Stats",
             "reasonCode": "GAP_IV_TO_STAT_FORMULA",
             "summary": "Individual Value (IV / talent rank 0-100%) integer rounding and base stat scaling formula",
+            "describedEffect": "described but unquantified: Individual Values (0-100% / 0-30 talent ranks) scale HP, Attack, and Defense stats.",
             "resolution": "Reopen upon extraction of PalTalentFormula / UPalStatCalculator code or versioned datamined talent tables.",
         },
         {
@@ -275,6 +280,7 @@ def main() -> None:
             "system": "Breeding",
             "reasonCode": "GAP_BREEDING_INCUBATION_TIMERS",
             "summary": "Exact egg production tick duration in Breeding Farm and egg incubation speed formulas",
+            "describedEffect": "described but unquantified: egg production ticks in Breeding Farm and egg incubation speed scale with base egg size and incubation settings.",
             "resolution": "Reopen when PalEggIncubateParameter and PalBreedingFarmProcess tick constants are extracted from game assets.",
         },
         {
@@ -282,6 +288,7 @@ def main() -> None:
             "system": "Survival & Base Work",
             "reasonCode": "GAP_HUNGER_SAN_DEPLETION_RATES",
             "summary": "Base metabolic hunger depletion rates, work activity consumption rates, and food satiety recovery ticks",
+            "describedEffect": "described but unquantified: base metabolic hunger depletion and work task SAN consumption decay rates.",
             "resolution": "Reopen when PalIndividualCharacterParameter hunger decay ticks and task-consumption tables are extracted.",
         },
         {
@@ -289,6 +296,7 @@ def main() -> None:
             "system": "Survival & Base Work",
             "reasonCode": "GAP_HUNGER_SAN_DEPLETION_RATES",
             "summary": "SAN depletion rates per work assignment type, nocturnal/sleep SAN recovery formulas, and sanity state thresholds",
+            "describedEffect": "described but unquantified: SAN depletion rates per work assignment and sleep/night recovery rates.",
             "resolution": "Reopen when PalIndividualCharacterParameter SAN decay parameters and work assignment task rules are extracted.",
         },
         {
@@ -296,6 +304,7 @@ def main() -> None:
             "system": "Incubation",
             "reasonCode": "GAP_BREEDING_INCUBATION_TIMERS",
             "summary": "Exact thermal multipliers (+50%, +100%, -50% speed penalties) for ambient cold/hot environments across egg elements",
+            "describedEffect": "described but unquantified: thermal multipliers (+50%, +100%, -50% speed penalties) for ambient cold/hot environments across egg elements.",
             "resolution": "Reopen when PalEggThermalParameter temperature scalar tables are extracted from game assets.",
         },
         {
@@ -303,6 +312,7 @@ def main() -> None:
             "system": "Breeding & Stats",
             "reasonCode": "GAP_GENERAL_PROBABILITY",
             "summary": "Species mutation breeding selection matrix and stat mutation probability distributions",
+            "describedEffect": "described but unquantified: species mutation breeding selection matrix and stat mutation probability distributions.",
             "resolution": "Reopen when PalBreedingMutationMatrix and PalStatMutationRules are extracted from game assets.",
         },
     ]
@@ -319,7 +329,7 @@ def main() -> None:
     if total_records != 29:
         raise SourceContractError(f"Expected 29 total system records, found {total_records}")
 
-    print("=== VALIDATION TARGET REPORT (TASK 6) ===")
+    print("=== VALIDATION TARGET REPORT ===")
     print(f"1. Published System Records: Collected = {len(published_systems)}, Target = 19 (Match)")
     print(f"2. System Gap Records: Collected = {len(system_gaps)}, Target = 10 (Match)")
     print(f"3. Total System Rows: Collected = {total_records}, Target = 29 (Match)")
@@ -347,6 +357,7 @@ def main() -> None:
         "  system: string;",
         "  reasonCode: string;",
         "  summary: string;",
+        "  describedEffect?: string | null;",
         "  resolution: string;",
         "}",
         "",
@@ -364,7 +375,7 @@ def main() -> None:
         "  version: {",
         f"    gameVersion: {js(game_version)},",
         f"    emittedAt: {js(emitted_at)},",
-        '    generatorVersion: "emit-knowledge-systems.py",',
+        '    generatorVersion: "emit-knowledge-systems-multi-source.py",',
         "  },",
         "  sources: [",
         "    {",
@@ -410,18 +421,18 @@ def main() -> None:
         "  gaps: [",
         "    {",
         '      field: "captureProbabilityFormula",',
-        '      reason: "Unobtainable from public sources.",',
-        '      resolution: "Recorded explicit system gap record.",',
+        '      reason: "described but unquantified: capture probability mechanics are described in game text and settings, but exact mathematical formula is unpublished.",',
+        '      resolution: "Recorded explicit system gap record with qualitative description.",',
         "    },",
         "    {",
         '      field: "damageFormula",',
-        '      reason: "Unobtainable from public sources.",',
-        '      resolution: "Recorded explicit system gap record.",',
+        '      reason: "described but unquantified: combat damage mechanics (STAB, elemental matchups, move power) are described, but exact calculation formula is unpublished.",',
+        '      resolution: "Recorded explicit system gap record with qualitative description.",',
         "    },",
         "    {",
         '      field: "experienceLevelCurve",',
-        '      reason: "Unobtainable from public sources.",',
-        '      resolution: "Recorded explicit system gap record.",',
+        '      reason: "described but unquantified: experience scaling is described, but exact level curve formula is unpublished.",',
+        '      resolution: "Recorded explicit system gap record with qualitative description.",',
         "    },",
         "  ],",
         "};",
