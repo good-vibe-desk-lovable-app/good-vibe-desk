@@ -38,3 +38,4 @@ __pycache__/
 
 # Generated source cache: retain only the reproducibility manifest, never fetched HTML or db exports.
 scripts/.cache/
+tmp/
