@@ -2,18 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   AlertTriangle,
   ArrowLeft,
-  BookOpen,
   Calculator,
   ChevronDown,
   Cpu,
   ExternalLink,
-  Flame,
   HelpCircle,
-  Layers,
   Search,
   ShieldAlert,
-  Sparkles,
-  Zap,
+  Users,
 } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 
@@ -21,17 +17,18 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type {
   PalworldSystemsKnowledge,
+  SystemCommunityRecord,
   SystemGapRecord,
   SystemPublishedRecord,
 } from "@/data/palworld/knowledgeSystems";
 import { useOfflineKnowledgePack } from "@/lib/use-offline-knowledge-pack";
 
-const TITLE = "Systems & Formulas Compendium — Mechanics & Evidence Gaps";
+const TITLE = "Systems & Formulas Compendium — Mechanics, Evidence Gaps & Community Records";
 const DESCRIPTION =
-  "Explore 19 published Palworld mechanics, breeding formulas, condensation, work speed levels, world settings, and 10 explicit source evidence gaps.";
+  "Explore 19 published Palworld mechanics, breeding formulas, condensation, work speed levels, world settings, 10 explicit source evidence gaps, and 3 community-derived mechanics records.";
 const SITE = "https://good-vibe-desk.kevinjackson1114.workers.dev/compendium/systems";
 
-type ViewFilter = "all" | "published" | "gaps";
+type ViewFilter = "all" | "published" | "gaps" | "community";
 type SubjectFilter =
   | "all"
   | "breeding"
@@ -96,7 +93,20 @@ function SystemsCompendiumPage() {
       return matchesQuery && matchesSubject;
     });
 
-    return { published, gaps };
+    const community = (knowledge.communitySystems ?? []).filter((item) => {
+      const matchesQuery =
+        !q ||
+        item.system.toLocaleLowerCase().includes(q) ||
+        item.summary.toLocaleLowerCase().includes(q) ||
+        item.figure.toLocaleLowerCase().includes(q) ||
+        (item.method && item.method.toLocaleLowerCase().includes(q)) ||
+        item.note.toLocaleLowerCase().includes(q);
+
+      const matchesSubject = matchSubject(item.system, subjectFilter);
+      return matchesQuery && matchesSubject;
+    });
+
+    return { published, gaps, community };
   }, [knowledge, query, subjectFilter]);
 
   if (loading || error || !knowledge || !filteredData) {
@@ -105,12 +115,16 @@ function SystemsCompendiumPage() {
 
   const publishedCount = knowledge.publishedSystems.length;
   const gapsCount = knowledge.systemGaps.length;
+  const communityCount = knowledge.communitySystems?.length ?? 0;
 
   const showPublished = viewFilter === "all" || viewFilter === "published";
   const showGaps = viewFilter === "all" || viewFilter === "gaps";
+  const showCommunity = viewFilter === "all" || viewFilter === "community";
 
   const totalFilteredCount =
-    (showPublished ? filteredData.published.length : 0) + (showGaps ? filteredData.gaps.length : 0);
+    (showPublished ? filteredData.published.length : 0) +
+    (showGaps ? filteredData.gaps.length : 0) +
+    (showCommunity ? filteredData.community.length : 0);
 
   return (
     <div className="min-h-screen bg-background">
@@ -137,13 +151,13 @@ function SystemsCompendiumPage() {
               </h1>
               <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
                 Explore published Palworld game mechanics, breeding formulas, condensation, work
-                speed levels, world settings, and documented public source evidence gaps.
+                speed levels, world settings, documented evidence gaps, and community-tier figures.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-center sm:min-w-72 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2 text-center sm:min-w-80 sm:grid-cols-4">
               <Metric label="Mechanics" value={String(publishedCount)} />
               <Metric label="Public Gaps" value={String(gapsCount)} />
-              <Metric label="Subject Areas" value="9" />
+              <Metric label="Community" value={String(communityCount)} />
               <Metric label="Game Version" value="v1.0.3" />
             </div>
           </div>
@@ -180,13 +194,19 @@ function SystemsCompendiumPage() {
           <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
             <p>
               This page documents 19 verified game mechanics alongside 10 explicit evidence gaps
-              where exact formulas are unobtainable from public sources.
+              where exact formulas are unobtainable from public sources, as well as 3
+              community-derived figures.
             </p>
             <p>
               Ten key mechanics (such as exact capture formulas, damage scaling, experience curves,
               and IV calculations) are recorded as explicit gaps with their resolution requirements
               rather than filled with guesses or assumed values. No other Palworld resource
               documents this honestly.
+            </p>
+            <p>
+              Community-tier records (from Game8 guides and sample testing) provide recorded numbers
+              for elemental multipliers, STAB bonus, and IV inheritance rates without closing those
+              system model gaps, as no game-file source confirms them.
             </p>
             <p>
               World Settings sliders are sourced from wiki.gg, which carries a version stamp of
@@ -221,7 +241,7 @@ function SystemsCompendiumPage() {
                   Type:
                 </span>
                 <FilterButton active={viewFilter === "all"} onClick={() => setViewFilter("all")}>
-                  All ({publishedCount + gapsCount})
+                  All ({publishedCount + gapsCount + communityCount})
                 </FilterButton>
                 <FilterButton
                   active={viewFilter === "published"}
@@ -233,6 +253,13 @@ function SystemsCompendiumPage() {
                 <FilterButton active={viewFilter === "gaps"} onClick={() => setViewFilter("gaps")}>
                   <ShieldAlert className="size-3.5 text-rose-500" />
                   Documented Gaps ({gapsCount})
+                </FilterButton>
+                <FilterButton
+                  active={viewFilter === "community"}
+                  onClick={() => setViewFilter("community")}
+                >
+                  <Users className="size-3.5 text-amber-500" />
+                  Community Records ({communityCount})
                 </FilterButton>
               </div>
 
@@ -309,7 +336,7 @@ function SystemsCompendiumPage() {
               Showing <strong className="text-foreground">{totalFilteredCount}</strong> matching
               entries
             </span>
-            <span>Sources: PalCalc Datamined Asset DB & Wiki Mechanics (v1.0.3 / v0.3.10.0)</span>
+            <span>Sources: Datamined Assets, Wiki Mechanics & Game8 Community Guides</span>
           </div>
 
           {totalFilteredCount === 0 ? (
@@ -347,6 +374,27 @@ function SystemsCompendiumPage() {
                   <div className="mt-3 grid gap-4 md:grid-cols-2">
                     {filteredData.gaps.map((item) => (
                       <GapCard key={item.id} gap={item} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Community-Derived & Unverified Mechanics Section */}
+              {showCommunity && filteredData.community.length > 0 && (
+                <div>
+                  <SectionHeader
+                    icon={<Users className="size-4 text-amber-600 dark:text-amber-400" />}
+                    title="Community-Derived & Unverified Mechanics"
+                    count={filteredData.community.length}
+                  />
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Figures published in Game8 guides and sample testing. Recorded for completeness
+                    under community tier, but unverified by game-code extractions and do not close
+                    model gaps.
+                  </p>
+                  <div className="mt-3 grid gap-4 md:grid-cols-2">
+                    {filteredData.community.map((item) => (
+                      <CommunityCard key={item.id} item={item} />
                     ))}
                   </div>
                 </div>
@@ -460,6 +508,70 @@ function GapCard({ gap }: { gap: SystemGapRecord }) {
 
       <div className="mt-4 border-t border-rose-500/20 pt-2 text-[11px] font-medium text-rose-700 dark:text-rose-300">
         Status: Verified Public Evidence Gap (Unresolved)
+      </div>
+    </article>
+  );
+}
+
+function CommunityCard({ item }: { item: SystemCommunityRecord }) {
+  return (
+    <article className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 shadow-sm transition hover:border-amber-500/50 hover:shadow-md flex flex-col justify-between">
+      <div>
+        <div className="flex items-start justify-between gap-2">
+          <span className="rounded-md bg-amber-500/15 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:text-amber-200 border border-amber-500/30">
+            {item.system}
+          </span>
+          <span className="rounded-md bg-amber-500/20 px-2 py-0.5 text-[11px] font-semibold text-amber-800 dark:text-amber-300 border border-amber-500/30">
+            {item.sourceTier}
+          </span>
+        </div>
+
+        <h3 className="mt-2.5 font-bold text-sm leading-snug text-foreground">{item.summary}</h3>
+
+        <div className="mt-3 rounded-lg border border-amber-500/25 bg-background/80 p-3 font-mono text-xs font-semibold text-foreground">
+          <span className="text-[10px] uppercase tracking-wider text-amber-800 dark:text-amber-300 block mb-1 font-sans">
+            Community Figure:
+          </span>
+          <div className="break-words text-amber-900 dark:text-amber-200">{item.figure}</div>
+        </div>
+
+        {item.method && (
+          <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+            <strong className="font-semibold text-foreground">Method:</strong> {item.method}
+            {item.sampleSize !== undefined && ` (${item.sampleSize} breeding samples)`}
+          </p>
+        )}
+
+        <div className="mt-2.5 rounded-md bg-amber-500/10 p-2.5 text-xs leading-relaxed text-amber-900 dark:text-amber-200 border border-amber-500/20">
+          <strong className="font-semibold block mb-0.5">Verification Note:</strong>
+          {item.note}
+        </div>
+      </div>
+
+      <div className="mt-4 border-t border-amber-500/20 pt-2.5 flex items-center justify-between text-xs text-muted-foreground">
+        <span>Source Citation:</span>
+        <div className="flex items-center gap-2">
+          <a
+            href={item.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-medium text-amber-700 dark:text-amber-300 hover:underline min-h-[44px] sm:min-h-0"
+          >
+            {formatUrlHost(item.sourceUrl)}
+            <ExternalLink className="size-3" />
+          </a>
+          {item.secondarySourceUrl && (
+            <a
+              href={item.secondarySourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-medium text-amber-700 dark:text-amber-300 hover:underline min-h-[44px] sm:min-h-0"
+            >
+              (Chart)
+              <ExternalLink className="size-3" />
+            </a>
+          )}
+        </div>
       </div>
     </article>
   );
@@ -583,6 +695,7 @@ function formatUrlHost(url: string): string {
     if (parsed.hostname.includes("paldb.cc")) return "PalDB Pal Calc";
     if (parsed.hostname.includes("wiki.gg"))
       return `wiki.gg/${parsed.pathname.split("/").pop() ?? ""}`;
+    if (parsed.hostname.includes("game8.co")) return "Game8 Guide";
     return parsed.hostname;
   } catch {
     return url;

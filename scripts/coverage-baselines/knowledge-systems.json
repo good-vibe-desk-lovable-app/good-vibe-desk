@@ -1,17 +1,22 @@
 {
   "dataset": "knowledge-systems",
-  "generatedAt": "2026-09-04T19:18:33Z",
+  "generatedAt": "2026-09-06T05:16:35Z",
   "gameVersion": "v1.0.3",
-  "recordCount": 29,
+  "recordCount": 32,
   "counts": {
     "publishedSystems": 19,
-    "systemGaps": 10
+    "systemGaps": 10,
+    "communitySystems": 3
   },
   "sourceUrls": [
     "https://raw.githubusercontent.com/tylercamp/palcalc/main/PalCalc.Model/db.json",
     "https://paldb.cc/en/Pal_Calc",
     "https://palworld.wiki.gg/wiki/Breeding",
     "https://palworld.wiki.gg/wiki/Pal_Condensation",
-    "https://palworld.wiki.gg/wiki/World_Settings"
+    "https://palworld.wiki.gg/wiki/World_Settings",
+    "https://game8.co/games/Palworld/archives/439611",
+    "https://game8.co/games/Palworld/archives/445883",
+    "https://game8.co/games/Palworld/archives/445735",
+    "https://game8.co/games/Palworld/archives/444315"
   ]
 }
