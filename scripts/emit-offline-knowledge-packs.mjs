@@ -6,6 +6,8 @@ const root = resolve(import.meta.dirname, "..");
 const sourceDirectory = resolve(root, "src", "data", "palworld");
 const outputDirectory = resolve(root, ".output", "public", "knowledge-packs");
 const optionalOutputDirectory = resolve(root, ".output", "public", "optional-knowledge-packs");
+const devOutputDirectory = resolve(root, "public", "knowledge-packs");
+const devOptionalOutputDirectory = resolve(root, "public", "optional-knowledge-packs");
 
 const packs = {
   eggs: "knowledgeEggs.ts",
@@ -60,8 +62,12 @@ function extractPayload(sourceFile) {
 
 rmSync(outputDirectory, { recursive: true, force: true });
 rmSync(optionalOutputDirectory, { recursive: true, force: true });
+rmSync(devOutputDirectory, { recursive: true, force: true });
+rmSync(devOptionalOutputDirectory, { recursive: true, force: true });
 mkdirSync(outputDirectory, { recursive: true });
 mkdirSync(optionalOutputDirectory, { recursive: true });
+mkdirSync(devOutputDirectory, { recursive: true });
+mkdirSync(devOptionalOutputDirectory, { recursive: true });
 
 const manifest = [];
 for (const [name, filename] of Object.entries(packs)) {
@@ -71,6 +77,7 @@ for (const [name, filename] of Object.entries(packs)) {
   const output = resolve(outputDirectory, `${name}.json.gz`);
 
   writeFileSync(output, compressed);
+  writeFileSync(resolve(devOutputDirectory, `${name}.json.gz`), compressed);
   manifest.push({
     name,
     file: `${name}.json.gz`,
@@ -82,6 +89,10 @@ for (const [name, filename] of Object.entries(packs)) {
 
 writeFileSync(
   resolve(outputDirectory, "manifest.json"),
+  `${JSON.stringify({ packs: manifest }, null, 2)}\n`,
+);
+writeFileSync(
+  resolve(devOutputDirectory, "manifest.json"),
   `${JSON.stringify({ packs: manifest }, null, 2)}\n`,
 );
 
@@ -109,6 +120,11 @@ for (const [name, definition] of Object.entries(optionalPacks)) {
   writeFileSync(resolve(optionalOutputDirectory, file), compressed);
   writeFileSync(
     resolve(optionalOutputDirectory, `${name}.manifest.json`),
+    `${JSON.stringify(pack, null, 2)}\n`,
+  );
+  writeFileSync(resolve(devOptionalOutputDirectory, file), compressed);
+  writeFileSync(
+    resolve(devOptionalOutputDirectory, `${name}.manifest.json`),
     `${JSON.stringify(pack, null, 2)}\n`,
   );
   optionalManifest.push(pack);

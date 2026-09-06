@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DataCheckRouteImport } from './routes/data-check'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as OpinionsRouteImport } from './routes/opinions'
+import { Route as ProgressionRouteImport } from './routes/progression'
 import { Route as TiersRouteImport } from './routes/tiers'
 import { Route as CompendiumIndexRouteImport } from './routes/compendium/index'
 import { Route as CompendiumEggsRouteImport } from './routes/compendium/eggs'
@@ -48,6 +49,11 @@ const ExploreRoute = ExploreRouteImport.update({
 const OpinionsRoute = OpinionsRouteImport.update({
   id: '/opinions',
   path: '/opinions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressionRoute = ProgressionRouteImport.update({
+  id: '/progression',
+  path: '/progression',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TiersRoute = TiersRouteImport.update({
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/data-check': typeof DataCheckRouteWithChildren
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
+  '/progression': typeof ProgressionRoute
   '/tiers': typeof TiersRoute
   '/compendium/eggs': typeof CompendiumEggsRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/data-check': typeof DataCheckRouteWithChildren
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
+  '/progression': typeof ProgressionRoute
   '/tiers': typeof TiersRoute
   '/compendium/eggs': typeof CompendiumEggsRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/data-check': typeof DataCheckRouteWithChildren
   '/explore': typeof ExploreRoute
   '/opinions': typeof OpinionsRoute
+  '/progression': typeof ProgressionRoute
   '/tiers': typeof TiersRoute
   '/compendium/eggs': typeof CompendiumEggsRoute
   '/compendium/encounters': typeof CompendiumEncountersRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/data-check'
     | '/explore'
     | '/opinions'
+    | '/progression'
     | '/tiers'
     | '/compendium/eggs'
     | '/compendium/encounters'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/data-check'
     | '/explore'
     | '/opinions'
+    | '/progression'
     | '/tiers'
     | '/compendium/eggs'
     | '/compendium/encounters'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/data-check'
     | '/explore'
     | '/opinions'
+    | '/progression'
     | '/tiers'
     | '/compendium/eggs'
     | '/compendium/encounters'
@@ -272,6 +284,7 @@ export interface RootRouteChildren {
   DataCheckRoute: typeof DataCheckRouteWithChildren
   ExploreRoute: typeof ExploreRoute
   OpinionsRoute: typeof OpinionsRoute
+  ProgressionRoute: typeof ProgressionRoute
   TiersRoute: typeof TiersRoute
   CompendiumEggsRoute: typeof CompendiumEggsRoute
   CompendiumEncountersRoute: typeof CompendiumEncountersRoute
@@ -317,6 +330,13 @@ declare module '@tanstack/react-router' {
       path: '/opinions'
       fullPath: '/opinions'
       preLoaderRoute: typeof OpinionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progression': {
+      id: '/progression'
+      path: '/progression'
+      fullPath: '/progression'
+      preLoaderRoute: typeof ProgressionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tiers': {
@@ -451,6 +471,7 @@ const rootRouteChildren: RootRouteChildren = {
   DataCheckRoute: DataCheckRouteWithChildren,
   ExploreRoute: ExploreRoute,
   OpinionsRoute: OpinionsRoute,
+  ProgressionRoute: ProgressionRoute,
   TiersRoute: TiersRoute,
   CompendiumEggsRoute: CompendiumEggsRoute,
   CompendiumEncountersRoute: CompendiumEncountersRoute,

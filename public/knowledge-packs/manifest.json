@@ -1,0 +1,81 @@
+{
+  "packs": [
+    {
+      "name": "eggs",
+      "file": "eggs.json.gz",
+      "recordCount": 1,
+      "uncompressedBytes": 141828,
+      "compressedBytes": 18674
+    },
+    {
+      "name": "field-alphas",
+      "file": "field-alphas.json.gz",
+      "recordCount": 65,
+      "uncompressedBytes": 103016,
+      "compressedBytes": 4643
+    },
+    {
+      "name": "encounters",
+      "file": "encounters.json.gz",
+      "recordCount": 633,
+      "uncompressedBytes": 646589,
+      "compressedBytes": 28796
+    },
+    {
+      "name": "fishing",
+      "file": "fishing.json.gz",
+      "recordCount": 1,
+      "uncompressedBytes": 176477,
+      "compressedBytes": 13729
+    },
+    {
+      "name": "food",
+      "file": "food.json.gz",
+      "recordCount": 1,
+      "uncompressedBytes": 58728,
+      "compressedBytes": 9267
+    },
+    {
+      "name": "missions",
+      "file": "missions.json.gz",
+      "recordCount": 117,
+      "uncompressedBytes": 176019,
+      "compressedBytes": 18638
+    },
+    {
+      "name": "skills",
+      "file": "skills.json.gz",
+      "recordCount": 1,
+      "uncompressedBytes": 658153,
+      "compressedBytes": 67057
+    },
+    {
+      "name": "structures",
+      "file": "structures.json.gz",
+      "recordCount": 498,
+      "uncompressedBytes": 2575964,
+      "compressedBytes": 111410
+    },
+    {
+      "name": "systems",
+      "file": "systems.json.gz",
+      "recordCount": 1,
+      "uncompressedBytes": 13662,
+      "compressedBytes": 3373
+    },
+    {
+      "name": "technologies",
+      "file": "technologies.json.gz",
+      "recordCount": 588,
+      "uncompressedBytes": 1131886,
+      "compressedBytes": 70141
+    },
+    {
+      "name": "work-suitability",
+      "file": "work-suitability.json.gz",
+      "recordCount": 297,
+      "uncompressedBytes": 544496,
+      "compressedBytes": 15419
+    }
+  ]
+}

@@ -167,6 +167,13 @@ function RootComponent() {
                 Pathfinder
               </Link>
               <Link
+                to="/progression"
+                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
+                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
+              >
+                Progression
+              </Link>
+              <Link
                 to="/compendium"
                 activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
                 className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"

@@ -1,0 +1,9 @@
+{
+  "id": "items-recipes-v1",
+  "file": "items-recipes-v1.json.gz",
+  "recordCount": 2455,
+  "description": "Palworld item catalogue cards, stats, and source-bounded production rows.",
+  "compressedBytes": 325099,
+  "uncompressedBytes": 7483412,
+  "storageBytes": 325099
+}

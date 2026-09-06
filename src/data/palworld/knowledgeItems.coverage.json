@@ -11,8 +11,5 @@
     "productionRows": 3779,
     "statGroups": 5946
   },
-  "sourceUrls": [
-    "https://paldb.cc/en/Items",
-    "https://palworld.gg/_nuxt/CAAXy-Yd.js"
-  ]
+  "sourceUrls": ["https://paldb.cc/en/Items", "https://palworld.gg/_nuxt/CAAXy-Yd.js"]
 }
