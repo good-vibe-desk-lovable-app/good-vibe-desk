@@ -60,8 +60,8 @@
       "name": "systems",
       "file": "systems.json.gz",
       "recordCount": 1,
-      "uncompressedBytes": 13662,
-      "compressedBytes": 3373
+      "uncompressedBytes": 15892,
+      "compressedBytes": 3880
     },
     {
       "name": "technologies",
