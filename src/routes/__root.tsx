@@ -17,7 +17,6 @@ import {
   Map,
   Menu,
   MessageSquareQuote,
-  Search,
   Swords,
   Trophy,
   Wrench,
@@ -29,7 +28,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { registerServiceWorker } from "../lib/pwa";
 import { Toaster } from "../components/ui/sonner";
-import { GlobalSearch } from "../components/GlobalSearch";
 
 const APP_NAME = "Palworld Pathfinder";
 const APP_DESCRIPTION =
@@ -183,8 +181,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
-  const [panel, setPanel] = useState<"none" | "more" | "search">("none");
-  const moreOpen = panel === "more";
+  const [moreOpen, setMoreOpen] = useState(false);
 
   useEffect(() => {
     registerServiceWorker();
@@ -192,13 +189,13 @@ function RootComponent() {
 
   // Any navigation dismisses an open panel.
   useEffect(() => {
-    setPanel("none");
+    setMoreOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (panel === "none") return;
+    if (!moreOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setPanel("none");
+      if (event.key === "Escape") setMoreOpen(false);
     };
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
@@ -206,7 +203,7 @@ function RootComponent() {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [panel]);
+  }, [moreOpen]);
 
   const secondaryActive = SECONDARY_NAV.some((item) => pathname.startsWith(item.to));
 
@@ -218,12 +215,6 @@ function RootComponent() {
             <Link to="/" className="shrink-0 text-base font-bold tracking-tight">
               <span className="text-primary">Palworld</span> Pathfinder
             </Link>
-
-            <div className="hidden min-w-0 flex-1 md:flex md:justify-center">
-              <div className="w-full max-w-xs">
-                <GlobalSearch />
-              </div>
-            </div>
 
             <nav className="ml-auto hidden items-center gap-1 md:flex">
               {PRIMARY_NAV.map((item) => (
@@ -239,7 +230,7 @@ function RootComponent() {
               ))}
               <button
                 type="button"
-                onClick={() => setPanel(moreOpen ? "none" : "more")}
+                onClick={() => setMoreOpen((open) => !open)}
                 aria-expanded={moreOpen}
                 className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-md px-3 text-sm font-medium transition-colors hover:bg-accent/50 hover:text-foreground ${
                   secondaryActive ? "bg-accent text-accent-foreground" : "text-muted-foreground"
@@ -249,23 +240,7 @@ function RootComponent() {
                 <Menu className="size-4" />
               </button>
             </nav>
-
-            <button
-              type="button"
-              onClick={() => setPanel(panel === "search" ? "none" : "search")}
-              aria-label="Search"
-              aria-expanded={panel === "search"}
-              className="ml-auto inline-flex size-11 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground md:hidden"
-            >
-              <Search className="size-5" />
-            </button>
           </div>
-
-          {panel === "search" ? (
-            <div className="border-t border-border px-4 py-3 md:hidden">
-              <GlobalSearch />
-            </div>
-          ) : null}
         </header>
 
         <main className="flex-1 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
@@ -294,7 +269,7 @@ function RootComponent() {
             })}
             <button
               type="button"
-              onClick={() => setPanel(moreOpen ? "none" : "more")}
+              onClick={() => setMoreOpen((open) => !open)}
               aria-expanded={moreOpen}
               className={`flex min-h-[56px] flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium transition-colors ${
                 secondaryActive || moreOpen ? "text-primary" : "text-muted-foreground"
@@ -311,7 +286,7 @@ function RootComponent() {
             <button
               type="button"
               aria-label="Close menu"
-              onClick={() => setPanel("none")}
+              onClick={() => setMoreOpen(false)}
               className="fixed inset-0 z-40 bg-background/70 backdrop-blur-sm"
             />
             <div
@@ -326,7 +301,7 @@ function RootComponent() {
                 </h2>
                 <button
                   type="button"
-                  onClick={() => setPanel("none")}
+                  onClick={() => setMoreOpen(false)}
                   aria-label="Close"
                   className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
                 >
