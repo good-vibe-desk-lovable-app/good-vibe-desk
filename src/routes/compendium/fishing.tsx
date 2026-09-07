@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   Anchor,
-  ArrowLeft,
   ChevronDown,
   Compass,
   Eye,
@@ -11,10 +10,17 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  BackLink,
+  Eyebrow,
+  FilterButton,
+  PackFeedback,
+  SectionHeader,
+} from "@/components/ui/compendium-helpers";
+import { EmptyState, PageShell } from "@/components/ui/page-header";
 import type {
   FishingEquipmentRecord,
   FishingLootRow,
@@ -114,13 +120,16 @@ function FishingCompendiumPage() {
   }, [knowledge, query]);
 
   if (loading || error || !knowledge || !filteredData) {
-    return <PackFeedback loading={loading} error={error} />;
+    return (
+      <PackFeedback
+        loading={loading}
+        error={error}
+        icon={Fish}
+        packName="Fishing Directory"
+        loadingBody="Preparing the cached offline fishing directory."
+      />
+    );
   }
-
-  const spotsCount = Object.keys(knowledge.spots).length;
-  const lootCount = Object.keys(knowledge.lootTables).length;
-  const eqCount = Object.keys(knowledge.equipment).length;
-  const palsCount = Object.keys(knowledge.supportPals).length;
 
   const showSpots = sectionFilter === "all" || sectionFilter === "spots";
   const showLoot = sectionFilter === "all" || sectionFilter === "loot";
@@ -136,230 +145,201 @@ function FishingCompendiumPage() {
     (showShadows ? filteredData.shadowTypes.length : 0);
 
   return (
-    <div className="min-h-screen bg-background">
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-72 opacity-60"
-        style={{
-          background:
-            "radial-gradient(65% 100% at 50% 0%, color-mix(in oklch, #06b6d4 18%, transparent) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+    <PageShell>
+      <BackLink />
 
-      <main className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <BackLink />
-
-        <section className="rounded-2xl border border-cyan-400/25 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <Eyebrow icon={<Fish className="size-3.5" />}>Offline compendium · Fishing</Eyebrow>
-              <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                Fishing Directory
-              </h1>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Explore fishing spots across all regions, catch distributions, loot table odds, rods
-                and bait tech, partner skills, and water shadow indicators.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-center sm:min-w-72 sm:grid-cols-4">
-              <Metric label="Spots" value={String(spotsCount)} />
-              <Metric label="Loot Tables" value={String(lootCount)} />
-              <Metric label="Rods & Bait" value={String(eqCount)} />
-              <Metric label="Support Pals" value={String(palsCount)} />
-            </div>
-          </div>
-        </section>
-
-        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
-          <CollapsibleTrigger className="flex min-h-[44px] w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
-            <span>What this can and can't tell you</span>
-            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
-            <p>
-              Provides verified records for 115 fishing spots, catch tables, item drop tables,
-              fishing rods, bait, support Pal partner skills, and shadow type indicators.
+      <section className="rounded-2xl border border-cyan-400/25 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <Eyebrow icon={<Fish className="size-3.5" />}>Offline compendium · Fishing</Eyebrow>
+            <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+              Fishing Directory
+            </h1>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
+              Explore fishing spots across all regions, catch distributions, loot table odds, rods
+              and bait tech, partner skills, and water shadow indicators.
             </p>
-            <p>
-              Loot table weights and drop chances are displayed exactly as published without
-              percentage recalculation. Unlocks reflect in-game technology level requirements.
-            </p>
-          </CollapsibleContent>
-        </Collapsible>
-
-        <section
-          className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
-          aria-label="Browse fishing data"
-        >
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-            <label className="block flex-1">
-              <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Search fishing guide
-              </span>
-              <span className="relative block">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Spot, Pal, zone, bait, rod, or item name"
-                  className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
-                />
-              </span>
-            </label>
-
-            <div className="flex flex-wrap gap-2" aria-label="Fishing section filters">
-              <FilterButton
-                active={sectionFilter === "all"}
-                onClick={() => setSectionFilter("all")}
-              >
-                All
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "spots"}
-                onClick={() => setSectionFilter("spots")}
-              >
-                <Compass className="size-3.5" />
-                Spots ({filteredData.spots.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "loot"}
-                onClick={() => setSectionFilter("loot")}
-              >
-                <Sparkles className="size-3.5" />
-                Loot ({filteredData.lootTables.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "equipment"}
-                onClick={() => setSectionFilter("equipment")}
-              >
-                <Anchor className="size-3.5" />
-                Rods & Bait ({filteredData.equipment.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "pals"}
-                onClick={() => setSectionFilter("pals")}
-              >
-                <Users className="size-3.5" />
-                Support Pals ({filteredData.supportPals.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "shadows"}
-                onClick={() => setSectionFilter("shadows")}
-              >
-                <Eye className="size-3.5" />
-                Shadows ({filteredData.shadowTypes.length})
-              </FilterButton>
-            </div>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-4 text-xs text-muted-foreground">
-            <span>
-              Showing <strong className="text-foreground">{totalFilteredCount}</strong> matching
-              entries
+      <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+        <CollapsibleTrigger className="flex min-h-[44px] w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+          <span>What this can and can't tell you</span>
+          <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+          <p>
+            Provides verified records for 115 fishing spots, catch tables, item drop tables, fishing
+            rods, bait, support Pal partner skills, and shadow type indicators.
+          </p>
+          <p>
+            Loot table weights and drop chances are displayed exactly as published without
+            percentage recalculation. Unlocks reflect in-game technology level requirements.
+          </p>
+        </CollapsibleContent>
+      </Collapsible>
+
+      <section
+        className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
+        aria-label="Browse fishing data"
+      >
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <label className="block flex-1">
+            <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Search fishing guide
             </span>
-            <span>Source: PalDB Fishing Catalogue (v1.0.3)</span>
+            <span className="relative block">
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Spot, Pal, zone, bait, rod, or item name"
+                className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
+              />
+            </span>
+          </label>
+
+          <div className="flex flex-wrap gap-2" aria-label="Fishing section filters">
+            <FilterButton active={sectionFilter === "all"} onClick={() => setSectionFilter("all")}>
+              All
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "spots"}
+              onClick={() => setSectionFilter("spots")}
+            >
+              <Compass className="size-3.5" />
+              Spots ({filteredData.spots.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "loot"}
+              onClick={() => setSectionFilter("loot")}
+            >
+              <Sparkles className="size-3.5" />
+              Loot ({filteredData.lootTables.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "equipment"}
+              onClick={() => setSectionFilter("equipment")}
+            >
+              <Anchor className="size-3.5" />
+              Rods & Bait ({filteredData.equipment.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "pals"}
+              onClick={() => setSectionFilter("pals")}
+            >
+              <Users className="size-3.5" />
+              Support Pals ({filteredData.supportPals.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "shadows"}
+              onClick={() => setSectionFilter("shadows")}
+            >
+              <Eye className="size-3.5" />
+              Shadows ({filteredData.shadowTypes.length})
+            </FilterButton>
           </div>
+        </div>
 
-          {totalFilteredCount === 0 ? (
-            <EmptyState text="No fishing records match your search. Try searching for a different spot, Pal, rod, or item name." />
-          ) : (
-            <div className="mt-6 space-y-8">
-              {/* Fishing Spots Section */}
-              {showSpots && filteredData.spots.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<Compass className="size-4 text-cyan-600 dark:text-cyan-400" />}
-                    title="Fishing Spots"
-                    count={filteredData.spots.length}
-                  />
-                  <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                    {filteredData.spots.map((spot) => (
-                      <SpotCard key={spot.spotId} spot={spot} />
-                    ))}
-                  </div>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-4 text-xs text-muted-foreground">
+          <span>
+            Showing <strong className="text-foreground">{totalFilteredCount}</strong> matching
+            entries
+          </span>
+          <span>Source: PalDB Fishing Catalogue (v1.0.3)</span>
+        </div>
+
+        {totalFilteredCount === 0 ? (
+          <EmptyState
+            title="No fishing records match your search."
+            body="Try searching for a different spot, Pal, rod, or item name."
+          />
+        ) : (
+          <div className="mt-6 space-y-8">
+            {/* Fishing Spots Section */}
+            {showSpots && filteredData.spots.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Compass className="size-4 text-cyan-600 dark:text-cyan-400" />}
+                  title="Fishing Spots"
+                  count={filteredData.spots.length}
+                />
+                <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredData.spots.map((spot) => (
+                    <SpotCard key={spot.spotId} spot={spot} />
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Support Pals Section */}
-              {showPals && filteredData.supportPals.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<Users className="size-4 text-cyan-600 dark:text-cyan-400" />}
-                    title="Fishing Support Pals"
-                    count={filteredData.supportPals.length}
-                  />
-                  <div className="mt-3 grid gap-4 md:grid-cols-2">
-                    {filteredData.supportPals.map((pal) => (
-                      <SupportPalCard key={pal.internalName} pal={pal} />
-                    ))}
-                  </div>
+            {/* Support Pals Section */}
+            {showPals && filteredData.supportPals.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Users className="size-4 text-cyan-600 dark:text-cyan-400" />}
+                  title="Fishing Support Pals"
+                  count={filteredData.supportPals.length}
+                />
+                <div className="mt-3 grid gap-4 md:grid-cols-2">
+                  {filteredData.supportPals.map((pal) => (
+                    <SupportPalCard key={pal.internalName} pal={pal} />
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Equipment (Rods & Bait) Section */}
-              {showEquipment && filteredData.equipment.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<Anchor className="size-4 text-cyan-600 dark:text-cyan-400" />}
-                    title="Rods, Bait & Facilities"
-                    count={filteredData.equipment.length}
-                  />
-                  <div className="mt-3 grid gap-3 md:grid-cols-2">
-                    {filteredData.equipment.map((eq) => (
-                      <EquipmentCard key={eq.id} equipment={eq} />
-                    ))}
-                  </div>
+            {/* Equipment (Rods & Bait) Section */}
+            {showEquipment && filteredData.equipment.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Anchor className="size-4 text-cyan-600 dark:text-cyan-400" />}
+                  title="Rods, Bait & Facilities"
+                  count={filteredData.equipment.length}
+                />
+                <div className="mt-3 grid gap-3 md:grid-cols-2">
+                  {filteredData.equipment.map((eq) => (
+                    <EquipmentCard key={eq.id} equipment={eq} />
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Shadow Types Section */}
-              {showShadows && filteredData.shadowTypes.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<Eye className="size-4 text-cyan-600 dark:text-cyan-400" />}
-                    title="Water Shadow Indicators"
-                    count={filteredData.shadowTypes.length}
-                  />
-                  <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    {filteredData.shadowTypes.map((shadow) => (
-                      <ShadowCard key={shadow.type} shadow={shadow} />
-                    ))}
-                  </div>
+            {/* Shadow Types Section */}
+            {showShadows && filteredData.shadowTypes.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Eye className="size-4 text-cyan-600 dark:text-cyan-400" />}
+                  title="Water Shadow Indicators"
+                  count={filteredData.shadowTypes.length}
+                />
+                <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {filteredData.shadowTypes.map((shadow) => (
+                    <ShadowCard key={shadow.type} shadow={shadow} />
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* Loot Tables Section */}
-              {showLoot && filteredData.lootTables.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<Package className="size-4 text-cyan-600 dark:text-cyan-400" />}
-                    title="Fishing Drop Tables"
-                    count={filteredData.lootTables.length}
-                  />
-                  <div className="mt-3 grid gap-4 md:grid-cols-2">
-                    {filteredData.lootTables.map(([tableName, rows]) => (
-                      <LootTableCard key={tableName} tableName={tableName} rows={rows} />
-                    ))}
-                  </div>
+            {/* Loot Tables Section */}
+            {showLoot && filteredData.lootTables.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Package className="size-4 text-cyan-600 dark:text-cyan-400" />}
+                  title="Fishing Drop Tables"
+                  count={filteredData.lootTables.length}
+                />
+                <div className="mt-3 grid gap-4 md:grid-cols-2">
+                  {filteredData.lootTables.map(([tableName, rows]) => (
+                    <LootTableCard key={tableName} tableName={tableName} rows={rows} />
+                  ))}
                 </div>
-              )}
-            </div>
-          )}
-        </section>
-      </main>
-    </div>
-  );
-}
-
-function SectionHeader({ icon, title, count }: { icon: ReactNode; title: string; count: number }) {
-  return (
-    <div className="flex items-center gap-2 border-b pb-2">
-      {icon}
-      <h2 className="text-lg font-bold tracking-tight">{title}</h2>
-      <span className="rounded-full bg-cyan-500/10 px-2.5 py-0.5 text-xs font-semibold text-cyan-700 dark:text-cyan-300">
-        {count}
-      </span>
-    </div>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+    </PageShell>
   );
 }
 
@@ -546,90 +526,6 @@ function ShadowCard({ shadow }: { shadow: ShadowTypeRecord }) {
       </div>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{shadow.indicator}</p>
     </article>
-  );
-}
-
-function PackFeedback({ loading, error }: { loading: boolean; error: Error | null }) {
-  return (
-    <div className="min-h-screen bg-background px-4 py-8">
-      <main className="mx-auto max-w-xl rounded-2xl border bg-card p-6 text-center shadow-sm">
-        <Fish className="mx-auto size-7 text-primary" />
-        <h1 className="mt-3 text-xl font-bold">
-          {loading ? "Loading Fishing Guide" : "Fishing pack unavailable"}
-        </h1>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          {loading
-            ? "Preparing the cached offline fishing directory."
-            : (error?.message ?? "The offline knowledge pack could not be read.")}
-        </p>
-        <Button asChild variant="outline" className="mt-5 min-h-[44px]">
-          <Link to="/compendium">Back to the compendium</Link>
-        </Button>
-      </main>
-    </div>
-  );
-}
-
-function BackLink() {
-  return (
-    <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2 min-h-[44px]">
-      <Link to="/compendium">
-        <ArrowLeft className="size-4" />
-        Back to the compendium
-      </Link>
-    </Button>
-  );
-}
-
-function Eyebrow({ icon, children }: { icon: ReactNode; children: ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-700 dark:text-cyan-300">
-      {icon}
-      {children}
-    </span>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-background/75 px-3 py-2.5">
-      <div className="text-lg font-bold leading-none">{value}</div>
-      <div className="mt-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function FilterButton({
-  active,
-  children,
-  onClick,
-}: {
-  active: boolean;
-  children: ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`inline-flex min-h-[44px] sm:min-h-0 h-9 items-center gap-1.5 rounded-md border px-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${
-        active
-          ? "border-primary bg-primary text-primary-foreground"
-          : "border-input bg-background text-foreground hover:bg-accent"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
-
-function EmptyState({ text }: { text: string }) {
-  return (
-    <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-      {text}
-    </div>
   );
 }
 

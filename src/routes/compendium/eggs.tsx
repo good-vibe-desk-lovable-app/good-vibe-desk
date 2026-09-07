@@ -1,22 +1,26 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
   AlertCircle,
-  ArrowLeft,
   ChevronDown,
   Compass,
   Egg,
-  Flame,
-  HelpCircle,
   Info,
   Layers,
   Search,
   Sparkles,
   Zap,
 } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  BackLink,
+  Eyebrow,
+  FilterButton,
+  PackFeedback,
+  SectionHeader,
+} from "@/components/ui/compendium-helpers";
+import { EmptyState, PageShell } from "@/components/ui/page-header";
 import type {
   EggKnowledge,
   EggPool,
@@ -59,7 +63,6 @@ function EggsCompendiumPage() {
   const { records, error, loading } = useOfflineKnowledgePack<EggKnowledge>("eggs");
   const record = records[0];
   const knowledge = record?.data;
-  const gaps = record?.gaps ?? [];
 
   const locationsList = useMemo(() => {
     if (!knowledge) return [];
@@ -73,6 +76,7 @@ function EggsCompendiumPage() {
   const filteredData = useMemo(() => {
     if (!knowledge) return null;
     const q = query.trim().toLocaleLowerCase();
+    const gaps = record?.gaps ?? [];
 
     const incubatorsList = knowledge.incubators.filter((inc) => {
       if (!q) return true;
@@ -161,16 +165,19 @@ function EggsCompendiumPage() {
       spawns: spawnsList,
       gaps: gapsList,
     };
-  }, [knowledge, gaps, query, typeFilter, sizeFilter, locationFilter]);
+  }, [knowledge, record?.gaps, query, typeFilter, sizeFilter, locationFilter]);
 
   if (loading || error || !knowledge || !filteredData) {
-    return <PackFeedback loading={loading} error={error} />;
+    return (
+      <PackFeedback
+        loading={loading}
+        error={error}
+        icon={Egg}
+        packName="Egg Compendium"
+        loadingBody="Preparing the cached offline egg directory."
+      />
+    );
   }
-
-  const poolsCount = knowledge.eggPools.length;
-  const spawnsCount = knowledge.wildEggSpawns.length;
-  const incubatorsCount = knowledge.incubators.length;
-  const gapsCount = gaps.length;
 
   const showIncubators = sectionFilter === "all" || sectionFilter === "incubators";
   const showPools = sectionFilter === "all" || sectionFilter === "pools";
@@ -186,327 +193,293 @@ function EggsCompendiumPage() {
     (showGaps ? filteredData.gaps.length : 0);
 
   return (
-    <div className="min-h-screen bg-background">
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-72 opacity-60"
-        style={{
-          background:
-            "radial-gradient(65% 100% at 50% 0%, color-mix(in oklch, #f59e0b 18%, transparent) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+    <PageShell>
+      <BackLink />
 
-      <main className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <BackLink />
-
-        <section className="rounded-2xl border border-amber-400/25 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <Eyebrow icon={<Egg className="size-3.5" />}>
-                Offline compendium · Eggs & Hatching
-              </Eyebrow>
-              <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Eggs Directory</h1>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Explore wild egg spawn locations with exact published weights, 27 hatch egg pools, 3
-                special egg types, and incubator technology specs.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-center sm:min-w-72 sm:grid-cols-4">
-              <Metric label="Egg Pools" value={String(poolsCount)} />
-              <Metric label="Wild Spawns" value={String(spawnsCount)} />
-              <Metric label="Incubators" value={String(incubatorsCount)} />
-              <Metric label="Knowledge Gaps" value={String(gapsCount)} />
-            </div>
+      <section className="rounded-2xl border border-amber-400/25 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <Eyebrow icon={<Egg className="size-3.5" />}>
+              Offline compendium · Eggs & Hatching
+            </Eyebrow>
+            <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Eggs Directory</h1>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
+              Explore wild egg spawn locations with exact published weights, 27 hatch egg pools, 3
+              special egg types, and incubator technology specs.
+            </p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
-          <CollapsibleTrigger className="flex min-h-[44px] w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
-            <span>What this can and can't tell you</span>
-            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2.5">
-            <p>
-              This guide provides source-verified data for 27 egg pools, 754 wild egg spawn rows, 3
-              special egg types, and 5 incubator structures.
-            </p>
-            <p>
-              <strong>Exact Weights:</strong> Wild spawn weights are preserved <em>exactly</em> as
-              published (e.g. weight 10, 8, 0.3) and never converted to misleading percentages.
-            </p>
-            <p>
-              <strong>Incubator Specs:</strong> The Egg Incubator (Level 10) and Ancient Hatchery
-              (Level 76) have published capacity and speed specs. The three middle tiers (Electric
-              Egg Incubator Lv 36, Large Incubator Lv 48, Large-Scale Electric Lv 58) have no
-              published capacity or speed bonus in technology unlock tiles and are explicitly
-              rendered as <em>Unknown (unpublished)</em>, never as zero.
-            </p>
-            <p>
-              <strong>Breeding Farm:</strong> The Breeding Farm (Level 19) is listed separately as a
-              production facility, NOT an incubator.
-            </p>
-            <p>
-              <strong>Correction History & Gaps:</strong> This dataset corrects an earlier wiki
-              error that listed only 2 incubators when the structured technology catalogue held 5.
-              Seven explicit data gaps with reason codes and resolutions are documented honestly
-              below.
-            </p>
-          </CollapsibleContent>
-        </Collapsible>
+      <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+        <CollapsibleTrigger className="flex min-h-[44px] w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+          <span>What this can and can't tell you</span>
+          <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2.5">
+          <p>
+            This guide provides source-verified data for 27 egg pools, 754 wild egg spawn rows, 3
+            special egg types, and 5 incubator structures.
+          </p>
+          <p>
+            <strong>Exact Weights:</strong> Wild spawn weights are preserved <em>exactly</em> as
+            published (e.g. weight 10, 8, 0.3) and never converted to misleading percentages.
+          </p>
+          <p>
+            <strong>Incubator Specs:</strong> The Egg Incubator (Level 10) and Ancient Hatchery
+            (Level 76) have published capacity and speed specs. The three middle tiers (Electric Egg
+            Incubator Lv 36, Large Incubator Lv 48, Large-Scale Electric Lv 58) have no published
+            capacity or speed bonus in technology unlock tiles and are explicitly rendered as{" "}
+            <em>Unknown (unpublished)</em>, never as zero.
+          </p>
+          <p>
+            <strong>Breeding Farm:</strong> The Breeding Farm (Level 19) is listed separately as a
+            production facility, NOT an incubator.
+          </p>
+          <p>
+            <strong>Correction History & Gaps:</strong> This dataset corrects an earlier wiki error
+            that listed only 2 incubators when the structured technology catalogue held 5. Seven
+            explicit data gaps with reason codes and resolutions are documented honestly below.
+          </p>
+        </CollapsibleContent>
+      </Collapsible>
 
-        <section
-          className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
-          aria-label="Browse egg data"
-        >
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-            <label className="block flex-1">
-              <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Search egg guide
-              </span>
-              <span className="relative block">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Pal name, egg type, incubator, or location"
-                  className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
-                />
-              </span>
-            </label>
-
-            <div className="flex flex-wrap gap-2" aria-label="Egg section filters">
-              <FilterButton
-                active={sectionFilter === "all"}
-                onClick={() => setSectionFilter("all")}
-              >
-                All
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "incubators"}
-                onClick={() => setSectionFilter("incubators")}
-              >
-                <Zap className="size-3.5" />
-                Incubators ({filteredData.incubators.length + filteredData.breeding.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "pools"}
-                onClick={() => setSectionFilter("pools")}
-              >
-                <Layers className="size-3.5" />
-                Egg Pools ({filteredData.pools.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "spawns"}
-                onClick={() => setSectionFilter("spawns")}
-              >
-                <Compass className="size-3.5" />
-                Wild Spawns ({filteredData.spawns.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "special"}
-                onClick={() => setSectionFilter("special")}
-              >
-                <Sparkles className="size-3.5" />
-                Special Eggs ({filteredData.special.length})
-              </FilterButton>
-              <FilterButton
-                active={sectionFilter === "gaps"}
-                onClick={() => setSectionFilter("gaps")}
-              >
-                <AlertCircle className="size-3.5" />
-                Gaps ({filteredData.gaps.length})
-              </FilterButton>
-            </div>
-          </div>
-
-          <div className="mt-4 flex flex-wrap gap-3 border-t pt-3">
-            <FilterSelect
-              label="Egg Element/Type"
-              value={typeFilter}
-              onChange={setTypeFilter}
-              options={[
-                { value: "all", label: "All Egg Elements" },
-                { value: "Scorching", label: "Scorching (Fire)" },
-                { value: "Damp", label: "Damp (Water)" },
-                { value: "Verdant", label: "Verdant (Grass)" },
-                { value: "Rocky", label: "Rocky (Ground)" },
-                { value: "Frozen", label: "Frozen (Ice)" },
-                { value: "Electric", label: "Electric" },
-                { value: "Dragon", label: "Dragon" },
-                { value: "Dark", label: "Dark" },
-                { value: "Common", label: "Common (Neutral)" },
-              ]}
-            />
-
-            <FilterSelect
-              label="Egg Size"
-              value={sizeFilter}
-              onChange={setSizeFilter}
-              options={[
-                { value: "all", label: "All Egg Sizes" },
-                { value: "Normal", label: "Normal Size" },
-                { value: "Large", label: "Large Size" },
-                { value: "Huge", label: "Huge Size" },
-              ]}
-            />
-
-            <FilterSelect
-              label="Spawn Region"
-              value={locationFilter}
-              onChange={setLocationFilter}
-              options={[
-                { value: "all", label: "All Spawn Regions" },
-                ...locationsList.map((loc) => ({
-                  value: loc,
-                  label: formatLocationName(loc),
-                })),
-              ]}
-            />
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-4 text-xs text-muted-foreground">
-            <span>
-              Showing <strong className="text-foreground">{totalFilteredCount}</strong> matching
-              records
+      <section
+        className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
+        aria-label="Browse egg data"
+      >
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <label className="block flex-1">
+            <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Search egg guide
             </span>
-            <span>Source: PalDB & Game Datamine (v1.0.3)</span>
+            <span className="relative block">
+              <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Pal name, egg type, incubator, or location"
+                className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
+              />
+            </span>
+          </label>
+
+          <div className="flex flex-wrap gap-2" aria-label="Egg section filters">
+            <FilterButton active={sectionFilter === "all"} onClick={() => setSectionFilter("all")}>
+              All
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "incubators"}
+              onClick={() => setSectionFilter("incubators")}
+            >
+              <Zap className="size-3.5" />
+              Incubators ({filteredData.incubators.length + filteredData.breeding.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "pools"}
+              onClick={() => setSectionFilter("pools")}
+            >
+              <Layers className="size-3.5" />
+              Egg Pools ({filteredData.pools.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "spawns"}
+              onClick={() => setSectionFilter("spawns")}
+            >
+              <Compass className="size-3.5" />
+              Wild Spawns ({filteredData.spawns.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "special"}
+              onClick={() => setSectionFilter("special")}
+            >
+              <Sparkles className="size-3.5" />
+              Special Eggs ({filteredData.special.length})
+            </FilterButton>
+            <FilterButton
+              active={sectionFilter === "gaps"}
+              onClick={() => setSectionFilter("gaps")}
+            >
+              <AlertCircle className="size-3.5" />
+              Gaps ({filteredData.gaps.length})
+            </FilterButton>
           </div>
+        </div>
 
-          {totalFilteredCount === 0 ? (
-            <EmptyState text="No egg records match your search and filter criteria. Try adjusting your query or filters." />
-          ) : (
-            <div className="mt-6 space-y-8">
-              {/* Incubators & Breeding Facilities */}
-              {showIncubators &&
-                (filteredData.incubators.length > 0 || filteredData.breeding.length > 0) && (
-                  <div>
-                    <SectionHeader
-                      icon={<Zap className="size-4 text-amber-600 dark:text-amber-400" />}
-                      title="Incubator & Hatching Facilities"
-                      count={filteredData.incubators.length + filteredData.breeding.length}
-                    />
-                    <p className="mt-2 text-xs text-muted-foreground">
-                      Structured technology catalogue records for egg hatching facilities. Capacity
-                      and incubation speed bonuses are displayed exactly as verified in game
-                      records.
-                    </p>
-                    <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                      {filteredData.incubators.map((inc) => (
-                        <IncubatorCard key={inc.technologyId} incubator={inc} />
-                      ))}
-                      {filteredData.breeding.map((b) => (
-                        <BreedingFacilityCard key={b.technologyId} structure={b} />
-                      ))}
-                    </div>
-                  </div>
-                )}
+        <div className="mt-4 flex flex-wrap gap-3 border-t pt-3">
+          <FilterSelect
+            label="Egg Element/Type"
+            value={typeFilter}
+            onChange={setTypeFilter}
+            options={[
+              { value: "all", label: "All Egg Elements" },
+              { value: "Scorching", label: "Scorching (Fire)" },
+              { value: "Damp", label: "Damp (Water)" },
+              { value: "Verdant", label: "Verdant (Grass)" },
+              { value: "Rocky", label: "Rocky (Ground)" },
+              { value: "Frozen", label: "Frozen (Ice)" },
+              { value: "Electric", label: "Electric" },
+              { value: "Dragon", label: "Dragon" },
+              { value: "Dark", label: "Dark" },
+              { value: "Common", label: "Common (Neutral)" },
+            ]}
+          />
 
-              {/* Special Egg Types */}
-              {showSpecial && filteredData.special.length > 0 && (
+          <FilterSelect
+            label="Egg Size"
+            value={sizeFilter}
+            onChange={setSizeFilter}
+            options={[
+              { value: "all", label: "All Egg Sizes" },
+              { value: "Normal", label: "Normal Size" },
+              { value: "Large", label: "Large Size" },
+              { value: "Huge", label: "Huge Size" },
+            ]}
+          />
+
+          <FilterSelect
+            label="Spawn Region"
+            value={locationFilter}
+            onChange={setLocationFilter}
+            options={[
+              { value: "all", label: "All Spawn Regions" },
+              ...locationsList.map((loc) => ({
+                value: loc,
+                label: formatLocationName(loc),
+              })),
+            ]}
+          />
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-4 text-xs text-muted-foreground">
+          <span>
+            Showing <strong className="text-foreground">{totalFilteredCount}</strong> matching
+            records
+          </span>
+          <span>Source: PalDB & Game Datamine (v1.0.3)</span>
+        </div>
+
+        {totalFilteredCount === 0 ? (
+          <EmptyState title="No egg records match your search and filter criteria. Try adjusting your query or filters." />
+        ) : (
+          <div className="mt-6 space-y-8">
+            {/* Incubators & Breeding Facilities */}
+            {showIncubators &&
+              (filteredData.incubators.length > 0 || filteredData.breeding.length > 0) && (
                 <div>
                   <SectionHeader
-                    icon={<Sparkles className="size-4 text-amber-600 dark:text-amber-400" />}
-                    title="Special Egg Types"
-                    count={filteredData.special.length}
-                  />
-                  <div className="mt-3 grid gap-3 md:grid-cols-3">
-                    {filteredData.special.map((spec) => (
-                      <SpecialEggCard key={spec.eggName} specialEgg={spec} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Egg Pools */}
-              {showPools && filteredData.pools.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<Layers className="size-4 text-amber-600 dark:text-amber-400" />}
-                    title="Egg Hatch Pools"
-                    count={filteredData.pools.length}
-                  />
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    27 distinct egg pool classifications detailing which Pals can hatch from each
-                    egg type and size.
-                  </p>
-                  <div className="mt-3 grid gap-4 md:grid-cols-2">
-                    {filteredData.pools.map((pool) => (
-                      <PoolCard key={pool.poolId} pool={pool} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Wild Egg Spawns */}
-              {showSpawns && filteredData.spawns.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<Compass className="size-4 text-amber-600 dark:text-amber-400" />}
-                    title="Wild Egg Spawn Locations"
-                    count={filteredData.spawns.length}
+                    icon={<Zap className="size-4 text-amber-600 dark:text-amber-400" />}
+                    title="Incubator & Hatching Facilities"
+                    count={filteredData.incubators.length + filteredData.breeding.length}
                   />
                   <p className="mt-2 text-xs text-muted-foreground">
-                    754 overworld egg spawn points. Spawn weights are preserved <em>exactly</em> as
-                    published without conversion.
+                    Structured technology catalogue records for egg hatching facilities. Capacity
+                    and incubation speed bonuses are displayed exactly as verified in game records.
                   </p>
                   <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                    {filteredData.spawns.slice(0, 120).map((spawn) => (
-                      <SpawnCard key={spawn.spawnId} spawn={spawn} />
+                    {filteredData.incubators.map((inc) => (
+                      <IncubatorCard key={inc.technologyId} incubator={inc} />
                     ))}
-                  </div>
-                  {filteredData.spawns.length > 120 && (
-                    <div className="mt-3 text-center text-xs text-muted-foreground rounded-lg border border-dashed p-3">
-                      Showing 120 of {filteredData.spawns.length} matching wild egg spawns. Use the
-                      search bar or filters to narrow down specific Pals or locations.
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Data Gaps & Correction History */}
-              {showGaps && filteredData.gaps.length > 0 && (
-                <div>
-                  <SectionHeader
-                    icon={<AlertCircle className="size-4 text-amber-600 dark:text-amber-400" />}
-                    title="Knowledge Gaps & Provenance"
-                    count={filteredData.gaps.length}
-                  />
-                  <div className="mt-3 rounded-xl border border-amber-400/30 bg-amber-500/10 p-4 text-xs leading-relaxed">
-                    <div className="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-200">
-                      <Info className="size-4 shrink-0" />
-                      Correction History & Transparency Policy
-                    </div>
-                    <p className="mt-1 text-muted-foreground">
-                      This repository previously corrected an egg incubator dataset error where a
-                      single wiki page listed only two incubators, whereas the structured technology
-                      catalogue contained five. All missing mechanics are explicitly recorded as gap
-                      entries with evidence citations rather than assumed as zero or omitted.
-                    </p>
-                  </div>
-                  <div className="mt-3 grid gap-3 md:grid-cols-2">
-                    {filteredData.gaps.map((gap, idx) => (
-                      <GapCard key={idx} gap={gap} />
+                    {filteredData.breeding.map((b) => (
+                      <BreedingFacilityCard key={b.technologyId} structure={b} />
                     ))}
                   </div>
                 </div>
               )}
-            </div>
-          )}
-        </section>
-      </main>
-    </div>
-  );
-}
 
-function SectionHeader({ icon, title, count }: { icon: ReactNode; title: string; count: number }) {
-  return (
-    <div className="flex items-center gap-2 border-b pb-2">
-      {icon}
-      <h2 className="text-lg font-bold tracking-tight">{title}</h2>
-      <span className="rounded-full bg-amber-500/10 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-300">
-        {count}
-      </span>
-    </div>
+            {/* Special Egg Types */}
+            {showSpecial && filteredData.special.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Sparkles className="size-4 text-amber-600 dark:text-amber-400" />}
+                  title="Special Egg Types"
+                  count={filteredData.special.length}
+                />
+                <div className="mt-3 grid gap-3 md:grid-cols-3">
+                  {filteredData.special.map((spec) => (
+                    <SpecialEggCard key={spec.eggName} specialEgg={spec} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Egg Pools */}
+            {showPools && filteredData.pools.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Layers className="size-4 text-amber-600 dark:text-amber-400" />}
+                  title="Egg Hatch Pools"
+                  count={filteredData.pools.length}
+                />
+                <p className="mt-2 text-xs text-muted-foreground">
+                  27 distinct egg pool classifications detailing which Pals can hatch from each egg
+                  type and size.
+                </p>
+                <div className="mt-3 grid gap-4 md:grid-cols-2">
+                  {filteredData.pools.map((pool) => (
+                    <PoolCard key={pool.poolId} pool={pool} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Wild Egg Spawns */}
+            {showSpawns && filteredData.spawns.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<Compass className="size-4 text-amber-600 dark:text-amber-400" />}
+                  title="Wild Egg Spawn Locations"
+                  count={filteredData.spawns.length}
+                />
+                <p className="mt-2 text-xs text-muted-foreground">
+                  754 overworld egg spawn points. Spawn weights are preserved <em>exactly</em> as
+                  published without conversion.
+                </p>
+                <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredData.spawns.slice(0, 120).map((spawn) => (
+                    <SpawnCard key={spawn.spawnId} spawn={spawn} />
+                  ))}
+                </div>
+                {filteredData.spawns.length > 120 && (
+                  <div className="mt-3 text-center text-xs text-muted-foreground rounded-lg border border-dashed p-3">
+                    Showing 120 of {filteredData.spawns.length} matching wild egg spawns. Use the
+                    search bar or filters to narrow down specific Pals or locations.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Data Gaps & Correction History */}
+            {showGaps && filteredData.gaps.length > 0 && (
+              <div>
+                <SectionHeader
+                  icon={<AlertCircle className="size-4 text-amber-600 dark:text-amber-400" />}
+                  title="Knowledge Gaps & Provenance"
+                  count={filteredData.gaps.length}
+                />
+                <div className="mt-3 rounded-xl border border-amber-400/30 bg-amber-500/10 p-4 text-xs leading-relaxed">
+                  <div className="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-200">
+                    <Info className="size-4 shrink-0" />
+                    Correction History & Transparency Policy
+                  </div>
+                  <p className="mt-1 text-muted-foreground">
+                    This repository previously corrected an egg incubator dataset error where a
+                    single wiki page listed only two incubators, whereas the structured technology
+                    catalogue contained five. All missing mechanics are explicitly recorded as gap
+                    entries with evidence citations rather than assumed as zero or omitted.
+                  </p>
+                </div>
+                <div className="mt-3 grid gap-3 md:grid-cols-2">
+                  {filteredData.gaps.map((gap, idx) => (
+                    <GapCard key={idx} gap={gap} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+    </PageShell>
   );
 }
 
@@ -745,7 +718,7 @@ function GapCard({ gap }: { gap: { field: string; reason: string; resolution: st
   return (
     <article className="rounded-xl border border-border/80 bg-background p-4 shadow-sm">
       <div className="flex items-center gap-2">
-        <HelpCircle className="size-4 text-amber-600 dark:text-amber-400 shrink-0" />
+        <AlertCircle className="size-4 text-amber-600 dark:text-amber-400 shrink-0" />
         <h3 className="font-bold text-sm text-foreground">{gap.field}</h3>
       </div>
 
@@ -760,82 +733,6 @@ function GapCard({ gap }: { gap: { field: string; reason: string; resolution: st
         </div>
       </div>
     </article>
-  );
-}
-
-function PackFeedback({ loading, error }: { loading: boolean; error: Error | null }) {
-  return (
-    <div className="min-h-screen bg-background px-4 py-8">
-      <main className="mx-auto max-w-xl rounded-2xl border bg-card p-6 text-center shadow-sm">
-        <Egg className="mx-auto size-7 text-primary" />
-        <h1 className="mt-3 text-xl font-bold">
-          {loading ? "Loading Egg Compendium" : "Egg pack unavailable"}
-        </h1>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          {loading
-            ? "Preparing the cached offline egg directory."
-            : (error?.message ?? "The offline knowledge pack could not be read.")}
-        </p>
-        <Button asChild variant="outline" className="mt-5 min-h-[44px]">
-          <Link to="/compendium">Back to the compendium</Link>
-        </Button>
-      </main>
-    </div>
-  );
-}
-
-function BackLink() {
-  return (
-    <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2 min-h-[44px]">
-      <Link to="/compendium">
-        <ArrowLeft className="size-4" />
-        Back to the compendium
-      </Link>
-    </Button>
-  );
-}
-
-function Eyebrow({ icon, children }: { icon: ReactNode; children: ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
-      {icon}
-      {children}
-    </span>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-background/75 px-3 py-2.5">
-      <div className="text-lg font-bold leading-none">{value}</div>
-      <div className="mt-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function FilterButton({
-  active,
-  children,
-  onClick,
-}: {
-  active: boolean;
-  children: ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`inline-flex min-h-[44px] sm:min-h-0 h-9 items-center gap-1.5 rounded-md border px-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${
-        active
-          ? "border-primary bg-primary text-primary-foreground"
-          : "border-input bg-background text-foreground hover:bg-accent"
-      }`}
-    >
-      {children}
-    </button>
   );
 }
 
@@ -865,14 +762,6 @@ function FilterSelect({
         ))}
       </select>
     </label>
-  );
-}
-
-function EmptyState({ text }: { text: string }) {
-  return (
-    <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-      {text}
-    </div>
   );
 }
 
