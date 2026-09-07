@@ -4,71 +4,130 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import {
+  BookOpen,
+  Compass,
+  Database,
+  Egg,
+  HardDriveDownload,
+  Map,
+  Menu,
+  MessageSquareQuote,
+  Search,
+  Swords,
+  Trophy,
+  Wrench,
+  X,
+} from "lucide-react";
+import { useEffect, useState, type ComponentType, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { registerServiceWorker } from "../lib/pwa";
 import { Toaster } from "../components/ui/sonner";
+import { GlobalSearch } from "../components/GlobalSearch";
+
+const APP_NAME = "Palworld Pathfinder";
+const APP_DESCRIPTION =
+  "Plan breeding chains that carry the passives you want onto any Pal — fully offline.";
+
+type NavItem = {
+  to: string;
+  label: string;
+  icon: ComponentType<{ className?: string }>;
+  exact?: boolean;
+};
+
+/** Primary destinations. Rendered as the desktop nav and the mobile tab bar. */
+const PRIMARY_NAV = [
+  { to: "/", label: "Breeding", icon: Egg, exact: true },
+  { to: "/progression", label: "Progress", icon: Map },
+  { to: "/compendium", label: "Compendium", icon: BookOpen },
+  { to: "/planner/combat", label: "Combat", icon: Swords },
+] as const satisfies readonly NavItem[];
+
+/** Secondary destinations. Reachable only from the More panel. */
+const SECONDARY_NAV = [
+  { to: "/planner/work", label: "Work Planner", icon: Wrench },
+  { to: "/explore", label: "Explorer", icon: Compass },
+  { to: "/tiers", label: "Tier Lists", icon: Trophy },
+  { to: "/opinions", label: "Opinions", icon: MessageSquareQuote },
+  { to: "/data-check", label: "Data Check", icon: Database },
+  { to: "/data-check/save-inspector", label: "Save Inspector", icon: HardDriveDownload },
+] as const satisfies readonly NavItem[];
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
+    <CenteredMessage
+      title="Page not found"
+      body="That page doesn't exist or has been moved."
+      action={
+        <Link
+          to="/"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          Go home
+        </Link>
+      }
+    />
   );
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+    <CenteredMessage
+      title="This page didn't load"
+      body="Something went wrong. Try again, or head back home."
+      action={
+        <>
           <button
+            type="button"
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-input px-4 text-sm font-semibold transition-colors hover:bg-accent"
           >
             Go home
           </a>
-        </div>
+        </>
+      }
+    />
+  );
+}
+
+function CenteredMessage({
+  title,
+  body,
+  action,
+}: {
+  title: string;
+  body: string;
+  action: ReactNode;
+}) {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-bold tracking-tight">{title}</h1>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{body}</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">{action}</div>
       </div>
     </div>
   );
@@ -78,25 +137,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      // viewport-fit=cover is what makes env(safe-area-inset-bottom) resolve to
-      // a real value. Without it the sticky action bar on / sits under the
-      // gesture-navigation strip on phones that have one.
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      // Root-level defaults for routes that do not set their own head. The
-      // template's placeholders were being served as the title and description
-      // of /tiers, /opinions and /data-check.
-      { title: "Palworld Breeding Pathfinder" },
-      {
-        name: "description",
-        content:
-          "Plan breeding chains that carry the passives you want onto any Pal — fully offline.",
-      },
-      { property: "og:title", content: "Palworld Breeding Pathfinder" },
-      {
-        property: "og:description",
-        content:
-          "Plan breeding chains that carry the passives you want onto any Pal — fully offline.",
-      },
+      { title: APP_NAME },
+      { name: "description", content: APP_DESCRIPTION },
+      { property: "og:title", content: APP_NAME },
+      { property: "og:description", content: APP_DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0a0d14" },
@@ -108,10 +153,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap",
       },
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/pwa-192x192.png" },
       { rel: "manifest", href: "/manifest.webmanifest" },
@@ -126,7 +168,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
       </head>
@@ -140,74 +182,176 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const [panel, setPanel] = useState<"none" | "more" | "search">("none");
 
-  // Client-only: the wrapper itself refuses to register in dev/preview/iframe.
   useEffect(() => {
     registerServiceWorker();
   }, []);
 
+  // Any navigation dismisses an open panel.
+  useEffect(() => {
+    setPanel("none");
+  }, [pathname]);
+
+  useEffect(() => {
+    if (panel === "none") return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPanel("none");
+    };
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [panel]);
+
+  const secondaryActive = SECONDARY_NAV.some((item) => pathname.startsWith(item.to));
+
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen flex flex-col bg-background text-foreground">
-        <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 h-14 sm:px-6 lg:px-8">
-            <Link
-              to="/"
-              className="flex items-center gap-2 font-bold text-base tracking-tight shrink-0"
-            >
+      <div className="flex min-h-screen flex-col bg-background text-foreground">
+        <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
+          <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
+            <Link to="/" className="shrink-0 text-base font-bold tracking-tight">
               <span className="text-primary">Palworld</span> Pathfinder
             </Link>
-            <nav className="flex items-center gap-1 overflow-x-auto py-1 scrollbar-none">
-              <Link
-                to="/"
-                activeOptions={{ exact: true }}
-                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
-                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
+
+            <div className="hidden min-w-0 flex-1 md:flex md:justify-center">
+              <div className="w-full max-w-xs">
+                <GlobalSearch />
+              </div>
+            </div>
+
+            <nav className="ml-auto hidden items-center gap-1 md:flex">
+              {PRIMARY_NAV.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  activeOptions={item.exact ? { exact: true } : undefined}
+                  activeProps={{ className: "bg-accent text-accent-foreground" }}
+                  className="inline-flex min-h-[44px] items-center rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <button
+                type="button"
+                onClick={() => setPanel(panel === "more" ? "none" : "more")}
+                aria-expanded={panel === "more"}
+                className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-md px-3 text-sm font-medium transition-colors hover:bg-accent/50 hover:text-foreground ${
+                  secondaryActive ? "bg-accent text-accent-foreground" : "text-muted-foreground"
+                }`}
               >
-                Pathfinder
-              </Link>
-              <Link
-                to="/progression"
-                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
-                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
-              >
-                Progression
-              </Link>
-              <Link
-                to="/compendium"
-                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
-                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
-              >
-                Compendium
-              </Link>
-              <Link
-                to="/planner/combat"
-                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
-                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
-              >
-                Combat Planner
-              </Link>
-              <Link
-                to="/planner/work"
-                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
-                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
-              >
-                Work Planner
-              </Link>
-              <Link
-                to="/explore"
-                activeProps={{ className: "bg-accent text-accent-foreground font-semibold" }}
-                className="inline-flex min-h-[44px] items-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors shrink-0"
-              >
-                Explorer
-              </Link>
+                More
+                <Menu className="size-4" />
+              </button>
             </nav>
+
+            <button
+              type="button"
+              onClick={() => setPanel(panel === "search" ? "none" : "search")}
+              aria-label="Search"
+              aria-expanded={panel === "search"}
+              className="ml-auto inline-flex size-11 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground md:hidden"
+            >
+              <Search className="size-5" />
+            </button>
           </div>
+
+          {panel === "search" ? (
+            <div className="border-t border-border px-4 py-3 md:hidden">
+              <GlobalSearch />
+            </div>
+          ) : null}
         </header>
-        <main className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+
+        <main className="flex-1 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
           <Outlet />
         </main>
+
+        <nav
+          aria-label="Primary"
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+        >
+          <div className="grid grid-cols-5">
+            {PRIMARY_NAV.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  activeOptions={item.exact ? { exact: true } : undefined}
+                  activeProps={{ className: "text-primary" }}
+                  className="flex min-h-[56px] flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium text-muted-foreground transition-colors"
+                >
+                  <Icon className="size-5" />
+                  {item.label}
+                </Link>
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => setPanel(panel === "more" ? "none" : "more")}
+              aria-expanded={panel === "more"}
+              className={`flex min-h-[56px] flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium transition-colors ${
+                secondaryActive || panel === "more" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              <Menu className="size-5" />
+              More
+            </button>
+          </div>
+        </nav>
+
+        {panel === "more" ? (
+          <>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setPanel("none")}
+              className="fixed inset-0 z-40 bg-background/70 backdrop-blur-sm"
+            />
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="More destinations"
+              className="fixed inset-x-0 bottom-0 z-50 max-h-[80vh] overflow-y-auto rounded-t-2xl border-t border-border bg-card pb-[env(safe-area-inset-bottom)] md:inset-x-auto md:bottom-auto md:right-4 md:top-16 md:w-72 md:rounded-2xl md:border"
+            >
+              <div className="flex items-center justify-between px-4 py-3">
+                <h2 className="text-sm font-bold uppercase tracking-wide text-muted-foreground">
+                  More
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setPanel("none")}
+                  aria-label="Close"
+                  className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
+              <ul className="px-2 pb-3">
+                {SECONDARY_NAV.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.to}>
+                      <Link
+                        to={item.to}
+                        activeProps={{ className: "bg-accent text-accent-foreground" }}
+                        className="flex min-h-[48px] items-center gap-3 rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
+                      >
+                        <Icon className="size-4 shrink-0" />
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </>
+        ) : null}
       </div>
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
