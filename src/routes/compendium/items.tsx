@@ -1,6 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
-  ArrowLeft,
   ChevronDown,
   Download,
   ExternalLink,
@@ -14,6 +13,8 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { BackLink } from "@/components/ui/compendium-helpers";
+import { PageShell } from "@/components/ui/page-header";
 import type { EvidenceRecord } from "@/data/palworld/knowledge";
 import type { ItemKnowledge } from "@/data/palworld/knowledgeItems";
 import { useOptionalItemsPack } from "@/lib/use-optional-items-pack";
@@ -72,204 +73,177 @@ function OptionalItemsCompendiumPage() {
   const decodedSize = manifest ? formatBytes(manifest.uncompressedBytes) : "Loading…";
 
   return (
-    <div className="min-h-screen bg-background">
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-80 opacity-60"
-        style={{
-          background:
-            "radial-gradient(65% 100% at 50% 0%, color-mix(in oklch, #f97316 18%, transparent) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+    <PageShell>
+      <BackLink />
 
-      <main className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2 min-h-[44px]">
-          <Link to="/compendium">
-            <ArrowLeft className="size-4" />
-            Back to the compendium
-          </Link>
-        </Button>
-
-        <section className="rounded-2xl border border-orange-400/30 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 rounded-full border border-orange-400/40 bg-orange-400/10 px-3 py-1 text-xs font-semibold text-orange-700 dark:text-orange-300">
-                <PackageOpen className="size-3.5" />
-                Optional offline catalogue
-              </span>
-              <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                Items & Recipes
-              </h1>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Download item stats and crafting recipes for offline use.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-center sm:min-w-64">
-              <Metric
-                label="Catalogue cards"
-                value={manifest ? String(manifest.recordCount) : "…"}
-              />
-              <Metric label="Device state" value={statusLabel(state)} />
-              <Metric label="Download" value={transferSize} />
-              <Metric label="Cached archive" value={storedSize} />
-            </div>
-          </div>
-        </section>
-
-        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
-          <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
-            <span>What this can and can't tell you</span>
-            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
-            <p>Shows verified stats and crafting recipes for items in Palworld.</p>
-            <p>
-              This guide is a separate download that shows its size before you start and can be
-              deleted from your browser at any time. The breeding calculator and other guides work
-              fine without it.
+      <section className="rounded-2xl border border-orange-400/30 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-orange-400/40 bg-orange-400/10 px-3 py-1 text-xs font-semibold text-orange-700 dark:text-orange-300">
+              <PackageOpen className="size-3.5" />
+              Optional offline catalogue
+            </span>
+            <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Items & Recipes</h1>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
+              Download item stats and crafting recipes for offline use.
             </p>
-          </CollapsibleContent>
-        </Collapsible>
+          </div>
+        </div>
+      </section>
 
+      <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+        <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+          <span>What this can and can't tell you</span>
+          <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+          <p>Shows verified stats and crafting recipes for items in Palworld.</p>
+          <p>
+            This guide is a separate download that shows its size before you start and can be
+            deleted from your browser at any time. The breeding calculator and other guides work
+            fine without it.
+          </p>
+        </CollapsibleContent>
+      </Collapsible>
+
+      <section
+        className="mt-6 rounded-2xl border bg-card p-5 shadow-sm sm:p-6"
+        aria-labelledby="optional-pack-title"
+      >
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <h2 id="optional-pack-title" className="text-lg font-bold">
+              {installed ? "Downloaded on this device" : "Not downloaded on this device"}
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              {installed
+                ? "This guide is stored on your device and can be deleted here at any time."
+                : "Nothing is downloaded until you tap Download. The breeding calculator and other guides work normally without it."}
+            </p>
+          </div>
+
+          {installed ? (
+            <Button
+              variant="outline"
+              onClick={() => void remove()}
+              className="border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive"
+            >
+              <Trash2 className="size-4" />
+              Remove download
+            </Button>
+          ) : (
+            <Button
+              onClick={() => void download()}
+              disabled={state === "checking" || downloading || !manifest}
+              className="bg-orange-600 text-white hover:bg-orange-500"
+            >
+              <Download className="size-4" />
+              {downloading ? "Downloading…" : `Download ${transferSize}`}
+            </Button>
+          )}
+        </div>
+
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          <StorageFact
+            icon={<Download className="size-4" />}
+            title="Transfer before install"
+            value={transferSize}
+            body="The gzip archive requested only after you press Download."
+          />
+          <StorageFact
+            icon={<HardDriveDownload className="size-4" />}
+            title="Persistent device storage"
+            value={storedSize}
+            body="The exact compressed archive stored in a removable dedicated browser cache."
+          />
+          <StorageFact
+            icon={<PackageOpen className="size-4" />}
+            title="While browsing"
+            value={decodedSize}
+            body="Decoded records live in page memory only; this is not additional permanent cache storage."
+          />
+        </div>
+
+        {error ? (
+          <p className="mt-4 flex gap-2 rounded-lg border border-destructive/35 bg-destructive/10 p-3 text-sm leading-6 text-destructive">
+            <TriangleAlert className="mt-0.5 size-4 shrink-0" />
+            {error.message}
+          </p>
+        ) : null}
+      </section>
+
+      {installed ? (
         <section
-          className="mt-6 rounded-2xl border bg-card p-5 shadow-sm sm:p-6"
-          aria-labelledby="optional-pack-title"
+          className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
+          aria-label="Browse downloaded item catalogue"
         >
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-2xl">
-              <h2 id="optional-pack-title" className="text-lg font-bold">
-                {installed ? "Downloaded on this device" : "Not downloaded on this device"}
-              </h2>
-              <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                {installed
-                  ? "This guide is stored on your device and can be deleted here at any time."
-                  : "Nothing is downloaded until you tap Download. The breeding calculator and other guides work normally without it."}
-              </p>
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <label className="block flex-1">
+              <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Search downloaded items
+              </span>
+              <span className="relative block">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Item name, description, or source key"
+                  className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
+                />
+              </span>
+            </label>
+            <button
+              type="button"
+              onClick={() => setRecipesOnly((value) => !value)}
+              className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-md border px-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${
+                recipesOnly
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-input bg-background text-foreground hover:bg-accent"
+              }`}
+            >
+              Recipe rows only
+            </button>
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-4 text-xs text-muted-foreground">
+            <span>
+              Showing <strong className="text-foreground">{visible.length}</strong> of{" "}
+              {filtered.length} matching downloaded cards
+            </span>
+            <span>{records.length} installed locally · source tier: wiki</span>
+          </div>
+
+          {visible.length > 0 ? (
+            <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+              {visible.map((record) => (
+                <ItemCard key={record.id} record={record} />
+              ))}
             </div>
+          ) : (
+            <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
+              No items match your search. Try typing a different item name or recipe keyword.
+            </div>
+          )}
 
-            {installed ? (
-              <Button
-                variant="outline"
-                onClick={() => void remove()}
-                className="border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive"
-              >
-                <Trash2 className="size-4" />
-                Remove download
+          {visible.length < filtered.length ? (
+            <div className="mt-5 text-center">
+              <Button variant="outline" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
+                Show {Math.min(PAGE_SIZE, filtered.length - visible.length)} more items
               </Button>
-            ) : (
-              <Button
-                onClick={() => void download()}
-                disabled={state === "checking" || downloading || !manifest}
-                className="bg-orange-600 text-white hover:bg-orange-500"
-              >
-                <Download className="size-4" />
-                {downloading ? "Downloading…" : `Download ${transferSize}`}
-              </Button>
-            )}
-          </div>
-
-          <div className="mt-5 grid gap-3 md:grid-cols-3">
-            <StorageFact
-              icon={<Download className="size-4" />}
-              title="Transfer before install"
-              value={transferSize}
-              body="The gzip archive requested only after you press Download."
-            />
-            <StorageFact
-              icon={<HardDriveDownload className="size-4" />}
-              title="Persistent device storage"
-              value={storedSize}
-              body="The exact compressed archive stored in a removable dedicated browser cache."
-            />
-            <StorageFact
-              icon={<PackageOpen className="size-4" />}
-              title="While browsing"
-              value={decodedSize}
-              body="Decoded records live in page memory only; this is not additional permanent cache storage."
-            />
-          </div>
-
-          {error ? (
-            <p className="mt-4 flex gap-2 rounded-lg border border-destructive/35 bg-destructive/10 p-3 text-sm leading-6 text-destructive">
-              <TriangleAlert className="mt-0.5 size-4 shrink-0" />
-              {error.message}
-            </p>
+            </div>
           ) : null}
         </section>
-
-        {installed ? (
-          <section
-            className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
-            aria-label="Browse downloaded item catalogue"
-          >
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-              <label className="block flex-1">
-                <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Search downloaded items
-                </span>
-                <span className="relative block">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <input
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
-                    placeholder="Item name, description, or source key"
-                    className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
-                  />
-                </span>
-              </label>
-              <button
-                type="button"
-                onClick={() => setRecipesOnly((value) => !value)}
-                className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-md border px-3 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${
-                  recipesOnly
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-input bg-background text-foreground hover:bg-accent"
-                }`}
-              >
-                Recipe rows only
-              </button>
-            </div>
-
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-4 text-xs text-muted-foreground">
-              <span>
-                Showing <strong className="text-foreground">{visible.length}</strong> of{" "}
-                {filtered.length} matching downloaded cards
-              </span>
-              <span>{records.length} installed locally · source tier: wiki</span>
-            </div>
-
-            {visible.length > 0 ? (
-              <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-                {visible.map((record) => (
-                  <ItemCard key={record.id} record={record} />
-                ))}
-              </div>
-            ) : (
-              <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-                No items match your search. Try typing a different item name or recipe keyword.
-              </div>
-            )}
-
-            {visible.length < filtered.length ? (
-              <div className="mt-5 text-center">
-                <Button variant="outline" onClick={() => setLimit((value) => value + PAGE_SIZE)}>
-                  Show {Math.min(PAGE_SIZE, filtered.length - visible.length)} more items
-                </Button>
-              </div>
-            ) : null}
-          </section>
-        ) : (
-          <section className="mt-7 rounded-2xl border border-dashed bg-card/50 p-8 text-center">
-            <HardDriveDownload className="mx-auto size-7 text-muted-foreground" />
-            <h2 className="mt-3 font-bold">The optional items guide is not downloaded</h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-              Download it above when you want offline access to item stats and crafting recipes. You
-              can delete it anytime, and the rest of the app works fully without it.
-            </p>
-          </section>
-        )}
-      </main>
-    </div>
+      ) : (
+        <section className="mt-7 rounded-2xl border border-dashed bg-card/50 p-8 text-center">
+          <HardDriveDownload className="mx-auto size-7 text-muted-foreground" />
+          <h2 className="mt-3 font-bold">The optional items guide is not downloaded</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
+            Download it above when you want offline access to item stats and crafting recipes. You
+            can delete it anytime, and the rest of the app works fully without it.
+          </p>
+        </section>
+      )}
+    </PageShell>
   );
 }
 
@@ -393,31 +367,12 @@ function StorageFact({
   );
 }
 
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-background/75 px-3 py-2.5">
-      <div className="text-lg font-bold leading-none">{value}</div>
-      <div className="mt-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
-    </div>
-  );
-}
-
 function Badge({ label }: { label: string }) {
   return (
     <span className="rounded-full bg-muted px-2 py-1 font-medium text-muted-foreground">
       {label}
     </span>
   );
-}
-
-function statusLabel(state: string) {
-  if (state === "installed") return "Installed";
-  if (state === "downloading") return "Downloading";
-  if (state === "available") return "Not installed";
-  if (state === "error") return "Check status";
-  return "Checking";
 }
 
 function formatBytes(bytes: number) {

@@ -1,6 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
-  ArrowLeft,
   Building2,
   ChevronDown,
   Hammer,
@@ -10,10 +9,11 @@ import {
   Shield,
   Zap,
 } from "lucide-react";
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { BackLink, Eyebrow, PackFeedback } from "@/components/ui/compendium-helpers";
+import { EmptyState, PageShell } from "@/components/ui/page-header";
 import type { EvidenceRecord } from "@/data/palworld/knowledge";
 import type { StructureKnowledge } from "@/data/palworld/knowledgeStructures";
 import { useOfflineKnowledgePack } from "@/lib/use-offline-knowledge-pack";
@@ -131,173 +131,166 @@ function StructuresCompendiumPage() {
   }, [records, query, categoryFilter, suitabilityFilter, techFilter]);
 
   if (loading || error || !records.length) {
-    return <PackFeedback loading={loading} error={error} />;
+    return (
+      <PackFeedback
+        loading={loading}
+        error={error}
+        icon={Building2}
+        packName="Structures Compendium"
+        loadingBody="Preparing the cached offline structure directory."
+      />
+    );
   }
 
   const totalCount = records.length;
-  const unlinkedCount = records.filter((r) => r.id.includes("unlinked")).length;
 
   return (
-    <div className="min-h-screen bg-background">
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-72 opacity-60"
-        style={{
-          background:
-            "radial-gradient(65% 100% at 50% 0%, color-mix(in oklch, #0284c7 18%, transparent) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+    <PageShell>
+      <BackLink />
 
-      <main className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <BackLink />
-
-        <section className="rounded-2xl border border-sky-500/25 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <Eyebrow icon={<Building2 className="size-3.5" />}>
-                Offline compendium · Structures
-              </Eyebrow>
-              <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                Structure Directory
-              </h1>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Browse all 498 Palworld base structures, production facilities, defenses, storage,
-                incubators, construction materials, required work suitabilities, and technology
-                unlock levels.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-center sm:min-w-72 sm:grid-cols-4">
-              <Metric label="Structures" value={String(totalCount)} />
-              <Metric label="Categories" value={String(categoriesList.length)} />
-              <Metric label="Work Types" value={String(suitabilitiesList.length)} />
-              <Metric label="Unlinked Gaps" value={String(unlinkedCount)} />
-            </div>
+      <section className="rounded-2xl border border-sky-500/25 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-7">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <Eyebrow icon={<Building2 className="size-3.5" />}>
+              Offline compendium · Structures
+            </Eyebrow>
+            <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+              Structure Directory
+            </h1>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
+              Browse all 498 Palworld base structures, production facilities, defenses, storage,
+              incubators, construction materials, required work suitabilities, and technology unlock
+              levels.
+            </p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
-          <CollapsibleTrigger className="flex min-h-[44px] w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
-            <span>What this can and can't tell you</span>
-            <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
-            <p>
-              Contains 498 structure catalogue records from PalDB (v1.0.3), detailing material
-              costs, required work suitabilities, and power draw/output metrics.
-            </p>
-            <p>
-              Technology levels are cross-referenced directly from the structured technology
-              catalogue (`knowledgeTechnologies.ts`). Two unlinked catalogue entries lacking detail
-              pages (e.g. <em>Banyan_Big</em> and <em>DamagedScarecrow_Test</em>) are retained with
-              their explicit gap reasons rather than excluded or zeroed out.
-            </p>
-            <p>
-              All five hatching facilities (Egg Incubator at Lv. 10, Electric Egg Incubator at Lv.
-              36, Large Incubator at Lv. 48, Large-Scale Electric Egg Incubator at Lv. 58, and
-              Ancient Hatchery at Lv. 76) are accurately verified from structured technology data.
-            </p>
-          </CollapsibleContent>
-        </Collapsible>
+      <Collapsible className="mt-5 rounded-xl border bg-card/60 p-4">
+        <CollapsibleTrigger className="flex min-h-[44px] w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
+          <span>What this can and can't tell you</span>
+          <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
+          <p>
+            Contains 498 structure catalogue records from PalDB (v1.0.3), detailing material costs,
+            required work suitabilities, and power draw/output metrics.
+          </p>
+          <p>
+            Technology levels are cross-referenced directly from the structured technology catalogue
+            (`knowledgeTechnologies.ts`). Two unlinked catalogue entries lacking detail pages (e.g.{" "}
+            <em>Banyan_Big</em> and <em>DamagedScarecrow_Test</em>) are retained with their explicit
+            gap reasons rather than excluded or zeroed out.
+          </p>
+          <p>
+            All five hatching facilities (Egg Incubator at Lv. 10, Electric Egg Incubator at Lv. 36,
+            Large Incubator at Lv. 48, Large-Scale Electric Egg Incubator at Lv. 58, and Ancient
+            Hatchery at Lv. 76) are accurately verified from structured technology data.
+          </p>
+        </CollapsibleContent>
+      </Collapsible>
 
-        <section
-          className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
-          aria-label="Browse structures data"
-        >
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-              <label className="block flex-1">
-                <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Search structures
+      <section
+        className="mt-7 rounded-2xl border bg-card p-4 shadow-sm sm:p-5"
+        aria-label="Browse structures data"
+      >
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <label className="block flex-1">
+              <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Search structures
+              </span>
+              <span className="relative block">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Structure name, material (e.g. Ingot), suitability, category..."
+                  className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
+                />
+              </span>
+            </label>
+
+            <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-1 min-w-36">
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  Category
                 </span>
-                <span className="relative block">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <input
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
-                    placeholder="Structure name, material (e.g. Ingot), suitability, category..."
-                    className="h-11 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm outline-none transition focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/50"
-                  />
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="h-10 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-foreground outline-none transition focus-visible:ring-2 focus-visible:ring-ring/50"
+                >
+                  <option value="all">All Categories ({categoriesList.length})</option>
+                  {categoriesList.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-1 min-w-36">
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  Work Suitability
                 </span>
-              </label>
+                <select
+                  value={suitabilityFilter}
+                  onChange={(e) => setSuitabilityFilter(e.target.value)}
+                  className="h-10 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-foreground outline-none transition focus-visible:ring-2 focus-visible:ring-ring/50"
+                >
+                  <option value="all">All Suitabilities ({suitabilitiesList.length})</option>
+                  {suitabilitiesList.map((suit) => (
+                    <option key={suit} value={suit}>
+                      {suit}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              <div className="flex flex-wrap gap-2">
-                <div className="flex flex-col gap-1 min-w-36">
-                  <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                    Category
-                  </span>
-                  <select
-                    value={categoryFilter}
-                    onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="h-10 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-foreground outline-none transition focus-visible:ring-2 focus-visible:ring-ring/50"
-                  >
-                    <option value="all">All Categories ({categoriesList.length})</option>
-                    {categoriesList.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex flex-col gap-1 min-w-36">
-                  <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                    Work Suitability
-                  </span>
-                  <select
-                    value={suitabilityFilter}
-                    onChange={(e) => setSuitabilityFilter(e.target.value)}
-                    className="h-10 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-foreground outline-none transition focus-visible:ring-2 focus-visible:ring-ring/50"
-                  >
-                    <option value="all">All Suitabilities ({suitabilitiesList.length})</option>
-                    {suitabilitiesList.map((suit) => (
-                      <option key={suit} value={suit}>
-                        {suit}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex flex-col gap-1 min-w-36">
-                  <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                    Tech Range
-                  </span>
-                  <select
-                    value={techFilter}
-                    onChange={(e) => setTechFilter(e.target.value as TechFilter)}
-                    className="h-10 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-foreground outline-none transition focus-visible:ring-2 focus-visible:ring-ring/50"
-                  >
-                    <option value="all">All Tech Levels</option>
-                    <option value="1-15">Levels 1 – 15</option>
-                    <option value="16-30">Levels 16 – 30</option>
-                    <option value="31-50">Levels 31 – 50</option>
-                    <option value="51-80">Levels 51 – 80</option>
-                    <option value="none">Unlinked / No Tech Level</option>
-                  </select>
-                </div>
+              <div className="flex flex-col gap-1 min-w-36">
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  Tech Range
+                </span>
+                <select
+                  value={techFilter}
+                  onChange={(e) => setTechFilter(e.target.value as TechFilter)}
+                  className="h-10 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-foreground outline-none transition focus-visible:ring-2 focus-visible:ring-ring/50"
+                >
+                  <option value="all">All Tech Levels</option>
+                  <option value="1-15">Levels 1 – 15</option>
+                  <option value="16-30">Levels 16 – 30</option>
+                  <option value="31-50">Levels 31 – 50</option>
+                  <option value="51-80">Levels 51 – 80</option>
+                  <option value="none">Unlinked / No Tech Level</option>
+                </select>
               </div>
             </div>
-
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t pt-3 text-xs text-muted-foreground">
-              <span>
-                Showing <strong className="text-foreground">{filteredStructures.length}</strong> of{" "}
-                {totalCount} matching structures
-              </span>
-              <span>Source: PalDB Structure Catalogue (v1.0.3)</span>
-            </div>
           </div>
 
-          {filteredStructures.length === 0 ? (
-            <EmptyState text="No structures match your search criteria. Try clearing filters or searching for a different item or material." />
-          ) : (
-            <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {filteredStructures.map((record) => (
-                <StructureCard key={record.id} record={record} />
-              ))}
-            </div>
-          )}
-        </section>
-      </main>
-    </div>
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t pt-3 text-xs text-muted-foreground">
+            <span>
+              Showing <strong className="text-foreground">{filteredStructures.length}</strong> of{" "}
+              {totalCount} matching structures
+            </span>
+            <span>Source: PalDB Structure Catalogue (v1.0.3)</span>
+          </div>
+        </div>
+
+        {filteredStructures.length === 0 ? (
+          <EmptyState
+            title="No structures match your search criteria."
+            body="Try clearing filters or searching for a different item or material."
+          />
+        ) : (
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filteredStructures.map((record) => (
+              <StructureCard key={record.id} record={record} />
+            ))}
+          </div>
+        )}
+      </section>
+    </PageShell>
   );
 }
 
@@ -430,65 +423,5 @@ function StructureCard({ record }: { record: EvidenceRecord<StructureKnowledge> 
         </div>
       )}
     </article>
-  );
-}
-
-function PackFeedback({ loading, error }: { loading: boolean; error: Error | null }) {
-  return (
-    <div className="min-h-screen bg-background px-4 py-8">
-      <main className="mx-auto max-w-xl rounded-2xl border bg-card p-6 text-center shadow-sm">
-        <Building2 className="mx-auto size-7 text-primary" />
-        <h1 className="mt-3 text-xl font-bold">
-          {loading ? "Loading Structures Guide" : "Structures pack unavailable"}
-        </h1>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          {loading
-            ? "Preparing the cached offline structures directory."
-            : (error?.message ?? "The offline knowledge pack could not be read.")}
-        </p>
-        <Button asChild variant="outline" className="mt-5 min-h-[44px]">
-          <Link to="/compendium">Back to the compendium</Link>
-        </Button>
-      </main>
-    </div>
-  );
-}
-
-function BackLink() {
-  return (
-    <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2 min-h-[44px]">
-      <Link to="/compendium">
-        <ArrowLeft className="size-4" />
-        Back to the compendium
-      </Link>
-    </Button>
-  );
-}
-
-function Eyebrow({ icon, children }: { icon: ReactNode; children: ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-sky-500/40 bg-sky-500/10 px-3 py-1 text-xs font-semibold text-sky-700 dark:text-sky-300">
-      {icon}
-      {children}
-    </span>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-background/75 px-3 py-2.5">
-      <div className="text-lg font-bold leading-none">{value}</div>
-      <div className="mt-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function EmptyState({ text }: { text: string }) {
-  return (
-    <div className="mt-6 rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
-      {text}
-    </div>
   );
 }
