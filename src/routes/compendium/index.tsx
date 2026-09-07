@@ -1,32 +1,178 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ArrowLeft,
-  BookOpen,
   Building2,
   ChevronDown,
   ChevronRight,
   Cpu,
   Crosshair,
-  Download,
   Egg,
   Fish,
   Lightbulb,
   MapPinned,
   PackageOpen,
   ScrollText,
-  ShieldCheck,
   Sparkles,
   Utensils,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import type { ComponentType } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { PageHeader, PageSection, PageShell } from "@/components/ui/page-header";
 
-const TITLE = "Palworld Compendium — Offline Knowledge Packs";
+const TITLE = "Compendium — Palworld Pathfinder";
 const DESCRIPTION =
-  "Browse source-backed Palworld reference packs without loading them into the core breeding pathfinder.";
+  "Source-backed Palworld reference packs that load separately from the breeding pathfinder.";
 const SITE = "https://good-vibe-desk.kevinjackson1114.workers.dev/compendium";
+
+/**
+ * Shared card chrome.
+ *
+ * Exported as a class string rather than a wrapper component because TanStack
+ * Router types Link's `to` prop against the generated route tree; funnelling it
+ * through a generic `to?: string` prop would erase that check across all routes.
+ *
+ * This will move to the shared primitive once it is reconciled with the
+ * existing src/components/ui/entity-detail-helpers.tsx. Do not fork it.
+ */
+const packCardClass =
+  "group/pack flex h-full flex-col rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+type Pack = {
+  to: string;
+  icon: ComponentType<{ className?: string }>;
+  title: string;
+  meta: string;
+  description: string;
+};
+
+type PackGroup = {
+  id: string;
+  title: string;
+  description: string;
+  packs: readonly Pack[];
+};
+
+/**
+ * Eleven packs grouped into four categories. Counts are carried over from the
+ * previous revision of this page and are NOT derived from the data files — the
+ * encounter figures in particular disagree with docs/PROJECT-HANDOFF.md and
+ * need reconciling before they are trusted.
+ */
+const GROUPS = [
+  {
+    id: "group-pals",
+    title: "Pals",
+    description: "What a Pal is, what it knows, and where it comes from.",
+    packs: [
+      {
+        to: "/compendium/skills",
+        icon: Sparkles,
+        title: "Skills & Passives",
+        meta: "807 moves & passives",
+        description:
+          "Active skills, passives, level learnsets, species partner skills, and verified inheritance rules.",
+      },
+      {
+        to: "/compendium/eggs",
+        icon: Egg,
+        title: "Eggs & Incubators",
+        meta: "754 wild spawns",
+        description:
+          "Egg pools, wild spawn locations with exact weights, special egg types, incubator specs, and recorded gaps.",
+      },
+    ],
+  },
+  {
+    id: "group-world",
+    title: "World",
+    description: "Everything you go out and find.",
+    packs: [
+      {
+        to: "/compendium/field-alphas",
+        icon: MapPinned,
+        title: "Fixed Field Alphas",
+        meta: "65 records",
+        description:
+          "Fixed overworld Alpha bosses with exact levels, spawn times, and map locations. Dungeon bosses are not included.",
+      },
+      {
+        to: "/compendium/encounters",
+        icon: Crosshair,
+        title: "Encounters",
+        meta: "207 records",
+        description: "Verified stats and locations for dungeon, raid, and tower bosses.",
+      },
+      {
+        to: "/compendium/missions",
+        icon: ScrollText,
+        title: "Missions",
+        meta: "117 records",
+        description: "Main and sub mission objectives, rewards, next steps, and map locations.",
+      },
+      {
+        to: "/compendium/fishing",
+        icon: Fish,
+        title: "Fishing",
+        meta: "115 spots",
+        description:
+          "Fishing spots, catch distributions, drop tables, rods and bait, support Pals, and water shadow indicators.",
+      },
+    ],
+  },
+  {
+    id: "group-base",
+    title: "Base & Crafting",
+    description: "What you build, unlock, cook, and carry.",
+    packs: [
+      {
+        to: "/compendium/technologies",
+        icon: Lightbulb,
+        title: "Technologies",
+        meta: "588 unlocks",
+        description: "Unlock levels, categories, and point costs from level 1 to 80.",
+      },
+      {
+        to: "/compendium/structures",
+        icon: Building2,
+        title: "Structures",
+        meta: "498 structures",
+        description:
+          "Base structures, production facilities, material costs, work suitabilities, and technology requirements.",
+      },
+      {
+        to: "/compendium/food",
+        icon: Utensils,
+        title: "Food & Recipes",
+        meta: "124 items",
+        description:
+          "Ingredients, recipes, nutrition, SAN changes, spoilage times, buffs, and cooking station tech levels.",
+      },
+      {
+        to: "/compendium/items",
+        icon: PackageOpen,
+        title: "Items & Recipes",
+        meta: "2,455 cards · optional download",
+        description:
+          "Separate pack for item stats and crafting recipes. Shows exact size and storage use before you start.",
+      },
+    ],
+  },
+  {
+    id: "group-mechanics",
+    title: "Game Mechanics",
+    description: "The published rules, and the ones nobody has published.",
+    packs: [
+      {
+        to: "/compendium/systems",
+        icon: Cpu,
+        title: "Systems & Formulas",
+        meta: "29 records & gaps",
+        description:
+          "Published mechanics, breeding formulas, work speed levels, world settings, and explicit source gaps.",
+      },
+    ],
+  },
+] as const satisfies readonly PackGroup[];
 
 export const Route = createFileRoute("/compendium/")({
   head: () => ({
@@ -46,274 +192,70 @@ export const Route = createFileRoute("/compendium/")({
 
 function CompendiumIndexPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-80 opacity-60"
-        style={{
-          background:
-            "radial-gradient(65% 100% at 50% 0%, color-mix(in oklch, var(--primary) 20%, transparent) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+    <PageShell>
+      <PageHeader
+        title="Compendium"
+        description="Offline reference packs for Pals, the world, your base, and the game's published rules. Each pack loads on its own, so opening one never slows the breeding pathfinder."
+      >
+        <Collapsible className="group rounded-lg border border-border bg-card">
+          <CollapsibleTrigger className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+            <span>What this can and can&apos;t tell you</span>
+            <ChevronDown className="size-4 shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="space-y-2 px-4 pb-4 text-sm leading-6 text-muted-foreground">
+            <p>
+              Every value carries a source and a tier. Where sources disagree, both values are
+              recorded and the conflict is flagged — nothing is averaged and no winner is picked.
+            </p>
+            <p>
+              Where nothing has been published, the entry says so and gives the reason. Missing
+              information is never filled with a guess.
+            </p>
+          </CollapsibleContent>
+        </Collapsible>
+      </PageHeader>
 
-      <main className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-        <Button asChild variant="ghost" size="sm" className="mb-5 -ml-2 min-h-[44px]">
-          <Link to="/">
-            <ArrowLeft className="size-4" />
-            Back to the pathfinder
-          </Link>
-        </Button>
-
-        <section className="rounded-2xl border border-primary/25 bg-card/80 p-5 shadow-sm backdrop-blur sm:p-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                <BookOpen className="size-3.5" />
-                Offline knowledge packs
-              </div>
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Palworld Compendium</h1>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-                Explore offline reference guides for Pals, encounters, missions, technology, and
-                items.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2 text-center sm:min-w-60">
-              <Metric label="Available directories" value="11" />
-              <Metric label="Core reference records" value="1,475" />
-              <Metric label="Core dependency" value="None" />
-              <Metric label="Item pack" value="Opt-in" />
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-7" aria-labelledby="available-packs">
-          <div className="mb-3 flex items-end justify-between gap-4">
-            <div>
-              <h2 id="available-packs" className="text-xl font-bold">
-                Available guides
-              </h2>
-            </div>
-          </div>
-
-          <Collapsible className="mb-4 rounded-xl border bg-card/60 p-4">
-            <CollapsibleTrigger className="flex w-full items-center justify-between font-semibold text-sm text-muted-foreground hover:text-foreground">
-              <span>What this can and can't tell you</span>
-              <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="mt-3 text-xs leading-relaxed text-muted-foreground space-y-2">
-              <p>
-                Every guide here is built directly from verified game records. Missing information
-                is left blank rather than filled with guesses.
-              </p>
-              <p>
-                Each guide loads separately so the breeding calculator stays fast and works without
-                downloading data you don't need.
-              </p>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <div className="grid gap-3 lg:grid-cols-2">
-            <PackCard
-              to="/compendium/field-alphas"
-              icon={<MapPinned className="size-5" />}
-              title="Fixed Field Alphas"
-              count="65 records"
-              description="Find fixed overworld Alpha bosses with their exact levels, spawn times, and map locations. Does not include dungeon bosses."
-              tone="amber"
-            />
-            <PackCard
-              to="/compendium/encounters"
-              icon={<Crosshair className="size-5" />}
-              title="Encounters"
-              count="207 records"
-              description="Check verified stats and locations for dungeon bosses, raid bosses, and tower bosses."
-              tone="violet"
-            />
-            <PackCard
-              to="/compendium/missions"
-              icon={<ScrollText className="size-5" />}
-              title="Missions"
-              count="117 records"
-              description="View main and sub mission objectives, rewards, next steps, and map locations."
-              tone="emerald"
-            />
-            <PackCard
-              to="/compendium/technologies"
-              icon={<Lightbulb className="size-5" />}
-              title="Technologies"
-              count="588 unlocks"
-              description="Look up unlock levels, technology categories, and point costs from levels 1 to 80."
-              tone="sky"
-            />
-            <PackCard
-              to="/compendium/fishing"
-              icon={<Fish className="size-5" />}
-              title="Fishing"
-              count="115 spots"
-              description="Explore fishing spots, catch distributions, drop tables, rods and bait, support Pals, and water shadow indicators."
-              tone="cyan"
-            />
-            <PackCard
-              to="/compendium/food"
-              icon={<Utensils className="size-5" />}
-              title="Food & Recipes"
-              count="124 items"
-              description="Explore ingredients, recipes, nutrition, SAN changes, spoilage times, food buffs, and cooking station tech levels."
-              tone="orange"
-            />
-            <PackCard
-              to="/compendium/structures"
-              icon={<Building2 className="size-5" />}
-              title="Structures"
-              count="498 structures"
-              description="Browse base structures, production facilities, construction material costs, work suitabilities, and technology requirements."
-              tone="sky"
-            />
-            <PackCard
-              to="/compendium/skills"
-              icon={<Sparkles className="size-5" />}
-              title="Skills & Passives"
-              count="807 moves & passives"
-              description="Browse active skill moves, passive skills, Pal level learnsets, species partner skills, and verified inheritance rules."
-              tone="violet"
-            />
-            <PackCard
-              to="/compendium/eggs"
-              icon={<Egg className="size-5" />}
-              title="Eggs & Incubators"
-              count="754 wild spawns"
-              description="Explore egg pools, wild egg spawn locations with exact weights, special egg types, incubator technology specs, and recorded gaps."
-              tone="amber"
-            />
-            <PackCard
-              to="/compendium/systems"
-              icon={<Cpu className="size-5" />}
-              title="Systems & Formulas"
-              count="29 records & gaps"
-              description="Explore published mechanics, breeding formulas, work speed levels, world settings, and explicit source evidence gaps."
-              tone="violet"
-            />
-            <PackCard
-              to="/compendium/items"
-              icon={<PackageOpen className="size-5" />}
-              title="Items & Recipes"
-              count="2,455 optional cards"
-              description="Optional download for item stats and crafting recipes. Shows exact download size and storage space before you start."
-              tone="orange"
-            />
-          </div>
-        </section>
-
-        <section className="mt-7 grid gap-3 md:grid-cols-2" aria-label="Compendium loading policy">
-          <PolicyCard
-            icon={<ShieldCheck className="size-4" />}
-            title="Core stays independent"
-            body="The breeding calculator works whether or not you open these guides."
-          />
-          <PolicyCard
-            icon={<Download className="size-4" />}
-            title="Items and recipes are opt-in"
-            body="The items pack is a separate download that shows its size before you start and can be deleted afterwards."
-          />
-        </section>
-      </main>
-    </div>
+      {GROUPS.map((group) => (
+        <PageSection
+          key={group.id}
+          id={group.id}
+          title={group.title}
+          description={group.description}
+        >
+          <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {group.packs.map((pack) => (
+              <PackCard key={pack.to} pack={pack} />
+            ))}
+          </ul>
+        </PageSection>
+      ))}
+    </PageShell>
   );
 }
 
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-background/75 px-3 py-2.5">
-      <div className="text-lg font-bold leading-none">{value}</div>
-      <div className="mt-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function PackCard({
-  to,
-  icon,
-  title,
-  count,
-  description,
-  tone,
-}: {
-  to:
-    | "/compendium/field-alphas"
-    | "/compendium/encounters"
-    | "/compendium/fishing"
-    | "/compendium/food"
-    | "/compendium/missions"
-    | "/compendium/skills"
-    | "/compendium/structures"
-    | "/compendium/systems"
-    | "/compendium/technologies"
-    | "/compendium/eggs"
-    | "/compendium/items";
-  icon: ReactNode;
-  title: string;
-  count: string;
-  description: string;
-  tone: "amber" | "violet" | "cyan" | "emerald" | "sky" | "orange";
-}) {
-  const toneClasses = {
-    amber:
-      "border-amber-400/25 hover:border-amber-400/60 bg-amber-400/10 text-amber-700 dark:text-amber-300",
-    violet:
-      "border-violet-400/25 hover:border-violet-400/60 bg-violet-400/10 text-violet-700 dark:text-violet-300",
-    cyan: "border-cyan-400/25 hover:border-cyan-400/60 bg-cyan-400/10 text-cyan-700 dark:text-cyan-300",
-    emerald:
-      "border-emerald-400/25 hover:border-emerald-400/60 bg-emerald-400/10 text-emerald-700 dark:text-emerald-300",
-    sky: "border-sky-400/25 hover:border-sky-400/60 bg-sky-400/10 text-sky-700 dark:text-sky-300",
-    orange:
-      "border-orange-400/25 hover:border-orange-400/60 bg-orange-400/10 text-orange-700 dark:text-orange-300",
-  }[tone];
-  const [borderClass, hoverClass, iconBackground, iconText, badgeText] = toneClasses.split(" ");
+function PackCard({ pack }: { pack: (typeof GROUPS)[number]["packs"][number] }) {
+  const Icon = pack.icon;
 
   return (
-    <Link
-      to={to}
-      className={`group block rounded-2xl border bg-card p-5 shadow-sm transition duration-150 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${borderClass} ${hoverClass}`}
-    >
-      <div className="flex h-full flex-col justify-between gap-5">
-        <div className="flex gap-4">
-          <div
-            className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${iconBackground} ${iconText}`}
-          >
-            {icon}
-          </div>
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-bold">{title}</h3>
-              <span
-                className={`rounded-full ${iconBackground} px-2 py-0.5 text-xs font-semibold ${badgeText}`}
-              >
-                {count}
-              </span>
-            </div>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">{description}</p>
+    <li>
+      <Link to={pack.to} className={packCardClass}>
+        <div className="flex items-start gap-3">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+            <Icon className="size-4" />
+          </span>
+          <div className="min-w-0">
+            <h3 className="font-semibold leading-tight">{pack.title}</h3>
+            <p className="mt-0.5 text-xs font-medium tabular-nums text-muted-foreground">
+              {pack.meta}
+            </p>
           </div>
         </div>
-        <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary">
-          Open guide{" "}
-          <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">{pack.description}</p>
+        <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+          Open
+          <ChevronRight className="size-4 transition-transform group-hover/pack:translate-x-0.5" />
         </span>
-      </div>
-    </Link>
-  );
-}
-
-function PolicyCard({ icon, title, body }: { icon: ReactNode; title: string; body: string }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-card/60 p-4">
-      <div className="flex items-center gap-2 text-sm font-semibold">
-        <span className="text-primary">{icon}</span>
-        {title}
-      </div>
-      <p className="mt-2 text-sm leading-5 text-muted-foreground">{body}</p>
-    </div>
+      </Link>
+    </li>
   );
 }
